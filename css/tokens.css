@@ -1,0 +1,980 @@
+/* MaV Design System — CSS Tokens
+   Source: Figma 8dGEq5WuFEitIQxYUmezTr (Modular App Visualizer)
+   Updated: commit d096ab452566e346bbc0a9a4a187d023434f9ad0
+   Token names match Figma verbatim — slashes preserved, typos preserved.
+   ─────────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LAYER 0 — Primitive palette (baseColors.js)
+   Raw hex values. Only source of hex in this file.
+   ══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Fyscal core ──────────────────────────────────────────────────────── */
+  --bc-white:         #ffffff;
+  --bc-black:         #171717;
+  --bc-grey:          #efefef;
+
+  /* Brand */
+  --bc-primary-light: #352eff;
+  --bc-primary-dark:  #a1ff5b;
+  --bc-secondary:     #0053ff;
+  --bc-tertiary1:     #7c9dff;
+  --bc-tertiary2:     #030192;
+  --bc-variation:     #ff00ff;
+
+  /* ── Mono scale ───────────────────────────────────────────────────────── */
+  --bc-mono100-l: #e5e5e5;  --bc-mono100-d: #242424;
+  --bc-mono200-l: #cccccc;  --bc-mono200-d: #484848;
+  --bc-mono300-l: #b2b2b2;  --bc-mono300-d: #6a6a6a;
+  --bc-mono400-l: #999999;  --bc-mono400-d: #666666;
+  --bc-mono500:   #7f7f7f;
+  --bc-mono600-l: #666666;  --bc-mono600-d: #999999;
+  --bc-mono700-l: #4c4c4c;  --bc-mono700-d: #b2b2b2;
+  --bc-mono800-l: #333333;  --bc-mono800-d: #cccccc;
+  --bc-mono900-l: #191919;  --bc-mono900-d: #e5e5e5;
+
+  /* ── System ───────────────────────────────────────────────────────────── */
+  --bc-danger:        #ff0000;   --bc-danger-dark:   #e93a2a;
+  --bc-danger-soft:   #ff00001a;
+  --bc-success:       #629c28;   --bc-success-soft:  #629c281a;
+  --bc-warning:       #ff8400;   --bc-warning-soft:  #ff84001a;
+  --bc-natural:       #d9d9d9;
+  --bc-primary-soft:  #352eff1a;
+
+  /* ── poliPurple ramp ──────────────────────────────────────────────────── */
+  --bc-polipurple-800: #20104d;
+  --bc-polipurple-700: #351a80;
+  --bc-polipurple-600: #4a25b3;
+  --bc-polipurple-500: #6a35ff;
+  --bc-polipurple-400: #9772ff;
+  --bc-polipurple-300: #b49aff;
+  --bc-polipurple-200: #d2c2ff;
+  --bc-polipurple-100: #e8dfff;
+
+  /* ── orangeSunshine ramp ─────────────────────────────────────────────── */
+  --bc-orange-800: #4d2914;
+  --bc-orange-700: #804322;
+  --bc-orange-600: #b35f30;
+  --bc-orange-500: #ff8744;
+  --bc-orange-400: #ffab7c;
+  --bc-orange-300: #ffc3a2;
+  --bc-orange-200: #ffdbc7;
+  --bc-orange-100: #ffefe6;
+
+  /* ── pinkPong ramp ───────────────────────────────────────────────────── */
+  --bc-pink-800: #4d1421;
+  --bc-pink-700: #802138;
+  --bc-pink-600: #b32e4e;
+  --bc-pink-500: #ff426f;
+  --bc-pink-400: #ff7b9a;
+  --bc-pink-300: #ffa0b7;
+  --bc-pink-200: #ffc6d4;
+  --bc-pink-100: #ffe1e9;
+
+  /* ── manna ramp ──────────────────────────────────────────────────────── */
+  --bc-manna-800: #4d3d15;
+  --bc-manna-700: #806623;
+  --bc-manna-600: #b38e30;
+  --bc-manna-500: #ffcb45;
+  --bc-manna-400: #ffdb7d;
+  --bc-manna-300: #ffe5a2;
+  --bc-manna-200: #ffefc7;
+  --bc-manna-100: #ffefc7;
+
+  /* ── neoPaccha ramp ──────────────────────────────────────────────────── */
+  --bc-neopaccha-800: #454c13;
+  --bc-neopaccha-700: #727f20;
+  --bc-neopaccha-600: #a0b22d;
+  --bc-neopaccha-500: #e5fe40;
+  --bc-neopaccha-400: #edfe79;
+  --bc-neopaccha-300: #f2ff9f;
+  --bc-neopaccha-200: #f7ffc6;
+  --bc-neopaccha-100: #fbffe6;
+
+  /* ── yoyo ramp ───────────────────────────────────────────────────────── */
+  --bc-yoyo-800: #33134d;
+  --bc-yoyo-700: #552080;
+  --bc-yoyo-600: #772cb3;
+  --bc-yoyo-500: #aa3fff;
+  --bc-yoyo-400: #c379ff;
+  --bc-yoyo-300: #d59fff;
+  --bc-yoyo-200: #e5c5ff;
+  --bc-yoyo-100: #f4e5ff;
+
+  /* ── parkGreen ramp ──────────────────────────────────────────────────── */
+  --bc-parkgreen-800: #124d34;
+  --bc-parkgreen-700: #1e8057;
+  --bc-parkgreen-600: #29b379;
+  --bc-parkgreen-500: #3bffad;
+  --bc-parkgreen-400: #76ffc6;
+  --bc-parkgreen-300: #9dffd6;
+  --bc-parkgreen-200: #c4ffe6;
+  --bc-parkgreen-100: #ddfff1;
+
+  /* ── yellowNeon ──────────────────────────────────────────────────────── */
+  --bc-yellowneon: #e3d506;
+
+  /* ── Error / Warning / Info / Success scales ─────────────────────────── */
+  --bc-error-500: #ee4d37;  --bc-error-400: #f05e4b;
+  --bc-error-300: #f47564;  --bc-error-200: #f6a69b;  --bc-error-100: #fce2dd;
+  --bc-warn-500:  #f08d32;  --bc-warn-400:  #f29947;
+  --bc-warn-300:  #f5ac6a;  --bc-warn-200:  #f8c699;  --bc-warn-100:  #fbddc2;
+  --bc-info-500:  #144cc7;  --bc-info-400:  #2c5ecd;
+  --bc-info-300:  #3f6fd9;  --bc-info-200:  #89a5e3;  --bc-info-100:  #c2d0f2;
+  --bc-succ-500:  #06c270;  --bc-succ-400:  #1fc87f;
+  --bc-succ-300:  #4fe3a3;  --bc-succ-200:  #83e0b8;  --bc-succ-100:  #e6f9f1;
+
+  /* ── kiqBase ─────────────────────────────────────────────────────────── */
+  --bc-kiq-primary:          #710cbe;
+  --bc-kiq-primary-shades:   #3a1264;
+  --bc-kiq-secondary:        #9dff34;
+  --bc-kiq-secondary-shades: #96d747;
+
+  /* ── Neon collection ─────────────────────────────────────────────────── */
+  --bc-neon-black:       #101010;
+  --bc-neon-primary:     #05005d;
+  --bc-neon-secondary:   #a1ff5b;
+  --bc-neon-tertiary1:   #4af482;
+  --bc-neon-tertiary2:   #00ffff;
+  --bc-neon-variation:   #ff0090;
+  --bc-neon-variation2:  #2d34ef;
+  --bc-neon-shade100:    #6bf800;
+  --bc-neon-shade200:    #62e400;
+
+  /* Neon Tint/Primary */
+  --bc-neon-tintp100: #fafaff;  --bc-neon-tintp200: #e8e6ff;
+  --bc-neon-tintp300: #d5d3ff;  --bc-neon-tintp400: #c4bfff;
+  --bc-neon-tintp500: #b0abff;  --bc-neon-tintp600: #9d98ff;
+  --bc-neon-tintp700: #8b84ff;  --bc-neon-tintp800: #7871ff;
+  --bc-neon-tintp900: #665eff;
+
+  /* Neon Shade/Primary */
+  --bc-neon-shadep100: #05005d;  --bc-neon-shadep200: #060071;
+  --bc-neon-shadep300: #070085;  --bc-neon-shadep400: #090098;
+  --bc-neon-shadep500: #0900ab;  --bc-neon-shadep600: #0a00bf;
+  --bc-neon-shadep700: #0b00d4;  --bc-neon-shadep800: #0c00e6;
+  --bc-neon-shadep900: #0d00fa;
+
+  /* Neon Tint/Secondary */
+  --bc-neon-tints100: #fbfff9;  --bc-neon-tints200: #f0ffe4;
+  --bc-neon-tints300: #e4ffd1;  --bc-neon-tints400: #daffbe;
+  --bc-neon-tints500: #ceffa9;  --bc-neon-tints600: #c4ff96;
+  --bc-neon-tints700: #b8ff82;  --bc-neon-tints800: #adff6f;
+  --bc-neon-tints900: #96ff47;
+
+  /* Tint/Primary extended (light mode) */
+  --bc-tintp100-l: #eaeaff;  --bc-tintp100-d: #e1e5ef;
+  --bc-tintp200-l: #d6d5ff;  --bc-tintp200-d: #c3cce0;
+  --bc-tintp300-l: #c2c0ff;  --bc-tintp300-d: #8a9ac0;
+  --bc-tintp400-l: #aeabff;  --bc-tintp400-d: #556aa0;
+  --bc-tintp500-l: #9a96ff;  --bc-tintp500-d: #3c538f;
+  --bc-tintp600-l: #8581ff;  --bc-tintp600-d: #253b7f;
+  --bc-tintp700-l: #716cff;  --bc-tintp700-d: #10226e;
+  --bc-tintp800-l: #5d57ff;  --bc-tintp800-d: #0a1b61;
+  --bc-tintp900-l: #4942ff;  --bc-tintp900-d: #060070;
+
+  /* Shade/Primary extended */
+  --bc-shadep100-l: #2f29e5;  --bc-shadep100-d: #040050;
+  --bc-shadep200-l: #2a24cc;  --bc-shadep200-d: #05005e;
+  --bc-shadep300-l: #2520b2;  --bc-shadep300-d: #040050;
+  --bc-shadep400-l: #1f1b99;  --bc-shadep400-d: #030043;
+  --bc-shadep500-l: #1a177f;  --bc-shadep500-d: #020037;
+  --bc-shadep600-l: #151266;  --bc-shadep600-d: #01002a;
+  --bc-shadep700-l: #0f0d4c;  --bc-shadep700-d: #01001f;
+  --bc-shadep800-l: #0a0933;  --bc-shadep800-d: #000014;
+  --bc-shadep900-l: #050419;  --bc-shadep900-d: #010111;
+
+  /* Tint/Secondary extended */
+  --bc-tints100-l: #e6edff;  --bc-tints100-d: #f6fff1;
+  --bc-tints200-l: #ccddff;  --bc-tints200-d: #edffe3;
+  --bc-tints300-l: #b2cbff;  --bc-tints300-d: #e4ffd5;
+  --bc-tints400-l: #9abaff;  --bc-tints400-d: #d2ffb7;
+  --bc-tints500-l: #6697ff;  --bc-tints500-d: #c9ffa7;
+  --bc-tints600-l: #4c86ff;  --bc-tints600-d: #bfff96;
+  --bc-tints700-l: #3276ff;  --bc-tints700-d: #b5ff85;
+  --bc-tints800-l: #1964ff;  --bc-tints800-d: #aeff79;
+  --bc-tints900-l: #0053ff;  --bc-tints900-d: #a3ff68;
+
+  /* Misc */
+  --bc-bubble-outcoming: #352eff19;
+  --bc-toggle-disabled2: #e4ebff;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LAYER 1 — Semantic shorthand aliases (doc use)
+   ══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Brand */
+  --mav-primary:      #352eff;
+  --mav-primary-dark: #a1ff5b;
+  --mav-secondary:    #0053ff;
+  --mav-tertiary-1:   #7c9dff;
+  --mav-tertiary-2:   #030192;
+
+  /* Neutral surface */
+  --mav-bg:           #ffffff;
+  --mav-bg-secondary: #e5e5e5;
+  --mav-surface:      #ffffff;
+  --mav-fg:           #171717;
+  --mav-muted:        #7f7f7f;
+  --mav-border:       #efefef;
+  --mav-placeholder:  #b2b2b2;
+
+  /* System */
+  --mav-danger:       #ff0000;
+  --mav-warning:      #ff8400;
+  --mav-success:      #629c28;
+  --mav-info:         #144cc7;
+
+  /* Typography — font family tokens */
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  --font-inter:   'Inter', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+
+  /* Active font — override this token to switch the whole system */
+  --font-active:  'Plus Jakarta Sans', sans-serif;
+
+  /* Semantic aliases — always reference the active family */
+  --font-display: var(--font-active);
+  --font-body:    var(--font-active);
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* Canonical Figma token */
+  --core\/font-family: var(--font-active);
+
+  /* Extended semantic aliases */
+  --mav-bg-tertiary: #e6edff;   /* tinted primary bg (swipeup, bg-tertiary) */
+  --mav-code-bg:     #0d0d0d;   /* code block bg — invariant dark */
+  --mav-focus-ring:  rgba(53,46,255,0.4); /* primary focus shadow color */
+
+  /* Light surface aliases (used in screen mockups / light-theme UI) */
+  --bc-surface:      #f5f5f5;   /* near-white light surface / input bg */
+  --bc-surface-soft: #f8f8f8;   /* softer near-white */
+  --bc-surface-ios:  #f2f2f7;   /* iOS system background (subtle blue tint) */
+
+  /* Platform / dev illustration tokens */
+  --bc-android-bg:    #0a1628;  /* Android mockup body / dark navy */
+  --bc-android-brand: #1a237e;  /* Material Design indigo accent */
+  --bc-code-dark:     #1a1a2e;  /* Dark navy for code block backgrounds */
+  --bc-code-comment:  #4a6a8a;  /* Code comment color in syntax examples */
+  --bc-success-dark:  #3a6a00;  /* Dark green for AAA accessibility labels */
+
+  /* Radii */
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   16px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --space-0:   0px;
+  --space-4:   4px;
+  --space-8:   8px;
+  --space-10:  10px;
+  --space-12:  12px;
+  --space-14:  14px;
+  --space-16:  16px;
+  --space-18:  18px;
+  --space-20:  20px;
+  --space-24:  24px;
+  --space-28:  28px;
+  --space-32:  32px;
+  --space-38:  38px;
+  --space-44:  44px;
+  --space-48:  48px;
+  --space-54:  54px;
+
+  /* Shadows */
+  --shadow-xs:    0px 2px 4px 0px rgba(16,16,19,0.16);
+  --shadow-sm:    0px 2px 4px 0px rgba(16,16,19,0.04), 0px 16px 32px -4px rgba(16,16,19,0.10);
+  --shadow-md:    0px 2px 4px 0px rgba(16,16,19,0.04), 0px 24px 48px -8px rgba(16,16,19,0.12);
+  --shadow-lg:    0px 2px 4px 0px rgba(16,16,19,0.04), 0px 40px 80px -16px rgba(16,16,19,0.16);
+  --shadow-xl:     0px 2px 4px 0px rgba(0,0,0,0.04), 0px 56px 112px -20px rgba(0,0,0,0.18);
+  --shadow-custom: 0px 0px 0px 1px rgba(16,16,19,0.08), 0px 8px 16px 0px rgba(16,16,19,0.04);
+  --shadow-input:  0px 1px 0px -1px rgba(0,0,0,0.05), 0px 1px 2px -1px rgba(0,0,0,0.05), 0px 2px 4px -2px rgba(0,0,0,0.05), 0px 3px 6px -3px rgba(0,0,0,0.05);
+  --shadow-focus:  0 0 0 3px rgba(53,46,255,0.4);
+
+  /* Blur */
+  --blur-xs: blur(4px);
+  --blur-sm: blur(8px);
+  --blur-md: blur(16px);
+  --blur-lg: blur(24px);
+  --blur-xl: blur(32px);
+
+  /* Gradients */
+  --gradient-bubble-bot: linear-gradient(142deg, rgba(181,210,243,0.10) 0%, #1a5896 100%);
+  --gradient-brand:      linear-gradient(135deg, var(--bc-primary-soft) 0%, var(--bc-dark-primary-soft) 100%);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LAYER 1 — Foundation color tokens (Figma verbatim, light mode)
+   ══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Core */
+  --Main\/White:       #ffffff;
+  --Main\/Black:       #171717;
+  --Main\/Grey:        #efefef;
+  --Main\/Transparant: #ffffff00;
+  --Main\/Primary:     #352eff;
+  --Main\/Secondary:   #0053ff;
+  --Main\/Tertiary-1:  #7c9dff;
+  --Main\/Tertiary-2:  #030192;
+  --Main\/Variation:   #ff00ff;
+
+  /* Mono */
+  --Mono\/100: #e5e5e5;
+  --Mono\/200: #cccccc;
+  --Mono\/300: #b2b2b2;
+  --Mono\/400: #999999;
+  --Mono\/500: #7f7f7f;
+  --Mono\/600: #666666;
+  --Mono\/700: #4c4c4c;
+  --Mono\/800: #333333;
+  --Mono\/900: #191919;
+
+  /* System */
+  --System\/Danger:       #ff0000;
+  --System\/Danger-soft:  #ff00001a;
+  --System\/Danger-dark:  #e93a2a;
+  --System\/Success:      #629c28;
+  --System\/Success-soft: #629c281a;
+  --System\/Warning:      #ff8400;
+  --System\/Warning-soft: #ff84001a;
+  --System\/Natural:      #d9d9d9;
+  --System\/Primary:      #352eff;
+  --System\/Primary-soft: #352eff1a;
+
+  /* Tint/Primary */
+  --Tint\/Primary\/100: #eaeaff;
+  --Tint\/Primary\/200: #d6d5ff;
+  --Tint\/Primary\/300: #c2c0ff;
+  --Tint\/Primary\/400: #aeabff;
+  --Tint\/Primary\/500: #9a96ff;
+  --Tint\/Primary\/600: #8581ff;
+  --Tint\/Primary\/700: #716cff;
+  --Tint\/Primary\/800: #5d57ff;
+  --Tint\/Primary\/900: #4942ff;
+
+  /* Shade/Primary */
+  --Shade\/Primary\/100: #2f29e5;
+  --Shade\/Primary\/200: #2a24cc;
+  --Shade\/Primary\/300: #2520b2;
+  --Shade\/Primary\/400: #1f1b99;
+  --Shade\/Primary\/500: #1a177f;
+  --Shade\/Primary\/600: #151266;
+  --Shade\/Primary\/700: #0f0d4c;
+  --Shade\/Primary\/800: #0a0933;
+  --Shade\/Primary\/900: #050419;
+
+  /* Tint/Secondary */
+  --Tint\/Secondary\/100: #e6edff;
+  --Tint\/Secondary\/200: #ccddff;
+  --Tint\/Secondary\/300: #b2cbff;
+  --Tint\/Secondary\/400: #9abaff;
+  --Tint\/Secondary\/500: #6697ff;
+  --Tint\/Secondary\/600: #4c86ff;
+  --Tint\/Secondary\/700: #3276ff;
+  --Tint\/Secondary\/800: #1964ff;
+  --Tint\/Secondary\/900: #0053ff;
+
+  /* Shade/Secondary */
+  --Shade\/Secondary\/100: #004ae6;
+  --Shade\/Secondary\/200: #0042cc;
+  --Shade\/Secondary\/300: #003ab2;
+  --Shade\/Secondary\/400: #003199;
+  --Shade\/Secondary\/500: #00297f;
+  --Shade\/Secondary\/600: #002166;
+  --Shade\/Secondary\/700: #00184c;
+  --Shade\/Secondary\/800: #000f33;
+  --Shade\/Secondary\/900: #000819;
+
+  /* Tint/Tertiary */
+  --Tint\/Tertiary\/100: #f1f5ff;
+  --Tint\/Tertiary\/200: #e4ebff;
+  --Tint\/Tertiary\/300: #d7e1ff;
+  --Tint\/Tertiary\/400: #cbd7ff;
+  --Tint\/Tertiary\/500: #b0c5ff;
+  --Tint\/Tertiary\/600: #a4bbff;
+  --Tint\/Tertiary\/700: #96b0ff;
+  --Tint\/Tertiary\/800: #89a6ff;
+  --Tint\/Tertiary\/900: #7c9dff;
+
+  /* Tint/Tertiary 2 */
+  --Tint\/Tertiary-2\/100: #e5e5f4;
+  --Tint\/Tertiary-2\/200: #cccce9;
+  --Tint\/Tertiary-2\/300: #b3b2de;
+  --Tint\/Tertiary-2\/400: #9a99d3;
+  --Tint\/Tertiary-2\/500: #8180c8;
+  --Tint\/Tertiary-2\/600: #6766bd;
+  --Tint\/Tertiary-2\/700: #4e4db2;
+  --Tint\/Tertiary-2\/800: #3533a7;
+  --Tint\/Tertiary-2\/900: #1c1a9c;
+
+  /* Shade/Tertiary */
+  --Shade\/Tertiary\/100: #6f8de5;
+  --Shade\/Tertiary\/200: #637dcc;
+  --Shade\/Tertiary\/300: #566db2;
+  --Shade\/Tertiary\/400: #4a5f99;
+  --Shade\/Tertiary\/500: #3e4e7f;
+  --Shade\/Tertiary\/600: #313e66;
+  --Shade\/Tertiary\/700: #252f4c;
+  --Shade\/Tertiary\/800: #171f34;
+  --Shade\/Tertiary\/900: #0b0f19;
+
+  /* Shade/Tertiary 2 */
+  --Shade\/Tertiary-2\/100: #020084;
+  --Shade\/Tertiary-2\/200: #020074;
+  --Shade\/Tertiary-2\/300: #020066;
+  --Shade\/Tertiary-2\/400: #010057;
+  --Shade\/Tertiary-2\/500: #010049;
+  --Shade\/Tertiary-2\/600: #01003a;
+  --Shade\/Tertiary-2\/700: #00002b;
+  --Shade\/Tertiary-2\/800: #00001d;
+  --Shade\/Tertiary-2\/900: #00000e;
+
+  /* Line chart */
+  --Line-Chart\/line-loss:        #ff0000;
+  --Line-Chart\/gradient-loss:    #ff00001a;
+  --Line-Chart\/line-gain:        #629c28;
+  --Line-Chart\/gradient-gain:    #629c281a;
+  --Line-Chart\/line-warning:     #ff8400;
+  --Line-Chart\/gradient-warning: #ff84001a;
+  --Line-Chart\/Natural:          #d9d9d9;
+  --Line-Chart\/line-brand:       #352eff;
+  --Line-Chart\/gradient-brand:   #352eff1a;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LAYER 2 — Semantic & component tokens (light mode)
+   ══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Background */
+  --background\/bg-default:   #ffffff;
+  --background\/bg-secondary: #e5e5e5;
+  --background\/bg-tertiary:  #e6edff;
+
+  /* Text */
+  --main-text\/default:     #171717;
+  --main-text\/description: #7f7f7f;
+  --main-text\/placeholder: #b2b2b2;
+  --main-text\/disabled:    #cccccc;
+  --main-text\/brand:       #352eff;
+  --main-text\/inverterd:   #ffffff;
+
+  /* Icon */
+  --icon\/default:  #171717;
+  --icon\/active:   #352eff;
+  --icon\/subtle:   #b2b2b2;
+  --icon\/disabled: #cccccc;
+  --icon\/inverted: #ffffff;
+
+  /* Divider (intentional typo — match Figma exactly) */
+  --devider\/default: #efefef;
+
+  /* Border */
+  --border\/default:  #171717;
+  --border\/inverted: #ffffff;
+  --border\/active:   #352eff;
+  --border\/subtle:   #efefef;
+  --border\/disabled: #cccccc;
+
+  /* Button — primary */
+  --btn\/primary\/default:       #352eff;
+  --btn\/primary\/hover:         #7c9dff;
+  --btn\/primary\/clicked:       #030192;
+  --btn\/primary\/disabled:      #e5e5e5;
+  --btn\/primary\/loading:       #352eff;
+  --btn\/primary\/text-default:  #ffffff;
+  --btn\/primary\/text-inverted: #171717;
+
+  /* Button — secondary */
+  --btn\/secondary\/default:          transparent;
+  --btn\/secondary\/hover:            #efefef;
+  --btn\/secondary\/clicked:          #352eff;
+  --btn\/secondary\/disabled:         transparent;
+  --btn\/secondary\/loading:          #ffffff;
+  --btn\/secondary\/default-outline:  #efefef;
+  --btn\/secondary\/hover-outline:    #7c9dff;
+  --btn\/secondary\/clicked-outline:  #ffffff;
+  --btn\/secondary\/loading-outline:  #352eff;
+  --btn\/secondary\/disabled-outline: #cccccc;
+  --btn\/secondary\/text-default:     #171717;
+  --btn\/secondary\/text-inverted:    #171717;
+
+  /* Button — text-only */
+  --btn\/textonly\/default:  #352eff;
+  --btn\/textonly\/hover:    #7c9dff;
+  --btn\/textonly\/clicked:  #030192;
+  --btn\/textonly\/disabled: #e5e5e5;
+  --btn\/textonly\/loading:  #352eff;
+
+  /* Button — sliding */
+  --btn\/sliding\/default:          #352eff;
+  --btn\/sliding\/hover:            #7c9dff;
+  --btn\/sliding\/clicked:          #030192;
+  --btn\/sliding\/disabled:         #e5e5e5;
+  --btn\/sliding\/Bg:               #ffffff;
+  --btn\/sliding\/sliding-disabled: #cccccc;
+  --btn\/sliding\/text-default:     #ffffff;
+  --btn\/sliding\/text-inverted:    #171717;
+
+  /* Button — swipeup */
+  --btn\/swipeup\/default:       #352eff;
+  --btn\/swipeup\/hover:         #7c9dff;
+  --btn\/swipeup\/clicked:       #030192;
+  --btn\/swipeup\/disabled:      #e5e5e5;
+  --btn\/swipeup\/loading:       #352eff;
+  --btn\/swipeup\/Bg-2:          #e6edff;
+  --btn\/swipeup\/text-default:  #ffffff;
+  --btn\/swipeup\/text-inverted: #171717;
+
+  /* Input field */
+  --input-field\/default\/bg-box:           #ffffff;
+  --input-field\/default\/outline-box:      #cccccc;
+  --input-field\/default\/text-placeholder: #b2b2b2;
+  --input-field\/active\/bg-box-active:      #ffffff;
+  --input-field\/active\/outline-box-active: #191919;
+  --input-field\/active\/text-active:        #191919;
+  --input-field\/focus\/bg-box:             #ffffff;
+  --input-field\/focus\/outline-box:        #352eff;
+  --input-field\/focus\/text-placeholder:   #191919;
+  --input-field\/error\/bg-box:             #ff00001a;
+  --input-field\/error\/outline-box:        #ff0000;
+  --input-field\/error\/text-placeholder:   #191919;
+  --input-field\/error\/label-error:        #ff0000;
+  --input-field\/error\/icon-error:         #ff0000;
+  --input-field\/disabled\/bg-box-disabled:      #efefef;
+  --input-field\/disabled\/outline-box-disabled: #cccccc;
+  --input-field\/disabled\/text-disabled:        #b2b2b2;
+
+  /* OTP */
+  --OTP\/default\/bg-box:           #ffffff;
+  --OTP\/default\/outline-box:      #cccccc;
+  --OTP\/default\/text-placeholder: #b2b2b2;
+  --OTP\/focus\/bg-box:             #ffffff;
+  --OTP\/focus\/outline-box:        #352eff;
+  --OTP\/focus\/text-placeholder:   #191919;
+  --OTP\/active\/bg-box-active:      #ffffff;
+  --OTP\/active\/outline-box-active: #191919;
+  --OTP\/active\/text-active:        #191919;
+  --OTP\/disabled\/bg-box-disabled:      #efefef;
+  --OTP\/disabled\/outline-box-disabled: #cccccc;
+  --OTP\/disabled\/text-disabled:        #cccccc;
+
+  /* Checkbox */
+  --Checkbox\/default\/bg-box:           #ffffff;
+  --Checkbox\/default\/outline-box:      #cccccc;
+  --Checkbox\/default\/text-placeholder: #b2b2b2;
+  --Checkbox\/active\/bg-box-active:      #352eff;
+  --Checkbox\/active\/outline-box-active: #191919;
+  --Checkbox\/active\/text-active:        #191919;
+  --Checkbox\/disabled\/bg-box-disabled:      #e5e5e5;
+  --Checkbox\/disabled\/outline-box-disabled: #b2b2b2;
+  --Checkbox\/disabled\/text-disabled:        #cccccc;
+
+  /* Toggle */
+  --toggle\/default\/bg-box:           #e5e5e5;
+  --toggle\/default\/text-placeholder: #b2b2b2;
+  --toggle\/active\/bg-box-active:     #352eff;
+  --toggle\/active\/text-active:       #191919;
+  --toggle\/disabled\/bg-box-disabled:   #e5e5e5;
+  --toggle\/disabled\/text-disabled:     #cccccc;
+  --toggle\/disabled\/bg-box-disabled-2: #e4ebff;
+
+  /* Alert (note: "waring" is intentional Figma typo) */
+  --alert\/primary\/bg-box:      #352eff1a;
+  --alert\/primary\/text-brand:  #352eff;
+  --alert\/primary\/icon:        #352eff;
+  --alert\/waring\/bg-box:       #ff84001a;
+  --alert\/waring\/text-warning: #ff8400;
+  --alert\/waring\/icon:         #ff8400;
+  --alert\/success\/bg-box:      #629c281a;
+  --alert\/success\/text-success:#629c28;
+  --alert\/success\/icon:        #629c28;
+  --alert\/danger\/bg-box:       #ff00001a;
+  --alert\/danger\/text-danger:  #ff0000;
+  --alert\/danger\/icon:         #ff0000;
+
+  /* Badge & chip (note: "waring" is intentional Figma typo) */
+  --badge\ &\ chip\/primary\/bg-box:  #352eff;
+  --badge\ &\ chip\/primary\/text:    #ffffff;
+  --badge\ &\ chip\/primary\/outline: #7c9dff;
+  --badge\ &\ chip\/primary\/icon:    #ffffff;
+  --badge\ &\ chip\/white\/bg-box:    #e5e5e5;
+  --badge\ &\ chip\/white\/text:      #171717;
+  --badge\ &\ chip\/white\/outline:   #efefef;
+  --badge\ &\ chip\/white\/icon:      #171717;
+  --badge\ &\ chip\/waring\/bg-box:   #ff84001a;
+  --badge\ &\ chip\/waring\/text:     #ff8400;
+  --badge\ &\ chip\/waring\/outline:  #ff8400;
+  --badge\ &\ chip\/waring\/icon:     #ff8400;
+  --badge\ &\ chip\/success\/bg-box:  #629c281a;
+  --badge\ &\ chip\/success\/text:    #629c28;
+  --badge\ &\ chip\/success\/outline: #629c28;
+  --badge\ &\ chip\/success\/icon:    #629c28;
+  --badge\ &\ chip\/danger\/bg-box:   #ff00001a;
+  --badge\ &\ chip\/danger\/text:     #ff0000;
+  --badge\ &\ chip\/danger\/outline:  #ff0000;
+  --badge\ &\ chip\/danger\/icon:     #ff0000;
+
+  /* Toast */
+  --toast\/bg-default: #ffffff;
+  --toast\/text-title: #171717;
+  --toast\/text-desc:  #7f7f7f;
+  --toast\/icon:       #171717;
+  --toast\/outline:    #efefef;
+
+  /* Nav bar */
+  --nav\ bar\/bg-primary:   #030192;
+  --nav\ bar\/bg-secondary: #efefef;
+  --nav\ bar\/bg-tertiary:  #ffffff;
+  --nav\ bar\/bg-card:      #efefef;
+  --nav\ bar\/active-state: #352eff;
+  --nav\ bar\/icon-default: #171717;
+  --nav\ bar\/text-default: #171717;
+
+  /* Menu */
+  --menu\/bg-primary:   #030192;
+  --menu\/bg-secondary: #efefef;
+  --menu\/bg-tertiary:  #ffffff;
+
+  /* Loader */
+  --loader\/spin: #352eff;
+
+  /* Coachmark */
+  --coachmark\/dots:             #352eff;
+  --coachmark\/dot-dash:         #352eff;
+  --coachmark\/text-title:       #ffffff;
+  --coachmark\/text-description: #ffffff;
+
+  /* Bubble */
+  --bubble\/bg-incoming:    #efefef;
+  --bubble\/bg-outcoming:   #352eff19;
+  --bubble\/name-incoming:  #352eff;
+  --bubble\/text-outcoming: #171717;
+  --bubble\/text-incoming:  #171717;
+
+  /* Balance */
+  --Balance\/Bg:           #ffffff;
+  --Balance\/Bg-secondary: #efefef;
+
+  /* Gain & Loss */
+  --gain\&loss\/success\/bg-box:    #629c281a;
+  --gain\&loss\/success\/text-gain: #629c28;
+  --gain\&loss\/success\/icon:      #629c28;
+  --gain\&loss\/danger\/bg-box:     #ff00001a;
+  --gain\&loss\/danger\/text-loss:  #ff0000;
+  --gain\&loss\/danger\/icon:       #ff0000;
+
+  /* Typography tokens */
+  --core\/font-family:         'Plus Jakarta Sans', sans-serif;
+  --core\/font-weight\/Medium: 500;
+  --core\/font-weight\/Bold:   700;
+  --medium\/sm:  12px;
+  --medium\/md:  14px;
+  --medium\/lg:  16px;
+  --medium\/xl:  18px;
+  --medium\/xl2: 20px;
+  --body\/xs:    10px;
+  --body\/sm:    12px;
+  --body\/md:    14px;
+  --body\/lg:    16px;
+  --body\/xl:    18px;
+  --body\/xl2:   20px;
+
+  /* Spacing tokens — full scale */
+  --Spacing\/0:   var(--space-0);
+  --Spacing\/4:   var(--space-4);
+  --Spacing\/8:   var(--space-8);
+  --Spacing\/10:  var(--space-10);
+  --Spacing\/12:  var(--space-12);
+  --Spacing\/14:  var(--space-14);
+  --Spacing\/16:  var(--space-16);
+  --Spacing\/18:  var(--space-18);
+  --Spacing\/20:  var(--space-20);
+  --Spacing\/24:  var(--space-24);
+  --Spacing\/28:  var(--space-28);
+  --Spacing\/32:  var(--space-32);
+  --Spacing\/38:  var(--space-38);
+  --Spacing\/44:  var(--space-44);
+  --Spacing\/48:  var(--space-48);
+  --Spacing\/54:  var(--space-54);
+
+  /* Spacing semantic aliases */
+  --spacing\/header\/none: var(--space-0);
+  --spacing\/header\/xs:   var(--space-4);
+  --spacing\/header\/sm:   var(--space-8);
+  --spacing\/header\/md:   var(--space-16);
+  --spacing\/header\/lg:   var(--space-24);
+
+  /* Border radius tokens */
+  --border\/border-radius\/xs:   var(--radius-xs);
+  --border\/border-radius\/sm:   var(--radius-sm);
+  --border\/border-radius\/md:   var(--radius-md);
+  --border\/border-radius\/lg:   var(--radius-lg);
+  --border\/border-radius\/full: var(--radius-full);
+
+  /* Border width tokens */
+  --border-width\/xs: 1px;
+  --border-width\/sm: 2px;
+  --border-width\/md: 4px;
+
+  /* Layout constraint tokens */
+  --layout\/container-padding:  var(--space-20);
+  --layout\/max-content-width:  343px;
+  --layout\/otp-root-gap:       var(--space-32);
+  --layout\/otp-field-gap:      var(--space-16);
+
+  /* OTP slot tokens */
+  --otp-slot\/width:     var(--space-48);
+  --otp-slot\/height:    var(--space-48);
+  --otp-slot\/padding-h: var(--space-16);
+  --otp-slot\/padding-v: var(--space-14);
+  --otp-slot\/gap:       var(--space-8);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   DARK MODE overrides
+   ══════════════════════════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+  /* Aliases */
+  --mav-primary:      #a1ff5b;
+  --mav-bg:           #171717;
+  --mav-bg-secondary: #242424;
+  --mav-surface:      #1f1f1f;
+  --mav-fg:           #ffffff;
+  --mav-muted:        #7f7f7f;
+  --mav-border:       #484848;
+  --mav-placeholder:  #6a6a6a;
+
+  /* Foundation overrides */
+  --Main\/White:       #171717;
+  --Main\/Black:       #ffffff;
+  --Main\/Grey:        #cccccc;
+  --Main\/Primary:     #a1ff5b;
+  --Main\/Secondary:   #a1ff5b;
+  --Main\/Tertiary-2:  #a1ff5b;
+
+  --Mono\/100: #242424;
+  --Mono\/200: #484848;
+  --Mono\/300: #6a6a6a;
+  --Mono\/400: #666666;
+  --Mono\/600: #999999;
+  --Mono\/700: #b2b2b2;
+  --Mono\/800: #cccccc;
+  --Mono\/900: #e5e5e5;
+
+  /* Tint/Primary dark */
+  --Tint\/Primary\/100: #e1e5ef;
+  --Tint\/Primary\/200: #c3cce0;
+  --Tint\/Primary\/300: #8a9ac0;
+  --Tint\/Primary\/400: #556aa0;
+  --Tint\/Primary\/500: #3c538f;
+  --Tint\/Primary\/600: #253b7f;
+  --Tint\/Primary\/700: #10226e;
+  --Tint\/Primary\/800: #0a1b61;
+  --Tint\/Primary\/900: #060070;
+
+  /* Shade/Primary dark */
+  --Shade\/Primary\/100: #040050;
+  --Shade\/Primary\/200: #05005e;
+  --Shade\/Primary\/300: #040050;
+  --Shade\/Primary\/400: #030043;
+  --Shade\/Primary\/500: #020037;
+  --Shade\/Primary\/600: #01002a;
+  --Shade\/Primary\/700: #01001f;
+  --Shade\/Primary\/800: #000014;
+  --Shade\/Primary\/900: #010111;
+
+  /* Tint/Secondary dark */
+  --Tint\/Secondary\/100: #f6fff1;
+  --Tint\/Secondary\/200: #edffe3;
+  --Tint\/Secondary\/300: #e4ffd5;
+  --Tint\/Secondary\/400: #d2ffb7;
+  --Tint\/Secondary\/500: #c9ffa7;
+  --Tint\/Secondary\/600: #bfff96;
+  --Tint\/Secondary\/700: #b5ff85;
+  --Tint\/Secondary\/800: #aeff79;
+  --Tint\/Secondary\/900: #a3ff68;
+
+  /* Shade/Secondary dark */
+  --Shade\/Secondary\/100: #8bde4e;
+  --Shade\/Secondary\/200: #76be41;
+  --Shade\/Secondary\/300: #629e35;
+  --Shade\/Secondary\/400: #4e8029;
+  --Shade\/Secondary\/500: #3c631e;
+  --Shade\/Secondary\/600: #2a4813;
+  --Shade\/Secondary\/700: #233c10;
+  --Shade\/Secondary\/800: #1c300d;
+  --Shade\/Secondary\/900: #010300;
+
+  /* Semantic overrides */
+  --background\/bg-default:   #171717;
+  --background\/bg-secondary: #242424;
+  --background\/bg-tertiary:  #f6fff1;
+
+  --main-text\/default:     #ffffff;
+  --main-text\/brand:       #a1ff5b;
+  --main-text\/inverterd:   #171717;
+
+  --icon\/default:  #ffffff;
+  --icon\/active:   #a1ff5b;
+  --icon\/inverted: #171717;
+
+  --devider\/default: #484848;
+  --border\/default:  #ffffff;
+  --border\/active:   #a1ff5b;
+  --border\/subtle:   #b2b2b2;
+
+  --btn\/primary\/default:      #a1ff5b;
+  --btn\/primary\/disabled:     #242424;
+  --btn\/primary\/text-default: #171717;
+  --btn\/textonly\/default:     #a1ff5b;
+  --btn\/textonly\/clicked:     #a1ff5b;
+
+  --input-field\/default\/bg-box:            #171717;
+  --input-field\/default\/outline-box:       #484848;
+  --input-field\/default\/text-placeholder:  #6a6a6a;
+  --input-field\/active\/bg-box-active:       #171717;
+  --input-field\/active\/outline-box-active:  #e5e5e5;
+  --input-field\/active\/text-active:         #e5e5e5;
+  --input-field\/focus\/bg-box:              #171717;
+  --input-field\/focus\/outline-box:         #a1ff5b;
+  --input-field\/focus\/text-placeholder:    #e5e5e5;
+
+  --OTP\/default\/bg-box:            #171717;
+  --OTP\/default\/outline-box:       #484848;
+  --OTP\/focus\/bg-box:              #171717;
+  --OTP\/focus\/outline-box:         #a1ff5b;
+  --OTP\/active\/bg-box-active:       #171717;
+  --OTP\/active\/outline-box-active:  #e5e5e5;
+  --OTP\/active\/text-active:         #e5e5e5;
+
+  --toggle\/default\/bg-box:       #242424;
+  --toggle\/active\/bg-box-active: #a1ff5b;
+
+  --Checkbox\/active\/bg-box-active: #a1ff5b;
+
+  --alert\/primary\/bg-box:     #352eff1a;
+  --alert\/primary\/text-brand: #a1ff5b;
+
+  --badge\ &\ chip\/primary\/bg-box: #a1ff5b;
+  --badge\ &\ chip\/primary\/text:   #171717;
+  --badge\ &\ chip\/primary\/icon:   #171717;
+
+  --toast\/bg-default: #171717;
+  --toast\/text-title: #ffffff;
+  --toast\/icon:       #ffffff;
+  --toast\/outline:    #484848;
+
+  --nav\ bar\/bg-primary:   #ffffff;
+  --nav\ bar\/bg-secondary: #ffffff;
+  --nav\ bar\/bg-card:      #ffffff;
+  --nav\ bar\/active-state: #ffffff;
+  --nav\ bar\/icon-default: #ffffff;
+  --nav\ bar\/text-default: #ffffff;
+
+  --loader\/spin: #a1ff5b;
+
+  --coachmark\/dots:     #ffffff;
+  --coachmark\/dot-dash: #ffffff;
+
+  --bubble\/bg-incoming:    #ffffff;
+  --bubble\/bg-outcoming:   #ffffff;
+  --bubble\/name-incoming:  #ffffff;
+  --bubble\/text-outcoming: #ffffff;
+  --bubble\/text-incoming:  #ffffff;
+
+  --Balance\/Bg:           #171717;
+  --Balance\/Bg-secondary: #cccccc;
+
+  --System\/Primary:    #a1ff5b;
+  --System\/Primary-soft: #a1ff5b1a;
+
+  --Line-Chart\/line-brand:     #a1ff5b;
+  --Line-Chart\/gradient-brand: #a1ff5b1a;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   NEON THEME
+   Set data-theme="neon" on <html> or <body> to activate.
+   Deep navy + electric lime brand. Invariant palette (same light & dark).
+   ══════════════════════════════════════════════════════════════════════════ */
+[data-theme="neon"] {
+  --mav-primary:      #a1ff5b;
+  --mav-bg:           #101010;
+  --mav-bg-secondary: #1a1a1a;
+  --mav-surface:      #161616;
+  --mav-fg:           #ffffff;
+  --mav-muted:        #7f7f7f;
+  --mav-border:       #2a2a2a;
+  --mav-placeholder:  #4c4c4c;
+  --mav-secondary:    #a1ff5b;
+  --mav-tertiary-1:   #4af482;
+  --mav-tertiary-2:   #00ffff;
+
+  --Main\/White:       #ffffff;
+  --Main\/Black:       #101010;
+  --Main\/Grey:        #efefef;
+  --Main\/Primary:     #05005d;
+  --Main\/Secondary:   #a1ff5b;
+  --Main\/Tertiary-1:  #4af482;
+  --Main\/Tertiary-2:  #00ffff;
+  --Main\/Variation:   #ff0090;
+
+  --background\/bg-default:   #101010;
+  --background\/bg-secondary: #1a1a1a;
+
+  --main-text\/default:     #ffffff;
+  --main-text\/brand:       #a1ff5b;
+  --main-text\/inverterd:   #101010;
+
+  --icon\/default:  #ffffff;
+  --icon\/active:   #a1ff5b;
+  --icon\/inverted: #101010;
+
+  --btn\/primary\/default:      #a1ff5b;
+  --btn\/primary\/hover:        #4af482;
+  --btn\/primary\/clicked:      #6bf800;
+  --btn\/primary\/text-default: #101010;
+
+  --toggle\/active\/bg-box-active: #a1ff5b;
+  --Checkbox\/active\/bg-box-active: #a1ff5b;
+
+  --loader\/spin: #a1ff5b;
+
+  /* Tint/Primary (neon) */
+  --Tint\/Primary\/100: #fafaff;
+  --Tint\/Primary\/200: #e8e6ff;
+  --Tint\/Primary\/300: #d5d3ff;
+  --Tint\/Primary\/400: #c4bfff;
+  --Tint\/Primary\/500: #b0abff;
+  --Tint\/Primary\/600: #9d98ff;
+  --Tint\/Primary\/700: #8b84ff;
+  --Tint\/Primary\/800: #7871ff;
+  --Tint\/Primary\/900: #665eff;
+
+  /* Shade/Primary (neon) */
+  --Shade\/Primary\/100: #05005d;
+  --Shade\/Primary\/200: #060071;
+  --Shade\/Primary\/300: #070085;
+  --Shade\/Primary\/400: #090098;
+  --Shade\/Primary\/500: #0900ab;
+  --Shade\/Primary\/600: #0a00bf;
+  --Shade\/Primary\/700: #0b00d4;
+  --Shade\/Primary\/800: #0c00e6;
+  --Shade\/Primary\/900: #0d00fa;
+
+  /* Tint/Secondary (neon) */
+  --Tint\/Secondary\/100: #fbfff9;
+  --Tint\/Secondary\/200: #f0ffe4;
+  --Tint\/Secondary\/300: #e4ffd1;
+  --Tint\/Secondary\/400: #daffbe;
+  --Tint\/Secondary\/500: #ceffa9;
+  --Tint\/Secondary\/600: #c4ff96;
+  --Tint\/Secondary\/700: #b8ff82;
+  --Tint\/Secondary\/800: #adff6f;
+  --Tint\/Secondary\/900: #96ff47;
+}

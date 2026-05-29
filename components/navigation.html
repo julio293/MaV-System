@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navigation — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* Mobile nav bar */
+.mob-frame{
+  width:375px;border-radius:24px;overflow:hidden;
+  border:1px solid var(--mav-border);
+  background:var(--mav-bg);
+  box-shadow:var(--shadow-md);
+}
+.mob-screen{
+  height:220px;
+  background:linear-gradient(160deg,var(--Tint\/Primary\/100) 0%,var(--mav-bg-tertiary) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:var(--mav-muted);
+}
+.mob-navbar{
+  display:flex;align-items:center;background:var(--mav-bg);
+  border-top:1px solid var(--mav-border);padding:10px 0 4px;
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  cursor:pointer;padding:4px 0;
+}
+.nav-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center;opacity:.4}
+.nav-icon.active{opacity:1}
+.nav-label{font-size:10px;font-weight:600;color:var(--mav-muted)}
+.nav-label.active{color:var(--mav-primary)}
+.nav-dot{width:4px;height:4px;border-radius:50%;background:var(--mav-primary);margin-top:2px}
+
+/* Top header bar */
+.top-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;background:var(--mav-bg);
+  border-bottom:1px solid var(--mav-border);
+}
+.th-title{font-size:18px;font-weight:700;color:var(--mav-fg)}
+.th-actions{display:flex;align-items:center;gap:8px}
+.th-icon-btn{width:36px;height:36px;border-radius:9999px;background:var(--mav-border);display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* Breadcrumb */
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:13px}
+.bc-link{color:var(--mav-primary);cursor:pointer;text-decoration:none}
+.bc-sep{color:var(--mav-muted);opacity:.5}
+.bc-current{color:var(--mav-fg);font-weight:500}
+
+/* Tabs */
+.tabs-row{display:flex;border-bottom:2px solid var(--mav-border)}
+.tab{padding:10px 20px;font-size:14px;font-weight:500;color:var(--mav-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.tab.active{color:var(--mav-primary);border-bottom-color:var(--mav-primary);font-weight:600}
+.tab:hover:not(.active){color:var(--mav-fg)}
+
+/* Pill tabs */
+.pill-tabs{display:flex;gap:4px;background:var(--mav-border);padding:4px;border-radius:9999px;width:fit-content}
+.pill-tab{padding:6px 18px;border-radius:9999px;font-size:13px;font-weight:500;color:var(--mav-muted);cursor:pointer;transition:all .15s}
+.pill-tab.active{background:var(--mav-bg);color:var(--mav-fg);font-weight:600;box-shadow:var(--shadow-xs)}
+
+/* Stepper */
+.stepper{display:flex;align-items:center}
+.step-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.step-circle{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.step-done{background:var(--mav-primary);color:var(--bc-white)}
+[data-theme=dark] .step-done{color:var(--mav-fg)}
+.step-active{background:var(--mav-primary);color:var(--bc-white);box-shadow:0 0 0 4px rgba(53,46,255,0.2)}
+[data-theme=dark] .step-active{color:var(--mav-fg)}
+.step-todo{background:var(--mav-border);color:var(--mav-muted)}
+.step-label{font-size:10px;font-weight:600;color:var(--mav-muted)}
+.step-label.active{color:var(--mav-primary)}
+.step-connector{flex:1;height:2px;background:var(--mav-border);margin-top:-16px}
+.step-connector.done{background:var(--mav-primary)}
+
+/* Coachmark */
+.coachmark{
+  position:relative;display:inline-block;
+  background:var(--bc-mono900-l);color:var(--bc-white);border-radius:10px;
+  padding:12px 16px;font-size:13px;line-height:1.5;
+  max-width:220px;box-shadow:var(--shadow-md);
+}
+.coachmark::after{
+  content:'';position:absolute;bottom:-8px;left:24px;
+  border:8px solid transparent;border-bottom:none;
+  border-top-color:var(--bc-mono900-l);
+}
+.coachmark-title{font-weight:700;margin-bottom:4px}
+.coachmark-desc{opacity:.7;font-size:12px}
+.coachmark-actions{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.cm-skip{font-size:12px;opacity:.5;cursor:pointer}
+.cm-next{font-size:12px;font-weight:600;color:var(--mav-primary-dark);cursor:pointer}
+.cm-dots{display:flex;gap:4px}
+.cm-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.3)}
+.cm-dot.active{background:var(--bc-white)}
+
+/* Side drawer indicator */
+.drawer-handle{width:4px;height:40px;background:var(--mav-border);border-radius:9999px}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="navigation.html" class="sidebar-link active">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Navigation</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Navigation</h1>
+    <p class="page-desc">Mobile nav bar, tabs, steppers, breadcrumbs, and coachmarks.</p>
+  </div>
+
+  <!-- Mobile nav bar -->
+  <div class="section">
+    <h2 class="section-title">Mobile Bottom Nav Bar</h2>
+    <p class="section-desc">5-item tab bar. Active tab uses primary color + dot indicator. Icon opacity 0.4 → 1 on active.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="mob-frame">
+          <div class="mob-screen">Screen content</div>
+          <div class="mob-navbar">
+            <div class="nav-item">
+              <div class="nav-icon active">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--mav-primary)" stroke-width="1.8"><path d="M3 9l8-6 8 6v10a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><path d="M9 20V13h4v7"/></svg>
+              </div>
+              <span class="nav-label active">Home</span>
+              <div class="nav-dot"></div>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="12" y="3" width="7" height="7" rx="1"/><rect x="3" y="12" width="7" height="7" rx="1"/><rect x="12" y="12" width="7" height="7" rx="1"/></svg>
+              </div>
+              <span class="nav-label">Cards</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M11 7v4l3 2"/></svg>
+              </div>
+              <span class="nav-label">History</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 2a9 9 0 100 18A9 9 0 0011 2zM11 8v4M11 14v.5"/></svg>
+              </div>
+              <span class="nav-label">Support</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="8" r="3"/><path d="M4 20c0-4 3.1-7 7-7h0c3.9 0 7 3.1 7 7"/></svg>
+              </div>
+              <span class="nav-label">Profile</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dark nav bar -->
+        <div class="mob-frame">
+          <div class="mob-screen"></div>
+          <div class="mob-navbar">
+            <div class="nav-item">
+              <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--bc-mono300-d)" stroke-width="1.8"><path d="M3 9l8-6 8 6v10a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><path d="M9 20V13h4v7"/></svg>
+              </div>
+              <span class="nav-label">Home</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--mav-primary-dark)" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="12" y="3" width="7" height="7" rx="1"/><rect x="3" y="12" width="7" height="7" rx="1"/><rect x="12" y="12" width="7" height="7" rx="1"/></svg>
+              </div>
+              <span class="nav-label">Cards</span>
+              <div class="nav-dot"></div>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--bc-mono300-d)" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M11 7v4l3 2"/></svg>
+              </div>
+              <span class="nav-label">History</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--bc-mono300-d)" stroke-width="1.8"><path d="M11 2a9 9 0 100 18A9 9 0 0011 2zM11 8v4M11 14v.5"/></svg>
+              </div>
+              <span class="nav-label">Support</span>
+            </div>
+            <div class="nav-item">
+              <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--bc-mono300-d)" stroke-width="1.8"><circle cx="11" cy="8" r="3"/><path d="M4 20c0-4 3.1-7 7-7h0c3.9 0 7 3.1 7 7"/></svg>
+              </div>
+              <span class="nav-label">Profile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Bottom nav — 375px frame · active: primary color + dot · dark: #a1ff5b accent</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Tabs -->
+  <div class="section">
+    <h2 class="section-title">Tabs</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div>Underline tabs</div>
+          <div class="tabs-row" id="tabs1">
+            <div class="tab active" onclick="selectTab('tabs1',this)">Overview</div>
+            <div class="tab" onclick="selectTab('tabs1',this)">Transactions</div>
+            <div class="tab" onclick="selectTab('tabs1',this)">Analytics</div>
+            <div class="tab" onclick="selectTab('tabs1',this)">Settings</div>
+          </div>
+        </div>
+        <div>
+          <div>Pill tabs</div>
+          <div class="pill-tabs" id="pills1">
+            <div class="pill-tab active" onclick="selectPill('pills1',this)">Monthly</div>
+            <div class="pill-tab" onclick="selectPill('pills1',this)">Weekly</div>
+            <div class="pill-tab" onclick="selectPill('pills1',this)">Daily</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Tabs — underline: 2px border · pill: bg toggle on active</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Stepper -->
+  <div class="section">
+    <h2 class="section-title">Progress Stepper</h2>
+    <p class="section-desc">Onboarding and multi-step flows. Step 1–2 done, step 3 active, step 4 pending.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div>
+            <div class="step-item">
+              <div class="step-circle step-done">✓</div>
+              <span class="step-label">Identity</span>
+            </div>
+            <div class="step-connector done"></div>
+            <div class="step-item">
+              <div class="step-circle step-done">✓</div>
+              <span class="step-label">Address</span>
+            </div>
+            <div class="step-connector done"></div>
+            <div class="step-item">
+              <div class="step-circle step-active">3</div>
+              <span class="step-label active">Documents</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item">
+              <div class="step-circle step-todo">4</div>
+              <span class="step-label">Review</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Stepper — 32px circle · connector 2px · active: focus ring glow</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Breadcrumb + Header -->
+  <div class="section">
+    <h2 class="section-title">Page Header & Breadcrumb</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="top-header">
+          <div>
+            <div class="breadcrumb">
+              <a class="bc-link">Home</a><span class="bc-sep">/</span>
+              <a class="bc-link">Wallet</a><span class="bc-sep">/</span>
+              <span class="bc-current">Transfer</span>
+            </div>
+            <div class="th-title">Send Money</div>
+          </div>
+          <div class="th-actions">
+            <div class="th-icon-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5"/><path d="M13 13l3 3"/></svg>
+            </div>
+            <div class="th-icon-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2a7 7 0 100 14A7 7 0 009 2zM9 6v4M9 11v.5"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Header — border-bottom 1px · 48px height · breadcrumb 13px</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Coachmark -->
+  <div class="section">
+    <h2 class="section-title">Coachmark / Tooltip</h2>
+    <p class="section-desc">Onboarding overlay tooltip. Dark background #191919. Action text #a1ff5b.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div>Target element</div>
+          <div class="coachmark">
+            <div class="coachmark-title">Quick transfer</div>
+            <div class="coachmark-desc">Tap this button to send money instantly to any bank in Nigeria.</div>
+            <div class="coachmark-actions">
+              <span class="cm-skip">Skip tour</span>
+              <div class="cm-dots">
+                <div class="cm-dot active"></div>
+                <div class="cm-dot"></div>
+                <div class="cm-dot"></div>
+              </div>
+              <span class="cm-next">Next →</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>Simple tooltip</div>
+          <div>
+            <div>Hover target</div>
+            <div>Fee: 0.3% · Max ₦500<div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Coachmark — bg #191919 · action #a1ff5b · border-radius 10px · arrow offset 24px</span></div>
+    </div>
+  </div>
+
+</main>
+</div>
+<script>
+function selectTab(groupId, el){
+  document.querySelectorAll('#'+groupId+' .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+function selectPill(groupId, el){
+  document.querySelectorAll('#'+groupId+' .pill-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+<script src="../js/theme.js"></script>
+</body>
+</html>

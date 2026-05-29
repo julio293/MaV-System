@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home — iOS — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-surface-ios);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px 48px;-webkit-font-smoothing:antialiased}
+
+/* ── Device frame ── */
+.device{width:393px;height:852px;border-radius:54px;background:#1c1c1e;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.35),inset 0 0 0 2px #3a3a3c,inset 0 0 0 3px #1c1c1e;overflow:hidden;flex-shrink:0}
+.device-screen{position:absolute;inset:0;border-radius:52px;overflow:hidden;background:var(--bc-white);display:flex;flex-direction:column}
+.di{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:126px;height:37px;background:#000;border-radius:20px;z-index:100}
+.status{position:absolute;top:0;left:0;right:0;padding:16px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:99;height:54px}
+.status-time{font-size:15px;font-weight:600;color:var(--bc-white);padding-left:8px}
+.status-icons{display:flex;align-items:center;gap:6px;padding-right:8px}
+.status-icons svg{fill:var(--bc-white)}
+.home-ind{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:134px;height:5px;background:var(--bc-white);border-radius:3px;opacity:.3;z-index:99}
+
+/* ── Page body ── */
+.screen-body{flex:1;overflow-y:auto;display:flex;flex-direction:column;padding-bottom:72px;padding-top:54px}
+
+/* ── Top bar ── */
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px 8px}
+.tb-greeting{display:flex;flex-direction:column}
+.tb-sup{font-size:12px;color:var(--mav-muted);font-weight:500}
+.tb-name{font-size:18px;font-weight:800;color:var(--mav-fg);letter-spacing:-0.02em}
+.tb-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--mav-primary),var(--mav-secondary));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--bc-white)}
+
+/* ── Balance card ── (matches organism) */
+.bal-section{padding:0 20px 20px}
+.balance-card{
+  background:linear-gradient(135deg,var(--mav-primary) 0%,var(--mav-secondary) 100%);
+  border-radius:20px;padding:24px;color:var(--bc-white);
+  box-shadow:0 8px 32px rgba(53,46,255,0.35);
+}
+.bal-label{font-size:12px;opacity:.7;font-weight:500;text-transform:uppercase;letter-spacing:.08em}
+.bal-amount{font-size:34px;font-weight:700;letter-spacing:-0.02em;margin:6px 0 2px;font-family:'JetBrains Mono',monospace}
+.bal-sub{font-size:12px;opacity:.6;margin-bottom:20px}
+.bal-actions{display:flex;gap:10px}
+.bal-btn{
+  flex:1;padding:10px 8px;border-radius:10px;
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);
+  color:var(--bc-white);font-size:11px;font-weight:600;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:5px;font-family:inherit;
+}
+.bal-btn svg{opacity:.9}
+
+/* ── Stat row ── */
+.stat-row{display:flex;gap:10px;padding:0 20px 20px}
+.stat-widget{
+  flex:1;display:flex;align-items:center;gap:10px;
+  padding:12px;border-radius:14px;border:1px solid var(--mav-border);
+  background:var(--mav-bg);
+}
+.stat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-icon-gain{background:color-mix(in srgb,var(--mav-success) 12%,transparent)}
+.stat-icon-loss{background:color-mix(in srgb,var(--mav-danger) 10%,transparent)}
+.stat-label{font-size:11px;color:var(--mav-muted);margin-bottom:2px;font-weight:500}
+.stat-value{font-size:15px;font-weight:700;letter-spacing:-0.01em;font-family:'JetBrains Mono',monospace}
+.stat-value-gain{color:var(--mav-success)}
+.stat-value-loss{color:var(--mav-danger)}
+
+/* ── Section header ── */
+.sec-hd{display:flex;align-items:center;justify-content:space-between;padding:0 20px 12px}
+.sec-title{font-size:15px;font-weight:700;color:var(--mav-fg);letter-spacing:-0.01em}
+.sec-see{font-size:13px;font-weight:600;color:var(--mav-primary)}
+
+/* ── Quick actions ── */
+.qa-grid{display:flex;gap:10px;padding:0 20px 24px}
+.qa-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px 8px;border-radius:14px;background:var(--mav-bg);border:1px solid var(--mav-border);cursor:pointer;font-family:inherit;transition:background .12s}
+.qa-btn:active{background:var(--mav-border)}
+.qa-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.qa-icon-send{background:color-mix(in srgb,var(--mav-primary) 10%,transparent)}
+.qa-icon-recv{background:color-mix(in srgb,var(--mav-success) 10%,transparent)}
+.qa-icon-pay{background:color-mix(in srgb,var(--mav-primary) 8%,transparent)}
+.qa-icon-more{background:color-mix(in srgb,var(--mav-muted) 10%,transparent)}
+.qa-label{font-size:11px;font-weight:600;color:var(--mav-fg)}
+
+/* ── Spend bar ── */
+.spend-wrap{margin:0 20px 24px;padding:16px;border-radius:16px;background:var(--mav-bg);border:1px solid var(--mav-border)}
+.spend-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.spend-title{font-size:12px;font-weight:600;color:var(--mav-muted);text-transform:uppercase;letter-spacing:.06em}
+.spend-days{display:flex;justify-content:space-between;margin-top:8px}
+.spend-day{font-size:10px;color:var(--mav-muted);font-weight:500}
+.chart-bar-wrap{display:flex;align-items:flex-end;gap:6px;height:56px}
+.chart-bar{border-radius:4px 4px 0 0;flex:1;transition:height .3s}
+.chart-bar-active{background:var(--mav-primary)}
+.chart-bar-inactive{background:var(--mav-border)}
+
+/* ── Transactions ── (matches organism) */
+.txn-list{padding:0 20px}
+.txn-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--mav-border)}
+.txn-item:last-child{border-bottom:none}
+.txn-icon{width:42px;height:42px;border-radius:12px;background:var(--mav-border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.txn-body{flex:1}
+.txn-name{font-size:14px;font-weight:600;color:var(--mav-fg)}
+.txn-meta{font-size:12px;color:var(--mav-muted);margin-top:2px}
+.txn-right{text-align:right}
+.txn-amount{font-size:15px;font-weight:700}
+.txn-amount-credit{color:var(--mav-success)}
+.txn-amount-debit{color:var(--mav-danger)}
+.txn-date{font-size:11px;color:var(--mav-muted);margin-top:2px}
+
+/* ── Bottom nav ── */
+.bottom-nav{position:absolute;bottom:0;left:0;right:0;background:var(--bc-white);border-top:1px solid var(--mav-border);padding:8px 0 28px;display:flex;z-index:50}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;border:none;background:none;cursor:pointer;font-family:inherit}
+.nav-item-label{font-size:10px;font-weight:600;color:var(--mav-muted)}
+.nav-item.active .nav-item-label{color:var(--mav-primary)}
+.nav-dot{width:4px;height:4px;border-radius:2px;background:var(--mav-primary);margin:0 auto}
+
+/* ── Back link ── */
+.back-link{text-align:center;margin-top:24px;font-size:13px;color:var(--mav-muted)}
+.back-link a{color:var(--mav-primary);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="device-screen">
+    <div class="di"></div>
+
+    <!-- Status bar -->
+    <div class="status">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="3" width="3" height="9" rx="1" fill="white"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="white"/><rect x="9" y="0" width="3" height="12" rx="1" fill="white"/><rect x="13.5" y="1" width="3" height="11" rx="1" fill="white" opacity=".3"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="white" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="16" height="6" rx="1.5" fill="white"/><path d="M22.5 4.5v3a1.5 1.5 0 000-3z" fill="white"/></svg>
+      </div>
+    </div>
+
+    <div class="screen-body">
+
+      <!-- Top bar -->
+      <div class="top-bar">
+        <div class="tb-greeting">
+          <span class="tb-sup">Good morning,</span>
+          <span class="tb-name">Alex Kim 👋</span>
+        </div>
+        <div class="tb-avatar">AK</div>
+      </div>
+
+      <!-- Balance card — matches organism -->
+      <div class="bal-section">
+        <div class="balance-card">
+          <div class="bal-label">Available Balance</div>
+          <div class="bal-amount">₦ 284,500<span style="font-size:22px;opacity:.7">.00</span></div>
+          <div class="bal-sub">Last updated: just now</div>
+          <div class="bal-actions">
+            <button class="bal-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+              Add Money
+            </button>
+            <button class="bal-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15 9H3M9 3l-6 6 6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Send
+            </button>
+            <button class="bal-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="2" stroke="white" stroke-width="1.8"/><path d="M2 9h14" stroke="white" stroke-width="1.8"/></svg>
+              Pay
+            </button>
+            <button class="bal-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="white" stroke-width="1.8"/><path d="M9 6v3l2 2" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+              History
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Income / spent stats -->
+      <div class="stat-row">
+        <div class="stat-widget">
+          <div class="stat-icon stat-icon-gain">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 12l3-3 3 3 5-6" stroke="var(--mav-success)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="stat-label">Income</div>
+            <div class="stat-value stat-value-gain">+₦350K</div>
+          </div>
+        </div>
+        <div class="stat-widget">
+          <div class="stat-icon stat-icon-loss">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 7l3 3 3-3 5 6" stroke="var(--mav-danger)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="stat-label">Spent</div>
+            <div class="stat-value stat-value-loss">−₦197K</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="sec-hd">
+        <span class="sec-title">Quick Actions</span>
+      </div>
+      <div class="qa-grid">
+        <button class="qa-btn">
+          <div class="qa-icon qa-icon-send">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10l12 0M14 6l4 4-4 4" stroke="var(--mav-primary)" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <span class="qa-label">Transfer</span>
+        </button>
+        <button class="qa-btn">
+          <div class="qa-icon qa-icon-recv">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16 10H4M6 14l-4-4 4-4" stroke="var(--mav-success)" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <span class="qa-label">Receive</span>
+        </button>
+        <button class="qa-btn">
+          <div class="qa-icon qa-icon-pay">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="12" rx="2.5" stroke="var(--mav-primary)" stroke-width="1.8"/><path d="M2 9h16" stroke="var(--mav-primary)" stroke-width="1.8"/></svg>
+          </div>
+          <span class="qa-label">Pay Bills</span>
+        </button>
+        <button class="qa-btn">
+          <div class="qa-icon qa-icon-more">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="6" cy="10" r="1.5" fill="var(--mav-muted)"/><circle cx="10" cy="10" r="1.5" fill="var(--mav-muted)"/><circle cx="14" cy="10" r="1.5" fill="var(--mav-muted)"/></svg>
+          </div>
+          <span class="qa-label">More</span>
+        </button>
+      </div>
+
+      <!-- Spend chart -->
+      <div class="spend-wrap">
+        <div class="spend-hd">
+          <span class="spend-title">Weekly Spend</span>
+          <span style="font-size:12px;font-weight:700;color:var(--mav-fg)">₦ 68,000</span>
+        </div>
+        <div class="chart-bar-wrap">
+          <div class="chart-bar chart-bar-inactive" style="height:40%"></div>
+          <div class="chart-bar chart-bar-inactive" style="height:55%"></div>
+          <div class="chart-bar chart-bar-inactive" style="height:30%"></div>
+          <div class="chart-bar chart-bar-inactive" style="height:70%"></div>
+          <div class="chart-bar chart-bar-active" style="height:85%"></div>
+          <div class="chart-bar chart-bar-inactive" style="height:50%"></div>
+          <div class="chart-bar chart-bar-inactive" style="height:20%"></div>
+        </div>
+        <div class="spend-days">
+          <span class="spend-day">Mon</span>
+          <span class="spend-day">Tue</span>
+          <span class="spend-day">Wed</span>
+          <span class="spend-day">Thu</span>
+          <span class="spend-day" style="color:var(--mav-primary);font-weight:700">Fri</span>
+          <span class="spend-day">Sat</span>
+          <span class="spend-day">Sun</span>
+        </div>
+      </div>
+
+      <!-- Transactions — matches organism -->
+      <div class="sec-hd">
+        <span class="sec-title">Recent Transactions</span>
+        <span class="sec-see">See all</span>
+      </div>
+      <div class="txn-list">
+        <div class="txn-item">
+          <div class="txn-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M10 3l7 7-7 7" stroke="var(--mav-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="txn-body">
+            <div class="txn-name">Salary — GTBank</div>
+            <div class="txn-meta">Transfer · Today, 09:14</div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amount txn-amount-credit">+₦ 350,000</div>
+            <div class="txn-date">Credit</div>
+          </div>
+        </div>
+        <div class="txn-item">
+          <div class="txn-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17 10H3M10 3L3 10l7 7" stroke="var(--mav-danger)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="txn-body">
+            <div class="txn-name">Airtime — MTN</div>
+            <div class="txn-meta">Bill payment · Today, 11:45</div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amount txn-amount-debit">−₦ 2,000</div>
+            <div class="txn-date">Debit</div>
+          </div>
+        </div>
+        <div class="txn-item">
+          <div class="txn-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17 10H3M10 3L3 10l7 7" stroke="var(--mav-danger)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="txn-body">
+            <div class="txn-name">P2P — James K.</div>
+            <div class="txn-meta">Send money · Yesterday, 14:33</div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amount txn-amount-debit">−₦ 20,000</div>
+            <div class="txn-date">Pending</div>
+          </div>
+        </div>
+        <div class="txn-item">
+          <div class="txn-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M10 3l7 7-7 7" stroke="var(--mav-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="txn-body">
+            <div class="txn-name">Freelance — Ahmad R.</div>
+            <div class="txn-meta">Transfer · Sun Dec 17</div>
+          </div>
+          <div class="txn-right">
+            <div class="txn-amount txn-amount-credit">+₦ 50,000</div>
+            <div class="txn-date">Credit</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom nav -->
+    <div class="bottom-nav">
+      <button class="nav-item active">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="var(--mav-primary)"><path d="M2 9L11 2l9 7v10H15v-6H7v6H2z"/></svg>
+        <span class="nav-item-label">Home</span>
+        <div class="nav-dot"></div>
+      </button>
+      <button class="nav-item" onclick="location.href='09-explore.html'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="10" cy="10" r="7" stroke="var(--mav-muted)" stroke-width="1.8"/><path d="M16 16l3 3" stroke="var(--mav-muted)" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span class="nav-item-label">Explore</span>
+      </button>
+      <button class="nav-item" onclick="location.href='10-payment.html'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="5" width="18" height="13" rx="3" stroke="var(--mav-muted)" stroke-width="1.8"/><path d="M2 9h18" stroke="var(--mav-muted)" stroke-width="1.8"/></svg>
+        <span class="nav-item-label">Pay</span>
+      </button>
+      <button class="nav-item" onclick="location.href='07-notifications.html'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2a7 7 0 017 7v4l2 3H2l2-3V9a7 7 0 017-7z" stroke="var(--mav-muted)" stroke-width="1.8"/><path d="M9 18a2 2 0 004 0" stroke="var(--mav-muted)" stroke-width="1.8"/></svg>
+        <span class="nav-item-label">Alerts</span>
+      </button>
+      <button class="nav-item" onclick="location.href='05-profile.html'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="var(--mav-muted)" stroke-width="1.8"/><path d="M3 19c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="var(--mav-muted)" stroke-width="1.8" fill="none"/></svg>
+        <span class="nav-item-label">Profile</span>
+      </button>
+    </div>
+
+    <div class="home-ind"></div>
+  </div>
+</div>
+
+<div class="back-link">
+  <a href="03-otp.html">← OTP</a> &nbsp;·&nbsp;
+  <a href="05-profile.html">Next: Profile →</a>
+</div>
+</body>
+</html>

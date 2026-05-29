@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notifications — Web — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.browser{width:1080px;border-radius:12px;background:var(--bc-surface-soft);box-shadow:0 24px 64px rgba(0,0,0,.15);overflow:hidden}
+.browser-bar{background:var(--bc-surface);border-bottom:1px solid var(--bc-mono100-l);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.browser-dots{display:flex;gap:6px}.bd{width:12px;height:12px;border-radius:6px}
+.bd-r{background:#ff5f57}.bd-y{background:#febc2e}.bd-g{background:#28c840}
+.browser-url{flex:1;background:var(--bc-white);border:1px solid var(--bc-mono100-l);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--bc-mono500);font-family:'JetBrains Mono',monospace;max-width:400px;margin:0 auto}
+.back-link{margin-bottom:16px;font-size:12px;color:var(--bc-primary-light);text-decoration:none;display:block;text-align:left;width:1080px}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:620px}
+.sidebar{background:var(--bc-white);border-right:1px solid var(--bc-grey);padding:0 0 24px}
+.sb-head{padding:18px 16px 16px;border-bottom:1px solid var(--bc-grey);display:flex;align-items:center;gap:10px}
+.sb-icon{width:32px;height:32px;border-radius:8px;background:var(--bc-primary-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-title{font-size:14px;font-weight:800;color:var(--bc-black)}
+.sb-nav{padding:12px 8px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--bc-mono500);cursor:pointer;transition:all .12s;text-decoration:none}
+.sb-item:hover{background:var(--bc-surface);color:var(--bc-black)}
+.sb-item.active{background:rgba(53,46,255,.08);color:var(--bc-primary-light);font-weight:600}
+.sb-badge{margin-left:auto;background:var(--bc-primary-light);color:var(--bc-white);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px}
+.main{overflow-y:auto;max-height:620px;background:var(--bc-white)}
+.top-bar{display:flex;align-items:center;padding:16px 24px;border-bottom:1px solid var(--bc-grey);gap:12px}
+.tb-title{font-size:15px;font-weight:800;color:var(--bc-black);flex:1;letter-spacing:-.01em}
+.badge-count{background:var(--bc-primary-light);color:var(--bc-white);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+.btn-sm-text{font-size:12px;font-weight:600;color:var(--bc-primary-light);background:none;border:none;cursor:pointer;font-family:inherit}
+/* Filter tabs */
+.filter-row{display:flex;border-bottom:1px solid var(--bc-grey);padding:0 24px}
+.ftab{padding:10px 16px;font-size:12px;font-weight:600;color:var(--bc-mono500);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .12s;white-space:nowrap}
+.ftab.active{color:var(--bc-primary-light);border-bottom-color:var(--bc-primary-light)}
+/* Notification list */
+.n-group{padding:0 24px}
+.n-date{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--bc-mono300-l);padding:16px 0 8px}
+.n-item{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--bc-surface);cursor:pointer;transition:background .12s;border-radius:8px;margin:0 -8px;padding-left:8px;padding-right:8px}
+.n-item:hover{background:var(--bc-surface-soft)}
+.n-item.unread{background:color-mix(in srgb,var(--bc-primary-light) 4%,transparent)}
+.n-item.unread:hover{background:color-mix(in srgb,var(--bc-primary-light) 8%,transparent)}
+.n-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;position:relative}
+.n-dot{width:8px;height:8px;border-radius:4px;background:var(--bc-primary-light);position:absolute;top:-2px;right:-2px;border:2px solid var(--bc-white)}
+.n-body{flex:1;min-width:0}
+.n-title{font-size:13px;font-weight:600;color:var(--bc-black);margin-bottom:2px;line-height:1.4}
+.n-sub{font-size:11px;color:var(--bc-mono500);line-height:1.4}
+.n-time{font-size:10px;color:var(--bc-mono200-l);white-space:nowrap;font-variant-numeric:tabular-nums;flex-shrink:0;margin-top:2px}
+.n-actions{display:flex;gap:6px;margin-top:8px}
+.btn-n-action{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;border:1.5px solid var(--bc-mono100-l);background:var(--bc-white);color:var(--bc-mono700-l);cursor:pointer;font-family:inherit}
+.btn-n-action.primary{background:var(--bc-primary-light);border-color:var(--bc-primary-light);color:var(--bc-white)}
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← Back to MaV Design System</a>
+<div class="browser">
+  <div class="browser-bar">
+    <div class="browser-dots"><div class="bd bd-r"></div><div class="bd bd-y"></div><div class="bd bd-g"></div></div>
+    <div class="browser-url">mav.app/notifications</div>
+  </div>
+  <div class="app">
+    <div class="sidebar">
+      <div class="sb-head">
+        <div class="sb-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L3 7v6l7 5 7-5V7L10 2z" fill="var(--bc-primary-dark)"/></svg></div>
+        <div><div class="sb-title">MaV</div></div>
+      </div>
+      <div class="sb-nav">
+        <a class="sb-item" href="03-dashboard.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a>
+        <a class="sb-item" href="04-explore.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Explore</a>
+        <a class="sb-item" href="05-profile.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+        <a class="sb-item active" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications<span class="sb-badge">5</span></a>
+        <a class="sb-item" href="06-settings.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+      </div>
+    </div>
+    <div class="main">
+      <div class="top-bar">
+        <span class="tb-title">Notifications</span>
+        <span class="badge-count">5 unread</span>
+        <button class="btn-sm-text" onclick="markAllRead()">Mark all read</button>
+        <button>Filter</button>
+      </div>
+      <div class="filter-row">
+        <div class="ftab active" onclick="setFtab(this)">All</div>
+        <div class="ftab" onclick="setFtab(this)">Unread</div>
+        <div class="ftab" onclick="setFtab(this)">Mentions</div>
+        <div class="ftab" onclick="setFtab(this)">Updates</div>
+        <div class="ftab" onclick="setFtab(this)">System</div>
+      </div>
+      <div class="n-group">
+        <div class="n-date">Today</div>
+        <div class="n-item unread" onclick="markRead(this)">
+          <div class="n-icon">🎨<div class="n-dot"></div></div>
+          <div class="n-body">
+            <div class="n-title">Colors palette updated — poliPurple ramp</div>
+            <div class="n-sub">8 new tokens added to the primitive layer: <code>--bc-polipurple-100</code> through <code>--bc-polipurple-800</code></div>
+            <div class="n-actions"><button class="btn-n-action primary">View Tokens</button><button class="btn-n-action">Dismiss</button></div>
+          </div>
+          <div class="n-time">2m</div>
+        </div>
+        <div class="n-item unread" onclick="markRead(this)">
+          <div class="n-icon">✅<div class="n-dot"></div></div>
+          <div class="n-body">
+            <div class="n-title">Accessibility audit passed — OTP Component</div>
+            <div class="n-sub">WCAG AA compliant. Contrast ratio 7.1:1 on light, 8.3:1 on dark theme.</div>
+          </div>
+          <div class="n-time">1h</div>
+        </div>
+        <div class="n-item unread" onclick="markRead(this)">
+          <div class="n-icon">📦<div class="n-dot"></div></div>
+          <div class="n-body">
+            <div class="n-title">New component available: Finance Modules</div>
+            <div class="n-sub">Balance card, transaction list, and budget ring added to the component library.</div>
+            <div class="n-actions"><button class="btn-n-action primary">Open Component</button></div>
+          </div>
+          <div class="n-time">3h</div>
+        </div>
+        <div class="n-item unread" onclick="markRead(this)">
+          <div class="n-icon">👤<div class="n-dot"></div></div>
+          <div class="n-body">
+            <div class="n-title">Jamie Lee started following you</div>
+            <div class="n-sub">@jamielee · Senior Designer at Vercel</div>
+            <div class="n-actions"><button class="btn-n-action primary">Follow Back</button><button class="btn-n-action">View Profile</button></div>
+          </div>
+          <div class="n-time">5h</div>
+        </div>
+        <div class="n-item unread" onclick="markRead(this)">
+          <div class="n-icon">❤️<div class="n-dot"></div></div>
+          <div class="n-body">
+            <div class="n-title">3 people saved your Color System</div>
+            <div class="n-sub">Your Color System foundation was saved by Jordan M., Sam T., and 1 other.</div>
+          </div>
+          <div class="n-time">6h</div>
+        </div>
+        <div class="n-date">Yesterday</div>
+        <div class="n-item" onclick="markRead(this)">
+          <div class="n-icon">🚀</div>
+          <div class="n-body">
+            <div class="n-title">iOS screens 01–10 shipped</div>
+            <div class="n-sub">Full onboarding → payment flow published to the design system.</div>
+          </div>
+          <div class="n-time">1d</div>
+        </div>
+        <div class="n-item" onclick="markRead(this)">
+          <div class="n-icon">🔔</div>
+          <div class="n-body">
+            <div class="n-title">Weekly digest ready</div>
+            <div class="n-sub">24 token changes, 3 new components, 12 new screens this week.</div>
+            <div class="n-actions"><button class="btn-n-action">View Digest</button></div>
+          </div>
+          <div class="n-time">1d</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function markRead(el){
+  el.classList.remove('unread');
+  const dot=el.querySelector('.n-dot');
+  if(dot)dot.remove();
+  updateCount();
+}
+function markAllRead(){
+  document.querySelectorAll('.n-item.unread').forEach(el=>{
+    el.classList.remove('unread');
+    const dot=el.querySelector('.n-dot');
+    if(dot)dot.remove();
+  });
+  updateCount();
+}
+function updateCount(){
+  const cnt=document.querySelectorAll('.n-item.unread').length;
+  document.querySelector('.badge-count').textContent=cnt+' unread';
+  document.querySelector('.sb-badge').textContent=cnt;
+}
+function setFtab(el){
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

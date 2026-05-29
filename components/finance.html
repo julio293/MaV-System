@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance Modules — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* Balance card */
+.balance-card{
+  background:linear-gradient(135deg,var(--mav-primary) 0%,var(--mav-secondary) 100%);
+  border-radius:20px;padding:28px;color:var(--bc-white);width:343px;
+  box-shadow:0 8px 32px rgba(53,46,255,0.35);
+}
+.bal-label{font-size:12px;opacity:.7;font-weight:500;text-transform:uppercase;letter-spacing:.08em}
+.bal-amount{font-size:36px;font-weight:700;letter-spacing:-0.02em;margin:6px 0 4px}
+.bal-sub{font-size:12px;opacity:.6}
+.bal-row{display:flex;justify-content:space-between;align-items:flex-end}
+.bal-actions{display:flex;gap:12px;margin-top:24px}
+.bal-btn{
+  flex:1;padding:10px;border-radius:10px;
+  background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.25);
+  color:var(--bc-white);font-size:12px;font-weight:600;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:5px;font-family:inherit;
+}
+.bal-btn svg{opacity:.9}
+
+/* Dark balance card */
+.balance-card-dk{
+  background:linear-gradient(135deg,var(--mav-fg) 0%,var(--mav-code-bg) 100%);
+  border:1px solid var(--bc-mono100-d);
+}
+.balance-card-dk .bal-btn{
+  background:rgba(161,255,91,0.12);border-color:rgba(161,255,91,0.25);
+}
+
+/* Gain/Loss widget */
+.stat-widget{
+  display:flex;align-items:center;gap:12px;
+  padding:16px;border-radius:12px;border:1px solid var(--mav-border);
+  background:var(--mav-bg);
+}
+.stat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-icon-gain{background:color-mix(in srgb,var(--mav-success) 12%,transparent)}
+.stat-icon-loss{background:rgba(255,0,0,0.08)}
+.stat-icon-neutral{background:rgba(53,46,255,0.08)}
+.stat-label{font-size:12px;color:var(--mav-muted);margin-bottom:2px}
+.stat-value{font-size:20px;font-weight:700;color:var(--mav-fg);letter-spacing:-0.01em}
+.stat-value-gain{color:var(--mav-success)}
+.stat-value-loss{color:var(--mav-danger)}
+.stat-change{font-size:11px;font-weight:500;margin-top:2px}
+.stat-change-up{color:var(--mav-success)}
+.stat-change-down{color:var(--mav-danger)}
+
+/* Transaction list item */
+.txn-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 0;border-bottom:1px solid var(--mav-border);
+}
+.txn-item:last-child{border-bottom:none}
+.txn-icon{width:42px;height:42px;border-radius:12px;background:var(--mav-border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.txn-body{flex:1}
+.txn-name{font-size:14px;font-weight:600;color:var(--mav-fg)}
+.txn-meta{font-size:12px;color:var(--mav-muted);margin-top:2px}
+.txn-amount{font-size:15px;font-weight:700;text-align:right}
+.txn-amount-credit{color:var(--mav-success)}
+.txn-amount-debit{color:var(--mav-danger)}
+.txn-date{font-size:11px;color:var(--mav-muted);margin-top:2px;text-align:right}
+
+/* Mini chart bar */
+.chart-bar-wrap{display:flex;align-items:flex-end;gap:6px;height:80px}
+.chart-bar{border-radius:4px 4px 0 0;flex:1;transition:opacity .15s;cursor:pointer}
+.chart-bar:hover{opacity:.7}
+.chart-bar-active{background:var(--mav-primary)}
+.chart-bar-inactive{background:var(--mav-border)}
+
+/* Limit indicator */
+.limit-track{height:8px;border-radius:9999px;background:var(--mav-border);overflow:hidden}
+.limit-fill{height:100%;border-radius:9999px;transition:width .3s}
+
+/* Account card (minimal) */
+.acc-card{
+  display:flex;align-items:center;gap:14px;
+  padding:16px;border-radius:12px;border:1px solid var(--mav-border);
+  background:var(--mav-bg);
+}
+.acc-logo{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.acc-info{flex:1}
+.acc-bank{font-size:13px;font-weight:600;color:var(--mav-fg)}
+.acc-num{font-size:11px;color:var(--mav-muted);font-family:var(--font-mono);margin-top:2px}
+.acc-bal{font-size:15px;font-weight:700;color:var(--mav-fg)}
+.acc-bal-sub{font-size:11px;color:var(--mav-muted)}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link active">Finance Modules</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Finance Modules</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Finance Modules</h1>
+    <p class="page-desc">Balance cards, gain/loss stats, transaction list items, and spend-limit indicators.</p>
+  </div>
+
+  <!-- Balance cards -->
+  <div class="section">
+    <h2 class="section-title">Balance Card</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <!-- Light/Blue gradient -->
+        <div class="balance-card">
+          <div class="bal-row">
+            <div>
+              <div class="bal-label">Available Balance</div>
+              <div class="bal-amount">₦ 284,500<span>.00</span></div>
+              <div class="bal-sub">Last updated: just now</div>
+            </div>
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" opacity=".4"><circle cx="18" cy="18" r="17" stroke="white" stroke-width="2"/><path d="M11 18h14M18 11l7 7-7 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="bal-actions">
+            <button class="bal-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+              Add Money
+            </button>
+            <button class="bal-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15 9H3M9 3l-6 6 6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Send
+            </button>
+            <button class="bal-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="white" stroke-width="2"/><path d="M9 6v3l2 2" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+              History
+            </button>
+          </div>
+        </div>
+
+        <!-- Dark card -->
+        <div class="balance-card balance-card-dk">
+          <div class="bal-row">
+            <div>
+              <div class="bal-label">Savings</div>
+              <div class="bal-amount">₦ 120,000</div>
+              <div class="bal-sub">+₦5,000 this month</div>
+            </div>
+            <div>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9l6-6 6 6" stroke="var(--mav-primary-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <div class="bal-actions">
+            <button class="bal-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="var(--mav-primary-dark)" stroke-width="2" stroke-linecap="round"/></svg>
+              Deposit
+            </button>
+            <button class="bal-btn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M9 3l6 6-6 6" stroke="var(--mav-primary-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Withdraw
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Balance card — 343px · gradient: #352eff→#0053ff · border-radius 20px</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Stats widgets -->
+  <div class="section">
+    <h2 class="section-title">Gain / Loss Stat Widgets</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="stat-widget">
+          <div class="stat-icon stat-icon-gain">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 16l5-5 4 4 5-7" stroke="var(--mav-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="stat-label">Total Income</div>
+            <div class="stat-value stat-value-gain">₦ 482K</div>
+            <div class="stat-change stat-change-up">▲ 12.4% vs last month</div>
+          </div>
+        </div>
+        <div class="stat-widget">
+          <div class="stat-icon stat-icon-loss">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 7l5 5 4-4 5 7" stroke="var(--mav-danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="stat-label">Total Spent</div>
+            <div class="stat-value stat-value-loss">₦ 197K</div>
+            <div class="stat-change stat-change-down">▼ 3.1% vs last month</div>
+          </div>
+        </div>
+        <div class="stat-widget">
+          <div class="stat-icon stat-icon-neutral">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="7" stroke="var(--mav-primary)" stroke-width="2"/><path d="M11 8v3l2 2" stroke="var(--mav-primary)" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <div class="stat-label">Pending</div>
+            <div class="stat-value">₦ 23K</div>
+            <div class="stat-change">4 transactions</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Stat widget — gain: #629c28 · loss: #ff0000 · neutral: primary</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Transaction list -->
+  <div class="section">
+    <h2 class="section-title">Transaction List</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="txn-item">
+          <div class="txn-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M10 3l7 7-7 7" stroke="var(--mav-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="txn-body">
+            <div class="txn-name">Salary — GTBank</div>
+            <div class="txn-meta">Transfer · Feb 28 · 09:14</div>
+          </div>
+          <div>
+            <div class="txn-amount txn-amount-credit">+₦ 350,000</div>
+            <div class="txn-date">Credit</div>
+          </div>
+        </div>
+        <div class="txn-item">
+          <div class="txn-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17 10H3M10 3L3 10l7 7" stroke="var(--mav-danger)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="txn-body">
+            <div class="txn-name">Airtime — MTN</div>
+            <div class="txn-meta">Bill payment · Feb 28 · 11:45</div>
+          </div>
+          <div>
+            <div class="txn-amount txn-amount-debit">−₦ 2,000</div>
+            <div class="txn-date">Debit</div>
+          </div>
+        </div>
+        <div class="txn-item">
+          <div class="txn-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="var(--mav-primary)" stroke-width="1.5"/><path d="M10 7v3l2.5 2.5" stroke="var(--mav-primary)" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="txn-body">
+            <div class="txn-name">P2P Transfer — James K.</div>
+            <div class="txn-meta">Send money · Feb 27 · 14:33</div>
+          </div>
+          <div>
+            <div class="txn-amount txn-amount-debit">−₦ 20,000</div>
+            <div class="txn-date">Pending</div>
+          </div>
+        </div>
+        <div class="txn-item">
+          <div class="txn-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10l4 4 8-8" stroke="var(--mav-success)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="txn-body">
+            <div class="txn-name">Savings — Auto-debit</div>
+            <div class="txn-meta">Internal · Feb 27 · 08:00</div>
+          </div>
+          <div>
+            <div class="txn-amount txn-amount-debit">−₦ 5,000</div>
+            <div class="txn-date">Completed</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Transaction row — 42px icon · credit #629c28 · debit #ff0000 · 14px 16px</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Spend limit + mini chart -->
+  <div class="section">
+    <h2 class="section-title">Spend Limit & Bar Chart</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div>Daily limit</div>
+          <div>
+            <span>₦ 68,000 used</span>
+            <span>of ₦ 100,000</span>
+          </div>
+          <div class="limit-track">
+            <div class="limit-fill"></div>
+          </div>
+          <div>₦ 32,000 remaining</div>
+
+          <div>
+            <span>₦ 88,000 used</span>
+            <span>of ₦ 100,000</span>
+          </div>
+          <div class="limit-track">
+            <div class="limit-fill"></div>
+          </div>
+          <div>⚠ Near limit — ₦ 12,000 left</div>
+
+          <div>
+            <span>₦ 100,000 used</span>
+            <span>of ₦ 100,000</span>
+          </div>
+          <div class="limit-track">
+            <div class="limit-fill"></div>
+          </div>
+          <div>Limit reached</div>
+        </div>
+
+        <div>
+          <div>Weekly spend</div>
+          <div class="chart-bar-wrap">
+            <div class="chart-bar chart-bar-inactive"></div>
+            <div class="chart-bar chart-bar-inactive"></div>
+            <div class="chart-bar chart-bar-inactive"></div>
+            <div class="chart-bar chart-bar-inactive"></div>
+            <div class="chart-bar chart-bar-active"></div>
+            <div class="chart-bar chart-bar-inactive"></div>
+            <div class="chart-bar chart-bar-inactive"></div>
+          </div>
+          <div>
+            <span>M</span>
+            <span>T</span>
+            <span>W</span>
+            <span>T</span>
+            <span>F</span>
+            <span>S</span>
+            <span>S</span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Limit bar — 8px track · primary fill → #ff8400 near → #ff0000 at limit</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Linked accounts -->
+  <div class="section">
+    <h2 class="section-title">Linked Account Cards</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="acc-card">
+          <div class="acc-logo">GT</div>
+          <div class="acc-info">
+            <div class="acc-bank">GTBank</div>
+            <div class="acc-num">0123456789</div>
+          </div>
+          <div>
+            <div class="acc-bal">₦ 284,500</div>
+            <div class="acc-bal-sub">Primary</div>
+          </div>
+        </div>
+        <div class="acc-card">
+          <div class="acc-logo">ZN</div>
+          <div class="acc-info">
+            <div class="acc-bank">Zenith Bank</div>
+            <div class="acc-num">9876543210</div>
+          </div>
+          <div>
+            <div class="acc-bal">₦ 50,000</div>
+            <div class="acc-bal-sub">Savings</div>
+          </div>
+        </div>
+        <div class="acc-card">
+          <div>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Add bank account
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Account card — 40px logo · mono account number · add card dashed</span></div>
+    </div>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grid & Breakpoints — Dev Reference — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--mav-bg);color:var(--mav-fg);-webkit-font-smoothing:antialiased;min-height:100vh}
+.header{background:var(--mav-surface);border-bottom:1px solid var(--mav-border);padding:20px 40px;display:flex;align-items:center;gap:16px}
+.header a{text-decoration:none;font-size:12px;color:var(--mav-primary);font-weight:600}
+.h-divider{color:var(--mav-border)}
+.h-title{font-size:15px;font-weight:800;color:var(--mav-fg)}
+.h-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:rgba(53,46,255,.1);color:var(--bc-primary-light)}
+.content{max-width:960px;margin:0 auto;padding:48px 40px}
+.section{margin-bottom:56px}
+.section-title{font-size:22px;font-weight:800;color:var(--mav-fg);letter-spacing:-.02em;margin-bottom:6px}
+.section-sub{font-size:13px;color:var(--mav-muted);line-height:1.6;margin-bottom:24px}
+/* Breakpoint diagram */
+.bp-diagram{background:var(--mav-surface);border:1px solid var(--mav-border);border-radius:12px;padding:28px;margin-bottom:28px;overflow-x:auto}
+.bp-track{position:relative;height:60px;background:var(--mav-bg);border-radius:8px;margin-bottom:16px;border:1px solid var(--mav-border);overflow:hidden}
+.bp-fill{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,rgba(53,46,255,.15),rgba(53,46,255,.08))}
+.bp-line{position:absolute;top:0;bottom:0;width:2px;background:var(--bc-primary-light);opacity:.5}
+.bp-label{position:absolute;top:8px;font-size:9px;font-weight:700;color:var(--bc-primary-light);white-space:nowrap;font-family:'JetBrains Mono',monospace}
+.bp-name{position:absolute;bottom:8px;font-size:8px;color:var(--mav-muted);white-space:nowrap}
+.bp-current{background:var(--bc-primary-light);border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--bc-white);display:inline-block;font-family:'JetBrains Mono',monospace}
+/* Breakpoint table */
+.bp-table{width:100%;border-collapse:collapse;font-size:12px}
+.bp-table th{text-align:left;padding:8px 14px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mav-muted);border-bottom:1px solid var(--mav-border)}
+.bp-table td{padding:10px 14px;border-bottom:1px solid var(--mav-border);vertical-align:top}
+.bp-table tr:last-child td{border-bottom:none}
+.bp-table tr:hover td{background:color-mix(in srgb,var(--mav-border) 20%,transparent)}
+.bp-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;font-family:'JetBrains Mono',monospace}
+/* Grid system */
+.grid-demo{border:1px solid var(--mav-border);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.gd-header{background:var(--mav-surface);padding:12px 16px;border-bottom:1px solid var(--mav-border);display:flex;align-items:center;justify-content:space-between}
+.gd-title{font-size:11px;font-weight:700;color:var(--mav-fg)}
+.gd-spec{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mav-muted)}
+.gd-body{padding:16px;display:grid;gap:8px}
+.gd-col{background:rgba(53,46,255,.08);border:1px dashed rgba(53,46,255,.2);border-radius:5px;padding:10px 8px;text-align:center;font-size:10px;font-weight:600;color:var(--bc-primary-light)}
+/* Code snippets */
+.code-block{background:var(--bc-code-dark);border-radius:10px;padding:18px 20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bc-mono100-l);line-height:1.7;margin-bottom:20px;overflow-x:auto}
+.code-block .comment{color:var(--bc-code-comment)}
+.code-block .prop{color:var(--bc-tertiary1)}
+.code-block .val{color:var(--bc-primary-dark)}
+.code-block .at{color:var(--bc-orange-500)}
+/* Container query demo */
+.cq-demo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
+.cq-card{background:var(--mav-surface);border:1px solid var(--mav-border);border-radius:10px;padding:18px;container-type:inline-size}
+.cq-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mav-muted);margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="header">
+  <a href="../index.html">MaV</a>
+  <span class="h-divider">/</span>
+  <span class="h-title">Grid & Breakpoints</span>
+  <span class="h-badge">Dev Reference</span>
+</div>
+<div class="content">
+  <!-- Breakpoint map -->
+  <div class="section">
+    <div class="section-title">Breakpoint System</div>
+    <p class="section-sub">MaV uses 8 semantic breakpoints covering the full 2025–2026 device landscape. Built mobile-first — apply styles at the smallest size, then override at wider breakpoints.</p>
+    <div class="bp-diagram">
+      <div class="bp-track">
+        <div class="bp-fill"></div>
+        <div class="bp-line"><div class="bp-label">360</div><div class="bp-name">xs</div></div>
+        <div class="bp-line"><div class="bp-label">390</div><div class="bp-name">sm</div></div>
+        <div class="bp-line"><div class="bp-label">600</div><div class="bp-name">md-sm</div></div>
+        <div class="bp-line"><div class="bp-label">768</div><div class="bp-name">md</div></div>
+        <div class="bp-line"><div class="bp-label">1024</div><div class="bp-name">lg</div></div>
+        <div class="bp-line"><div class="bp-label">1280</div><div class="bp-name">xl</div></div>
+        <div class="bp-line"><div class="bp-label">1440</div><div class="bp-name">2xl</div></div>
+      </div>
+      <div>Track width = 1920px. Current viewport: <span class="bp-current" id="bp-current">—</span></div>
+    </div>
+    <table class="bp-table">
+      <thead><tr><th>Name</th><th>Min Width</th><th>Device Context</th><th>Grid</th><th>Gutter</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="bp-badge">xs</span></td>
+          <td>360px</td>
+          <td>Mobile compact (older/budget phones)</td>
+          <td>4 col</td>
+          <td>16px</td>
+        </tr>
+        <tr>
+          <td><span class="bp-badge">sm</span></td>
+          <td>390px</td>
+          <td>iPhone 15/16, Pixel 8 standard</td>
+          <td>4 col</td>
+          <td>16px</td>
+        </tr>
+        <tr>
+          <td><span class="bp-badge">md-sm</span></td>
+          <td>600px</td>
+          <td>Foldables unfolded, small tablets</td>
+          <td>8 col</td>
+          <td>20px</td>
+        </tr>
+        <tr>
+          <td><span class="bp-badge">md</span></td>
+          <td>768px</td>
+          <td>iPad Mini, Android tablets portrait</td>
+          <td>8 col</td>
+          <td>24px</td>
+        </tr>
+        <tr>
+          <td><span class="bp-badge">lg</span></td>
+          <td>1024px</td>
+          <td>iPad Pro landscape, small laptops</td>
+          <td>12 col</td>
+          <td>24px</td>
+        </tr>
+        <tr>
+          <td><span class="bp-badge">xl</span></td>
+          <td>1280px</td>
+          <td>MacBook Pro 13/14", standard laptops</td>
+          <td>12 col</td>
+          <td>32px</td>
+        </tr>
+        <tr>
+          <td><span class="bp-badge">2xl</span></td>
+          <td>1440px</td>
+          <td>Large monitors, desktop default</td>
+          <td>12 col</td>
+          <td>32px</td>
+        </tr>
+        <tr>
+          <td><span class="bp-badge">wide</span></td>
+          <td>1920px</td>
+          <td>4K/wide monitors, wall displays</td>
+          <td>16 col</td>
+          <td>40px</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Grid demos -->
+  <div class="section">
+    <div class="section-title">Grid Examples</div>
+    <div class="grid-demo">
+      <div class="gd-header"><span class="gd-title">Mobile — 4 column</span><span class="gd-spec">360–599px · 16px gutter</span></div>
+      <div class="gd-body">
+        <div class="gd-col">1</div><div class="gd-col">2</div><div class="gd-col">3</div><div class="gd-col">4</div>
+      </div>
+    </div>
+    <div class="grid-demo">
+      <div class="gd-header"><span class="gd-title">Tablet — 8 column</span><span class="gd-spec">768–1023px · 24px gutter</span></div>
+      <div class="gd-body">
+        <div class="gd-col">1</div><div class="gd-col">2</div><div class="gd-col">3</div><div class="gd-col">4</div>
+        <div class="gd-col">5</div><div class="gd-col">6</div><div class="gd-col">7</div><div class="gd-col">8</div>
+      </div>
+    </div>
+    <div class="grid-demo">
+      <div class="gd-header"><span class="gd-title">Desktop — 12 column</span><span class="gd-spec">1024px+ · 32px gutter</span></div>
+      <div class="gd-body">
+        <div class="gd-col">1</div><div class="gd-col">2</div><div class="gd-col">3</div><div class="gd-col">4</div>
+        <div class="gd-col">5</div><div class="gd-col">6</div><div class="gd-col">7</div><div class="gd-col">8</div>
+        <div class="gd-col">9</div><div class="gd-col">10</div><div class="gd-col">11</div><div class="gd-col">12</div>
+      </div>
+    </div>
+  </div>
+  <!-- CSS -->
+  <div class="section">
+    <div class="section-title">CSS Breakpoint Definitions</div>
+    <div class="code-block">
+<span class="comment">/* MaV Breakpoints — mobile first */</span>
+<span class="at">:root</span> {
+  <span class="prop">  --bp-xs:</span>   <span class="val">360px</span>;
+  <span class="prop">  --bp-sm:</span>   <span class="val">390px</span>;
+  <span class="prop">  --bp-md-sm:</span><span class="val">600px</span>;
+  <span class="prop">  --bp-md:</span>   <span class="val">768px</span>;
+  <span class="prop">  --bp-lg:</span>   <span class="val">1024px</span>;
+  <span class="prop">  --bp-xl:</span>   <span class="val">1280px</span>;
+  <span class="prop">  --bp-2xl:</span>  <span class="val">1440px</span>;
+  <span class="prop">  --bp-wide:</span> <span class="val">1920px</span>;
+}
+
+<span class="comment">/* Usage */</span>
+<span class="at">@media</span> (<span class="prop">min-width:</span> <span class="val">768px</span>) {
+  <span class="prop">  .card-grid</span> { <span class="prop">grid-template-columns:</span> <span class="val">repeat(2, 1fr)</span>; }
+}
+<span class="at">@media</span> (<span class="prop">min-width:</span> <span class="val">1024px</span>) {
+  <span class="prop">  .card-grid</span> { <span class="prop">grid-template-columns:</span> <span class="val">repeat(3, 1fr)</span>; }
+}
+
+<span class="comment">/* Fluid type with clamp() */</span>
+<span class="prop">.hero-title</span> {
+  <span class="prop">  font-size:</span> <span class="val">clamp(28px, 5vw, 64px)</span>;
+}
+    </div>
+  </div>
+</div>
+<script>
+function getBP(w){
+  if(w>=1920)return'wide (1920px+)';
+  if(w>=1440)return'2xl (1440px+)';
+  if(w>=1280)return'xl (1280px+)';
+  if(w>=1024)return'lg (1024px+)';
+  if(w>=768)return'md (768px+)';
+  if(w>=600)return'md-sm (600px+)';
+  if(w>=390)return'sm (390px+)';
+  return'xs (360px+)';
+}
+function updateBP(){document.getElementById('bp-current').textContent=getBP(window.innerWidth)+' · '+window.innerWidth+'px'}
+updateBP();
+window.addEventListener('resize',updateBP);
+</script>
+</body>
+</html>

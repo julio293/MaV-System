@@ -1,0 +1,1113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MaV Customiser — Live Token Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="css/tokens.css">
+<script src="js/theme.js" defer></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{
+  font-family:var(--font-active,'Plus Jakarta Sans',sans-serif);
+  font-size:14px;line-height:1.5;
+  color:var(--mav-fg);background:var(--mav-bg);
+  -webkit-font-smoothing:antialiased;
+  transition:background .2s,color .2s;
+  height:100%;
+}
+
+/* ── Root layout ── */
+.shell{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* ── Left panel ── */
+.ctrl-panel{
+  border-right:1px solid var(--mav-border);
+  background:var(--mav-bg);
+  overflow-y:auto;
+  height:100vh;
+  scrollbar-width:thin;
+  scrollbar-color:var(--mav-border) transparent;
+  flex-shrink:0;
+}
+
+/* ── Panel header ── */
+.p-head{
+  position:sticky;top:0;z-index:10;
+  padding:16px 16px 12px;
+  border-bottom:1px solid var(--mav-border);
+  background:var(--mav-bg);
+  display:flex;align-items:center;gap:8px;
+}
+.p-back{
+  display:flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:6px;
+  border:1px solid var(--mav-border);
+  color:var(--mav-muted);text-decoration:none;
+  font-size:14px;transition:all .12s;flex-shrink:0;
+}
+.p-back:hover{background:var(--mav-border);color:var(--mav-fg)}
+.p-logo{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.p-mark{
+  width:28px;height:28px;border-radius:7px;
+  background:var(--mav-primary);
+  display:grid;place-items:center;flex-shrink:0;
+}
+.p-mark svg{fill:#fff}
+[data-theme=dark] .p-mark svg,[data-theme=neon] .p-mark svg{fill:#171717}
+.p-title{font-size:14px;font-weight:700;color:var(--mav-fg);letter-spacing:-.01em;white-space:nowrap}
+.p-sub{font-size:10px;color:var(--mav-muted);font-weight:500}
+.theme-btn{
+  display:flex;align-items:center;
+  padding:5px 8px;border-radius:6px;
+  border:1px solid var(--mav-border);background:var(--mav-bg);
+  color:var(--mav-muted);font-size:13px;cursor:pointer;
+  transition:all .12s;font-family:inherit;flex-shrink:0;
+}
+.theme-btn:hover{background:var(--mav-border);color:var(--mav-fg)}
+
+/* ── Section ── */
+.ctrl-section{padding:16px 16px 0}
+.ctrl-section:last-child{padding-bottom:20px}
+.section-label{
+  font-size:10px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--mav-muted);
+  margin-bottom:10px;display:block;
+}
+
+/* ── Theme Pills ── */
+.theme-pills{display:flex;flex-direction:column;gap:6px}
+.theme-pill{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:10px;
+  border:1.5px solid var(--mav-border);
+  background:var(--mav-bg);cursor:pointer;
+  transition:all .12s;position:relative;
+}
+.theme-pill:hover{border-color:var(--mav-muted)}
+.theme-pill.active{
+  border-color:var(--mav-primary);
+  background:color-mix(in srgb,var(--mav-primary) 8%,transparent);
+}
+.theme-pill-dot{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.theme-pill-dot.light{background:#f0f0f0;border:1.5px solid #e0e0e0}
+.theme-pill-dot.dark{background:#1a1a1a;border:1.5px solid #333}
+.theme-pill-dot.neon{background:#101010;border:1.5px solid #a1ff5b}
+.theme-pill-info{flex:1;min-width:0}
+.theme-pill-name{font-size:13px;font-weight:600;color:var(--mav-fg)}
+.theme-pill-sub{font-size:11px;color:var(--mav-muted)}
+.theme-pill-check{
+  width:16px;height:16px;border-radius:50%;
+  border:1.5px solid var(--mav-border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:9px;color:transparent;
+  transition:all .12s;
+}
+.theme-pill.active .theme-pill-check{
+  background:var(--mav-primary);border-color:var(--mav-primary);color:#fff;
+}
+[data-theme=dark] .theme-pill.active .theme-pill-check,
+[data-theme=neon] .theme-pill.active .theme-pill-check{color:#171717}
+
+/* ── Color Swatches ── */
+.swatch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.swatch{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  cursor:pointer;padding:6px 4px;border-radius:8px;
+  border:1.5px solid transparent;transition:all .12s;
+}
+.swatch:hover{background:color-mix(in srgb,var(--mav-border) 50%,transparent)}
+.swatch.active{border-color:var(--mav-primary)}
+.swatch-circle{
+  width:36px;height:36px;border-radius:50%;
+  border:2px solid transparent;transition:all .12s;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+}
+.swatch.active .swatch-circle{border-color:var(--mav-fg)}
+.swatch-label{font-size:10px;font-weight:500;color:var(--mav-muted);text-align:center}
+.custom-color-row{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:8px;
+  border:1.5px solid var(--mav-border);
+  transition:all .12s;cursor:pointer;
+}
+.custom-color-row:hover{border-color:var(--mav-muted)}
+.custom-color-row.active{border-color:var(--mav-primary)}
+.color-input-wrap{
+  width:28px;height:28px;border-radius:50%;
+  overflow:hidden;border:2px solid var(--mav-border);
+  cursor:pointer;flex-shrink:0;
+}
+.color-input-wrap input[type=color]{
+  width:200%;height:200%;margin:-50%;
+  border:none;outline:none;cursor:pointer;padding:0;background:none;
+}
+.custom-color-label{font-size:12px;font-weight:500;color:var(--mav-muted);flex:1}
+.custom-color-val{font-size:11px;font-family:monospace;color:var(--mav-muted)}
+
+/* ── Font options ── */
+.font-options{display:flex;flex-direction:column;gap:6px}
+.font-opt{
+  padding:10px 12px;border-radius:8px;
+  border:1.5px solid var(--mav-border);
+  cursor:pointer;transition:all .12s;
+}
+.font-opt:hover{border-color:var(--mav-muted)}
+.font-opt.active{
+  border-color:var(--mav-primary);
+  background:color-mix(in srgb,var(--mav-primary) 8%,transparent);
+}
+.font-name{font-size:15px;font-weight:600;color:var(--mav-fg)}
+.font-sample{font-size:11px;color:var(--mav-muted);margin-top:1px}
+
+/* ── Segmented controls ── */
+.seg-ctrl{
+  display:flex;gap:4px;
+  padding:3px;border-radius:9px;
+  background:var(--mav-bg-secondary,#e5e5e5);
+}
+.seg-btn{
+  flex:1;padding:6px 4px;border-radius:6px;
+  border:none;background:transparent;
+  font-size:11px;font-weight:600;color:var(--mav-muted);
+  cursor:pointer;transition:all .12s;font-family:inherit;
+  white-space:nowrap;
+}
+.seg-btn:hover{color:var(--mav-fg)}
+.seg-btn.active{
+  background:var(--mav-bg);color:var(--mav-primary);
+  box-shadow:0 1px 4px rgba(0,0,0,.1);
+}
+
+/* ── Live Component Preview ── */
+.live-preview{
+  padding:12px;border-radius:10px;
+  border:1px solid var(--mav-border);
+  background:var(--mav-bg);
+  display:flex;flex-direction:column;gap:12px;
+}
+.preview-btn{
+  display:flex;align-items:center;justify-content:center;
+  height:48px;border-radius:var(--radius-md,8px);
+  background:var(--mav-primary);color:#fff;
+  font-size:14px;font-weight:600;font-family:inherit;
+  border:none;cursor:pointer;transition:all .12s;width:100%;
+}
+[data-theme=dark] .preview-btn,[data-theme=neon] .preview-btn{color:#171717}
+.preview-btn:hover{opacity:.9}
+.preview-input{
+  display:flex;align-items:center;
+  height:44px;padding:0 12px;
+  border-radius:var(--radius-md,8px);
+  border:1.5px solid var(--mav-border);
+  background:var(--mav-bg);
+  font-size:13px;font-family:inherit;
+  color:var(--mav-placeholder);outline:none;width:100%;
+  transition:all .12s;
+}
+.preview-input:focus{border-color:var(--mav-primary);color:var(--mav-fg)}
+.preview-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.preview-badge{
+  padding:3px 10px;border-radius:var(--radius-full,9999px);
+  background:var(--mav-primary);
+  font-size:11px;font-weight:600;color:#fff;
+}
+[data-theme=dark] .preview-badge,[data-theme=neon] .preview-badge{color:#171717}
+.preview-toggle{
+  display:flex;align-items:center;gap:6px;cursor:pointer;
+}
+.toggle-track{
+  width:40px;height:22px;border-radius:11px;
+  background:var(--mav-primary);
+  position:relative;transition:background .12s;
+}
+.toggle-thumb{
+  width:18px;height:18px;border-radius:50%;
+  background:#fff;position:absolute;top:2px;right:2px;
+  transition:all .12s;box-shadow:0 1px 3px rgba(0,0,0,.2);
+}
+.preview-txn{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:var(--radius-md,8px);
+  background:color-mix(in srgb,var(--mav-border) 40%,transparent);
+}
+.txn-icon{
+  width:32px;height:32px;border-radius:50%;
+  background:color-mix(in srgb,var(--mav-success,#629c28) 15%,transparent);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.txn-info{flex:1;min-width:0}
+.txn-label{font-size:12px;font-weight:600;color:var(--mav-fg)}
+.txn-sub{font-size:10px;color:var(--mav-muted)}
+.txn-amount{font-size:13px;font-weight:700;color:var(--mav-success,#629c28)}
+
+/* ── Token Overrides ── */
+.changes-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:8px;
+}
+.changes-badge{
+  padding:2px 8px;border-radius:999px;
+  background:color-mix(in srgb,var(--mav-primary) 15%,transparent);
+  color:var(--mav-primary);font-size:11px;font-weight:700;
+}
+.changes-list{
+  max-height:140px;overflow-y:auto;
+  display:flex;flex-direction:column;gap:4px;
+  margin-bottom:10px;
+  scrollbar-width:thin;scrollbar-color:var(--mav-border) transparent;
+}
+.change-pill{
+  display:flex;align-items:center;gap:6px;
+  padding:4px 8px;border-radius:6px;
+  background:color-mix(in srgb,var(--mav-border) 50%,transparent);
+  font-size:10px;font-family:monospace;
+}
+.change-key{color:var(--mav-primary);font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.change-val{color:var(--mav-muted);flex-shrink:0}
+.empty-state{font-size:11px;color:var(--mav-muted);text-align:center;padding:10px}
+.action-row{display:flex;gap:8px}
+.btn-copy,.btn-reset{
+  flex:1;padding:8px;border-radius:8px;
+  font-size:12px;font-weight:600;font-family:inherit;
+  cursor:pointer;transition:all .12s;border:1.5px solid var(--mav-border);
+}
+.btn-copy{
+  background:var(--mav-primary);color:#fff;border-color:var(--mav-primary);
+}
+[data-theme=dark] .btn-copy,[data-theme=neon] .btn-copy{color:#171717}
+.btn-copy:hover{opacity:.88}
+.btn-reset{
+  background:transparent;color:var(--mav-muted);
+}
+.btn-reset:hover{background:var(--mav-border);color:var(--mav-fg)}
+
+/* ── Right panel ── */
+.preview-panel{
+  display:flex;flex-direction:column;
+  height:100vh;overflow:hidden;
+  background:var(--mav-bg);
+}
+
+/* ── Toolbar ── */
+.preview-toolbar{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 16px;
+  border-bottom:1px solid var(--mav-border);
+  background:var(--mav-bg);
+  flex-shrink:0;flex-wrap:wrap;
+}
+.device-tabs{display:flex;gap:2px;padding:3px;border-radius:8px;background:var(--mav-bg-secondary,#e5e5e5)}
+.dev-tab{
+  padding:5px 14px;border-radius:5px;
+  border:none;background:transparent;
+  font-size:12px;font-weight:600;color:var(--mav-muted);
+  cursor:pointer;transition:all .12s;font-family:inherit;
+}
+.dev-tab.active{background:var(--mav-bg);color:var(--mav-primary);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.screen-select{
+  flex:1;min-width:0;max-width:220px;
+  padding:6px 10px;border-radius:7px;
+  border:1px solid var(--mav-border);
+  background:var(--mav-bg);color:var(--mav-fg);
+  font-size:12px;font-family:inherit;cursor:pointer;outline:none;
+  transition:all .12s;
+}
+.screen-select:focus{border-color:var(--mav-primary)}
+.btn-open{
+  display:flex;align-items:center;gap:4px;
+  padding:6px 12px;border-radius:7px;
+  border:1px solid var(--mav-border);background:var(--mav-bg);
+  color:var(--mav-muted);font-size:12px;font-weight:500;
+  cursor:pointer;transition:all .12s;font-family:inherit;white-space:nowrap;
+}
+.btn-open:hover{background:var(--mav-border);color:var(--mav-fg)}
+
+/* ── Preview stage ── */
+.preview-stage{
+  flex:1;overflow:hidden;
+  display:flex;align-items:stretch;justify-content:center;
+  background:
+    repeating-conic-gradient(
+      color-mix(in srgb,var(--mav-border) 30%,transparent) 0% 25%,
+      transparent 0% 50%
+    ) 0 0 / 20px 20px;
+}
+
+/* ── Single preview iframe ── */
+#preview-frame{
+  width:100%;
+  max-width:430px;
+  height:100%;
+  border:none;
+  display:block;
+  background:var(--mav-bg);
+  flex-shrink:0;
+}
+.preview-stage.web-mode #preview-frame{
+  max-width:100%;
+}
+
+/* ── Toast ── */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);
+  background:var(--mav-fg);color:var(--mav-bg);
+  padding:10px 20px;border-radius:8px;
+  font-size:13px;font-weight:600;
+  opacity:0;transition:all .3s;pointer-events:none;z-index:9999;
+  white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── Divider ── */
+.ctrl-divider{height:1px;background:var(--mav-border);margin:0 0 0}
+
+/* ── Mobile responsive ── */
+@media(max-width:768px){
+  .shell{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .ctrl-panel{height:auto;max-height:50vh}
+  .preview-panel{height:50vh}
+}
+
+/* ── Spacing between sections ── */
+.ctrl-section + .ctrl-section{margin-top:0}
+.s-sep{height:1px;background:var(--mav-border);margin:12px 0 0}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ════════════════ LEFT PANEL ════════════════ -->
+  <aside class="ctrl-panel" id="ctrl-panel">
+
+    <!-- Header -->
+    <div class="p-head">
+      <a href="index.html" class="p-back" title="Back to docs">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.5 3L4.5 7L8.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <div class="p-logo">
+        <div class="p-mark">
+          <svg width="16" height="16" viewBox="0 0 16 16">
+            <rect x="0" y="0" width="6" height="6" rx="1.5"/>
+            <rect x="10" y="0" width="6" height="6" rx="1.5"/>
+            <rect x="0" y="10" width="6" height="6" rx="1.5"/>
+            <rect x="10" y="10" width="6" height="6" rx="1.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="p-title">MaV Customiser</div>
+          <div class="p-sub">Live token editor</div>
+        </div>
+      </div>
+      <button class="theme-btn" id="page-theme-btn" title="Toggle page theme">☾</button>
+    </div>
+
+    <!-- Section 1: Color Theme -->
+    <div class="ctrl-section" style="padding-top:14px">
+      <span class="section-label">Color Theme</span>
+      <div class="theme-pills" id="theme-pills">
+        <button class="theme-pill active" data-theme-val="light">
+          <div class="theme-pill-dot light">☀</div>
+          <div class="theme-pill-info">
+            <div class="theme-pill-name">Light</div>
+            <div class="theme-pill-sub">Blue on white</div>
+          </div>
+          <div class="theme-pill-check">✓</div>
+        </button>
+        <button class="theme-pill" data-theme-val="dark">
+          <div class="theme-pill-dot dark">☾</div>
+          <div class="theme-pill-info">
+            <div class="theme-pill-name">Dark</div>
+            <div class="theme-pill-sub">Lime on dark</div>
+          </div>
+          <div class="theme-pill-check">✓</div>
+        </button>
+        <button class="theme-pill" data-theme-val="neon">
+          <div class="theme-pill-dot neon">⚡</div>
+          <div class="theme-pill-info">
+            <div class="theme-pill-name">Neon</div>
+            <div class="theme-pill-sub">Deep navy + lime</div>
+          </div>
+          <div class="theme-pill-check">✓</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="s-sep" style="margin:14px 0 0"></div>
+
+    <!-- Section 2: Primary Color -->
+    <div class="ctrl-section" style="padding-top:14px">
+      <span class="section-label">Primary Color</span>
+      <div class="swatch-grid" id="swatch-grid">
+        <div class="swatch active" data-color="#352eff" data-label="Electric" tabindex="0" role="button">
+          <div class="swatch-circle" style="background:#352eff"></div>
+          <span class="swatch-label">Electric</span>
+        </div>
+        <div class="swatch" data-color="#0053ff" data-label="Cobalt" tabindex="0" role="button">
+          <div class="swatch-circle" style="background:#0053ff"></div>
+          <span class="swatch-label">Cobalt</span>
+        </div>
+        <div class="swatch" data-color="#6a35ff" data-label="Purple" tabindex="0" role="button">
+          <div class="swatch-circle" style="background:#6a35ff"></div>
+          <span class="swatch-label">Purple</span>
+        </div>
+        <div class="swatch" data-color="#ff8744" data-label="Orange" tabindex="0" role="button">
+          <div class="swatch-circle" style="background:#ff8744"></div>
+          <span class="swatch-label">Orange</span>
+        </div>
+        <div class="swatch" data-color="#ff426f" data-label="Rose" tabindex="0" role="button">
+          <div class="swatch-circle" style="background:#ff426f"></div>
+          <span class="swatch-label">Rose</span>
+        </div>
+        <div class="swatch" data-color="#ffcb45" data-label="Amber" tabindex="0" role="button">
+          <div class="swatch-circle" style="background:#ffcb45"></div>
+          <span class="swatch-label">Amber</span>
+        </div>
+        <div class="swatch" data-color="#e5fe40" data-label="Lime" tabindex="0" role="button">
+          <div class="swatch-circle" style="background:#e5fe40"></div>
+          <span class="swatch-label">Lime</span>
+        </div>
+        <div class="swatch" data-color="#aa3fff" data-label="Violet" tabindex="0" role="button">
+          <div class="swatch-circle" style="background:#aa3fff"></div>
+          <span class="swatch-label">Violet</span>
+        </div>
+        <div class="swatch" data-color="#3bffad" data-label="Green" tabindex="0" role="button">
+          <div class="swatch-circle" style="background:#3bffad"></div>
+          <span class="swatch-label">Green</span>
+        </div>
+      </div>
+      <div class="custom-color-row" id="custom-color-row">
+        <div class="color-input-wrap">
+          <input type="color" id="custom-color-input" value="#352eff" title="Custom color">
+        </div>
+        <span class="custom-color-label">Custom color</span>
+        <span class="custom-color-val" id="custom-color-val">#352eff</span>
+      </div>
+    </div>
+
+    <div class="s-sep" style="margin:14px 0 0"></div>
+
+    <!-- Section 3: Font Family -->
+    <div class="ctrl-section" style="padding-top:14px">
+      <span class="section-label">Font Family</span>
+      <div class="font-options" id="font-options">
+        <div class="font-opt active" data-font="'Plus Jakarta Sans', sans-serif" tabindex="0" role="button">
+          <div class="font-name" style="font-family:'Plus Jakarta Sans',sans-serif">Plus Jakarta Sans</div>
+          <div class="font-sample" style="font-family:'Plus Jakarta Sans',sans-serif">Aa Bb Cc — 0123456789</div>
+        </div>
+        <div class="font-opt" data-font="'Inter', sans-serif" tabindex="0" role="button">
+          <div class="font-name" style="font-family:'Inter',sans-serif">Inter</div>
+          <div class="font-sample" style="font-family:'Inter',sans-serif">Aa Bb Cc — 0123456789</div>
+        </div>
+        <div class="font-opt" data-font="'Poppins', sans-serif" tabindex="0" role="button">
+          <div class="font-name" style="font-family:'Poppins',sans-serif">Poppins</div>
+          <div class="font-sample" style="font-family:'Poppins',sans-serif">Aa Bb Cc — 0123456789</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="s-sep" style="margin:14px 0 0"></div>
+
+    <!-- Section 4: Shape Scale -->
+    <div class="ctrl-section" style="padding-top:14px">
+      <span class="section-label">Shape Scale</span>
+      <div class="seg-ctrl" id="shape-ctrl">
+        <button class="seg-btn" data-shape="sharp">Sharp</button>
+        <button class="seg-btn active" data-shape="default">Default</button>
+        <button class="seg-btn" data-shape="rounded">Rounded</button>
+        <button class="seg-btn" data-shape="pill">Pill</button>
+      </div>
+    </div>
+
+    <div class="s-sep" style="margin:14px 0 0"></div>
+
+    <!-- Section 5: Density -->
+    <div class="ctrl-section" style="padding-top:14px">
+      <span class="section-label">Density</span>
+      <div class="seg-ctrl" id="density-ctrl">
+        <button class="seg-btn" data-density="compact">Compact</button>
+        <button class="seg-btn active" data-density="default">Default</button>
+        <button class="seg-btn" data-density="spacious">Spacious</button>
+      </div>
+    </div>
+
+    <div class="s-sep" style="margin:14px 0 0"></div>
+
+    <!-- Section 6: Live Component Preview -->
+    <div class="ctrl-section" style="padding-top:14px">
+      <span class="section-label">Live Preview</span>
+      <div class="live-preview">
+        <button class="preview-btn">Pay Now</button>
+        <input class="preview-input" placeholder="Enter amount…" readonly>
+        <div class="preview-row">
+          <span class="preview-badge">Primary</span>
+          <div class="preview-toggle" title="Toggle active">
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            <span style="font-size:11px;color:var(--mav-muted)">Active</span>
+          </div>
+        </div>
+        <div class="preview-txn">
+          <div class="txn-icon">↑</div>
+          <div class="txn-info">
+            <div class="txn-label">Transfer received</div>
+            <div class="txn-sub">Today, 09:41</div>
+          </div>
+          <div class="txn-amount">+$240.00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="s-sep" style="margin:14px 0 0"></div>
+
+    <!-- Section 7: Token Overrides -->
+    <div class="ctrl-section" style="padding-top:14px;padding-bottom:24px">
+      <div class="changes-header">
+        <span class="section-label" style="margin-bottom:0">Token Overrides</span>
+        <span class="changes-badge" id="changes-badge">0 changes</span>
+      </div>
+      <div class="changes-list" id="changes-list">
+        <div class="empty-state" id="changes-empty">No overrides yet</div>
+      </div>
+      <div class="action-row">
+        <button class="btn-copy" id="btn-copy">Copy CSS</button>
+        <button class="btn-reset" id="btn-reset">Reset All</button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ════════════════ RIGHT PANEL ════════════════ -->
+  <div class="preview-panel">
+
+    <!-- Toolbar -->
+    <div class="preview-toolbar">
+      <div class="device-tabs" id="device-tabs">
+        <button class="dev-tab active" data-device="ios">iOS</button>
+        <button class="dev-tab" data-device="android">Android</button>
+        <button class="dev-tab" data-device="web">Web</button>
+      </div>
+      <select class="screen-select" id="screen-select">
+        <optgroup label="iOS Screens">
+          <option value="ios/01-onboarding.html">Onboarding</option>
+          <option value="ios/02-login.html">Login</option>
+          <option value="ios/03-otp.html">OTP Verify</option>
+          <option value="ios/04-home.html">Home</option>
+          <option value="ios/05-profile.html">Profile</option>
+          <option value="ios/06-settings.html">Settings</option>
+          <option value="ios/07-notifications.html">Notifications</option>
+          <option value="ios/08-dark-mode.html">Dark Mode</option>
+          <option value="ios/09-explore.html">Explore</option>
+          <option value="ios/10-payment.html">Payment</option>
+        </optgroup>
+        <optgroup label="Android Screens" id="android-optgroup">
+          <option value="android/01-onboarding.html">Onboarding</option>
+          <option value="android/02-login.html">Login</option>
+          <option value="android/03-otp.html">OTP Verify</option>
+          <option value="android/04-home.html">Home</option>
+          <option value="android/05-profile.html">Profile</option>
+          <option value="android/06-settings.html">Settings</option>
+          <option value="android/07-notifications.html">Notifications</option>
+          <option value="android/08-dark-mode.html">Dark Mode</option>
+          <option value="android/09-explore.html">Explore</option>
+          <option value="android/10-payment.html">Payment</option>
+        </optgroup>
+        <optgroup label="Web App" id="web-optgroup">
+          <option value="web/01-landing.html">Landing</option>
+          <option value="web/02-login.html">Login</option>
+          <option value="web/03-dashboard.html">Dashboard</option>
+          <option value="web/04-explore.html">Explore</option>
+          <option value="web/05-profile.html">Profile</option>
+          <option value="web/06-settings.html">Settings</option>
+          <option value="web/07-notifications.html">Notifications</option>
+          <option value="web/08-dark-mode.html">Dark Mode</option>
+          <option value="web/09-checkout.html">Checkout</option>
+          <option value="web/10-playground.html">Playground</option>
+        </optgroup>
+      </select>
+      <button class="btn-open" id="btn-open">Open ↗</button>
+    </div>
+
+    <!-- Preview Stage -->
+    <div class="preview-stage phone-mode" id="preview-stage">
+      <iframe id="preview-frame" src="ios/01-onboarding.html" title="Screen preview"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+'use strict';
+
+// ── State ──────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'mav-customiser-state';
+const BASE_SPACES = {
+  '--space-8':8,'--space-10':10,'--space-12':12,'--space-14':14,
+  '--space-16':16,'--space-18':18,'--space-20':20,'--space-24':24,
+  '--space-28':28,'--space-32':32,'--space-38':38,'--space-44':44,
+  '--space-48':48,'--space-54':54
+};
+const SHAPE_PRESETS = {
+  sharp:   {'--radius-xs':'0px','--radius-sm':'2px','--radius-md':'4px','--radius-lg':'8px'},
+  default: {'--radius-xs':'2px','--radius-sm':'4px','--radius-md':'8px','--radius-lg':'16px'},
+  rounded: {'--radius-xs':'4px','--radius-sm':'8px','--radius-md':'16px','--radius-lg':'24px'},
+  pill:    {'--radius-xs':'8px','--radius-sm':'16px','--radius-md':'24px','--radius-lg':'9999px'}
+};
+
+const state = {
+  theme: 'light',
+  primaryColor: '#352eff',
+  font: "'Plus Jakarta Sans', sans-serif",
+  shape: 'default',
+  density: 'default',
+  overrides: {}
+};
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return {r,g,b};
+}
+function hexAlpha(hex, alpha) {
+  const {r,g,b} = hexToRgb(hex);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function getActiveFrame() {
+  return document.getElementById('preview-frame');
+}
+state.device = 'ios';
+
+function syncIframe() {
+  const iframe = document.getElementById('preview-frame');
+  const payload = { theme: state.theme, overrides: state.overrides };
+
+  // Primary: localStorage storage event — fires in same-origin iframes even inside sandbox
+  try { localStorage.setItem('mav-overrides', JSON.stringify(payload)); } catch(e) {}
+
+  // Secondary: postMessage
+  try {
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'mav-sync', ...payload }, '*');
+    }
+  } catch(e) {}
+
+  // Tertiary: direct DOM (same-origin, non-sandboxed)
+  try {
+    const doc = iframe && (iframe.contentDocument || iframe.contentWindow.document);
+    if (doc && doc.documentElement) {
+      const root = doc.documentElement;
+      root.setAttribute('data-theme', state.theme);
+      Object.entries(state.overrides).forEach(([k, v]) => {
+        if (v === null || v === undefined) root.style.removeProperty(k);
+        else root.style.setProperty(k, v);
+      });
+    }
+  } catch(e) {}
+}
+
+function applyToPage() {
+  Object.entries(state.overrides).forEach(([k,v]) => {
+    document.documentElement.style.setProperty(k, v);
+  });
+  document.documentElement.setAttribute('data-theme', state.theme);
+}
+
+function setOverride(key, value) {
+  if (value === null || value === undefined) {
+    delete state.overrides[key];
+  } else {
+    state.overrides[key] = value;
+  }
+  applyToPage();
+  syncIframe();
+  updateChangesPanel();
+  saveState();
+}
+
+function batchOverrides(obj) {
+  Object.entries(obj).forEach(([k,v]) => {
+    if (v === null) delete state.overrides[k];
+    else state.overrides[k] = v;
+  });
+  applyToPage();
+  syncIframe();
+  updateChangesPanel();
+  saveState();
+}
+
+function clearAllOverrides() {
+  Object.keys(state.overrides).forEach(k => {
+    document.documentElement.style.removeProperty(k);
+  });
+  state.overrides = {};
+  // Tell the iframe to clear via localStorage (primary) + postMessage (fallback)
+  const clearPayload = { type: 'mav-sync', clearAll: true, theme: state.theme, overrides: {} };
+  try { localStorage.setItem('mav-overrides', JSON.stringify({ clearAll: true, theme: state.theme, overrides: {} })); } catch(e) {}
+  const iframe = document.getElementById('preview-frame');
+  try {
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage(clearPayload, '*');
+    }
+  } catch(e) {}
+  try {
+    if (iframe && iframe.contentDocument && iframe.contentDocument.documentElement) {
+      iframe.contentDocument.documentElement.removeAttribute('style');
+    }
+  } catch(e) {}
+  applyToPage();
+  updateChangesPanel();
+  saveState();
+}
+
+// ── Changes panel ──────────────────────────────────────────────────────────
+function updateChangesPanel() {
+  const list = document.getElementById('changes-list');
+  const badge = document.getElementById('changes-badge');
+  const empty = document.getElementById('changes-empty');
+  const entries = Object.entries(state.overrides);
+  badge.textContent = entries.length + ' change' + (entries.length !== 1 ? 's' : '');
+  if (entries.length === 0) {
+    list.innerHTML = '';
+    list.appendChild(empty);
+    empty.style.display = '';
+    return;
+  }
+  empty.style.display = 'none';
+  list.innerHTML = '';
+  entries.forEach(([k,v]) => {
+    const pill = document.createElement('div');
+    pill.className = 'change-pill';
+    pill.innerHTML = `<span class="change-key">${k}</span><span class="change-val">${v}</span>`;
+    list.appendChild(pill);
+  });
+}
+
+// ── Toast ──────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ── Save / Restore ─────────────────────────────────────────────────────────
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      theme: state.theme,
+      primaryColor: state.primaryColor,
+      font: state.font,
+      shape: state.shape,
+      density: state.density,
+      overrides: state.overrides,
+      device: state.device,
+      screen: state.screen || 'ios/01-onboarding.html'
+    }));
+  } catch(e) {}
+}
+
+function restoreState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+    if (!saved) return;
+    if (saved.theme) state.theme = saved.theme;
+    if (saved.primaryColor) state.primaryColor = saved.primaryColor;
+    if (saved.font) state.font = saved.font;
+    if (saved.shape) state.shape = saved.shape;
+    if (saved.density) state.density = saved.density;
+    if (saved.overrides) state.overrides = saved.overrides;
+    if (saved.device) state.device = saved.device;
+    if (saved.screen) state.screen = saved.screen;
+  } catch(e) {}
+}
+
+// ── Apply theme ────────────────────────────────────────────────────────────
+function applyTheme(theme) {
+  state.theme = theme;
+  document.querySelectorAll('.theme-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.themeVal === theme);
+  });
+  const btn = document.getElementById('page-theme-btn');
+  btn.textContent = theme === 'light' ? '☾' : '☀';
+  applyToPage();
+  syncIframe();
+  saveState();
+}
+
+// ── Apply primary color ────────────────────────────────────────────────────
+function applyPrimaryColor(hex) {
+  state.primaryColor = hex;
+  const focusRing = hexAlpha(hex, 0.4);
+  const bgTertiary = hexAlpha(hex, 0.08);
+  batchOverrides({
+    '--mav-primary': hex,
+    '--mav-focus-ring': focusRing,
+    '--mav-bg-tertiary': bgTertiary
+  });
+  // Sync custom input
+  document.getElementById('custom-color-input').value = hex;
+  document.getElementById('custom-color-val').textContent = hex;
+  // Update swatch active states
+  document.querySelectorAll('.swatch').forEach(s => {
+    s.classList.toggle('active', s.dataset.color === hex);
+  });
+  const customRow = document.getElementById('custom-color-row');
+  const isCustom = !Array.from(document.querySelectorAll('.swatch')).some(s => s.dataset.color === hex);
+  customRow.classList.toggle('active', isCustom);
+}
+
+// ── Apply font ─────────────────────────────────────────────────────────────
+function applyFont(font) {
+  state.font = font;
+  batchOverrides({
+    '--font-active': font,
+    '--font-display': font,
+    '--font-body': font,
+    '--core\\/font-family': font
+  });
+  document.querySelectorAll('.font-opt').forEach(f => {
+    f.classList.toggle('active', f.dataset.font === font);
+  });
+}
+
+// ── Apply shape ────────────────────────────────────────────────────────────
+function applyShape(shape) {
+  state.shape = shape;
+  document.querySelectorAll('[data-shape]').forEach(b => {
+    b.classList.toggle('active', b.dataset.shape === shape);
+  });
+  batchOverrides(SHAPE_PRESETS[shape]);
+}
+
+// ── Apply density ──────────────────────────────────────────────────────────
+function applyDensity(density) {
+  state.density = density;
+  document.querySelectorAll('[data-density]').forEach(b => {
+    b.classList.toggle('active', b.dataset.density === density);
+  });
+  const factor = density === 'compact' ? 0.75 : density === 'spacious' ? 1.25 : 1;
+  const overrides = {};
+  Object.entries(BASE_SPACES).forEach(([k,v]) => {
+    overrides[k] = factor === 1 ? null : `${Math.round(v * factor)}px`;
+  });
+  batchOverrides(overrides);
+}
+
+// ── Device switching ───────────────────────────────────────────────────────
+const DEVICE_SCREENS = {
+  ios: ['ios/01-onboarding.html','ios/02-login.html','ios/03-otp.html','ios/04-home.html','ios/05-profile.html','ios/06-settings.html','ios/07-notifications.html','ios/08-dark-mode.html','ios/09-explore.html','ios/10-payment.html'],
+  android: ['android/01-onboarding.html','android/02-login.html','android/03-otp.html','android/04-home.html','android/05-profile.html','android/06-settings.html','android/07-notifications.html','android/08-dark-mode.html','android/09-explore.html','android/10-payment.html'],
+  web: ['web/01-landing.html','web/02-login.html','web/03-dashboard.html','web/04-explore.html','web/05-profile.html','web/06-settings.html','web/07-notifications.html','web/08-dark-mode.html','web/09-checkout.html','web/10-playground.html']
+};
+
+function switchDevice(device) {
+  state.device = device;
+  document.querySelectorAll('.dev-tab').forEach(t => t.classList.toggle('active', t.dataset.device === device));
+  const stage = document.getElementById('preview-stage');
+  stage.classList.toggle('phone-mode', device !== 'web');
+  stage.classList.toggle('web-mode', device === 'web');
+
+  // Update select to show only matching optgroup first option if current doesn't match
+  const select = document.getElementById('screen-select');
+  const currentSrc = select.value;
+  const validSrc = DEVICE_SCREENS[device].some(s => s === currentSrc);
+  if (!validSrc) {
+    select.value = DEVICE_SCREENS[device][0];
+    loadScreen(DEVICE_SCREENS[device][0]);
+  }
+  syncIframe();
+  saveState();
+}
+
+function loadScreen(src) {
+  state.screen = src;
+  const iframe = document.getElementById('preview-frame');
+  if (iframe && iframe.src !== new URL(src, location.href).href) {
+    iframe.src = src;
+  }
+  saveState();
+}
+
+// ── Init all event listeners ───────────────────────────────────────────────
+function init() {
+  restoreState();
+
+  // iframe load sync
+  const mainFrame = document.getElementById('preview-frame');
+  if (mainFrame) mainFrame.addEventListener('load', syncIframe);
+
+  // Page theme toggle (toggles the customiser page itself)
+  document.getElementById('page-theme-btn').addEventListener('click', () => {
+    const next = state.theme === 'light' ? 'dark' : state.theme === 'dark' ? 'neon' : 'light';
+    applyTheme(next);
+  });
+
+  // Theme pills
+  document.getElementById('theme-pills').addEventListener('click', e => {
+    const pill = e.target.closest('[data-theme-val]');
+    if (pill) applyTheme(pill.dataset.themeVal);
+  });
+
+  // Swatches
+  document.getElementById('swatch-grid').addEventListener('click', e => {
+    const swatch = e.target.closest('.swatch');
+    if (swatch) applyPrimaryColor(swatch.dataset.color);
+  });
+  document.getElementById('swatch-grid').addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const swatch = e.target.closest('.swatch');
+      if (swatch) { e.preventDefault(); applyPrimaryColor(swatch.dataset.color); }
+    }
+  });
+
+  // Custom color
+  const customInput = document.getElementById('custom-color-input');
+  customInput.addEventListener('input', () => {
+    const hex = customInput.value;
+    document.getElementById('custom-color-val').textContent = hex;
+    document.getElementById('custom-color-row').classList.add('active');
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+    applyPrimaryColor(hex);
+  });
+  document.getElementById('custom-color-row').addEventListener('click', () => {
+    customInput.click();
+  });
+
+  // Fonts
+  document.getElementById('font-options').addEventListener('click', e => {
+    const opt = e.target.closest('.font-opt');
+    if (opt) applyFont(opt.dataset.font);
+  });
+  document.getElementById('font-options').addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const opt = e.target.closest('.font-opt');
+      if (opt) { e.preventDefault(); applyFont(opt.dataset.font); }
+    }
+  });
+
+  // Shape
+  document.getElementById('shape-ctrl').addEventListener('click', e => {
+    const btn = e.target.closest('[data-shape]');
+    if (btn) applyShape(btn.dataset.shape);
+  });
+
+  // Density
+  document.getElementById('density-ctrl').addEventListener('click', e => {
+    const btn = e.target.closest('[data-density]');
+    if (btn) applyDensity(btn.dataset.density);
+  });
+
+  // Device tabs
+  document.getElementById('device-tabs').addEventListener('click', e => {
+    const tab = e.target.closest('[data-device]');
+    if (tab) switchDevice(tab.dataset.device);
+  });
+
+  // Screen select
+  document.getElementById('screen-select').addEventListener('change', e => {
+    loadScreen(e.target.value);
+  });
+
+  // Open in new tab
+  document.getElementById('btn-open').addEventListener('click', () => {
+    const src = document.getElementById('screen-select').value;
+    window.open(src, '_blank');
+  });
+
+  // Copy CSS
+  document.getElementById('btn-copy').addEventListener('click', () => {
+    const css = buildFullCSS();
+    navigator.clipboard.writeText(css).then(() => showToast('Copied to clipboard!'));
+  });
+
+  // Reset all
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    clearAllOverrides();
+    // Reset UI state
+    state.primaryColor = '#352eff';
+    state.font = "'Plus Jakarta Sans', sans-serif";
+    state.shape = 'default';
+    state.density = 'default';
+    // Re-apply UI selections
+    document.querySelectorAll('.swatch').forEach(s => s.classList.toggle('active', s.dataset.color === '#352eff'));
+    document.getElementById('custom-color-row').classList.remove('active');
+    document.getElementById('custom-color-input').value = '#352eff';
+    document.getElementById('custom-color-val').textContent = '#352eff';
+    document.querySelectorAll('.font-opt').forEach(f => f.classList.toggle('active', f.dataset.font === "'Plus Jakarta Sans', sans-serif"));
+    document.querySelectorAll('[data-shape]').forEach(b => b.classList.toggle('active', b.dataset.shape === 'default'));
+    document.querySelectorAll('[data-density]').forEach(b => b.classList.toggle('active', b.dataset.density === 'default'));
+    showToast('Reset to defaults');
+  });
+
+  // Now apply restored state
+  applyThemeUI(state.theme);
+  document.documentElement.setAttribute('data-theme', state.theme);
+  // Apply color overrides to page
+  Object.entries(state.overrides).forEach(([k,v]) => {
+    document.documentElement.style.setProperty(k, v);
+  });
+  // Apply UI selections
+  applyTheme(state.theme);
+  if (state.primaryColor !== '#352eff') {
+    document.querySelectorAll('.swatch').forEach(s => s.classList.toggle('active', s.dataset.color === state.primaryColor));
+    document.getElementById('custom-color-input').value = state.primaryColor;
+    document.getElementById('custom-color-val').textContent = state.primaryColor;
+    const isCustom = !Array.from(document.querySelectorAll('.swatch')).some(s => s.dataset.color === state.primaryColor);
+    document.getElementById('custom-color-row').classList.toggle('active', isCustom);
+  }
+  document.querySelectorAll('.font-opt').forEach(f => f.classList.toggle('active', f.dataset.font === state.font));
+  document.querySelectorAll('[data-shape]').forEach(b => b.classList.toggle('active', b.dataset.shape === state.shape));
+  document.querySelectorAll('[data-density]').forEach(b => b.classList.toggle('active', b.dataset.density === state.density));
+  if (state.device) switchDevice(state.device);
+  if (state.screen) {
+    document.getElementById('screen-select').value = state.screen;
+    loadScreen(state.screen);
+  }
+  updateChangesPanel();
+}
+
+function applyThemeUI(theme) {
+  document.querySelectorAll('.theme-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.themeVal === theme);
+  });
+  const btn = document.getElementById('page-theme-btn');
+  if (btn) btn.textContent = theme === 'light' ? '☾' : '☀';
+}
+
+function buildFullCSS() {
+  const lines = Object.entries(state.overrides).map(([k,v]) => `  ${k}: ${v};`).join('\n');
+  return `:root {\n${lines}\n}`;
+}
+
+// Run
+document.addEventListener('DOMContentLoaded', init);
+if (document.readyState === 'loading') {
+  // will fire
+} else {
+  init();
+}
+
+})();
+</script>
+</body>
+</html>

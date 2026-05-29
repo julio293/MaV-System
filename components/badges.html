@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Badges & Chips — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* Status badges */
+.badge-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+.b{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:9999px;font-size:12px;font-weight:600;letter-spacing:.01em}
+.b-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* Semantic fills */
+.b-primary  {background:var(--mav-primary);color:var(--bc-white)}
+[data-theme=dark] .b-primary{color:var(--mav-fg)}
+.b-success  {background:color-mix(in srgb,var(--mav-success) 12%,transparent);color:var(--mav-success)}
+.b-warning  {background:color-mix(in srgb,var(--mav-warning) 12%,transparent);color:var(--mav-warning)}
+.b-danger   {background:rgba(255,0,0,0.10);color:var(--mav-danger)}
+.b-neutral  {background:var(--mav-border);color:var(--mav-muted)}
+.b-info     {background:rgba(20,76,199,0.10);color:var(--mav-info)}
+.b-dark     {background:var(--bc-mono900-l);color:var(--bc-white)}
+.b-outline  {background:transparent;border:1px solid var(--mav-border);color:var(--mav-fg)}
+
+/* Sizes */
+.b-sm{padding:1px 7px;font-size:10px}
+.b-lg{padding:5px 14px;font-size:13px}
+
+/* Chips (interactive) */
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:9999px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid;transition:all .15s}
+.chip-default{background:var(--mav-bg);border-color:var(--mav-border);color:var(--mav-muted)}
+.chip-default:hover{border-color:var(--mav-fg);color:var(--mav-fg)}
+.chip-selected{background:var(--mav-primary);border-color:var(--mav-primary);color:var(--bc-white)}
+[data-theme=dark] .chip-selected{color:var(--mav-fg)}
+.chip-close{font-size:15px;opacity:.7;line-height:1}
+
+/* Notification dot */
+.notif-wrap{position:relative;display:inline-flex}
+.notif-dot{position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;background:var(--mav-danger);border:2px solid var(--mav-bg)}
+.notif-count{position:absolute;top:-6px;right:-8px;background:var(--mav-danger);color:var(--bc-white);font-size:9px;font-weight:700;padding:1px 4px;border-radius:9999px;min-width:16px;text-align:center;border:2px solid var(--mav-bg)}
+
+/* Tag group */
+.tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.tag-blue  {background:var(--mav-primary);color:var(--bc-white)}
+.tag-lime  {background:var(--mav-primary-dark);color:var(--mav-fg)}
+.tag-gray  {background:var(--bc-mono100-l);color:var(--bc-mono600-l)}
+.tag-dark  {background:var(--bc-mono900-l);color:var(--bc-white)}
+
+/* Count badge on icon */
+.icon-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:9999px;background:var(--mav-border);cursor:pointer}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link active">Badges & Chips</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Badges & Chips</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Badges & Chips</h1>
+    <p class="page-desc">Status badges, interactive chips, notification dots, and category tags.</p>
+  </div>
+
+  <!-- Status badges -->
+  <div class="section">
+    <h2 class="section-title">Status Badges</h2>
+    <p class="section-desc">Semantic pill labels. Border-radius 9999px. 12px medium weight.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div>Filled</div>
+          <div class="badge-row">
+            <span class="b b-primary">Primary</span>
+            <span class="b b-success"><span class="b-dot"></span>Success</span>
+            <span class="b b-warning"><span class="b-dot"></span>Warning</span>
+            <span class="b b-danger"><span class="b-dot"></span>Failed</span>
+            <span class="b b-info">Info</span>
+            <span class="b b-neutral">Neutral</span>
+            <span class="b b-dark">Dark</span>
+          </div>
+        </div>
+        <div>
+          <div>Outline</div>
+          <div class="badge-row">
+            <span class="b b-outline">Default</span>
+            <span class="b">Active</span>
+            <span class="b">Pending</span>
+            <span class="b">Rejected</span>
+          </div>
+        </div>
+        <div>
+          <div>Sizes</div>
+          <div class="badge-row">
+            <span class="b b-sm b-primary">Small</span>
+            <span class="b b-primary">Default</span>
+            <span class="b b-lg b-primary">Large</span>
+          </div>
+        </div>
+        <div>
+          <div>With icon</div>
+          <div class="badge-row">
+            <span class="b b-success">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="var(--mav-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Verified
+            </span>
+            <span class="b b-warning">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2v3M5 7.5v.5" stroke="var(--mav-warning)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Review
+            </span>
+            <span class="b b-primary">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" opacity=".8"><circle cx="5" cy="5" r="4"/></svg>
+              Live
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Badge — border-radius 9999px · padding 3px 10px</span><span class="preview-sublabel">Uses badge/* token namespace</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Chips -->
+  <div class="section">
+    <h2 class="section-title">Filter Chips</h2>
+    <p class="section-desc">Interactive. Toggle selected state on click. Used for filters and tag pickers.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div>States</div>
+          <div class="badge-row">
+            <div class="chip chip-default">Default</div>
+            <div class="chip chip-selected">Selected</div>
+            <div class="chip chip-default">Disabled</div>
+          </div>
+        </div>
+        <div>
+          <div>With dismiss</div>
+          <div class="badge-row">
+            <div class="chip chip-selected">Transfer <span class="chip-close">×</span></div>
+            <div class="chip chip-selected">Savings <span class="chip-close">×</span></div>
+            <div class="chip chip-default">Payments</div>
+            <div class="chip chip-default">Cards</div>
+          </div>
+        </div>
+        <div>
+          <div>Filter row example</div>
+          <div class="badge-row" id="chip-group">
+            <div class="chip chip-selected" onclick="selectChip(this)">All</div>
+            <div class="chip chip-default" onclick="selectChip(this)">Sent</div>
+            <div class="chip chip-default" onclick="selectChip(this)">Received</div>
+            <div class="chip chip-default" onclick="selectChip(this)">Pending</div>
+            <div class="chip chip-default" onclick="selectChip(this)">Failed</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Chip — border-radius 9999px · padding 6px 14px · border 1px</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Notification dots -->
+  <div class="section">
+    <h2 class="section-title">Notification Badges</h2>
+    <p class="section-desc">Count and dot indicators overlaid on icons and avatar elements.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div class="notif-wrap">
+            <div class="icon-btn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2a6 6 0 016 6v3l1.5 3h-15L4 11V8a6 6 0 016-6zM8 17a2 2 0 004 0"/></svg>
+            </div>
+            <span class="notif-count">3</span>
+          </div>
+          <span>Count</span>
+        </div>
+        <div>
+          <div class="notif-wrap">
+            <div class="icon-btn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h12v10H4zm4 10v2m4-2v2"/></svg>
+            </div>
+            <span class="notif-dot"></span>
+          </div>
+          <span>Dot</span>
+        </div>
+        <div>
+          <div class="notif-wrap">
+            <div>J</div>
+            <span class="notif-dot"></span>
+          </div>
+          <span>Online</span>
+        </div>
+        <div>
+          <div class="notif-wrap">
+            <div>A</div>
+            <span class="notif-count">12</span>
+          </div>
+          <span>Avatar</span>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Notification dot — 10px · count pill 16px min-width · border 2px bg</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Category tags -->
+  <div class="section">
+    <h2 class="section-title">Category Tags</h2>
+    <p class="section-desc">Uppercase label tags. Border-radius 4px. Used on screen headers and list items.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <span class="tag tag-blue">Component</span>
+        <span class="tag tag-lime">Foundation</span>
+        <span class="tag tag-gray">iOS</span>
+        <span class="tag tag-dark">Android</span>
+        <span class="tag">Web</span>
+        <span class="tag">Dev</span>
+        <span class="tag">New</span>
+        <span class="tag">Stable</span>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Tag — border-radius 4px · uppercase · 11px · letter-spacing .06em</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--badge\/primary\/bg</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Primary badge fill</td></tr>
+        <tr><td class="token-name">--badge\/success\/bg</td><td><span class="token-swatch-sm" style="background:rgba(98,156,40,0.12);border:1px solid #d0d0d0"></span><span class="token-value">rgba(98,156,40,0.12)</span></td><td class="token-value">Success badge fill</td></tr>
+        <tr><td class="token-name">--badge\/waring\/bg</td><td><span class="token-swatch-sm" style="background:rgba(255,132,0,0.12);border:1px solid #d0d0d0"></span><span class="token-value">rgba(255,132,0,0.12)</span></td><td class="token-value">Warning badge fill</td></tr>
+        <tr><td class="token-name">--badge\/danger\/bg</td><td><span class="token-swatch-sm" style="background:rgba(255,0,0,0.10);border:1px solid #d0d0d0"></span><span class="token-value">rgba(255,0,0,0.10)</span></td><td class="token-value">Danger badge fill</td></tr>
+        <tr><td class="token-name">--badge\/neutral\/bg</td><td><span class="token-swatch-sm" style="background:#efefef;border:1px solid #d0d0d0"></span><span class="token-value">#efefef</span></td><td class="token-value">Neutral badge fill</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script>
+function selectChip(el){
+  document.querySelectorAll('#chip-group .chip').forEach(c=>{
+    c.className='chip chip-default';
+  });
+  el.className='chip chip-selected';
+}
+</script>
+<script src="../js/theme.js"></script>
+</body>
+</html>

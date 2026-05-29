@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Profile — Android — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.device{width:393px;height:851px;border-radius:48px;background:var(--bc-black);position:relative;box-shadow:0 32px 80px rgba(0,0,0,.4),inset 0 0 0 1.5px var(--mav-border);overflow:hidden;flex-shrink:0}
+.device-screen{position:absolute;inset:0;border-radius:46px;overflow:hidden;background:var(--bc-surface);display:flex;flex-direction:column}
+.ph{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:#000;border-radius:50%;z-index:100}
+.status{position:absolute;top:0;left:0;right:0;padding:14px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:99;height:48px}
+.status-time{font-size:13px;font-weight:600;color:var(--bc-white)}
+.status-icons{display:flex;align-items:center;gap:5px}
+.nav-gesture{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:4px;background:var(--bc-black);border-radius:2px;opacity:.15;z-index:99}
+/* Header */
+.profile-header{background:linear-gradient(160deg,var(--Shade\/Primary\/100),var(--bc-primary-light));padding:50px 24px 28px;text-align:center;position:relative}
+.edit-btn{position:absolute;top:54px;right:20px;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.15);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.avatar-wrap{position:relative;display:inline-block;margin-bottom:12px}
+.avatar-big{width:76px;height:76px;border-radius:24px;background:linear-gradient(135deg,var(--bc-primary-light),var(--bc-tertiary1));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:var(--bc-white)}
+.verified-badge{position:absolute;bottom:-6px;right:-6px;width:24px;height:24px;border-radius:8px;background:var(--bc-primary-dark);display:flex;align-items:center;justify-content:center;border:2px solid var(--bc-white)}
+.prof-name{font-size:20px;font-weight:800;color:var(--bc-white);letter-spacing:-.02em;margin-bottom:4px}
+.prof-email{font-size:13px;color:rgba(255,255,255,.6)}
+/* Stats row */
+.stats-row{display:flex;background:var(--bc-white);border-bottom:1px solid var(--bc-surface)}
+.stat-item{flex:1;padding:14px 0;text-align:center;border-right:1px solid var(--bc-surface)}
+.stat-item:last-child{border-right:none}
+.stat-val{font-size:18px;font-weight:800;color:var(--bc-black);letter-spacing:-.02em}
+.stat-label{font-size:11px;color:var(--bc-mono300-l);margin-top:2px}
+/* Scroll */
+.scroll-body{flex:1;overflow-y:auto;padding:12px 16px 80px}
+.section-lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--bc-mono300-l);padding:10px 4px 6px}
+.menu-card{background:var(--bc-white);border-radius:16px;overflow:hidden;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.menu-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--bc-surface)}
+.menu-row:last-child{border-bottom:none}
+.menu-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.menu-label{flex:1;font-size:15px;font-weight:500;color:var(--bc-black)}
+.menu-badge{padding:3px 8px;border-radius:20px;background:var(--mav-bg-tertiary);font-size:11px;font-weight:700;color:var(--bc-primary-light)}
+.menu-arrow{color:var(--bc-mono200-l);font-size:18px}
+/* Sign out */
+.signout-btn{width:100%;padding:14px;border-radius:14px;background:var(--bc-white);border:1.5px solid color-mix(in srgb, var(--bc-danger) 8%, transparent);color:var(--bc-danger);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px}
+/* Bottom nav */
+.bottom-nav{position:absolute;bottom:0;left:0;right:0;background:var(--bc-white);border-top:1px solid var(--bc-surface);padding:8px 0 22px;display:flex;z-index:50}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;border:none;background:none;cursor:pointer;font-family:inherit}
+.nav-label{font-size:10px;font-weight:600;color:var(--bc-mono300-l)}
+.nav-item.active .nav-label{color:var(--bc-primary-light)}
+.nav-dot{width:4px;height:4px;border-radius:2px;background:var(--bc-primary-light);margin:0 auto}
+.back-link{text-align:center;margin-top:24px;font-size:13px;color:var(--bc-mono500)}
+.back-link a{color:var(--bc-primary-light);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="device-screen">
+    <div class="ph"></div>
+    <div class="status">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="var(--bc-white)"><rect x="0" y="4" width="2.5" height="8" rx="1"/><rect x="4" y="2.5" width="2.5" height="9.5" rx="1"/><rect x="8" y="1" width="2.5" height="11" rx="1"/><rect x="12" y="0" width="2.5" height="12" rx="1" opacity=".3"/></svg>
+        <svg width="24" height="12" viewBox="0 0 24 12"><rect x="0" y="1" width="20" height="10" rx="3" stroke="var(--bc-white)" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="13" height="6" rx="1.5" fill="var(--bc-white)"/><path d="M21.5 4.5v3a1.5 1.5 0 000-3z" fill="var(--bc-white)"/></svg>
+      </div>
+    </div>
+
+    <div class="profile-header">
+      <button class="edit-btn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.5 2.5l2 2L5 13H3v-2L11.5 2.5z" stroke="var(--bc-white)" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="avatar-wrap">
+        <div class="avatar-big">AK</div>
+        <div class="verified-badge">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6l2.5 2.5 4.5-5" stroke="var(--bc-black)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="prof-name">Alex Kim</div>
+      <div class="prof-email">alex.kim@example.com</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-val">$24.3K</div><div class="stat-label">Balance</div></div>
+      <div class="stat-item"><div class="stat-val">47</div><div class="stat-label">Payments</div></div>
+      <div class="stat-item"><div class="stat-val">3.2%</div><div class="stat-label">Savings Rate</div></div>
+    </div>
+
+    <div class="scroll-body">
+      <div class="section-lbl">Account</div>
+      <div class="menu-card">
+        <div class="menu-row">
+          <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3.5" stroke="var(--bc-primary-light)" stroke-width="1.5"/><path d="M2 15c0-3.3 3.1-6 7-6s7 2.7 7 6" stroke="var(--bc-primary-light)" stroke-width="1.5"/></svg></div>
+          <span class="menu-label">Personal Details</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-row">
+          <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L3 5v5c0 3.9 2.7 7.5 6 8.5C12.3 17.5 15 13.9 15 10V5L9 2z" stroke="var(--bc-success)" stroke-width="1.5"/></svg></div>
+          <span class="menu-label">Security & Privacy</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-row">
+          <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="11" rx="2.5" stroke="var(--bc-manna-500)" stroke-width="1.5"/><path d="M5 4V3a4 4 0 018 0v1" stroke="var(--bc-manna-500)" stroke-width="1.5"/></svg></div>
+          <span class="menu-label">Payment Methods</span>
+          <span class="menu-arrow">›</span>
+        </div>
+      </div>
+
+      <div class="section-lbl">Preferences</div>
+      <div class="menu-card">
+        <div class="menu-row">
+          <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2a5 5 0 015 5v3l2 2H2l2-2V7a5 5 0 015-5z" stroke="var(--bc-yoyo-500)" stroke-width="1.5"/></svg></div>
+          <span class="menu-label">Notifications</span>
+          <span class="menu-badge">3</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-row">
+          <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v3M9 13v3M2 9h3M13 9h3M4.1 4.1l2.1 2.1M11.8 11.8l2.1 2.1" stroke="var(--bc-mono600-l)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <span class="menu-label">Appearance</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-row">
+          <div class="menu-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2a7 7 0 100 14A7 7 0 009 2z" stroke="var(--bc-primary-light)" stroke-width="1.5"/><path d="M6 9h6M9 6l3 3-3 3" stroke="var(--bc-primary-light)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <span class="menu-label">Language</span>
+          <span>EN</span>
+          <span class="menu-arrow">›</span>
+        </div>
+      </div>
+
+      <button class="signout-btn">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 9h8M12 6l3 3-3 3" stroke="var(--bc-danger)" stroke-width="1.5" stroke-linecap="round"/><path d="M10 3H4a1 1 0 00-1 1v10a1 1 0 001 1h6" stroke="var(--bc-danger)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Sign Out
+      </button>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item" onclick="window.location.href='04-home.html'"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 9L11 2l9 7v10H15v-6H7v6H2z" stroke="var(--bc-mono300-l)" stroke-width="1.8" fill="none"/></svg><span class="nav-label">Home</span></button>
+      <button class="nav-item"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="10" cy="10" r="7" stroke="var(--bc-mono300-l)" stroke-width="1.8"/><path d="M16 16l3 3" stroke="var(--bc-mono300-l)" stroke-width="1.8" stroke-linecap="round"/></svg><span class="nav-label">Explore</span></button>
+      <button class="nav-item"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="5" width="18" height="13" rx="3" stroke="var(--bc-mono300-l)" stroke-width="1.8"/><path d="M2 9h18" stroke="var(--bc-mono300-l)" stroke-width="1.8"/></svg><span class="nav-label">Pay</span></button>
+      <button class="nav-item"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2a7 7 0 017 7v4l2 3H2l2-3V9a7 7 0 017-7z" stroke="var(--bc-mono300-l)" stroke-width="1.8"/></svg><span class="nav-label">Alerts</span></button>
+      <button class="nav-item active"><svg width="22" height="22" viewBox="0 0 22 22" fill="var(--bc-primary-light)"><circle cx="11" cy="8" r="4"/><path d="M3 19c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="var(--bc-primary-light)"/></svg><span class="nav-label">Profile</span><div class="nav-dot"></div></button>
+    </div>
+    <div class="nav-gesture"></div>
+  </div>
+</div>
+<div class="back-link">
+  <a href="04-home.html">← Home</a> &nbsp;·&nbsp;
+  <a href="06-settings.html">Next: Settings →</a>
+</div>
+</body>
+</html>

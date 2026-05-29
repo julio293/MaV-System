@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Token Architecture — Dev Reference — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--mav-bg);color:var(--mav-fg);-webkit-font-smoothing:antialiased;min-height:100vh}
+.header{background:var(--mav-surface);border-bottom:1px solid var(--mav-border);padding:20px 40px;display:flex;align-items:center;gap:16px}
+.header a{text-decoration:none;font-size:12px;color:var(--mav-primary);font-weight:600}
+.h-divider{color:var(--mav-border)}
+.h-title{font-size:15px;font-weight:800;color:var(--mav-fg)}
+.h-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:rgba(53,46,255,.1);color:var(--bc-primary-light)}
+.content{max-width:900px;margin:0 auto;padding:48px 40px}
+.section{margin-bottom:56px}
+.section-title{font-size:26px;font-weight:800;color:var(--mav-fg);letter-spacing:-.02em;margin-bottom:8px}
+.section-sub{font-size:14px;color:var(--mav-muted);line-height:1.6;margin-bottom:28px;max-width:600px}
+/* 3-layer diagram */
+.layers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--mav-border);border-radius:12px;overflow:hidden;margin-bottom:32px}
+.layer{padding:24px;border-right:1px solid var(--mav-border)}
+.layer:last-child{border-right:none}
+.l-num{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mav-muted);margin-bottom:8px}
+.l-name{font-size:17px;font-weight:800;color:var(--mav-fg);letter-spacing:-.01em;margin-bottom:6px}
+.l-desc{font-size:12px;color:var(--mav-muted);line-height:1.5;margin-bottom:14px}
+.l-examples{display:flex;flex-direction:column;gap:6px}
+.l-ex{font-family:'JetBrains Mono',monospace;font-size:10px;padding:5px 8px;border-radius:5px;line-height:1.4}
+.l-ex-p{background:rgba(53,46,255,.08);color:var(--bc-primary-light)}
+.l-ex-s{background:rgba(0,83,255,.08);color:var(--bc-secondary)}
+.l-ex-c{background:rgba(161,255,91,.15);color:var(--bc-success-dark)}
+.l-arrow{display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--mav-muted);align-self:center;padding:0 12px}
+/* Flow diagram */
+.flow{display:flex;align-items:center;gap:0;overflow-x:auto;margin-bottom:32px;padding:24px;background:var(--mav-surface);border-radius:12px;border:1px solid var(--mav-border)}
+.flow-node{background:var(--mav-bg);border:1px solid var(--mav-border);border-radius:8px;padding:12px 16px;text-align:center;min-width:120px;flex-shrink:0}
+.fn-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mav-muted);margin-bottom:4px}
+.fn-name{font-size:12px;font-weight:700;color:var(--mav-fg)}
+.fn-code{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--mav-primary);margin-top:4px}
+.flow-arrow{font-size:18px;color:var(--mav-muted);padding:0 12px;flex-shrink:0}
+/* Source files */
+.source-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:32px}
+.source-card{background:var(--mav-surface);border:1px solid var(--mav-border);border-radius:10px;padding:18px}
+.sc-icon{font-size:20px;margin-bottom:10px}
+.sc-file{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mav-primary);margin-bottom:6px}
+.sc-desc{font-size:11px;color:var(--mav-muted);line-height:1.5}
+.sc-exports{margin-top:10px;display:flex;flex-direction:column;gap:3px}
+.sc-export{font-family:'JetBrains Mono',monospace;font-size:9px;background:rgba(53,46,255,.06);color:var(--bc-primary-light);padding:3px 7px;border-radius:4px;display:inline-block;width:fit-content}
+/* Naming convention */
+.naming-table{width:100%;border-collapse:collapse;font-size:12px}
+.naming-table th{text-align:left;padding:8px 14px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mav-muted);border-bottom:1px solid var(--mav-border)}
+.naming-table td{padding:10px 14px;border-bottom:1px solid var(--mav-border);font-family:'JetBrains Mono',monospace;font-size:11px}
+.naming-table tr:last-child td{border-bottom:none}
+.segment{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;margin-right:4px}
+</style>
+</head>
+<body>
+<div class="header">
+  <a href="../index.html">MaV</a>
+  <span class="h-divider">/</span>
+  <span class="h-title">Token Architecture</span>
+  <span class="h-badge">Dev Reference</span>
+</div>
+<div class="content">
+  <!-- Overview -->
+  <div class="section">
+    <div class="section-title">3-Layer Token Architecture</div>
+    <p class="section-sub">MaV tokens follow a strict three-layer hierarchy: primitives define raw values, semantic tokens assign roles, component tokens scope to specific UI elements. No component should reference a primitive directly.</p>
+    <div class="layers">
+      <div class="layer">
+        <div class="l-num">Layer 0</div>
+        <div class="l-name">Primitive</div>
+        <div class="l-desc">Raw hex values. Single source of truth. Never reference in component code — only through semantic aliases.</div>
+        <div class="l-examples">
+          <div class="l-ex l-ex-p">--bc-primary-light: #352eff</div>
+          <div class="l-ex l-ex-p">--bc-polipurple-500: #6a35ff</div>
+          <div class="l-ex l-ex-p">--bc-mono400-l: #999999</div>
+          <div class="l-ex l-ex-p">--bc-success: #629c28</div>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="l-num">Layer 1</div>
+        <div class="l-name">Semantic</div>
+        <div class="l-desc">Role-based aliases. Theme-aware — flip between light/dark by reassigning primitive references, not by duplicating CSS.</div>
+        <div class="l-examples">
+          <div class="l-ex l-ex-s">--mav-primary: var(--bc-primary-light)</div>
+          <div class="l-ex l-ex-s">--mav-bg: var(--bc-white)</div>
+          <div class="l-ex l-ex-s">--mav-fg: var(--bc-black)</div>
+          <div class="l-ex l-ex-s">--mav-success: var(--bc-success)</div>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="l-num">Layer 2</div>
+        <div class="l-name">Component</div>
+        <div class="l-desc">Scoped overrides for specific components. Can remap semantic tokens without touching global values.</div>
+        <div class="l-examples">
+          <div class="l-ex l-ex-c">--btn-bg: var(--mav-primary)</div>
+          <div class="l-ex l-ex-c">--btn-fg: var(--mav-on-primary)</div>
+          <div class="l-ex l-ex-c">--input-border: var(--mav-border)</div>
+          <div class="l-ex l-ex-c">--badge-bg: var(--mav-surface)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Token flow -->
+  <div class="section">
+    <div class="section-title">Token Binding Flow</div>
+    <p class="section-sub">How a raw brand hex reaches a rendered button — tracing the full path from source file to CSS property.</p>
+    <div class="flow">
+      <div class="flow-node">
+        <div class="fn-label">Source</div>
+        <div class="fn-name">baseColors.js</div>
+        <div class="fn-code">#352eff</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Primitive</div>
+        <div class="fn-name">CSS :root</div>
+        <div class="fn-code">--bc-primary-light</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Semantic</div>
+        <div class="fn-name">Light theme</div>
+        <div class="fn-code">--mav-primary</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Component</div>
+        <div class="fn-name">Button</div>
+        <div class="fn-code">--btn-bg</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Rendered</div>
+        <div class="fn-name">CSS property</div>
+        <div class="fn-code">background: var(--btn-bg)</div>
+      </div>
+    </div>
+  </div>
+  <!-- Source files -->
+  <div class="section">
+    <div class="section-title">Source Files</div>
+    <p class="section-sub">Token definitions live in three JS files in the design system repo. The CSS is generated from these — never edit the CSS directly.</p>
+    <div class="source-grid">
+      <div class="source-card">
+        <div class="sc-icon">🎨</div>
+        <div class="sc-file">baseColors.js</div>
+        <div class="sc-desc">All primitive hex values. Brand palette, extended color ramps (poliPurple, orangeSunshine, pinkPong, manna), mono scale, system colors.</div>
+        <div class="sc-exports">
+          <span class="sc-export">export const baseColors</span>
+          <span class="sc-export">export const monoScale</span>
+          <span class="sc-export">export const systemColors</span>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="sc-icon">🔗</div>
+        <div class="sc-file">colors.js</div>
+        <div class="sc-desc">Semantic token mappings — links primitives to role-based names. Defines both light and dark mode variants. Single file controls theme switching.</div>
+        <div class="sc-exports">
+          <span class="sc-export">export const lightTheme</span>
+          <span class="sc-export">export const darkTheme</span>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="sc-icon">🧩</div>
+        <div class="sc-file">colorsTokens.js</div>
+        <div class="sc-desc">Component-scoped token overrides. Maps semantic tokens to component-specific CSS custom properties. Used by the token generator.</div>
+        <div class="sc-exports">
+          <span class="sc-export">export const buttonTokens</span>
+          <span class="sc-export">export const inputTokens</span>
+          <span class="sc-export">export const badgeTokens</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Naming convention -->
+  <div class="section">
+    <div class="section-title">Naming Convention</div>
+    <p class="section-sub">All token names follow a consistent pattern: <code>--[prefix]-[category]-[scale/variant]</code></p>
+    <table class="naming-table">
+      <thead><tr><th>Segment</th><th>Example</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><span class="segment">--bc-</span></td><td>--bc-primary-light</td><td>Base Color — Layer 0 primitive</td></tr>
+        <tr><td><span class="segment">--mav-</span></td><td>--mav-primary</td><td>MaV semantic — Layer 1 role token</td></tr>
+        <tr><td><span class="segment">--btn-</span></td><td>--btn-bg</td><td>Component prefix — Layer 2 scope</td></tr>
+        <tr><td><span class="segment">-800 / -500 / -100</span></td><td>--bc-polipurple-500</td><td>Scale step (dark → light: 800 → 100)</td></tr>
+        <tr><td><span class="segment">-l / -d</span></td><td>--bc-mono400-l</td><td>Light / dark mode variant suffix</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Architecture — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+.layer-diagram{display:flex;flex-direction:column;gap:0;margin:24px 0}
+.layer{
+  border:1px solid var(--mav-border);padding:24px 28px;
+  position:relative;cursor:default;
+  transition:background .15s;
+}
+.layer:first-child{border-radius:10px 10px 0 0}
+.layer:last-child{border-radius:0 0 10px 10px}
+.layer:hover{background:color-mix(in srgb,var(--mav-primary) 4%,var(--mav-bg))}
+
+.layer-num{
+  position:absolute;top:24px;right:24px;
+  font-size:11px;font-weight:700;
+  background:var(--mav-primary);color:var(--bc-white);
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+[data-theme=dark] .layer-num{color:var(--bc-black)}
+.layer-name{font-size:18px;font-weight:700;color:var(--mav-fg);margin-bottom:4px}
+.layer-source{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mav-muted);margin-bottom:10px}
+.layer-desc{font-size:13px;color:var(--mav-muted);max-width:560px;margin-bottom:12px}
+.layer-examples{display:flex;flex-wrap:wrap;gap:6px}
+.layer-ex{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  padding:3px 8px;border-radius:4px;
+  background:var(--mav-border);color:var(--mav-fg);
+}
+
+.arrow{
+  display:flex;align-items:center;justify-content:center;
+  height:24px;color:var(--mav-muted);font-size:18px;
+}
+
+.ns-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.ns-card{
+  border:1px solid var(--mav-border);border-radius:8px;padding:16px;
+  background:var(--mav-bg);
+}
+.ns-name{font-size:13px;font-weight:700;color:var(--mav-primary);margin-bottom:4px}
+.ns-desc{font-size:12px;color:var(--mav-muted);margin-bottom:8px}
+.ns-tokens{display:flex;flex-direction:column;gap:3px}
+.ns-token{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mav-muted);padding:2px 0}
+
+.codebase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.cb-card{
+  border:1px solid var(--mav-border);border-radius:10px;overflow:hidden;
+}
+.cb-head{padding:14px 16px;font-size:13px;font-weight:700;color:var(--mav-fg)}
+.cb-body{padding:16px;background:var(--mav-bg);font-size:12px;color:var(--mav-muted);display:flex;flex-direction:column;gap:6px}
+.cb-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:9999px;font-size:10px;font-weight:600}
+.cb-rn{background:rgba(53,46,255,.08);color:var(--bc-primary-light)}
+.cb-web{background:rgba(98,156,40,.08);color:var(--bc-success)}
+.cb-otp{background:rgba(255,132,0,.10);color:var(--bc-warning)}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Foundations</div>
+  <a href="colors.html" class="sidebar-link">Color System</a>
+  <a href="typography.html" class="sidebar-link">Typography</a>
+  <a href="spacing.html" class="sidebar-link">Spacing & Layout</a>
+  <a href="effects.html" class="sidebar-link">Shadows & Effects</a>
+  <a href="dark-mode.html" class="sidebar-link">Dark Mode</a>
+  <a href="tokens.html" class="sidebar-link active">Token Layers</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Token Architecture</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Foundations</div>
+    <h1 class="page-title">Token Architecture</h1>
+    <p class="page-desc">Three layers: primitives → foundation → semantic/component. Never reach past the semantic layer in component code.</p>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Layer Diagram</h2>
+    <div class="layer-diagram">
+      <div class="layer">
+        <div class="layer-num">0</div>
+        <div class="layer-name">Layer 0 — Primitives</div>
+        <div class="layer-source">tokens/baseColors.js · Downloads/BASE COLOR.json</div>
+        <div class="layer-desc">Raw swatches with no semantic meaning. Named by color family and shade. Never reference these directly in component code.</div>
+        <div class="layer-examples">
+          <span class="layer-ex">poliPurple.500 → #6a35ff</span>
+          <span class="layer-ex">popBlack.400 → #121212</span>
+          <span class="layer-ex">orangeSunshine.500 → #ff8744</span>
+          <span class="layer-ex">parkGreen.500 → #3bffad</span>
+          <span class="layer-ex">error.500 → #ee4d37</span>
+        </div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="layer">
+        <div class="layer-num">1</div>
+        <div class="layer-name">Layer 1 — Foundation</div>
+        <div class="layer-source">tokens/colors.js · Downloads/tokensModularApp.json (fyscalFoundation)</div>
+        <div class="layer-desc">Semantic naming with light/dark mode values. These alias primitives. Two collections: fyscalFoundation (light/dark pairs) and neon (fixed dark palette variant).</div>
+        <div class="layer-examples">
+          <span class="layer-ex">Main/Primary → light:#352eff dark:#a1ff5b</span>
+          <span class="layer-ex">Main/Black → light:#171717 dark:#ffffff</span>
+          <span class="layer-ex">Mono/900 → light:#191919 dark:#e5e5e5</span>
+          <span class="layer-ex">System/Danger → #ff0000 (both)</span>
+          <span class="layer-ex">Tint/Primary/100 → #eaeaff</span>
+        </div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="layer">
+        <div class="layer-num">2</div>
+        <div class="layer-name">Layer 2 — Semantic + Component</div>
+        <div class="layer-source">tokens/colorTokens.js · Downloads/tokensModularApp.json (fyscalToken)</div>
+        <div class="layer-desc">Component-scoped tokens with exact Figma variable names. Aliases resolved through layer 1. Token names use <code>/</code> separators verbatim — never normalise to hyphens. Intentional typos match Figma exactly.</div>
+        <div class="layer-examples">
+          <span class="layer-ex">btn/primary/default → #352eff</span>
+          <span class="layer-ex">input-field/focus/outline-box → #352eff</span>
+          <span class="layer-ex">devider/default → #efefef ⚠ typo</span>
+          <span class="layer-ex">alert/waring/text-warning → #ff8400 ⚠ typo</span>
+          <span class="layer-ex">main-text/inverterd → #fff ⚠ typo</span>
+          <span class="layer-ex">OTP/focus/outline-box → #352eff</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div>⚠ Intentional Figma Typos — Match Exactly</div>
+      <div>
+        <span>devider</span>
+        <span>— should be "divider"</span>
+        <span>waring</span>
+        <span>— should be "warning"</span>
+        <span>inverterd</span>
+        <span>— should be "inverted"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Namespaces -->
+  <div class="section">
+    <h2 class="section-title">Token Namespaces (Layer 2)</h2>
+    <div class="ns-grid">
+      <div class="ns-card">
+        <div class="ns-name">background</div>
+        <div class="ns-desc">Page/surface backgrounds</div>
+        <div class="ns-tokens">
+          <div class="ns-token">background/bg-default</div>
+          <div class="ns-token">background/bg-secondary</div>
+          <div class="ns-token">background/bg-tertiary</div>
+        </div>
+      </div>
+      <div class="ns-card">
+        <div class="ns-name">main-text</div>
+        <div class="ns-desc">Text colors</div>
+        <div class="ns-tokens">
+          <div class="ns-token">main-text/default</div>
+          <div class="ns-token">main-text/description</div>
+          <div class="ns-token">main-text/brand</div>
+          <div class="ns-token">main-text/placeholder</div>
+          <div class="ns-token">main-text/disabled</div>
+          <div class="ns-token">main-text/inverterd ⚠</div>
+        </div>
+      </div>
+      <div class="ns-card">
+        <div class="ns-name">btn</div>
+        <div class="ns-desc">All button types</div>
+        <div class="ns-tokens">
+          <div class="ns-token">btn/primary/*</div>
+          <div class="ns-token">btn/secondary/*</div>
+          <div class="ns-token">btn/textonly/*</div>
+          <div class="ns-token">btn/sliding/*</div>
+          <div class="ns-token">btn/swipeup/*</div>
+        </div>
+      </div>
+      <div class="ns-card">
+        <div class="ns-name">input-field</div>
+        <div class="ns-desc">Input states</div>
+        <div class="ns-tokens">
+          <div class="ns-token">input-field/default/*</div>
+          <div class="ns-token">input-field/active/*</div>
+          <div class="ns-token">input-field/focus/*</div>
+          <div class="ns-token">input-field/error/*</div>
+          <div class="ns-token">input-field/disabled/*</div>
+        </div>
+      </div>
+      <div class="ns-card">
+        <div class="ns-name">OTP</div>
+        <div class="ns-desc">OTP boxless variant</div>
+        <div class="ns-tokens">
+          <div class="ns-token">OTP/default/*</div>
+          <div class="ns-token">OTP/focus/*</div>
+          <div class="ns-token">OTP/active/*</div>
+          <div class="ns-token">OTP/disabled/*</div>
+        </div>
+      </div>
+      <div class="ns-card">
+        <div class="ns-name">alert</div>
+        <div class="ns-desc">Alert types</div>
+        <div class="ns-tokens">
+          <div class="ns-token">alert/primary/*</div>
+          <div class="ns-token">alert/waring/* ⚠</div>
+          <div class="ns-token">alert/success/*</div>
+          <div class="ns-token">alert/danger/*</div>
+        </div>
+      </div>
+      <div class="ns-card">
+        <div class="ns-name">badge & chip</div>
+        <div class="ns-desc">Badges and chips</div>
+        <div class="ns-tokens">
+          <div class="ns-token">badge & chip/primary/*</div>
+          <div class="ns-token">badge & chip/white/*</div>
+          <div class="ns-token">badge & chip/waring/* ⚠</div>
+          <div class="ns-token">badge & chip/success/*</div>
+          <div class="ns-token">badge & chip/danger/*</div>
+        </div>
+      </div>
+      <div class="ns-card">
+        <div class="ns-name">nav bar</div>
+        <div class="ns-desc">Navigation components</div>
+        <div class="ns-tokens">
+          <div class="ns-token">nav bar/bg-primary</div>
+          <div class="ns-token">nav bar/bg-secondary</div>
+          <div class="ns-token">nav bar/active-state</div>
+          <div class="ns-token">nav bar/icon-default</div>
+          <div class="ns-token">nav bar/text-default</div>
+        </div>
+      </div>
+      <div class="ns-card">
+        <div class="ns-name">bubble / balance / gain&loss</div>
+        <div class="ns-desc">Finance + chat</div>
+        <div class="ns-tokens">
+          <div class="ns-token">bubble/bg-incoming</div>
+          <div class="ns-token">bubble/bg-outcoming</div>
+          <div class="ns-token">Balance/Bg</div>
+          <div class="ns-token">gain&loss/success/*</div>
+          <div class="ns-token">gain&loss/danger/*</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Three codebases -->
+  <div class="section">
+    <h2 class="section-title">Three Codebases — Don't Cross-Pollinate</h2>
+    <div class="codebase-grid">
+      <div class="cb-card">
+        <div class="cb-head">
+          <span class="cb-tag cb-rn">React Native</span><br>
+          design-system/
+        </div>
+        <div class="cb-body">
+          <div><strong>Styling:</strong> StyleSheet.create()</div>
+          <div><strong>Fonts:</strong> useFonts() hook</div>
+          <div><strong>Spacing:</strong> usePadding() hook</div>
+          <div><strong>Images:</strong> react-native-fast-image</div>
+          <div><strong>Animations:</strong> lottie-react-native</div>
+          <div><strong>Icons:</strong> react-native-svg</div>
+          <div>⚠ Never use CSS here. Hooks at module level will crash.</div>
+        </div>
+      </div>
+      <div class="cb-card">
+        <div class="cb-head">
+          <span class="cb-tag cb-web">React Web + MUI</span><br>
+          kelly-web/
+        </div>
+        <div class="cb-body">
+          <div><strong>Styling:</strong> MUI sx prop + Emotion</div>
+          <div><strong>Theme:</strong> createTheme() + ThemeProvider</div>
+          <div><strong>Global:</strong> SCSS modules</div>
+          <div><strong>State:</strong> Redux Toolkit + RxJS</div>
+          <div><strong>Font:</strong> Plus Jakarta Sans via CDN</div>
+          <div>⚠ Don't add CSS custom properties here — use MUI palette tokens.</div>
+        </div>
+      </div>
+      <div class="cb-card">
+        <div class="cb-head">
+          <span class="cb-tag cb-otp">Standalone OTP</span><br>
+          OTPInput.tsx + .css
+        </div>
+        <div class="cb-body">
+          <div><strong>Styling:</strong> CSS custom properties</div>
+          <div><strong>Token names:</strong> Figma verbatim with /</div>
+          <div><strong>Build:</strong> Vite 5</div>
+          <div><strong>OTP slots:</strong> 48×48px (fixed)</div>
+          <div><strong>Focus ring:</strong> rgba(53,46,255,0.4)</div>
+          <div>⚠ Never hardcode hex — always use a token. Focus ring never changes in dark mode.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forms & Controls — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+.ctrl-row{display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--mav-border)}
+.ctrl-row:last-child{border-bottom:none}
+.ctrl-label{font-size:13px;color:var(--mav-fg);flex:1}
+.ctrl-sub{font-size:11px;color:var(--mav-muted);margin-top:2px}
+.ctrl-state{font-size:11px;color:var(--mav-muted);min-width:70px;text-align:right}
+
+/* Checkbox */
+.mav-checkbox{
+  width:20px;height:20px;border-radius:4px;border:1px solid;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;cursor:pointer;transition:all .15s;
+}
+.cb-default{border-color:var(--bc-mono200-l);background:var(--bc-white)}
+.cb-active{border-color:var(--bc-mono900-l);background:var(--mav-primary);border:none}
+.cb-disabled{border-color:var(--mav-placeholder);background:var(--bc-mono100-l)}
+.checkmark{color:var(--bc-white);font-size:13px;font-weight:700;line-height:1}
+
+/* Toggle */
+.mav-toggle{
+  position:relative;width:44px;height:24px;border-radius:9999px;
+  cursor:pointer;transition:background .2s;flex-shrink:0;
+}
+.toggle-off{background:var(--bc-mono100-l)}
+.toggle-on{background:var(--mav-primary)}
+.toggle-on-dk{background:var(--mav-primary-dark)}
+.toggle-handle{
+  position:absolute;top:3px;width:18px;height:18px;
+  border-radius:50%;background:var(--bc-white);transition:left .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,0.15);
+}
+.toggle-handle-off{left:3px}
+.toggle-handle-on{left:23px}
+[data-theme=dark] .toggle-on{background:var(--mav-primary-dark)}
+[data-theme=dark] .toggle-handle{background:var(--mav-fg)}
+
+/* Search */
+.search-wrap{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 14px;border-radius:4px;border:1px solid;
+  background:var(--mav-bg);width:280px;
+}
+.search-icon{color:var(--mav-muted);flex-shrink:0}
+.search-input{
+  border:none;outline:none;background:transparent;
+  font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;
+  flex:1;
+}
+.search-default .search-input{color:var(--mav-placeholder)}
+.search-default{border-color:var(--bc-mono200-l)}
+.search-active .search-input{color:var(--bc-mono900-l)}
+.search-active{border-color:var(--bc-mono900-l)}
+.search-focused{border-color:var(--bc-polipurple-500);box-shadow:0 0 0 3px color-mix(in srgb,var(--bc-polipurple-500) 20%,transparent)}
+.search-focused .search-input{color:var(--bc-mono900-l)}
+.search-error{border-color:var(--bc-error-500)}
+.search-error .search-input{color:var(--bc-mono900-l)}
+
+/* Radio group */
+.radio-group{display:flex;flex-direction:column;gap:10px}
+.radio-row{display:flex;align-items:center;gap:10px;cursor:pointer}
+.radio-outer{
+  width:20px;height:20px;border-radius:50%;border:1.5px solid;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.radio-empty{border-color:var(--bc-mono200-l);background:var(--bc-white)}
+.radio-selected{border-color:var(--mav-primary);background:var(--bc-white)}
+.radio-dot{width:10px;height:10px;border-radius:50%;background:var(--mav-primary)}
+.radio-label{font-size:14px;color:var(--mav-fg)}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link active">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Forms & Controls</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Forms & Controls</h1>
+    <p class="page-desc">Checkbox, Toggle, Search, and Radio. All interactive in this preview.</p>
+  </div>
+
+  <!-- Checkbox -->
+  <div class="section">
+    <h2 class="section-title">Checkbox</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="ctrl-row">
+          <div class="mav-checkbox cb-default" onclick="this.className='mav-checkbox cb-default'">
+          </div>
+          <div class="ctrl-label">Unchecked — Default<div class="ctrl-sub">Checkbox/default/outline-box: #cccccc</div></div>
+          <div class="ctrl-state">default</div>
+        </div>
+        <div class="ctrl-row">
+          <div class="mav-checkbox cb-active" onclick="">
+            <span class="checkmark">✓</span>
+          </div>
+          <div class="ctrl-label">Checked — Active<div class="ctrl-sub">Checkbox/active/bg-box-active: #352eff · checkmark white</div></div>
+          <div class="ctrl-state">active</div>
+        </div>
+        <div class="ctrl-row">
+          <div class="mav-checkbox cb-disabled">
+          </div>
+          <div class="ctrl-label">Disabled<div class="ctrl-sub">Checkbox/disabled/bg-box-disabled: #e5e5e5</div></div>
+          <div class="ctrl-state">disabled</div>
+        </div>
+        <div class="ctrl-row">
+          <div class="mav-checkbox">
+            <span class="checkmark">✓</span>
+          </div>
+          <div class="ctrl-label">Checked + Disabled</div>
+          <div class="ctrl-state">checked + disabled</div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Checkbox — 20×20px · border-radius 4px</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Toggle -->
+  <div class="section">
+    <h2 class="section-title">Toggle</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="ctrl-row">
+          <div class="mav-toggle toggle-off" id="t1" onclick="this.classList.toggle('toggle-off');this.classList.toggle('toggle-on');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-off');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-on')">
+            <div class="toggle-handle toggle-handle-off"></div>
+          </div>
+          <div class="ctrl-label">Off — Default<div class="ctrl-sub">toggle/default/bg-box: #e5e5e5</div></div>
+          <div class="ctrl-state">Click to toggle</div>
+        </div>
+        <div class="ctrl-row">
+          <div class="mav-toggle toggle-on" id="t2" onclick="this.classList.toggle('toggle-off');this.classList.toggle('toggle-on');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-off');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-on')">
+            <div class="toggle-handle toggle-handle-on"></div>
+          </div>
+          <div class="ctrl-label">On — Active<div class="ctrl-sub">toggle/active/bg-box-active: #352eff (dark: #a1ff5b)</div></div>
+          <div class="ctrl-state">Click to toggle</div>
+        </div>
+        <div class="ctrl-row">
+          <div class="mav-toggle toggle-off">
+            <div class="toggle-handle toggle-handle-off"></div>
+          </div>
+          <div class="ctrl-label">Disabled<div class="ctrl-sub">toggle/disabled/bg-box-disabled: #e5e5e5</div></div>
+          <div class="ctrl-state">disabled</div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Toggle — 44×24px · handle 18×18px</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Search -->
+  <div class="section">
+    <h2 class="section-title">Search Field</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div>Default</div>
+          <div class="search-wrap search-default">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10L14 14"/></svg>
+            <input class="search-input" placeholder="Search..." readonly>
+          </div>
+        </div>
+        <div>
+          <div>Active</div>
+          <div class="search-wrap search-active">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--bc-black)" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10L14 14"/></svg>
+            <input class="search-input" value="search query" readonly>
+            <span>×</span>
+          </div>
+        </div>
+        <div>
+          <div>Focus</div>
+          <div class="search-wrap search-focused">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--bc-polipurple-500)" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10L14 14"/></svg>
+            <input class="search-input" placeholder="Type to search..." readonly>
+          </div>
+        </div>
+        <div>
+          <div>Error</div>
+          <div class="search-wrap search-error">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--bc-error-500)" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10L14 14"/></svg>
+            <input class="search-input" value="no results" readonly>
+          </div>
+          <div>No results found</div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Search — tokens/colorTokens.js search namespace</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Radio -->
+  <div class="section">
+    <h2 class="section-title">Radio Buttons</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="radio-group">
+          <label class="radio-row">
+            <div class="radio-outer radio-selected"><div class="radio-dot"></div></div>
+            <span class="radio-label">Option A — Selected</span>
+          </label>
+          <label class="radio-row">
+            <div class="radio-outer radio-empty"></div>
+            <span class="radio-label">Option B</span>
+          </label>
+          <label class="radio-row">
+            <div class="radio-outer radio-empty"></div>
+            <span class="radio-label">Option C</span>
+          </label>
+          <label class="radio-row">
+            <div class="radio-outer"></div>
+            <span class="radio-label">Disabled option</span>
+          </label>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Radio — uses Checkbox token family</span></div>
+    </div>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

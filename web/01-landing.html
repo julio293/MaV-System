@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Landing — Web — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+/* Browser chrome */
+.browser{width:1080px;border-radius:12px;background:var(--bc-white);box-shadow:0 24px 64px rgba(0,0,0,.15);overflow:hidden;flex-shrink:0}
+.browser-bar{background:var(--bc-surface);border-bottom:1px solid var(--bc-mono100-l);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.browser-dots{display:flex;gap:6px}
+.bd{width:12px;height:12px;border-radius:6px}
+.bd-r{background:#ff5f57}
+.bd-y{background:#febc2e}
+.bd-g{background:#28c840}
+.browser-url{flex:1;background:var(--bc-white);border:1px solid var(--bc-mono100-l);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--bc-mono500);font-family:'JetBrains Mono',monospace;max-width:400px;margin:0 auto}
+/* Site */
+.site{display:flex;flex-direction:column;min-height:600px}
+/* Nav */
+.site-nav{display:flex;align-items:center;padding:16px 48px;border-bottom:1px solid var(--bc-grey);background:var(--bc-white);position:sticky;top:0;z-index:10}
+.nav-logo{display:flex;align-items:center;gap:10px;margin-right:40px}
+.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--bc-primary-light);display:flex;align-items:center;justify-content:center}
+.logo-name{font-size:18px;font-weight:800;color:var(--bc-black);letter-spacing:-.02em}
+.nav-links{display:flex;gap:28px;flex:1}
+.nav-link{font-size:14px;font-weight:500;color:var(--bc-mono500);text-decoration:none;cursor:pointer}
+.nav-link:hover{color:var(--bc-primary-light)}
+.nav-ctas{display:flex;gap:10px;align-items:center}
+.btn-ghost-sm{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;color:var(--bc-primary-light);border:1.5px solid var(--bc-primary-light);background:none;cursor:pointer;font-family:inherit}
+.btn-solid-sm{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;color:var(--bc-white);border:none;background:var(--bc-primary-light);cursor:pointer;font-family:inherit}
+/* Hero */
+.hero{padding:72px 48px 56px;background:linear-gradient(160deg,var(--Shade\/Primary\/100) 0%,var(--bc-primary-light) 55%,var(--bc-tertiary1) 100%);position:relative;overflow:hidden;text-align:center}
+.hero::before{content:'';position:absolute;top:-100px;right:-80px;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,.04)}
+.hero::after{content:'';position:absolute;bottom:-120px;left:-80px;width:360px;height:360px;border-radius:50%;background:rgba(53,46,255,.3)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;color:rgba(255,255,255,.8);margin-bottom:20px;position:relative;z-index:2}
+.hero-title{font-size:52px;font-weight:800;color:var(--bc-white);letter-spacing:-.04em;line-height:1.1;margin-bottom:18px;position:relative;z-index:2;max-width:640px;margin-left:auto;margin-right:auto}
+.hero-title span{color:var(--bc-tertiary1)}
+.hero-sub{font-size:18px;color:rgba(255,255,255,.7);line-height:1.55;margin-bottom:32px;position:relative;z-index:2;max-width:520px;margin-left:auto;margin-right:auto}
+.hero-ctas{display:flex;gap:12px;justify-content:center;position:relative;z-index:2;margin-bottom:48px}
+.btn-hero-p{padding:14px 28px;border-radius:12px;background:var(--bc-white);color:var(--bc-primary-light);font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:inherit}
+.btn-hero-s{padding:14px 28px;border-radius:12px;background:rgba(255,255,255,.12);color:var(--bc-white);font-size:15px;font-weight:600;border:1px solid rgba(255,255,255,.25);cursor:pointer;font-family:inherit}
+/* Token preview band */
+.token-band{display:flex;gap:8px;justify-content:center;position:relative;z-index:2}
+.token-swatch{display:flex;flex-direction:column;align-items:center;gap:6px}
+.swatch{width:36px;height:36px;border-radius:10px}
+.swatch-name{font-size:9px;color:rgba(255,255,255,.5);font-family:'JetBrains Mono',monospace}
+/* Features */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:48px 48px 0}
+.feat-card{background:var(--Tint\/Primary\/100);border-radius:16px;padding:24px}
+.feat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.feat-title{font-size:16px;font-weight:700;color:var(--bc-black);margin-bottom:6px}
+.feat-desc{font-size:13px;color:var(--bc-mono500);line-height:1.5}
+/* Stats */
+.stats-row{display:flex;padding:40px 48px;gap:0;border-bottom:1px solid var(--bc-grey)}
+.stat{flex:1;text-align:center;border-right:1px solid var(--bc-grey);padding:0 20px}
+.stat:last-child{border-right:none}
+.stat-val{font-size:32px;font-weight:800;color:var(--bc-primary-light);letter-spacing:-.03em;font-family:'JetBrains Mono',monospace}
+.stat-label{font-size:13px;color:var(--bc-mono500);margin-top:4px}
+/* CTA banner */
+.cta-banner{background:linear-gradient(135deg,var(--bc-primary-light),var(--bc-tertiary2));padding:40px 48px;display:flex;align-items:center;justify-content:space-between}
+.cta-text h3{font-size:22px;font-weight:800;color:var(--bc-white);margin-bottom:6px}
+.cta-text p{font-size:14px;color:rgba(255,255,255,.7)}
+.btn-cta-white{padding:12px 24px;border-radius:10px;background:var(--bc-white);color:var(--bc-primary-light);font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:inherit}
+/* Footer */
+.site-footer{background:var(--bc-white);padding:20px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--bc-grey)}
+.footer-copy{font-size:12px;color:var(--bc-mono300-l)}
+.footer-links{display:flex;gap:16px}
+.footer-link{font-size:12px;color:var(--bc-mono500);text-decoration:none}
+.back-link{text-align:center;margin-top:24px;font-size:13px;color:var(--bc-mono500)}
+.back-link a{color:var(--bc-primary-light);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="browser">
+  <div class="browser-bar">
+    <div class="browser-dots"><div class="bd bd-r"></div><div class="bd bd-y"></div><div class="bd bd-g"></div></div>
+    <div class="browser-url">mav.design</div>
+  </div>
+  <div class="site">
+    <nav class="site-nav">
+      <div class="nav-logo">
+        <div class="logo-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="2" fill="var(--bc-white)"/><rect x="11" y="2" width="7" height="7" rx="2" fill="rgba(255,255,255,.5)"/><rect x="2" y="11" width="7" height="7" rx="2" fill="rgba(255,255,255,.3)"/><rect x="11" y="11" width="7" height="7" rx="2" fill="rgba(255,255,255,.7)"/></svg></div>
+        <span class="logo-name">MaV</span>
+      </div>
+      <div class="nav-links">
+        <span class="nav-link">Foundations</span>
+        <span class="nav-link">Components</span>
+        <span class="nav-link">Platforms</span>
+        <span class="nav-link">Changelog</span>
+      </div>
+      <div class="nav-ctas">
+        <button class="btn-ghost-sm" onclick="window.location.href='02-login.html'">Sign in</button>
+        <button class="btn-solid-sm" onclick="window.location.href='03-dashboard.html'">Get Started</button>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="var(--bc-primary-dark)"><rect x="0" y="0" width="5" height="5" rx="1.5"/><rect x="7" y="0" width="5" height="5" rx="1.5"/><rect x="0" y="7" width="5" height="5" rx="1.5"/><rect x="7" y="7" width="5" height="5" rx="1.5" opacity=".4"/></svg>
+        Updated · commit d096ab4 · 9 new color ramps
+      </div>
+      <div class="hero-title">Design System<br>Made <span>Visual</span></div>
+      <div class="hero-sub">Tokens, components, and live previews across iOS, Android, and web — powered by a 3-layer token architecture.</div>
+      <div class="hero-ctas">
+        <button class="btn-hero-p" onclick="window.location.href='03-dashboard.html'">Open Dashboard →</button>
+        <button class="btn-hero-s">View on GitHub</button>
+      </div>
+      <div class="token-band">
+        <div class="token-swatch"><div class="swatch"></div><span class="swatch-name">Primary</span></div>
+        <div class="token-swatch"><div class="swatch"></div><span class="swatch-name">Lime</span></div>
+        <div class="token-swatch"><div class="swatch"></div><span class="swatch-name">manna</span></div>
+        <div class="token-swatch"><div class="swatch"></div><span class="swatch-name">yoyo</span></div>
+        <div class="token-swatch"><div class="swatch"></div><span class="swatch-name">parkGreen</span></div>
+        <div class="token-swatch"><div class="swatch"></div><span class="swatch-name">pinkPong</span></div>
+        <div class="token-swatch"><div class="swatch"></div><span class="swatch-name">Tertiary</span></div>
+        <div class="token-swatch"><div class="swatch"></div><span class="swatch-name">Orange</span></div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat"><div class="stat-val">3</div><div class="stat-label">Token Layers</div></div>
+      <div class="stat"><div class="stat-val">9</div><div class="stat-label">Brand Ramps</div></div>
+      <div class="stat"><div class="stat-val">50</div><div class="stat-label">Screens</div></div>
+      <div class="stat"><div class="stat-val">3</div><div class="stat-label">Themes</div></div>
+    </div>
+
+    <div class="features">
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="7" height="7" rx="2" fill="var(--bc-primary-light)"/><rect x="13" y="2" width="7" height="7" rx="2" fill="var(--bc-tertiary1)"/><rect x="2" y="13" width="7" height="7" rx="2" fill="var(--bc-primary-light)" opacity=".5"/><rect x="13" y="13" width="7" height="7" rx="2" fill="var(--bc-tertiary1)" opacity=".3"/></svg></div>
+        <div class="feat-title">3-Layer Tokens</div>
+        <div class="feat-desc">Primitive hex → semantic role → component scope. Change a ramp once; every theme and platform updates.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="6" width="5" height="14" rx="2.5" fill="var(--bc-success)" opacity=".4"/><rect x="9" y="3" width="5" height="17" rx="2.5" fill="var(--bc-success)" opacity=".7"/><rect x="16" y="8" width="4" height="12" rx="2" fill="var(--bc-success)"/></svg></div>
+        <div class="feat-title">Cross-Platform</div>
+        <div class="feat-desc">iOS, Android, and responsive web — all rendered from the same MaV token foundation.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" fill="var(--mav-bg)"/><path d="M5 11a6 6 0 006-6" stroke="var(--bc-primary-dark)" stroke-width="1.8"/><circle cx="11" cy="11" r="3" fill="var(--bc-primary-dark)"/></svg></div>
+        <div class="feat-title">3 Themes</div>
+        <div class="feat-desc">Light, Dark, and Neon — each with complete tint/shade scales. Switch via data-theme attribute.</div>
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <div class="cta-text">
+        <h3>Ready to explore the full system?</h3>
+        <p>50 screens across iOS, Android, and web — all live in your browser.</p>
+      </div>
+      <button class="btn-cta-white" onclick="window.location.href='03-dashboard.html'">Open Dashboard →</button>
+    </div>
+
+    <div class="site-footer">
+      <span class="footer-copy">© 2024 MaV Design System · v1.0.0</span>
+      <div class="footer-links">
+        <a class="footer-link" href="../foundations/colors.html">Colors</a>
+        <a class="footer-link" href="../dev/css-variables.html">Tokens</a>
+        <a class="footer-link" href="../dev/accessibility.html">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="back-link">
+  <a href="../android/10-payment.html">← Android: Payment</a> &nbsp;·&nbsp;
+  <a href="02-login.html">Next: Login →</a>
+</div>
+</body>
+</html>

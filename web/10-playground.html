@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Component Playground — Web — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.browser{width:1080px;border-radius:12px;background:var(--bc-surface-soft);box-shadow:0 24px 64px rgba(0,0,0,.15);overflow:hidden}
+.browser-bar{background:var(--bc-surface);border-bottom:1px solid var(--bc-mono100-l);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.browser-dots{display:flex;gap:6px}.bd{width:12px;height:12px;border-radius:6px}
+.bd-r{background:#ff5f57}.bd-y{background:#febc2e}.bd-g{background:#28c840}
+.browser-url{flex:1;background:var(--bc-white);border:1px solid var(--bc-mono100-l);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--bc-mono500);font-family:'JetBrains Mono',monospace;max-width:400px;margin:0 auto}
+.back-link{margin-bottom:16px;font-size:12px;color:var(--bc-primary-light);text-decoration:none;display:block;text-align:left;width:1080px}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:620px}
+/* App sidebar */
+.sidebar{background:var(--bc-white);border-right:1px solid var(--bc-grey);padding:0 0 24px}
+.sb-head{padding:18px 16px 16px;border-bottom:1px solid var(--bc-grey);display:flex;align-items:center;gap:10px}
+.sb-icon{width:32px;height:32px;border-radius:8px;background:var(--bc-primary-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-title{font-size:14px;font-weight:800;color:var(--bc-black)}
+.sb-nav{padding:12px 8px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--bc-mono500);cursor:pointer;transition:all .12s;text-decoration:none}
+.sb-item:hover{background:var(--bc-surface);color:var(--bc-black)}
+.sb-item.active{background:rgba(53,46,255,.08);color:var(--bc-primary-light);font-weight:600}
+/* Playground layout */
+.playground{display:grid;grid-template-columns:180px 1fr 240px;min-height:620px;background:var(--bc-white)}
+/* Component tree */
+.comp-tree{background:var(--bc-surface-soft);border-right:1px solid var(--bc-grey);padding:16px 0;overflow-y:auto}
+.ct-section{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--bc-mono300-l);padding:10px 14px 4px}
+.ct-item{display:flex;align-items:center;gap:7px;padding:6px 14px;font-size:12px;font-weight:500;color:var(--bc-mono700-l);cursor:pointer;transition:background .12s}
+.ct-item:hover{background:var(--bc-grey)}
+.ct-item.active{background:rgba(53,46,255,.08);color:var(--bc-primary-light);font-weight:600}
+/* Canvas */
+.canvas{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.canvas-topbar{display:flex;align-items:center;padding:10px 16px;border-bottom:1px solid var(--bc-grey);gap:8px;background:var(--bc-white)}
+.canvas-title{font-size:13px;font-weight:700;color:var(--bc-black);flex:1}
+.canvas-tabs{display:flex;gap:2px;background:var(--bc-surface);border-radius:7px;padding:2px}
+.ctab{padding:5px 12px;border-radius:5px;font-size:11px;font-weight:600;color:var(--bc-mono500);cursor:pointer;transition:all .12s;border:none;background:none;font-family:inherit}
+.ctab.active{background:var(--bc-white);color:var(--bc-black);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.canvas-body{flex:1;padding:32px;display:flex;align-items:center;justify-content:center;background:var(--bc-surface-soft);position:relative}
+.canvas-grid{position:absolute;inset:0;background-image:radial-gradient(var(--bc-natural) 1px,transparent 1px);background-size:20px 20px;opacity:.5}
+.canvas-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:16px}
+/* Props panel */
+.props{background:var(--bc-surface-soft);border-left:1px solid var(--bc-grey);padding:16px;overflow-y:auto}
+.props-title{font-size:12px;font-weight:800;color:var(--bc-black);margin-bottom:14px;letter-spacing:-.01em}
+.prop-group{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--bc-grey)}
+.prop-group:last-child{border-bottom:none}
+.prop-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--bc-mono300-l);margin-bottom:8px}
+.prop-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.prop-key{font-size:11px;color:var(--bc-mono700-l);font-weight:500}
+.prop-val{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--bc-primary-light);background:rgba(53,46,255,.08);padding:2px 6px;border-radius:4px;cursor:pointer}
+.prop-select{font-size:11px;border:1px solid var(--bc-mono100-l);border-radius:5px;padding:4px 7px;background:var(--bc-white);color:var(--bc-black);outline:none;font-family:inherit;cursor:pointer}
+.prop-toggle{display:flex;gap:3px}
+.pt-opt{padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--bc-mono100-l);background:var(--bc-white);color:var(--bc-mono500);transition:all .12s}
+.pt-opt.on{background:var(--bc-primary-light);border-color:var(--bc-primary-light);color:var(--bc-white)}
+/* Button variants preview */
+.btn-preview-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.preview-btn{padding:10px 20px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
+.code-block{background:var(--bc-code-dark);border-radius:8px;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bc-primary-dark);line-height:1.6;max-width:500px;text-align:left}
+.code-block .comment{color:var(--bc-code-comment)}
+.code-block .key{color:var(--bc-tertiary1)}
+.code-block .val{color:var(--bc-primary-dark)}
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← Back to MaV Design System</a>
+<div class="browser">
+  <div class="browser-bar">
+    <div class="browser-dots"><div class="bd bd-r"></div><div class="bd bd-y"></div><div class="bd bd-g"></div></div>
+    <div class="browser-url">mav.app/playground</div>
+  </div>
+  <div class="app">
+    <div class="sidebar">
+      <div class="sb-head">
+        <div class="sb-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L3 7v6l7 5 7-5V7L10 2z" fill="var(--bc-primary-dark)"/></svg></div>
+        <div><div class="sb-title">MaV</div></div>
+      </div>
+      <div class="sb-nav">
+        <a class="sb-item" href="03-dashboard.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a>
+        <a class="sb-item" href="04-explore.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Explore</a>
+        <a class="sb-item active" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 22 22 7"/></svg>Playground</a>
+      </div>
+    </div>
+    <!-- Playground 3-col -->
+    <div class="playground">
+      <!-- Component tree -->
+      <div class="comp-tree">
+        <div class="ct-section">Interactive</div>
+        <div class="ct-item active" onclick="setComp(this,'buttons')">Buttons</div>
+        <div class="ct-item" onclick="setComp(this,'inputs')">Inputs</div>
+        <div class="ct-item" onclick="setComp(this,'otp')">OTP</div>
+        <div class="ct-item" onclick="setComp(this,'badges')">Badges</div>
+        <div class="ct-section">Display</div>
+        <div class="ct-item" onclick="setComp(this,'cards')">Cards</div>
+        <div class="ct-item" onclick="setComp(this,'modals')">Modals</div>
+        <div class="ct-item" onclick="setComp(this,'alerts')">Alerts</div>
+        <div class="ct-section">Navigation</div>
+        <div class="ct-item" onclick="setComp(this,'tabs')">Tabs</div>
+        <div class="ct-item" onclick="setComp(this,'breadcrumb')">Breadcrumb</div>
+      </div>
+      <!-- Canvas -->
+      <div class="canvas">
+        <div class="canvas-topbar">
+          <span class="canvas-title" id="canvas-title">Button</span>
+          <div class="canvas-tabs">
+            <button class="ctab active" onclick="setView(this,'preview')">Preview</button>
+            <button class="ctab" onclick="setView(this,'code')">Code</button>
+            <button class="ctab" onclick="setView(this,'tokens')">Tokens</button>
+          </div>
+        </div>
+        <div class="canvas-body">
+          <div class="canvas-grid"></div>
+          <!-- Preview -->
+          <div class="canvas-center" id="preview-view">
+            <div class="btn-preview-row" id="btn-row">
+              <button class="preview-btn" id="demo-btn">Primary</button>
+            </div>
+          </div>
+          <!-- Code view (hidden) -->
+          <div id="code-view">
+            <div class="code-block">
+<span class="comment">/* MaV Button — Primary */</span>
+<span class="key">.btn-primary</span> {
+  <span class="key">  background:</span> <span class="val">var(--mav-primary)</span>;
+  <span class="key">  color:</span> <span class="val">var(--mav-on-primary)</span>;
+  <span class="key">  padding:</span> <span class="val">10px 20px</span>;
+  <span class="key">  border-radius:</span> <span class="val">var(--radius-md)</span>;
+  <span class="key">  font-weight:</span> <span class="val">700</span>;
+  <span class="key">  transition:</span> <span class="val">opacity 0.12s</span>;
+}
+<span class="key">.btn-primary:hover</span> { <span class="key">opacity:</span> <span class="val">0.85</span>; }
+<span class="key">.btn-primary:disabled</span> { <span class="key">opacity:</span> <span class="val">0.4</span>; <span class="key">cursor:</span> <span class="val">not-allowed</span>; }
+            </div>
+          </div>
+          <!-- Tokens view (hidden) -->
+          <div id="tokens-view">
+            <div class="code-block">
+<span class="comment">/* Token binding — Button */</span>
+<span class="key">--mav-primary:</span>    <span class="val">#352eff</span>;
+<span class="key">--mav-on-primary:</span> <span class="val">#ffffff</span>;
+<span class="key">--radius-md:</span>      <span class="val">9px</span>;
+<span class="key">--font-weight-bold:</span><span class="val">700</span>;
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Props -->
+      <div class="props">
+        <div class="props-title">Properties</div>
+        <div class="prop-group">
+          <div class="prop-label">Variant</div>
+          <div class="prop-toggle">
+            <div class="pt-opt on" onclick="setVariant(this,'primary')">Primary</div>
+            <div class="pt-opt" onclick="setVariant(this,'outline')">Outline</div>
+            <div class="pt-opt" onclick="setVariant(this,'ghost')">Ghost</div>
+          </div>
+        </div>
+        <div class="prop-group">
+          <div class="prop-label">Size</div>
+          <div class="prop-toggle">
+            <div class="pt-opt" onclick="setSize(this,'sm')">SM</div>
+            <div class="pt-opt on" onclick="setSize(this,'md')">MD</div>
+            <div class="pt-opt" onclick="setSize(this,'lg')">LG</div>
+          </div>
+        </div>
+        <div class="prop-group">
+          <div class="prop-label">State</div>
+          <select class="prop-select" onchange="setState(this.value)">
+            <option>Default</option>
+            <option>Hover</option>
+            <option>Disabled</option>
+            <option>Loading</option>
+          </select>
+        </div>
+        <div class="prop-group">
+          <div class="prop-label">Tokens</div>
+          <div class="prop-row"><span class="prop-key">background</span><span class="prop-val" id="tok-bg">--mav-primary</span></div>
+          <div class="prop-row"><span class="prop-key">color</span><span class="prop-val" id="tok-fg">--mav-on-primary</span></div>
+          <div class="prop-row"><span class="prop-key">radius</span><span class="prop-val">--radius-md</span></div>
+          <div class="prop-row"><span class="prop-key">padding</span><span class="prop-val">10px 20px</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const btnStyles={
+  primary:{bg:'#352eff',color:'#fff',border:'none',tok:{bg:'--mav-primary',fg:'--mav-on-primary'}},
+  outline:{bg:'transparent',color:'#352eff',border:'2px solid #352eff',tok:{bg:'transparent',fg:'--mav-primary'}},
+  ghost:{bg:'rgba(53,46,255,.08)',color:'#352eff',border:'none',tok:{bg:'rgba(primary,0.08)',fg:'--mav-primary'}}
+};
+const btnSizes={sm:{padding:'6px 14px',fontSize:'12px'},md:{padding:'10px 20px',fontSize:'14px'},lg:{padding:'13px 28px',fontSize:'15px'}};
+let curVariant='primary',curSize='md';
+function applyBtn(){
+  const btn=document.getElementById('demo-btn');
+  const s=btnStyles[curVariant];
+  const sz=btnSizes[curSize];
+  btn.style.background=s.bg;
+  btn.style.color=s.color;
+  btn.style.border=s.border;
+  btn.style.padding=sz.padding;
+  btn.style.fontSize=sz.fontSize;
+  document.getElementById('tok-bg').textContent=s.tok.bg;
+  document.getElementById('tok-fg').textContent=s.tok.fg;
+}
+function setVariant(el,v){
+  document.querySelectorAll('.prop-toggle .pt-opt').forEach((o,i)=>{if(i<3)o.classList.remove('on')});
+  el.classList.add('on');
+  curVariant=v;applyBtn();
+}
+function setSize(el,sz){
+  el.closest('.prop-group').querySelectorAll('.pt-opt').forEach(o=>o.classList.remove('on'));
+  el.classList.add('on');
+  curSize=sz;applyBtn();
+}
+function setState(v){
+  const btn=document.getElementById('demo-btn');
+  if(v==='Disabled'){btn.disabled=true;btn.style.opacity='.4'}
+  else if(v==='Loading'){btn.disabled=true;btn.textContent='Loading…';btn.style.opacity='.7'}
+  else{btn.disabled=false;btn.style.opacity='1';btn.textContent='Primary'}
+}
+function setView(el,v){
+  document.querySelectorAll('.canvas-tabs .ctab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('preview-view').style.display=v==='preview'?'flex':'none';
+  document.getElementById('code-view').style.display=v==='code'?'block':'none';
+  document.getElementById('tokens-view').style.display=v==='tokens'?'block':'none';
+}
+function setComp(el,name){
+  document.querySelectorAll('.ct-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('canvas-title').textContent=name.charAt(0).toUpperCase()+name.slice(1);
+}
+</script>
+</body>
+</html>

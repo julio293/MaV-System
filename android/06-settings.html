@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings — Android — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.device{width:393px;height:851px;border-radius:48px;background:var(--bc-black);position:relative;box-shadow:0 32px 80px rgba(0,0,0,.4),inset 0 0 0 1.5px var(--mav-border);overflow:hidden;flex-shrink:0}
+.device-screen{position:absolute;inset:0;border-radius:46px;overflow:hidden;background:var(--bc-surface);display:flex;flex-direction:column}
+.ph{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:#000;border-radius:50%;z-index:100}
+.status{position:absolute;top:0;left:0;right:0;padding:14px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:99;height:48px}
+.status-time{font-size:13px;font-weight:600;color:var(--bc-black)}
+.status-icons{display:flex;align-items:center;gap:5px}
+.nav-gesture{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:4px;background:var(--bc-black);border-radius:2px;opacity:.15;z-index:99}
+/* Top bar */
+.top-bar{background:var(--bc-white);padding:50px 20px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--bc-grey)}
+.back-btn{width:40px;height:40px;border-radius:12px;background:var(--bc-surface);display:flex;align-items:center;justify-content:center;border:none;cursor:pointer}
+.top-title{font-size:20px;font-weight:800;color:var(--bc-black);letter-spacing:-.02em}
+/* Scroll */
+.scroll-body{flex:1;overflow-y:auto;padding:8px 16px 40px}
+.section-lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--bc-mono300-l);padding:12px 4px 6px}
+.card{background:var(--bc-white);border-radius:16px;overflow:hidden;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--bc-surface)}
+.row:last-child{border-bottom:none}
+.row-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.row-label{flex:1;font-size:15px;font-weight:500;color:var(--bc-black)}
+.row-sub{font-size:13px;color:var(--bc-mono300-l);margin-right:4px}
+.row-arrow{color:var(--bc-mono200-l);font-size:18px}
+/* Android Material toggle */
+.md-toggle{position:relative;width:48px;height:28px;flex-shrink:0}
+.md-toggle input{opacity:0;width:0;height:0;position:absolute}
+.md-track{width:48px;height:28px;border-radius:14px;background:var(--bc-mono100-l);transition:background .2s;cursor:pointer;display:block;position:relative}
+.md-toggle input:checked + .md-track{background:var(--mav-bg-tertiary)}
+.md-thumb{position:absolute;top:4px;left:4px;width:20px;height:20px;border-radius:10px;background:var(--bc-mono300-l);box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .2s,background .2s;pointer-events:none}
+.md-toggle input:checked ~ .md-thumb{transform:translateX(20px);background:var(--bc-primary-light)}
+/* Version */
+.version-row{text-align:center;padding:16px;font-size:12px;color:var(--bc-mono300-l)}
+.back-link{text-align:center;margin-top:24px;font-size:13px;color:var(--bc-mono500)}
+.back-link a{color:var(--bc-primary-light);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="device-screen">
+    <div class="ph"></div>
+    <div class="status">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="var(--bc-black)"><rect x="0" y="4" width="2.5" height="8" rx="1"/><rect x="4" y="2.5" width="2.5" height="9.5" rx="1"/><rect x="8" y="1" width="2.5" height="11" rx="1"/><rect x="12" y="0" width="2.5" height="12" rx="1" opacity=".3"/></svg>
+        <svg width="24" height="12" viewBox="0 0 24 12"><rect x="0" y="1" width="20" height="10" rx="3" stroke="var(--bc-black)" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="13" height="6" rx="1.5" fill="var(--bc-black)"/><path d="M21.5 4.5v3a1.5 1.5 0 000-3z" fill="var(--bc-black)"/></svg>
+      </div>
+    </div>
+
+    <div class="top-bar">
+      <button class="back-btn" onclick="window.location.href='05-profile.html'">
+        <svg width="10" height="16" viewBox="0 0 10 16" fill="none"><path d="M8.5 1.5L2 8l6.5 6.5" stroke="var(--bc-primary-light)" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <span class="top-title">Settings</span>
+    </div>
+
+    <div class="scroll-body">
+      <div class="section-lbl">Account</div>
+      <div class="card">
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3.5" stroke="var(--bc-primary-light)" stroke-width="1.5"/><path d="M2 15c0-3.3 3.1-6 7-6s7 2.7 7 6" stroke="var(--bc-primary-light)" stroke-width="1.5"/></svg></div>
+          <span class="row-label">Account Details</span>
+          <span class="row-arrow">›</span>
+        </div>
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L3 5v5c0 3.9 2.7 7.5 6 8.5C12.3 17.5 15 13.9 15 10V5L9 2z" stroke="var(--bc-success)" stroke-width="1.5"/></svg></div>
+          <span class="row-label">Security</span>
+          <span class="row-arrow">›</span>
+        </div>
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="11" rx="2.5" stroke="var(--bc-manna-500)" stroke-width="1.5"/><path d="M5 4V3a4 4 0 018 0v1" stroke="var(--bc-manna-500)" stroke-width="1.5"/></svg></div>
+          <span class="row-label">Payment Methods</span>
+          <span class="row-arrow">›</span>
+        </div>
+      </div>
+
+      <div class="section-lbl">Notifications</div>
+      <div class="card">
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2a5 5 0 015 5v3l2 2H2l2-2V7a5 5 0 015-5z" stroke="var(--bc-yoyo-500)" stroke-width="1.5"/><path d="M7 14a2 2 0 004 0" stroke="var(--bc-yoyo-500)" stroke-width="1.5"/></svg></div>
+          <span class="row-label">Push Notifications</span>
+          <label class="md-toggle"><input type="checkbox" checked><span class="md-track"></span><span class="md-thumb"></span></label>
+        </div>
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="11" rx="2.5" stroke="var(--bc-primary-light)" stroke-width="1.5"/><path d="M5 8h8M5 11h5" stroke="var(--bc-primary-light)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <span class="row-label">Email Alerts</span>
+          <label class="md-toggle"><input type="checkbox" checked><span class="md-track"></span><span class="md-thumb"></span></label>
+        </div>
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 10V8a5 5 0 0110 0v2" stroke="var(--bc-warning)" stroke-width="1.5"/><path d="M3 10h12l-1.5 5H4.5L3 10z" stroke="var(--bc-warning)" stroke-width="1.5"/></svg></div>
+          <span class="row-label">Transaction Alerts</span>
+          <label class="md-toggle"><input type="checkbox"><span class="md-track"></span><span class="md-thumb"></span></label>
+        </div>
+      </div>
+
+      <div class="section-lbl">Appearance</div>
+      <div class="card">
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v3M9 13v3M2 9h3M13 9h3M4.1 4.1l2.1 2.1M11.8 11.8l2.1 2.1M4.1 13.9l2.1-2.1M11.8 6.2l2.1-2.1" stroke="var(--bc-mono600-l)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <span class="row-label">Theme</span>
+          <span class="row-sub">Light</span>
+          <span class="row-arrow">›</span>
+        </div>
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2a7 7 0 100 14A7 7 0 009 2z" stroke="var(--bc-primary-light)" stroke-width="1.5"/><path d="M6 9h6M9 6l3 3-3 3" stroke="var(--bc-primary-light)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <span class="row-label">Language</span>
+          <span class="row-sub">English (US)</span>
+          <span class="row-arrow">›</span>
+        </div>
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="var(--bc-manna-500)" stroke-width="1.5"/><path d="M6.5 9l2 2 3-3" stroke="var(--bc-manna-500)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <span class="row-label">Accessibility</span>
+          <span class="row-arrow">›</span>
+        </div>
+      </div>
+
+      <div class="section-lbl">About</div>
+      <div class="card">
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="var(--bc-mono600-l)" stroke-width="1.5"/><path d="M9 8v5M9 6v.5" stroke="var(--bc-mono600-l)" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <span class="row-label">About MaV</span>
+          <span class="row-sub">v1.0.0</span>
+          <span class="row-arrow">›</span>
+        </div>
+        <div class="row">
+          <div class="row-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="3" stroke="var(--bc-mono600-l)" stroke-width="1.5"/><path d="M5 9h8M5 6h8M5 12h5" stroke="var(--bc-mono600-l)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <span class="row-label">Terms &amp; Privacy</span>
+          <span class="row-arrow">›</span>
+        </div>
+      </div>
+      <div class="version-row">MaV v1.0.0 (build 100) · Android</div>
+    </div>
+    <div class="nav-gesture"></div>
+  </div>
+</div>
+<div class="back-link">
+  <a href="05-profile.html">← Profile</a> &nbsp;·&nbsp;
+  <a href="07-notifications.html">Next: Notifications →</a>
+</div>
+</body>
+</html>

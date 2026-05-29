@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Explore — iOS — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-surface-ios);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.device{width:393px;height:852px;border-radius:54px;background:#1c1c1e;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.35),inset 0 0 0 2px #3a3a3c,inset 0 0 0 3px #1c1c1e;overflow:hidden;flex-shrink:0}
+.device-screen{position:absolute;inset:0;border-radius:52px;overflow:hidden;background:var(--bc-surface-ios);display:flex;flex-direction:column}
+.di{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:126px;height:37px;background:#000;border-radius:20px;z-index:100}
+.status{position:absolute;top:0;left:0;right:0;padding:16px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:99;height:54px}
+.status-time{font-size:15px;font-weight:600;color:var(--bc-black);padding-left:8px}
+.status-icons{display:flex;align-items:center;gap:6px;padding-right:8px}
+.status-icons svg{fill:var(--bc-black)}
+.home-bar{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:134px;height:5px;background:var(--bc-black);border-radius:3px;opacity:.2;z-index:99}
+
+/* Header */
+.ex-header{background:var(--bc-white);padding:64px 20px 12px}
+.ex-title{font-size:28px;font-weight:800;color:var(--bc-black);letter-spacing:-.03em;margin-bottom:14px}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--bc-surface-ios);border-radius:12px;padding:10px 14px}
+.search-input{flex:1;border:none;background:transparent;font-size:15px;font-family:inherit;color:var(--bc-black);outline:none}
+.search-input::placeholder{color:var(--bc-mono300-l)}
+
+/* Category chips */
+.cat-row{display:flex;gap:8px;padding:12px 16px;overflow-x:auto;background:var(--bc-white);scrollbar-width:none;border-bottom:1px solid var(--bc-surface-ios)}
+.cat-row::-webkit-scrollbar{display:none}
+.cat-chip{padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;white-space:nowrap;border:none;cursor:pointer;font-family:inherit;transition:all .12s}
+.cat-chip.active{background:var(--mav-primary);color:var(--bc-white)}
+.cat-chip.off{background:var(--bc-surface-ios);color:var(--mav-muted)}
+
+/* Scroll body */
+.scroll-body{flex:1;overflow-y:auto;padding:16px 16px 88px;display:flex;flex-direction:column;gap:20px}
+
+/* Section header */
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sec-title{font-size:16px;font-weight:700;color:var(--bc-black)}
+.sec-more{font-size:13px;font-weight:600;color:var(--mav-primary);background:none;border:none;cursor:pointer;font-family:inherit}
+
+/* Quick pay contacts */
+.contacts-row{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.contacts-row::-webkit-scrollbar{display:none}
+.contact-item{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0}
+.contact-avatar{width:52px;height:52px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--bc-white)}
+.contact-name{font-size:11px;font-weight:600;color:var(--bc-black);max-width:54px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.add-contact{width:52px;height:52px;border-radius:18px;background:var(--bc-surface-ios);display:flex;align-items:center;justify-content:center;border:2px dashed var(--bc-mono200-l)}
+
+/* Bill categories */
+.bill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.bill-item{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
+.bill-icon{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center}
+.bill-label{font-size:11px;font-weight:600;color:var(--bc-black);text-align:center;line-height:1.3}
+
+/* Promo card */
+.promo-card{border-radius:18px;overflow:hidden;position:relative;height:110px;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;background:linear-gradient(135deg,var(--mav-primary) 0%,var(--mav-secondary) 100%)}
+.promo-dots{display:flex;gap:4px;position:absolute;top:14px;right:14px}
+.promo-dot{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.35)}
+.promo-dot.on{width:18px;background:var(--bc-white)}
+.promo-badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--bc-white);margin-bottom:5px}
+.promo-title{font-size:17px;font-weight:800;color:var(--bc-white);letter-spacing:-.02em;margin-bottom:2px}
+.promo-sub{font-size:11px;color:rgba(255,255,255,.72)}
+
+/* Recent transactions */
+.txn-mini{background:var(--bc-white);border-radius:16px;padding:4px 0}
+.txn-row{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.txn-row+.txn-row{border-top:1px solid var(--bc-surface-ios)}
+.txn-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.txn-info{flex:1}
+.txn-nm{font-size:14px;font-weight:600;color:var(--bc-black)}
+.txn-mt{font-size:12px;color:var(--mav-muted);margin-top:1px}
+.txn-amt{font-size:14px;font-weight:700}
+.txn-cr{color:var(--mav-success)}
+.txn-db{color:var(--mav-danger)}
+
+/* Bottom nav */
+.bottom-nav{position:absolute;bottom:0;left:0;right:0;background:var(--bc-white);border-top:1px solid var(--bc-surface-ios);padding:8px 0 28px;display:flex;z-index:50}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;border:none;background:none;cursor:pointer;font-family:inherit}
+.nav-label{font-size:10px;font-weight:600;color:var(--bc-mono300-l)}
+.nav-item.active .nav-label{color:var(--mav-primary)}
+.nav-dot{width:4px;height:4px;border-radius:2px;background:var(--mav-primary);margin:0 auto}
+.back-link{text-align:center;margin-top:24px;font-size:13px;color:var(--mav-muted)}
+.back-link a{color:var(--mav-primary);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="device-screen">
+    <div class="di"></div>
+    <div class="status">
+      <span class="status-time">9:41</span>
+      <div class="status-icons"><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="var(--bc-black)" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="14" height="6" rx="1.5" fill="var(--bc-black)"/><path d="M22.5 4.5v3a1.5 1.5 0 000-3z" fill="var(--bc-black)"/></svg></div>
+    </div>
+
+    <div class="ex-header">
+      <div class="ex-title">Explore</div>
+      <div class="search-box">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M12.5 12.5l3 3" stroke="var(--bc-mono300-l)" stroke-width="2" stroke-linecap="round"/><circle cx="8" cy="8" r="5.5" stroke="var(--bc-mono300-l)" stroke-width="2"/></svg>
+        <input class="search-input" placeholder="Search people, bills, services…">
+      </div>
+    </div>
+
+    <div class="cat-row">
+      <button class="cat-chip active">All</button>
+      <button class="cat-chip off">Transfer</button>
+      <button class="cat-chip off">Pay Bills</button>
+      <button class="cat-chip off">Top Up</button>
+      <button class="cat-chip off">Shopping</button>
+    </div>
+
+    <div class="scroll-body">
+
+      <!-- Quick Pay -->
+      <div>
+        <div class="sec-hd">
+          <span class="sec-title">Quick Pay</span>
+          <button class="sec-more">See All</button>
+        </div>
+        <div class="contacts-row">
+          <div class="contact-item">
+            <div class="contact-avatar" style="background:linear-gradient(135deg,var(--mav-primary),var(--mav-secondary))">JL</div>
+            <span class="contact-name">Jamie</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-avatar" style="background:linear-gradient(135deg,#16a34a,#4ade80)">SR</div>
+            <span class="contact-name">Sarah</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-avatar" style="background:linear-gradient(135deg,#ec4899,#f9a8d4)">MK</div>
+            <span class="contact-name">Mike</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-avatar" style="background:linear-gradient(135deg,#ea580c,#fdba74)">AN</div>
+            <span class="contact-name">Anna</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-avatar" style="background:linear-gradient(135deg,#ca8a04,#fde047)">DP</div>
+            <span class="contact-name">David</span>
+          </div>
+          <div class="contact-item">
+            <div class="add-contact"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 5v10M5 10h10" stroke="var(--bc-mono300-l)" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <span class="contact-name">Add</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pay Bills -->
+      <div>
+        <div class="sec-hd">
+          <span class="sec-title">Pay Bills</span>
+          <button class="sec-more">See All</button>
+        </div>
+        <div class="bill-grid">
+          <div class="bill-item">
+            <div class="bill-icon" style="background:rgba(234,88,12,.1)">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 2L4 8v14h18V8L13 2z" stroke="#ea580c" stroke-width="1.8" stroke-linejoin="round"/><rect x="9" y="14" width="3.5" height="8" rx="1" fill="#ea580c" opacity=".5"/><path d="M15 18h2M15 15h2" stroke="#ea580c" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <span class="bill-label">Electricity</span>
+          </div>
+          <div class="bill-item">
+            <div class="bill-icon" style="background:rgba(22,163,74,.1)">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 4c-3 0-7 3-7 8 0 4 2 7 7 10 5-3 7-6 7-10 0-5-4-8-7-8z" stroke="#16a34a" stroke-width="1.8" stroke-linejoin="round"/><path d="M13 10v4l2.5 2" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <span class="bill-label">Water</span>
+          </div>
+          <div class="bill-item">
+            <div class="bill-icon" style="background:rgba(53,46,255,.1)">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="7" width="18" height="12" rx="3" stroke="var(--mav-primary)" stroke-width="1.8"/><path d="M4 12h18" stroke="var(--mav-primary)" stroke-width="1.4"/><circle cx="8.5" cy="16" r="1.5" fill="var(--mav-primary)"/><path d="M12 16h6" stroke="var(--mav-primary)" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <span class="bill-label">Internet</span>
+          </div>
+          <div class="bill-item">
+            <div class="bill-icon" style="background:rgba(236,72,153,.1)">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="7" y="3" width="12" height="20" rx="3" stroke="#ec4899" stroke-width="1.8"/><path d="M11 7h4M13 19v1" stroke="#ec4899" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <span class="bill-label">Mobile</span>
+          </div>
+          <div class="bill-item">
+            <div class="bill-icon" style="background:rgba(124,58,237,.1)">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 3L4 9v4c0 5 4 9 9 10 5-1 9-5 9-10V9L13 3z" stroke="#7c3aed" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="bill-label">Insurance</span>
+          </div>
+          <div class="bill-item">
+            <div class="bill-icon" style="background:rgba(202,138,4,.1)">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="4" width="18" height="18" rx="3" stroke="#ca8a04" stroke-width="1.8"/><path d="M8 13h10M8 9h6M8 17h4" stroke="#ca8a04" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <span class="bill-label">Tax</span>
+          </div>
+          <div class="bill-item">
+            <div class="bill-icon" style="background:rgba(220,38,38,.1)">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="9" stroke="#dc2626" stroke-width="1.8"/><path d="M9 13l2.5 2.5 5-5" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="bill-label">Streaming</span>
+          </div>
+          <div class="bill-item">
+            <div class="bill-icon" style="background:var(--bc-surface-ios)">
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="8" cy="13" r="2" fill="var(--mav-muted)"/><circle cx="13" cy="13" r="2" fill="var(--mav-muted)"/><circle cx="18" cy="13" r="2" fill="var(--mav-muted)"/></svg>
+            </div>
+            <span class="bill-label">More</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Promo -->
+      <div>
+        <div class="sec-hd">
+          <span class="sec-title">For You</span>
+          <button class="sec-more">View All</button>
+        </div>
+        <div class="promo-card">
+          <div class="promo-dots">
+            <div class="promo-dot on"></div>
+            <div class="promo-dot"></div>
+            <div class="promo-dot"></div>
+          </div>
+          <div class="promo-badge">Limited Offer</div>
+          <div class="promo-title">Free Transfers All Weekend</div>
+          <div class="promo-sub">Send to any bank · Ends Sunday 11:59 PM</div>
+        </div>
+      </div>
+
+      <!-- Recent activity -->
+      <div>
+        <div class="sec-hd">
+          <span class="sec-title">Recent Activity</span>
+          <button class="sec-more">History</button>
+        </div>
+        <div class="txn-mini">
+          <div class="txn-row">
+            <div class="txn-ico" style="background:rgba(22,163,74,.1)">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="2.5" stroke="#16a34a" stroke-width="1.5"/><path d="M2 8.5h14" stroke="#16a34a" stroke-width="1.3"/></svg>
+            </div>
+            <div class="txn-info"><div class="txn-nm">PLN Electricity</div><div class="txn-mt">3 min ago</div></div>
+            <div class="txn-amt txn-db">−₦2,500</div>
+          </div>
+          <div class="txn-row">
+            <div class="txn-ico" style="background:rgba(53,46,255,.1)">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M11 6l3 3-3 3" stroke="var(--mav-primary)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="txn-info"><div class="txn-nm">Transfer from Sarah</div><div class="txn-mt">1 hr ago</div></div>
+            <div class="txn-amt txn-cr">+₦15,000</div>
+          </div>
+          <div class="txn-row">
+            <div class="txn-ico" style="background:rgba(236,72,153,.1)">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="8" height="14" rx="2" stroke="#ec4899" stroke-width="1.4"/><path d="M6 6h3M6 9h2" stroke="#ec4899" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="txn-info"><div class="txn-nm">Telkomsel Top Up</div><div class="txn-mt">Yesterday</div></div>
+            <div class="txn-amt txn-db">−₦50,000</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item" onclick="window.location.href='04-home.html'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 9L11 2l9 7v10H15v-6H7v6H2z" stroke="var(--bc-mono300-l)" stroke-width="1.8"/></svg>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-item active">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="10" cy="10" r="7" stroke="var(--mav-primary)" stroke-width="1.8"/><path d="M16 16l3 3" stroke="var(--mav-primary)" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span class="nav-label">Explore</span>
+        <div class="nav-dot"></div>
+      </button>
+      <button class="nav-item" onclick="window.location.href='10-payment.html'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="5" width="18" height="13" rx="3" stroke="var(--bc-mono300-l)" stroke-width="1.8"/><path d="M2 9h18" stroke="var(--bc-mono300-l)" stroke-width="1.8"/></svg>
+        <span class="nav-label">Pay</span>
+      </button>
+      <button class="nav-item" onclick="window.location.href='07-notifications.html'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2a7 7 0 017 7v4l2 3H2l2-3V9a7 7 0 017-7z" stroke="var(--bc-mono300-l)" stroke-width="1.8"/><path d="M9 18a2 2 0 004 0" stroke="var(--bc-mono300-l)" stroke-width="1.5" fill="none"/></svg>
+        <span class="nav-label">Alerts</span>
+      </button>
+      <button class="nav-item" onclick="window.location.href='05-profile.html'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="var(--bc-mono300-l)" stroke-width="1.8"/><path d="M3 19c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="var(--bc-mono300-l)" stroke-width="1.8"/></svg>
+        <span class="nav-label">Profile</span>
+      </button>
+    </div>
+    <div class="home-bar"></div>
+  </div>
+</div>
+<div class="back-link">
+  <a href="08-dark-mode.html">← Dark Mode</a> &nbsp;·&nbsp;
+  <a href="10-payment.html">Next: Payment →</a>
+</div>
+<script>
+document.querySelectorAll('.cat-chip').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.cat-chip').forEach(function(b){ b.classList.remove('active'); b.classList.add('off'); });
+    btn.classList.remove('off'); btn.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

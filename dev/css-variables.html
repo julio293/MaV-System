@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSS Variables — Dev Reference — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--mav-bg);color:var(--mav-fg);-webkit-font-smoothing:antialiased;min-height:100vh}
+.header{background:var(--mav-surface);border-bottom:1px solid var(--mav-border);padding:20px 40px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:10}
+.header a{text-decoration:none;font-size:12px;color:var(--mav-primary);font-weight:600}
+.h-divider{color:var(--mav-border)}
+.h-title{font-size:15px;font-weight:800;color:var(--mav-fg);letter-spacing:-.01em}
+.h-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:rgba(53,46,255,.1);color:var(--bc-primary-light)}
+.h-theme{margin-left:auto;display:flex;gap:6px}
+.theme-btn{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--mav-border);background:var(--mav-surface);color:var(--mav-muted);font-family:inherit;transition:all .12s}
+.theme-btn.active{border-color:var(--bc-primary-light);color:var(--bc-primary-light);background:rgba(53,46,255,.06)}
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 57px)}
+.toc{position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto;border-right:1px solid var(--mav-border);padding:20px 0;background:var(--mav-bg)}
+.toc-section{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mav-muted);padding:10px 20px 3px}
+.toc-item{display:block;padding:5px 20px;font-size:12px;font-weight:500;color:var(--mav-muted);text-decoration:none;transition:color .12s}
+.toc-item:hover{color:var(--mav-primary)}
+.toc-item.active{color:var(--mav-primary);font-weight:600}
+.content{padding:40px;max-width:860px}
+.section{margin-bottom:48px}
+.section-head{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--mav-border)}
+.section-title{font-size:20px;font-weight:800;color:var(--mav-fg);letter-spacing:-.02em;margin-bottom:4px}
+.section-sub{font-size:13px;color:var(--mav-muted)}
+/* Table */
+.var-table{width:100%;border-collapse:collapse;font-size:12px}
+.var-table th{text-align:left;padding:8px 12px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mav-muted);border-bottom:1px solid var(--mav-border);background:var(--mav-bg)}
+.var-table td{padding:10px 12px;border-bottom:1px solid var(--mav-border);vertical-align:middle}
+.var-table tr:last-child td{border-bottom:none}
+.var-table tr:hover td{background:color-mix(in srgb,var(--mav-border) 30%,transparent)}
+.var-name{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mav-primary);cursor:pointer}
+.var-name:hover{text-decoration:underline}
+.var-value{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mav-muted)}
+.var-swatch{width:18px;height:18px;border-radius:4px;display:inline-block;vertical-align:middle;margin-right:8px;border:1px solid rgba(0,0,0,.1)}
+.var-desc{font-size:11px;color:var(--mav-muted)}
+.copy-toast{position:fixed;bottom:24px;right:24px;background:var(--bc-black);color:var(--bc-primary-dark);padding:10px 18px;border-radius:8px;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;opacity:0;transition:opacity .2s;pointer-events:none;z-index:100}
+.copy-toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="header">
+  <a href="../index.html">MaV</a>
+  <span class="h-divider">/</span>
+  <span class="h-title">CSS Variables</span>
+  <span class="h-badge">Dev Reference</span>
+  <div class="h-theme">
+    <button class="theme-btn active" onclick="setTheme('light',this)">Light</button>
+    <button class="theme-btn" onclick="setTheme('dark',this)">Dark</button>
+  </div>
+</div>
+<div class="layout">
+  <nav class="toc">
+    <div class="toc-section">Primitives</div>
+    <a class="toc-item active" href="#brand">Brand</a>
+    <a class="toc-item" href="#mono">Mono Scale</a>
+    <a class="toc-item" href="#system">System</a>
+    <a class="toc-item" href="#polipurple">poliPurple</a>
+    <a class="toc-item" href="#orange">orangeSunshine</a>
+    <a class="toc-item" href="#pink">pinkPong</a>
+    <a class="toc-item" href="#manna">manna</a>
+    <div class="toc-section">Semantic</div>
+    <a class="toc-item" href="#semantic-color">Color</a>
+    <a class="toc-item" href="#semantic-type">Typography</a>
+    <a class="toc-item" href="#semantic-space">Spacing</a>
+    <a class="toc-item" href="#semantic-radius">Radius</a>
+    <div class="toc-section">Component</div>
+    <a class="toc-item" href="#comp-button">Button</a>
+    <a class="toc-item" href="#comp-input">Input</a>
+    <a class="toc-item" href="#comp-badge">Badge</a>
+  </nav>
+  <div class="content">
+    <!-- Brand -->
+    <div class="section" id="brand">
+      <div class="section-head">
+        <div class="section-title">Brand Primitives</div>
+        <div class="section-sub">Core brand colors — direct hex values. Never use in components without a semantic alias.</div>
+      </div>
+      <table class="var-table">
+        <thead><tr><th>Variable</th><th>Value</th><th>Preview</th><th>Notes</th></tr></thead>
+        <tbody id="brand-rows"></tbody>
+      </table>
+    </div>
+    <!-- Mono -->
+    <div class="section" id="mono">
+      <div class="section-head">
+        <div class="section-title">Mono Scale</div>
+        <div class="section-sub">Neutral grey ramp — light and dark mode variants.</div>
+      </div>
+      <table class="var-table">
+        <thead><tr><th>Variable</th><th>Light</th><th>Dark</th><th>Use case</th></tr></thead>
+        <tbody id="mono-rows"></tbody>
+      </table>
+    </div>
+    <!-- poliPurple -->
+    <div class="section" id="polipurple">
+      <div class="section-head">
+        <div class="section-title">poliPurple Ramp</div>
+        <div class="section-sub">Added in commit d096ab4 — 8-step purple ramp for accent use cases.</div>
+      </div>
+      <table class="var-table">
+        <thead><tr><th>Variable</th><th>Value</th><th>Preview</th></tr></thead>
+        <tbody id="purple-rows"></tbody>
+      </table>
+    </div>
+    <!-- Semantic -->
+    <div class="section" id="semantic-color">
+      <div class="section-head">
+        <div class="section-title">Semantic Color Tokens</div>
+        <div class="section-sub">Theme-aware tokens — these flip between light/dark automatically.</div>
+      </div>
+      <table class="var-table">
+        <thead><tr><th>Token</th><th>Light value</th><th>Dark value</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td class="var-name" onclick="copy('--mav-bg')">--mav-bg</td><td class="var-value">#ffffff</td><td class="var-value">#171717</td><td class="var-desc">Page background</td></tr>
+          <tr><td class="var-name" onclick="copy('--mav-surface')">--mav-surface</td><td class="var-value">#f8f8f8</td><td class="var-value">#1a1a1a</td><td class="var-desc">Card / panel surface</td></tr>
+          <tr><td class="var-name" onclick="copy('--mav-fg')">--mav-fg</td><td class="var-value">#171717</td><td class="var-value">#e5e5e5</td><td class="var-desc">Primary text</td></tr>
+          <tr><td class="var-name" onclick="copy('--mav-muted')">--mav-muted</td><td class="var-value">#7f7f7f</td><td class="var-value">#666666</td><td class="var-desc">Secondary text, placeholders</td></tr>
+          <tr><td class="var-name" onclick="copy('--mav-border')">--mav-border</td><td class="var-value">#e5e5e5</td><td class="var-value">#2a2a2a</td><td class="var-desc">Hairline borders</td></tr>
+          <tr><td class="var-name" onclick="copy('--mav-primary')">--mav-primary</td><td class="var-value">#352eff</td><td class="var-value">#a1ff5b</td><td class="var-desc">Brand action color</td></tr>
+          <tr><td class="var-name" onclick="copy('--mav-on-primary')">--mav-on-primary</td><td class="var-value">#ffffff</td><td class="var-value">#171717</td><td class="var-desc">Text on primary bg</td></tr>
+          <tr><td class="var-name" onclick="copy('--mav-success')">--mav-success</td><td class="var-value">#629c28</td><td class="var-value">#a1ff5b</td><td class="var-desc">Success states</td></tr>
+          <tr><td class="var-name" onclick="copy('--mav-danger')">--mav-danger</td><td class="var-value">#ff0000</td><td class="var-value">#ff426f</td><td class="var-desc">Error / destructive</td></tr>
+          <tr><td class="var-name" onclick="copy('--mav-warning')">--mav-warning</td><td class="var-value">#ff8400</td><td class="var-value">#ffcb45</td><td class="var-desc">Warning states</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Spacing -->
+    <div class="section" id="semantic-space">
+      <div class="section-head">
+        <div class="section-title">Spacing Scale</div>
+        <div class="section-sub">4px base unit — multiply for consistent layouts.</div>
+      </div>
+      <table class="var-table">
+        <thead><tr><th>Token</th><th>Value</th><th>px</th><th>Use case</th></tr></thead>
+        <tbody>
+          <tr><td class="var-name" onclick="copy('--space-1')">--space-1</td><td class="var-value">0.25rem</td><td class="var-desc">4px</td><td class="var-desc">Icon gaps, micro spacing</td></tr>
+          <tr><td class="var-name" onclick="copy('--space-2')">--space-2</td><td class="var-value">0.5rem</td><td class="var-desc">8px</td><td class="var-desc">Input padding (tight)</td></tr>
+          <tr><td class="var-name" onclick="copy('--space-3')">--space-3</td><td class="var-value">0.75rem</td><td class="var-desc">12px</td><td class="var-desc">Card padding (tight)</td></tr>
+          <tr><td class="var-name" onclick="copy('--space-4')">--space-4</td><td class="var-value">1rem</td><td class="var-desc">16px</td><td class="var-desc">Standard element gap</td></tr>
+          <tr><td class="var-name" onclick="copy('--space-5')">--space-5</td><td class="var-value">1.25rem</td><td class="var-desc">20px</td><td class="var-desc">Section inner padding</td></tr>
+          <tr><td class="var-name" onclick="copy('--space-6')">--space-6</td><td class="var-value">1.5rem</td><td class="var-desc">24px</td><td class="var-desc">Card padding (default)</td></tr>
+          <tr><td class="var-name" onclick="copy('--space-8')">--space-8</td><td class="var-value">2rem</td><td class="var-desc">32px</td><td class="var-desc">Section gap</td></tr>
+          <tr><td class="var-name" onclick="copy('--space-10')">--space-10</td><td class="var-value">2.5rem</td><td class="var-desc">40px</td><td class="var-desc">Page gutter</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Radius -->
+    <div class="section" id="semantic-radius">
+      <div class="section-head">
+        <div class="section-title">Border Radius</div>
+        <div class="section-sub">Consistent corner treatment across components.</div>
+      </div>
+      <table class="var-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Use case</th></tr></thead>
+        <tbody>
+          <tr><td class="var-name" onclick="copy('--radius-sm')">--radius-sm</td><td class="var-value">4px</td><td class="var-desc">Tags, chips, small elements</td></tr>
+          <tr><td class="var-name" onclick="copy('--radius-md')">--radius-md</td><td class="var-value">8px</td><td class="var-desc">Buttons, inputs (default)</td></tr>
+          <tr><td class="var-name" onclick="copy('--radius-lg')">--radius-lg</td><td class="var-value">12px</td><td class="var-desc">Cards, panels</td></tr>
+          <tr><td class="var-name" onclick="copy('--radius-xl')">--radius-xl</td><td class="var-value">16px</td><td class="var-desc">Modals, sheets</td></tr>
+          <tr><td class="var-name" onclick="copy('--radius-full')">--radius-full</td><td class="var-value">9999px</td><td class="var-desc">Pills, avatars</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="copy-toast" id="toast"></div>
+<script>
+const brandVars=[
+  ['--bc-primary-light','#352eff','Primary light'],
+  ['--bc-primary-dark','#a1ff5b','Primary dark / accent'],
+  ['--bc-secondary','#0053ff','Secondary action'],
+  ['--bc-tertiary1','#7c9dff','Tertiary 1'],
+  ['--bc-tertiary2','#030192','Tertiary 2'],
+  ['--bc-variation','#ff00ff','Variation / magenta'],
+  ['--bc-white','#ffffff','Pure white'],
+  ['--bc-black','#171717','Near-black'],
+  ['--bc-grey','#efefef','Neutral grey'],
+];
+const monoVars=[
+  ['100','#e5e5e5','#242424','Subtle dividers, disabled bg'],
+  ['200','#cccccc','#484848','Placeholder text, icons'],
+  ['300','#b2b2b2','#6a6a6a','Secondary icons'],
+  ['400','#999999','#666666','Muted labels'],
+  ['500','#7f7f7f','#7f7f7f','Mid-grey (same both modes)'],
+  ['600','#666666','#999999','Body muted'],
+  ['700','#4c4c4c','#b2b2b2','Secondary body'],
+  ['800','#333333','#cccccc','Body default'],
+  ['900','#191919','#e5e5e5','Near-fg'],
+];
+const purpleVars=[
+  ['--bc-polipurple-100','#e8dfff'],
+  ['--bc-polipurple-200','#d2c2ff'],
+  ['--bc-polipurple-300','#b49aff'],
+  ['--bc-polipurple-400','#9772ff'],
+  ['--bc-polipurple-500','#6a35ff'],
+  ['--bc-polipurple-600','#4a25b3'],
+  ['--bc-polipurple-700','#351a80'],
+  ['--bc-polipurple-800','#20104d'],
+];
+
+const bTbody=document.getElementById('brand-rows');
+brandVars.forEach(([name,val,desc])=>{
+  bTbody.innerHTML+=`<tr><td class="var-name" onclick="copy('${name}')">${name}</td><td class="var-value">${val}</td><td><span class="var-swatch" style="background:${val}"></span></td><td class="var-desc">${desc}</td></tr>`;
+});
+const mTbody=document.getElementById('mono-rows');
+monoVars.forEach(([step,light,dark,desc])=>{
+  mTbody.innerHTML+=`<tr><td class="var-name" onclick="copy('--bc-mono${step}-l')">--bc-mono${step}</td><td class="var-value"><span class="var-swatch" style="background:${light}"></span>${light}</td><td class="var-value"><span class="var-swatch" style="background:${dark}"></span>${dark}</td><td class="var-desc">${desc}</td></tr>`;
+});
+const pTbody=document.getElementById('purple-rows');
+purpleVars.forEach(([name,val])=>{
+  pTbody.innerHTML+=`<tr><td class="var-name" onclick="copy('${name}')">${name}</td><td class="var-value">${val}</td><td><span class="var-swatch" style="background:${val}"></span></td></tr>`;
+});
+
+function copy(text){
+  navigator.clipboard.writeText(text).catch(()=>{});
+  const t=document.getElementById('toast');
+  t.textContent='Copied: '+text;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1800);
+}
+function setTheme(mode,btn){
+  document.documentElement.setAttribute('data-theme',mode==='dark'?'dark':'');
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+// Highlight TOC on scroll
+const sections=document.querySelectorAll('.section');
+const tocItems=document.querySelectorAll('.toc-item');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(s.getBoundingClientRect().top<=80)cur=s.id});
+  tocItems.forEach(i=>{
+    i.classList.toggle('active',i.getAttribute('href')==='#'+cur);
+  });
+});
+</script>
+</body>
+</html>

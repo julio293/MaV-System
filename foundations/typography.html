@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Typography — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+
+<!-- Apply saved font before first paint to prevent FOUT -->
+<script>
+(function(){
+  var map = { jakarta:"'Plus Jakarta Sans',sans-serif", inter:"'Inter',sans-serif", poppins:"'Poppins',sans-serif" };
+  var k = ''; try { k = localStorage.getItem('mav-font-choice') || ''; } catch(e){}
+  var v = map[k] || map.jakarta;
+  document.documentElement.style.setProperty('--font-active', v);
+})();
+</script>
+
+<style>
+/* ── Font picker strip ────────────────────────────────────────────────────── */
+.font-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--mav-surface);
+  border-bottom: 1px solid var(--mav-border);
+  position: sticky;
+  top: 48px;
+  z-index: 50;
+}
+.font-picker-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mav-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.font-btn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: 1.5px solid var(--mav-border);
+  background: transparent;
+  color: var(--mav-muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+  font-family: var(--font-body);
+}
+.font-btn:hover {
+  border-color: var(--mav-primary);
+  color: var(--mav-primary);
+}
+.font-btn.active {
+  background: var(--mav-primary);
+  border-color: var(--mav-primary);
+  color: #fff;
+  font-weight: 600;
+}
+.font-btn[data-font="jakarta"] { font-family: 'Plus Jakarta Sans', sans-serif; }
+.font-btn[data-font="inter"]   { font-family: 'Inter', sans-serif; }
+.font-btn[data-font="poppins"] { font-family: 'Poppins', sans-serif; }
+
+.font-preview-note {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--mav-muted);
+  font-family: var(--font-mono);
+}
+
+/* ── Font family cards ────────────────────────────────────────────────────── */
+.font-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) { .font-cards { grid-template-columns: 1fr; } }
+
+.font-card {
+  border: 1.5px solid var(--mav-border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  background: var(--mav-surface);
+  position: relative;
+  transition: border-color 0.15s ease;
+}
+.font-card.is-active {
+  border-color: var(--mav-primary);
+}
+.font-card.is-active::after {
+  content: 'Active';
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mav-primary);
+  background: var(--mav-primary-soft);
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+}
+.font-card-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mav-fg);
+  margin-bottom: 2px;
+}
+.font-card-token {
+  font-size: 11px;
+  color: var(--mav-muted);
+  font-family: var(--font-mono);
+  margin-bottom: 20px;
+}
+.font-card-preview {
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--mav-fg);
+  line-height: 1.05;
+  margin-bottom: 12px;
+}
+.font-card-abc {
+  font-size: 13px;
+  color: var(--mav-muted);
+  line-height: 1.9;
+}
+.font-card-use {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--mav-muted);
+  line-height: 1.6;
+  border-top: 1px solid var(--mav-border);
+  padding-top: 12px;
+}
+
+/* ── Weight rows ──────────────────────────────────────────────────────────── */
+.weight-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--mav-border);
+}
+.weight-row:last-child { border-bottom: none; }
+.weight-meta { min-width: 200px; flex-shrink: 0; display: flex; gap: 12px; align-items: baseline; }
+.weight-num { font-size: 12px; font-family: var(--font-mono); color: var(--mav-muted); min-width: 32px; }
+.weight-name { font-size: 12px; color: var(--mav-muted); min-width: 80px; }
+.weight-token { font-size: 11px; font-family: var(--font-mono); color: var(--mav-primary); }
+.weight-sample { font-size: 22px; color: var(--mav-fg); flex: 1; font-family: var(--font-active); }
+
+/* ── Type scale rows ──────────────────────────────────────────────────────── */
+.type-row {
+  display: flex;
+  align-items: baseline;
+  gap: 28px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--mav-border);
+}
+.type-row:last-child { border-bottom: none; }
+.type-meta { min-width: 200px; flex-shrink: 0; }
+.type-label { font-size: 12px; font-weight: 600; color: var(--mav-fg); margin-bottom: 2px; }
+.type-sub { font-size: 11px; color: var(--mav-muted); font-family: var(--font-mono); }
+.type-sample { flex: 1; color: var(--mav-fg); font-family: var(--font-active); }
+
+/* ── CSS token block ──────────────────────────────────────────────────────── */
+.token-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.token-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mav-muted);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--mav-border);
+  background: var(--mav-bg);
+}
+.token-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--mav-border);
+  vertical-align: middle;
+}
+.token-table tr:last-child td { border-bottom: none; }
+.token-table .tk { font-family: var(--font-mono); color: var(--mav-primary); font-size: 12px; }
+.token-table .tv { font-family: var(--font-mono); color: var(--mav-fg); font-size: 12px; }
+.token-table .td { color: var(--mav-muted); font-size: 12px; }
+.token-preview-cell { font-size: 18px; font-weight: 600; font-family: var(--font-active); color: var(--mav-fg); }
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar"></nav>
+<main class="doc-main">
+
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Typography</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <!-- Font picker — sticky -->
+  <div class="font-picker">
+    <span class="font-picker-label">Font family</span>
+    <button class="font-btn active" data-font="jakarta">Plus Jakarta Sans</button>
+    <button class="font-btn" data-font="inter">Inter</button>
+    <button class="font-btn" data-font="poppins">Poppins</button>
+    <span class="font-preview-note">All samples update live · saved to localStorage</span>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Foundations</div>
+    <h1 class="page-title">Typography</h1>
+    <p class="page-desc">MaV supports three interchangeable UI font families — Plus Jakarta Sans, Inter, and Poppins. One is active at a time via <code style="font-family:var(--font-mono);font-size:13px;">--font-active</code>. All <code style="font-family:var(--font-mono);font-size:13px;">--font-display</code> and <code style="font-family:var(--font-mono);font-size:13px;">--font-body</code> tokens reference it automatically.</p>
+  </div>
+
+  <!-- Font family cards -->
+  <div class="section">
+    <h2 class="section-title">Font Families</h2>
+    <p class="section-desc">Choose the active family above. Each card shows the typeface in its own rendering — independent of the active selection — so you can compare personality before switching.</p>
+    <div class="font-cards">
+
+      <div class="font-card" data-font-card="jakarta">
+        <div class="font-card-name">Plus Jakarta Sans</div>
+        <div class="font-card-token">--font-jakarta · var(--font-active) default</div>
+        <div class="font-card-preview" style="font-family:'Plus Jakarta Sans',sans-serif">Aa Bb Cc</div>
+        <div class="font-card-abc" style="font-family:'Plus Jakarta Sans',sans-serif">
+          ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+          abcdefghijklmnopqrstuvwxyz<br>
+          0123456789 !@#$%&amp;
+        </div>
+        <div class="font-card-use">Geometric humanist. Warm stroke contrast with consistent letterform structure. Strong across both display and body sizes. Recommended for UI-first products.</div>
+      </div>
+
+      <div class="font-card" data-font-card="inter">
+        <div class="font-card-name">Inter</div>
+        <div class="font-card-token">--font-inter</div>
+        <div class="font-card-preview" style="font-family:'Inter',sans-serif">Aa Bb Cc</div>
+        <div class="font-card-abc" style="font-family:'Inter',sans-serif">
+          ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+          abcdefghijklmnopqrstuvwxyz<br>
+          0123456789 !@#$%&amp;
+        </div>
+        <div class="font-card-use">Designed for screens. Optimized at small sizes with tight metrics and tall x-height. Best for data-dense UIs, dashboards, and developer tooling.</div>
+      </div>
+
+      <div class="font-card" data-font-card="poppins">
+        <div class="font-card-name">Poppins</div>
+        <div class="font-card-token">--font-poppins</div>
+        <div class="font-card-preview" style="font-family:'Poppins',sans-serif">Aa Bb Cc</div>
+        <div class="font-card-abc" style="font-family:'Poppins',sans-serif">
+          ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+          abcdefghijklmnopqrstuvwxyz<br>
+          0123456789 !@#$%&amp;
+        </div>
+        <div class="font-card-use">Geometric grotesque. Wide, open letterforms with circular construction. High impact at display sizes. Good for consumer apps, marketing, and mobile-first surfaces.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Weights -->
+  <div class="section">
+    <h2 class="section-title">Font Weights</h2>
+    <p class="section-desc">All three families ship the same five weights. Samples render in the currently active family.</p>
+    <div>
+      <div class="weight-row">
+        <div class="weight-meta">
+          <span class="weight-num">400</span>
+          <span class="weight-name">Regular</span>
+          <span class="weight-token">--core/font-weight/Regular</span>
+        </div>
+        <div class="weight-sample" style="font-weight:400">The quick brown fox jumps over the lazy dog</div>
+      </div>
+      <div class="weight-row">
+        <div class="weight-meta">
+          <span class="weight-num">500</span>
+          <span class="weight-name">Medium</span>
+          <span class="weight-token">--core/font-weight/Medium</span>
+        </div>
+        <div class="weight-sample" style="font-weight:500">The quick brown fox jumps over the lazy dog</div>
+      </div>
+      <div class="weight-row">
+        <div class="weight-meta">
+          <span class="weight-num">600</span>
+          <span class="weight-name">Semi Bold</span>
+          <span class="weight-token">--core/font-weight/Semi Bold</span>
+        </div>
+        <div class="weight-sample" style="font-weight:600">The quick brown fox jumps over the lazy dog</div>
+      </div>
+      <div class="weight-row">
+        <div class="weight-meta">
+          <span class="weight-num">700</span>
+          <span class="weight-name">Bold</span>
+          <span class="weight-token">--core/font-weight/Bold</span>
+        </div>
+        <div class="weight-sample" style="font-weight:700">The quick brown fox jumps over the lazy dog</div>
+      </div>
+      <div class="weight-row">
+        <div class="weight-meta">
+          <span class="weight-num">800</span>
+          <span class="weight-name">Extra Bold</span>
+          <span class="weight-token">—</span>
+        </div>
+        <div class="weight-sample" style="font-weight:800">The quick brown fox jumps over the lazy dog</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Heading scale -->
+  <div class="section">
+    <h2 class="section-title">Heading Scale</h2>
+    <p class="section-desc">Bold weight (700) at all heading sizes. Letter-spacing tightens at display sizes.</p>
+    <div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">heading/hero</div>
+          <div class="type-sub">64px · 700 · -0.02em</div>
+        </div>
+        <div class="type-sample" style="font-size:64px;font-weight:700;letter-spacing:-.02em;line-height:1.05">Heading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">heading/xl3</div>
+          <div class="type-sub">48px · 700 · -0.02em</div>
+        </div>
+        <div class="type-sample" style="font-size:48px;font-weight:700;letter-spacing:-.02em;line-height:1.1">Large Title</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">heading/xl2</div>
+          <div class="type-sub">44px · 700 · -0.015em</div>
+        </div>
+        <div class="type-sample" style="font-size:44px;font-weight:700;letter-spacing:-.015em;line-height:1.1">Display Text</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">heading/xl</div>
+          <div class="type-sub">32px · 700</div>
+        </div>
+        <div class="type-sample" style="font-size:32px;font-weight:700;line-height:1.2">Section Heading</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">heading/headerMobileLg</div>
+          <div class="type-sub">24px · 700</div>
+        </div>
+        <div class="type-sample" style="font-size:24px;font-weight:700;line-height:1.3">Mobile Header Large</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">heading/headerMobileMd</div>
+          <div class="type-sub">16px · 700</div>
+        </div>
+        <div class="type-sample" style="font-size:16px;font-weight:700">Mobile Header Medium</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">heading/headerMobileSm</div>
+          <div class="type-sub">14px · 700</div>
+        </div>
+        <div class="type-sample" style="font-size:14px;font-weight:700">Mobile Header Small</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Body scale -->
+  <div class="section">
+    <h2 class="section-title">Body Scale</h2>
+    <p class="section-desc">Three weight stacks per size: Regular (400), Medium (500), Bold (700).</p>
+    <div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">body/xl2 · medium/xl2</div>
+          <div class="type-sub">20px</div>
+        </div>
+        <div>
+          <div class="type-sample" style="font-size:20px;font-weight:400;margin-bottom:4px">Regular — Body section title</div>
+          <div class="type-sample" style="font-size:20px;font-weight:500;margin-bottom:4px">Medium — Emphasized text</div>
+          <div class="type-sample" style="font-size:20px;font-weight:700">Bold — Strong emphasis</div>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">body/xl · medium/xl</div>
+          <div class="type-sub">18px · OTP character</div>
+        </div>
+        <div>
+          <div class="type-sample" style="font-size:18px;font-weight:400;margin-bottom:4px">Regular 18px — Section description</div>
+          <div class="type-sample" style="font-size:18px;font-weight:500">Medium 18px — OTP slot character</div>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">body/lg · medium/lg</div>
+          <div class="type-sub">16px · primary body</div>
+        </div>
+        <div>
+          <div class="type-sample" style="font-size:16px;font-weight:400;margin-bottom:4px">Regular 16px — Primary body text</div>
+          <div class="type-sample" style="font-size:16px;font-weight:500">Medium 16px — Button, label text</div>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">body/md · medium/md</div>
+          <div class="type-sub">14px · default</div>
+        </div>
+        <div>
+          <div class="type-sample" style="font-size:14px;font-weight:400;margin-bottom:4px">Regular 14px — Default body copy, descriptions</div>
+          <div class="type-sample" style="font-size:14px;font-weight:500">Medium 14px — Verify button, resend label</div>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">body/sm · medium/sm</div>
+          <div class="type-sub">12px · caption</div>
+        </div>
+        <div>
+          <div class="type-sample" style="font-size:12px;font-weight:400;margin-bottom:4px">Regular 12px — Caption, helper text</div>
+          <div class="type-sample" style="font-size:12px;font-weight:500">Medium 12px — Text-only button label, Resend Code</div>
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <div class="type-label">body/xs</div>
+          <div class="type-sub">10px · micro label</div>
+        </div>
+        <div>
+          <div class="type-sample" style="font-size:10px;font-weight:400;margin-bottom:4px">10px — Micro labels, tags, badges</div>
+          <div class="type-sample" style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em">SECTION LABEL · 10px 600 UPPERCASE</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Monospace -->
+  <div class="section">
+    <h2 class="section-title">Monospace</h2>
+    <p class="section-desc">JetBrains Mono is used for all code snippets, token names, numeric data, and OTP slots. It is not swappable — it is a fixed system choice independent of the UI font.</p>
+    <div class="font-card" style="max-width:600px">
+      <div class="font-card-name">JetBrains Mono / IBM Plex Mono</div>
+      <div class="font-card-token">--font-mono · fixed — not swappable</div>
+      <div class="font-card-preview" style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:500;letter-spacing:-.01em">--mav-primary: #352eff</div>
+      <div class="font-card-abc" style="font-family:'JetBrains Mono',monospace">
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+        abcdefghijklmnopqrstuvwxyz<br>
+        0123456789 !@#$%&amp; const fn = () =&gt; {}
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- CSS Tokens -->
+  <div class="section">
+    <h2 class="section-title">CSS Custom Properties</h2>
+    <p class="section-desc">All typography references should go through <code style="font-family:var(--font-mono);font-size:12px;">--font-display</code> or <code style="font-family:var(--font-mono);font-size:12px;">--font-body</code> — never hardcode a family name in component CSS.</p>
+
+    <table class="token-table">
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Value</th>
+          <th>Layer</th>
+          <th>Purpose</th>
+          <th>Preview</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tk">--font-jakarta</td>
+          <td class="tv">'Plus Jakarta Sans', sans-serif</td>
+          <td class="td">Layer 0</td>
+          <td class="td">Primitive — Jakarta stack</td>
+          <td style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:600">Aa Bb Cc</td>
+        </tr>
+        <tr>
+          <td class="tk">--font-inter</td>
+          <td class="tv">'Inter', sans-serif</td>
+          <td class="td">Layer 0</td>
+          <td class="td">Primitive — Inter stack</td>
+          <td style="font-family:'Inter',sans-serif;font-size:16px;font-weight:600">Aa Bb Cc</td>
+        </tr>
+        <tr>
+          <td class="tk">--font-poppins</td>
+          <td class="tv">'Poppins', sans-serif</td>
+          <td class="td">Layer 0</td>
+          <td class="td">Primitive — Poppins stack</td>
+          <td style="font-family:'Poppins',sans-serif;font-size:16px;font-weight:600">Aa Bb Cc</td>
+        </tr>
+        <tr style="background:var(--mav-primary-soft)">
+          <td class="tk">--font-active</td>
+          <td class="tv tv-live" id="active-font-display">'Plus Jakarta Sans', sans-serif</td>
+          <td class="td">Layer 1</td>
+          <td class="td">Active selection — override to switch all UI</td>
+          <td class="token-preview-cell">Aa Bb Cc</td>
+        </tr>
+        <tr>
+          <td class="tk">--font-display</td>
+          <td class="tv">var(--font-active)</td>
+          <td class="td">Layer 2</td>
+          <td class="td">Semantic — headings, display text</td>
+          <td class="token-preview-cell">Display</td>
+        </tr>
+        <tr>
+          <td class="tk">--font-body</td>
+          <td class="tv">var(--font-active)</td>
+          <td class="td">Layer 2</td>
+          <td class="td">Semantic — body copy, labels</td>
+          <td class="token-preview-cell">Body copy</td>
+        </tr>
+        <tr>
+          <td class="tk">--font-mono</td>
+          <td class="tv">'JetBrains Mono', monospace</td>
+          <td class="td">Layer 0</td>
+          <td class="td">Fixed — code, tokens, OTP digits</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:14px">const x = 1</td>
+        </tr>
+        <tr>
+          <td class="tk">--core/font-weight/Regular</td>
+          <td class="tv">400</td>
+          <td class="td">Layer 0</td>
+          <td class="td">Body text</td>
+          <td class="token-preview-cell" style="font-weight:400">Regular</td>
+        </tr>
+        <tr>
+          <td class="tk">--core/font-weight/Medium</td>
+          <td class="tv">500</td>
+          <td class="td">Layer 0</td>
+          <td class="td">Labels, buttons</td>
+          <td class="token-preview-cell" style="font-weight:500">Medium</td>
+        </tr>
+        <tr>
+          <td class="tk">--core/font-weight/Semi Bold</td>
+          <td class="tv">600</td>
+          <td class="td">Layer 0</td>
+          <td class="td">Section labels, nav items</td>
+          <td class="token-preview-cell" style="font-weight:600">Semi Bold</td>
+        </tr>
+        <tr>
+          <td class="tk">--core/font-weight/Bold</td>
+          <td class="tv">700</td>
+          <td class="td">Layer 0</td>
+          <td class="td">Headings, emphasis</td>
+          <td class="token-preview-cell" style="font-weight:700">Bold</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- RN note -->
+  <div class="section">
+    <div class="callout-info" style="background:var(--mav-primary-soft);border-left:3px solid var(--mav-primary);padding:16px 20px;border-radius:var(--radius-md);font-size:13px;color:var(--mav-fg);line-height:1.6">
+      <strong>React Native usage:</strong> In RN, load the active font via <code style="font-family:var(--font-mono)">useFonts()</code> inside the component — never at module level. Scale values with <code style="font-family:var(--font-mono)">fontPixel()</code> for density-independent rendering. The <code style="font-family:var(--font-mono)">--font-active</code> token corresponds to the <code style="font-family:var(--font-mono)">fontFamily</code> key in your RN theme object.
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script src="../js/theme.js"></script>
+<script>
+(function () {
+  var FONTS = {
+    jakarta: "'Plus Jakarta Sans', sans-serif",
+    inter:   "'Inter', sans-serif",
+    poppins: "'Poppins', sans-serif"
+  };
+
+  function applyFont(key) {
+    var value = FONTS[key];
+    if (!value) return;
+
+    /* Persist */
+    try { localStorage.setItem('mav-font-choice', key); } catch (e) {}
+
+    /* 1 — CSS variable on <html> (cascades to all var(--font-active) consumers) */
+    document.documentElement.style.setProperty('--font-active', value);
+
+    /* 2 — Directly stamp font-family on every sample element (belt + suspenders
+           for sandboxed previews where CSS variable inheritance may be blocked) */
+    document.querySelectorAll('.weight-sample, .type-sample').forEach(function (el) {
+      el.style.fontFamily = value;
+    });
+
+    /* 3 — Button active state */
+    document.querySelectorAll('.font-btn').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-font') === key);
+    });
+
+    /* 4 — Card active highlight */
+    document.querySelectorAll('[data-font-card]').forEach(function (card) {
+      card.classList.toggle('is-active', card.getAttribute('data-font-card') === key);
+    });
+
+    /* 5 — Live token value display */
+    var liveEl = document.getElementById('active-font-display');
+    if (liveEl) liveEl.textContent = value;
+  }
+
+  function init() {
+    /* Wire each button via addEventListener — works in CSP-restricted sandboxes */
+    document.querySelectorAll('.font-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyFont(btn.getAttribute('data-font'));
+      });
+    });
+
+    /* Apply saved or default on load */
+    var saved = '';
+    try { saved = localStorage.getItem('mav-font-choice') || ''; } catch (e) {}
+    applyFont(saved || 'jakarta');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init(); /* already parsed — run immediately */
+  }
+})();
+</script>
+</body>
+</html>

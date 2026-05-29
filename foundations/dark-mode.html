@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dark Mode — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+.compare-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  border:1px solid var(--mav-border);border-radius:10px;overflow:hidden;margin-bottom:16px;
+}
+.compare-light,.compare-dark{padding:20px}
+.compare-light{background:var(--bc-white);border-right:1px solid var(--bc-mono100-l)}
+.compare-dark{background:var(--bc-black)}
+.compare-heading{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.c-light .compare-heading{color:var(--bc-mono400-l)}
+.c-dark .compare-heading{color:var(--bc-mono200-d)}
+
+.token-compare{
+  display:grid;grid-template-columns:1fr;gap:4px;
+}
+.tc-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  border:1px solid var(--mav-border);border-radius:6px;overflow:hidden;
+}
+.tc-cell{padding:10px 14px;display:flex;align-items:center;gap:8px}
+.tc-cell-dark{background:var(--mav-bg-secondary);border-left:1px solid var(--bc-mono800-l)}
+.tc-swatch{width:16px;height:16px;border-radius:3px;border:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.tc-name{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--bc-mono400-l);margin-bottom:2px}
+.tc-hex{font-size:12px;font-weight:600}
+.tc-hex-light{color:var(--bc-mono800-l)}
+.tc-hex-dark{color:var(--bc-grey)}
+
+.side-demo{display:flex;gap:20px;align-items:flex-start}
+.demo-frame{
+  width:200px;flex-shrink:0;border-radius:12px;overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Foundations</div>
+  <a href="colors.html" class="sidebar-link">Color System</a>
+  <a href="typography.html" class="sidebar-link">Typography</a>
+  <a href="spacing.html" class="sidebar-link">Spacing & Layout</a>
+  <a href="effects.html" class="sidebar-link">Shadows & Effects</a>
+  <a href="dark-mode.html" class="sidebar-link active">Dark Mode</a>
+  <a href="tokens.html" class="sidebar-link">Token Layers</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Dark Mode</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Foundations</div>
+    <h1 class="page-title">Dark Mode</h1>
+    <p class="page-desc">MaV flips from electric blue #352EFF to lime green #A1FF5B in dark mode. Background becomes #171717. Implemented via <code>[data-theme="dark"]</code> selector.</p>
+  </div>
+
+  <!-- Live comparison demo -->
+  <div class="section">
+    <h2 class="section-title">Live Comparison</h2>
+    <p class="section-desc">Toggle the button above to see the current page flip between modes.</p>
+    <div class="compare-row">
+      <!-- Light demo card -->
+      <div class="compare-light c-light">
+        <div class="compare-heading">Light Mode</div>
+        <button style="display:block;margin-bottom:10px;padding:8px 16px;background:#352eff;color:#fff;border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;">Primary Button</button>
+        <div style="margin-bottom:8px;padding:8px 12px;border:1px solid #cccccc;border-radius:8px;font-size:13px;color:#999999;">Email address</div>
+        <div style="margin-bottom:10px;padding:8px 12px;background:#eff0ff;border:1px solid #c0c2ff;border-radius:8px;font-size:12px;color:#352eff;">ℹ️ Primary alert message</div>
+        <div style="display:flex;gap:6px;">
+          <span style="padding:3px 10px;background:#352eff;color:#fff;border-radius:20px;font-size:11px;font-weight:600;">Primary</span>
+          <span style="padding:3px 10px;background:#e5f8ed;color:#1a8a45;border-radius:20px;font-size:11px;font-weight:600;">Success</span>
+        </div>
+      </div>
+      <!-- Dark demo card -->
+      <div class="compare-dark c-dark">
+        <div class="compare-heading">Dark Mode</div>
+        <button style="display:block;margin-bottom:10px;padding:8px 16px;background:#a1ff5b;color:#171717;border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;">Primary Button</button>
+        <div style="margin-bottom:8px;padding:8px 12px;border:1px solid #484848;border-radius:8px;font-size:13px;color:#666666;">Email address</div>
+        <div style="margin-bottom:10px;padding:8px 12px;background:#1e2a1a;border:1px solid #3a6a00;border-radius:8px;font-size:12px;color:#a1ff5b;">ℹ️ Primary alert message</div>
+        <div style="display:flex;gap:6px;">
+          <span style="padding:3px 10px;background:#a1ff5b;color:#171717;border-radius:20px;font-size:11px;font-weight:600;">Primary</span>
+          <span style="padding:3px 10px;background:#1e2a1a;color:#a1ff5b;border-radius:20px;font-size:11px;font-weight:600;">Success</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token override map -->
+  <div class="section">
+    <h2 class="section-title">Token Override Map</h2>
+    <p class="section-desc">Only tokens that change between modes. Tokens not listed here are identical in both themes (e.g. system/danger, system/success).</p>
+
+    <div class="token-compare">
+      <div style="display:grid;grid-template-columns:1fr 1fr;margin-bottom:8px;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mav-muted);padding:0 14px;">Light</div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mav-muted);padding:0 14px;">Dark</div>
+      </div>
+
+      <!-- Background -->
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mav-muted);padding:8px 0 4px;">Background / Surface</div>
+      <div class="tc-row"><div class="tc-cell"><div class="tc-swatch" style="background:#ffffff;border:1px solid #e0e0e0;"></div><div><div class="tc-name">background/bg-default</div><div class="tc-hex tc-hex-light">#ffffff</div></div></div><div class="tc-cell tc-cell-dark"><div class="tc-swatch" style="background:#171717;"></div><div><div class="tc-name">background/bg-default</div><div class="tc-hex tc-hex-dark">#171717</div></div></div></div>
+      <div class="tc-row"><div class="tc-cell"><div class="tc-swatch" style="background:#e5e5e5;"></div><div><div class="tc-name">background/bg-secondary</div><div class="tc-hex tc-hex-light">#e5e5e5</div></div></div><div class="tc-cell tc-cell-dark"><div class="tc-swatch" style="background:#242424;"></div><div><div class="tc-name">background/bg-secondary</div><div class="tc-hex tc-hex-dark">#242424</div></div></div></div>
+
+      <!-- Brand -->
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mav-muted);padding:8px 0 4px;">Brand Primary</div>
+      <div class="tc-row"><div class="tc-cell"><div class="tc-swatch" style="background:#352eff;"></div><div><div class="tc-name">Main/Primary</div><div class="tc-hex tc-hex-light">#352eff</div></div></div><div class="tc-cell tc-cell-dark"><div class="tc-swatch" style="background:#a1ff5b;"></div><div><div class="tc-name">Main/Primary</div><div class="tc-hex tc-hex-dark">#a1ff5b</div></div></div></div>
+
+      <!-- Buttons -->
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mav-muted);padding:8px 0 4px;">Buttons</div>
+      <div class="tc-row"><div class="tc-cell"><div class="tc-swatch" style="background:#352eff;"></div><div><div class="tc-name">btn/primary/default</div><div class="tc-hex tc-hex-light">#352eff</div></div></div><div class="tc-cell tc-cell-dark"><div class="tc-swatch" style="background:#a1ff5b;"></div><div><div class="tc-name">btn/primary/default</div><div class="tc-hex tc-hex-dark">#a1ff5b</div></div></div></div>
+      <div class="tc-row"><div class="tc-cell"><div class="tc-swatch" style="background:#ffffff;border:1px solid #e0e0e0;"></div><div><div class="tc-name">btn/primary/text-default</div><div class="tc-hex tc-hex-light">#ffffff</div></div></div><div class="tc-cell tc-cell-dark"><div class="tc-swatch" style="background:#171717;"></div><div><div class="tc-name">btn/primary/text-default</div><div class="tc-hex tc-hex-dark">#171717</div></div></div></div>
+      <div class="tc-row"><div class="tc-cell"><div class="tc-swatch" style="background:#e5e5e5;"></div><div><div class="tc-name">btn/primary/disabled</div><div class="tc-hex tc-hex-light">#e5e5e5</div></div></div><div class="tc-cell tc-cell-dark"><div class="tc-swatch" style="background:#242424;"></div><div><div class="tc-name">btn/primary/disabled</div><div class="tc-hex tc-hex-dark">#242424</div></div></div></div>
+
+      <!-- Inputs -->
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mav-muted);padding:8px 0 4px;">Input Fields</div>
+      <div class="tc-row"><div class="tc-cell"><div class="tc-swatch" style="background:#ffffff;border:1px solid #e0e0e0;"></div><div><div class="tc-name">input-field/default/bg-box</div><div class="tc-hex tc-hex-light">#ffffff</div></div></div><div class="tc-cell tc-cell-dark"><div class="tc-swatch" style="background:#171717;"></div><div><div class="tc-name">input-field/default/bg-box</div><div class="tc-hex tc-hex-dark">#171717</div></div></div></div>
+      <div class="tc-row"><div class="tc-cell"><div class="tc-swatch" style="background:#cccccc;"></div><div><div class="tc-name">input-field/default/outline-box</div><div class="tc-hex tc-hex-light">#cccccc</div></div></div><div class="tc-cell tc-cell-dark"><div class="tc-swatch" style="background:#484848;"></div><div><div class="tc-name">input-field/default/outline-box</div><div class="tc-hex tc-hex-dark">#484848</div></div></div></div>
+      <div class="tc-row"><div class="tc-cell"><div class="tc-swatch" style="background:#352eff;"></div><div><div class="tc-name">input-field/focus/outline-box</div><div class="tc-hex tc-hex-light">#352eff</div></div></div><div class="tc-cell tc-cell-dark"><div class="tc-swatch" style="background:#a1ff5b;"></div><div><div class="tc-name">input-field/focus/outline-box</div><div class="tc-hex tc-hex-dark">#a1ff5b</div></div></div></div>
+
+      <!-- Divider -->
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mav-muted);padding:8px 0 4px;">Divider</div>
+      <div class="tc-row"><div class="tc-cell"><div class="tc-swatch" style="background:#efefef;"></div><div><div class="tc-name">devider/default</div><div class="tc-hex tc-hex-light">#efefef</div></div></div><div class="tc-cell tc-cell-dark"><div class="tc-swatch" style="background:#484848;"></div><div><div class="tc-name">devider/default</div><div class="tc-hex tc-hex-dark">#484848</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <h2 class="section-title">Implementation</h2>
+    <div class="code-block"><span class="token-c">/* CSS — attribute selector approach */</span>
+<span class="token-k">[data-theme="dark"]</span> {
+  <span class="token-k">--mav-primary</span>:      <span class="token-s">#a1ff5b</span>;
+  <span class="token-k">--mav-bg</span>:           <span class="token-s">#171717</span>;
+  <span class="token-k">--mav-fg</span>:           <span class="token-s">#ffffff</span>;
+  <span class="token-k">--mav-border</span>:       <span class="token-s">#484848</span>;
+  <span class="token-k">--btn\/primary\/default</span>: <span class="token-s">#a1ff5b</span>;
+  <span class="token-c">/* ... full list in css/tokens.css */</span>
+}
+
+<span class="token-c">/* React Native — useColorScheme hook */</span>
+<span class="token-k">const</span> colorScheme = useColorScheme();
+<span class="token-k">const</span> theme = colorScheme === <span class="token-s">'dark'</span> ? DarkColorTheme : LightColorTheme;
+
+<span class="token-c">/* Web (MUI) — createTheme with mode */</span>
+createTheme({ palette: { mode: <span class="token-s">'dark'</span> } });</div>
+
+    <div>
+      <div>⚠ Focus ring exception</div>
+      <div>The OTP/input focus ring <code>0 0 0 3px rgba(53,46,255,0.4)</code> is the <strong>same in both themes</strong>. Do NOT replace it with the dark accent color. This is explicitly specified in the design spec.</div>
+    </div>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

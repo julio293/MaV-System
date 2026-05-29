@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OTP — Android — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.device{width:393px;height:851px;border-radius:48px;background:var(--bc-black);position:relative;box-shadow:0 32px 80px rgba(0,0,0,.4),inset 0 0 0 1.5px var(--mav-border);overflow:hidden;flex-shrink:0}
+.device-screen{position:absolute;inset:0;border-radius:46px;overflow:hidden;background:var(--bc-white);display:flex;flex-direction:column}
+.ph{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:#000;border-radius:50%;z-index:100}
+.status{position:absolute;top:0;left:0;right:0;padding:14px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:99;height:48px}
+.status-time{font-size:13px;font-weight:600;color:var(--bc-black)}
+.status-icons{display:flex;align-items:center;gap:5px}
+.nav-gesture{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:4px;background:var(--bc-black);border-radius:2px;opacity:.15;z-index:99}
+/* Nav bar */
+.nav-bar{padding:56px 20px 12px;display:flex;align-items:center;gap:12px;background:var(--bc-white);border-bottom:1px solid var(--bc-surface)}
+.back-btn{width:40px;height:40px;border-radius:12px;background:var(--bc-surface);display:flex;align-items:center;justify-content:center;border:none;cursor:pointer}
+.nav-title{font-size:17px;font-weight:700;color:var(--bc-black)}
+/* Content */
+.content{flex:1;padding:28px 28px;display:flex;flex-direction:column}
+.otp-icon{width:64px;height:64px;border-radius:20px;background:var(--mav-bg-tertiary);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.otp-title{font-size:24px;font-weight:800;color:var(--bc-black);letter-spacing:-.03em;margin-bottom:8px}
+.otp-sub{font-size:14px;color:var(--bc-mono500);line-height:1.5;margin-bottom:32px}
+.otp-sub strong{color:var(--bc-black);font-weight:600}
+/* OTP boxes */
+.otp-row{display:flex;gap:10px;justify-content:center;margin-bottom:24px}
+.otp-box{width:48px;height:58px;border:2px solid var(--bc-mono100-l);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--bc-black);background:var(--bc-surface-soft);transition:all .15s}
+.otp-box.filled{border-color:var(--bc-primary-light);background:var(--bc-white);color:var(--bc-black)}
+.otp-box.focused{border-color:var(--bc-primary-light);box-shadow:0 0 0 3px rgba(53,46,255,.12);background:var(--bc-white)}
+/* Timer */
+.timer-row{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:28px}
+.timer-label{font-size:14px;color:var(--bc-mono500)}
+.timer-val{font-size:14px;font-weight:700;color:var(--bc-primary-light);font-family:'JetBrains Mono',monospace}
+/* Numpad */
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
+.num-key{height:56px;border-radius:14px;background:var(--bc-surface);border:none;font-size:20px;font-weight:600;color:var(--bc-black);cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:background .1s}
+.num-key:active{background:var(--mav-bg-tertiary)}
+.num-key.del{background:color-mix(in srgb, var(--bc-danger) 6%, transparent)}
+/* Verify btn */
+.btn-verify{width:100%;padding:16px;border-radius:14px;background:var(--bc-primary-light);color:var(--bc-white);font-size:16px;font-weight:700;border:none;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-verify:active{transform:scale(.97);background:var(--bc-tertiary2)}
+.back-link{text-align:center;margin-top:24px;font-size:13px;color:var(--bc-mono500)}
+.back-link a{color:var(--bc-primary-light);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="device-screen">
+    <div class="ph"></div>
+    <div class="status">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="var(--bc-black)"><rect x="0" y="4" width="2.5" height="8" rx="1"/><rect x="4" y="2.5" width="2.5" height="9.5" rx="1"/><rect x="8" y="1" width="2.5" height="11" rx="1"/><rect x="12" y="0" width="2.5" height="12" rx="1" opacity=".3"/></svg>
+        <svg width="24" height="12" viewBox="0 0 24 12"><rect x="0" y="1" width="20" height="10" rx="3" stroke="var(--bc-black)" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="13" height="6" rx="1.5" fill="var(--bc-black)"/><path d="M21.5 4.5v3a1.5 1.5 0 000-3z" fill="var(--bc-black)"/></svg>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <button class="back-btn" onclick="window.location.href='02-login.html'">
+        <svg width="10" height="16" viewBox="0 0 10 16" fill="none"><path d="M8.5 1.5L2 8l6.5 6.5" stroke="var(--bc-primary-light)" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <span class="nav-title">Verification</span>
+    </div>
+
+    <div class="content">
+      <div class="otp-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="4" y="8" width="24" height="18" rx="4" stroke="var(--bc-primary-light)" stroke-width="2"/><path d="M4 14h24" stroke="var(--bc-primary-light)" stroke-width="2"/><path d="M10 20h3M16 20h3M22 20h1" stroke="var(--bc-primary-light)" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="otp-title">Check your SMS</div>
+      <div class="otp-sub">We sent a 6-digit code to<br><strong>+1 (415) 555-0192</strong>. Enter it below.</div>
+
+      <div class="otp-row">
+        <div class="otp-box filled">3</div>
+        <div class="otp-box filled">8</div>
+        <div class="otp-box focused"></div>
+        <div class="otp-box"></div>
+        <div class="otp-box"></div>
+        <div class="otp-box"></div>
+      </div>
+
+      <div class="timer-row">
+        <span class="timer-label">Resend code in</span>
+        <span class="timer-val" id="timerVal">0:47</span>
+      </div>
+
+      <div class="numpad">
+        <button class="num-key">1</button>
+        <button class="num-key">2</button>
+        <button class="num-key">3</button>
+        <button class="num-key">4</button>
+        <button class="num-key">5</button>
+        <button class="num-key">6</button>
+        <button class="num-key">7</button>
+        <button class="num-key">8</button>
+        <button class="num-key">9</button>
+        <button class="num-key"></button>
+        <button class="num-key">0</button>
+        <button class="num-key del">
+          <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M8 1H20a1 1 0 011 1v12a1 1 0 01-1 1H8l-7-7 7-7z" stroke="var(--bc-danger)" stroke-width="1.5"/><path d="M12 6l4 4M16 6l-4 4" stroke="var(--bc-danger)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <button class="btn-verify" onclick="window.location.href='04-home.html'">Verify &amp; Continue</button>
+    </div>
+    <div class="nav-gesture"></div>
+  </div>
+</div>
+<div class="back-link">
+  <a href="02-login.html">← Login</a> &nbsp;·&nbsp;
+  <a href="04-home.html">Next: Home →</a>
+</div>
+<script>
+let s=47;
+const el=document.getElementById('timerVal');
+const t=setInterval(()=>{
+  s--;
+  if(s<0){clearInterval(t);el.textContent='Resend';el.style.color='#352eff';el.style.cursor='pointer';el.parentElement.querySelector('.timer-label').textContent='';return;}
+  const m=Math.floor(s/60);const sec=s%60;
+  el.textContent=m+':'+(sec<10?'0':'')+sec;
+  if(s<=10)el.style.color='#ff4444';
+},1000);
+</script>
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shadows & Effects — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ── Shadow cards ── */
+.shadow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 8px 0 32px;
+}
+.shadow-card {
+  background: var(--mav-surface);
+  border: 1px solid var(--mav-border);
+  border-radius: var(--border\/border-radius\/md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.shadow-box {
+  width: 88px;
+  height: 88px;
+  border-radius: var(--border\/border-radius\/md);
+  background: var(--mav-surface);
+}
+.shadow-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mav-fg);
+}
+.shadow-token {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--mav-primary);
+  background: var(--bc-primary-soft);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.shadow-value {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 9px;
+  color: var(--mav-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+.shadow-use {
+  font-size: 11px;
+  color: var(--mav-muted);
+}
+
+/* ── Input & focus demos ── */
+.input-demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+@media (max-width: 640px) { .input-demo-grid { grid-template-columns: 1fr; } }
+.input-demo-card {
+  background: var(--mav-surface);
+  border: 1px solid var(--mav-border);
+  border-radius: var(--border\/border-radius\/md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.input-demo-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--mav-muted);
+}
+.demo-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--border\/border-radius\/sm);
+  border: 1px solid var(--mav-border);
+  background: var(--mav-bg);
+  color: var(--mav-fg);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+.demo-input.input-sm { box-shadow: var(--shadow-input); }
+.demo-input.input-focus { box-shadow: var(--shadow-focus); border-color: var(--mav-primary); }
+.input-token {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--mav-primary);
+  background: var(--bc-primary-soft);
+  padding: 2px 8px;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+.input-css {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 9px;
+  color: var(--mav-muted);
+  line-height: 1.6;
+}
+
+/* ── Blur demos ── */
+.blur-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+.blur-table th {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--mav-muted);
+  border-bottom: 1px solid var(--mav-border);
+  padding: 8px 12px;
+  text-align: left;
+}
+.blur-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--mav-border);
+  vertical-align: middle;
+}
+.blur-scene {
+  position: relative;
+  width: 100px;
+  height: 48px;
+  border-radius: var(--border\/border-radius\/sm);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--bc-primary) 0%, var(--bc-neon-primary) 100%);
+}
+.blur-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255, 0.35);
+}
+.blur-token {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--mav-primary);
+  background: var(--bc-primary-soft);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+.blur-css {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--mav-muted);
+}
+.blur-desc { font-size: 12px; color: var(--mav-muted); }
+
+/* ── Gradient demos ── */
+.gradient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 16px;
+}
+.gradient-card {
+  border: 1px solid var(--mav-border);
+  border-radius: var(--border\/border-radius\/md);
+  overflow: hidden;
+}
+.gradient-preview {
+  height: 100px;
+}
+.gradient-info {
+  padding: 16px;
+  background: var(--mav-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.gradient-name { font-size: 13px; font-weight: 700; color: var(--mav-fg); }
+.gradient-token {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--mav-primary);
+  background: var(--bc-primary-soft);
+  padding: 2px 8px;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+.gradient-value {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 9px;
+  color: var(--mav-muted);
+  line-height: 1.5;
+}
+.gradient-use { font-size: 11px; color: var(--mav-muted); }
+
+/* ── Token reference table ── */
+.token-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 13px;
+}
+.token-table th {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--mav-muted);
+  border-bottom: 2px solid var(--mav-border);
+  padding: 8px 12px;
+  text-align: left;
+}
+.token-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--mav-border);
+  vertical-align: middle;
+}
+.token-table tr:last-child td { border-bottom: none; }
+.tt-name {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--mav-primary);
+  background: var(--bc-primary-soft);
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.tt-preview {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border\/border-radius\/sm);
+  background: var(--mav-bg);
+}
+.tt-value {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--mav-muted);
+  line-height: 1.6;
+}
+.tt-use { font-size: 12px; color: var(--mav-muted); }
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar"></nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Shadows & Effects</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Foundations</div>
+    <h1 class="page-title">Shadows & Effects</h1>
+    <p class="page-desc">Six elevation levels (xs–custom), five blur tiers, two gradient styles, and the OTP focus ring — all defined as CSS tokens in Layer 0.</p>
+  </div>
+
+  <!-- ── Drop Shadows ── -->
+  <div class="section">
+    <h2 class="section-title">Drop Shadows</h2>
+    <p class="section-desc">Six elevation levels from tight hover state to deep floating panel. Each box below is rendered with the actual <code>box-shadow</code> token.</p>
+    <div class="shadow-grid">
+
+      <div class="shadow-card">
+        <div class="shadow-box" style="box-shadow:var(--shadow-xs)"></div>
+        <div class="shadow-name">shadow.xs</div>
+        <div class="shadow-token">--shadow-xs</div>
+        <div class="shadow-value">0px 2px 4px 0px<br>rgba(16,16,19, 0.16)</div>
+        <div class="shadow-use">Tight hover elevation</div>
+      </div>
+
+      <div class="shadow-card">
+        <div class="shadow-box" style="box-shadow:var(--shadow-sm)"></div>
+        <div class="shadow-name">shadow.sm</div>
+        <div class="shadow-token">--shadow-sm</div>
+        <div class="shadow-value">y:2 rgba(0.04) +<br>y:16 spread:-4 rgba(0.10)</div>
+        <div class="shadow-use">Cards, dropdowns</div>
+      </div>
+
+      <div class="shadow-card">
+        <div class="shadow-box" style="box-shadow:var(--shadow-md)"></div>
+        <div class="shadow-name">shadow.md</div>
+        <div class="shadow-token">--shadow-md</div>
+        <div class="shadow-value">y:2 rgba(0.04) +<br>y:24 spread:-8 rgba(0.12)</div>
+        <div class="shadow-use">Modals, dialogs</div>
+      </div>
+
+      <div class="shadow-card">
+        <div class="shadow-box" style="box-shadow:var(--shadow-lg)"></div>
+        <div class="shadow-name">shadow.lg</div>
+        <div class="shadow-token">--shadow-lg</div>
+        <div class="shadow-value">y:2 rgba(0.04) +<br>y:40 spread:-16 rgba(0.16)</div>
+        <div class="shadow-use">Floating panels</div>
+      </div>
+
+      <div class="shadow-card">
+        <div class="shadow-box" style="box-shadow:var(--shadow-xl)"></div>
+        <div class="shadow-name">shadow.xl</div>
+        <div class="shadow-token">--shadow-xl</div>
+        <div class="shadow-value">y:2 rgba(0.04) +<br>y:56 spread:-20 rgba(0.18)</div>
+        <div class="shadow-use">Deep elevation</div>
+      </div>
+
+      <div class="shadow-card">
+        <div class="shadow-box" style="box-shadow:var(--shadow-custom)"></div>
+        <div class="shadow-name">shadow.custom</div>
+        <div class="shadow-token">--shadow-custom</div>
+        <div class="shadow-value">1px border ring +<br>8px ambient glow</div>
+        <div class="shadow-use">Subtle containers</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Input & Focus Shadows ── -->
+  <div class="section">
+    <h2 class="section-title">Input & Focus Shadows</h2>
+    <p class="section-desc">Two dedicated shadows for form inputs. The focus ring color is <strong>always</strong> <code>rgba(53,46,255,0.4)</code> — fixed across both themes.</p>
+    <div class="input-demo-grid">
+
+      <div class="input-demo-card">
+        <div class="input-demo-label">Default input</div>
+        <input class="demo-input input-sm" type="text" placeholder="Enter text…" readonly>
+        <div class="input-token">--shadow-input</div>
+        <div class="input-css">
+          0px 1px 0px -1px rgba(0,0,0,0.05)<br>
+          0px 1px 2px -1px rgba(0,0,0,0.05)<br>
+          0px 2px 4px -2px rgba(0,0,0,0.05)<br>
+          0px 3px 6px -3px rgba(0,0,0,0.05)
+        </div>
+      </div>
+
+      <div class="input-demo-card">
+        <div class="input-demo-label">Focus state</div>
+        <input class="demo-input input-focus" type="text" placeholder="Focused input…" readonly>
+        <div class="input-token">--shadow-focus</div>
+        <div class="input-css">
+          0 0 0 3px rgba(53, 46, 255, 0.4)<br>
+          <span style="color:var(--bc-warning)">⚠ Never use dark accent (#a1ff5b) for focus rings</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Backdrop Blur ── -->
+  <div class="section">
+    <h2 class="section-title">Backdrop Blur</h2>
+    <p class="section-desc">Five blur tiers for frosted glass effects on nav bars, modals, and overlays. Apply via <code>backdrop-filter: var(--blur-*)</code>.</p>
+
+    <table class="blur-table">
+      <thead>
+        <tr>
+          <th>Preview</th>
+          <th>Name</th>
+          <th>Token</th>
+          <th>CSS value</th>
+          <th>Figma ref</th>
+          <th>Usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="blur-scene">
+              <div class="blur-overlay" style="backdrop-filter:var(--blur-xs)"></div>
+            </div>
+          </td>
+          <td>blur.xs</td>
+          <td><span class="blur-token">--blur-xs</span></td>
+          <td class="blur-css">blur(4px)</td>
+          <td class="blur-desc">Blur/xs · b:8</td>
+          <td class="blur-desc">Hover tooltips</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="blur-scene">
+              <div class="blur-overlay" style="backdrop-filter:var(--blur-sm)"></div>
+            </div>
+          </td>
+          <td>blur.sm</td>
+          <td><span class="blur-token">--blur-sm</span></td>
+          <td class="blur-css">blur(8px)</td>
+          <td class="blur-desc">Blur/sm · b:16</td>
+          <td class="blur-desc">Nav bar, tab bar</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="blur-scene">
+              <div class="blur-overlay" style="backdrop-filter:var(--blur-md)"></div>
+            </div>
+          </td>
+          <td>blur.md</td>
+          <td><span class="blur-token">--blur-md</span></td>
+          <td class="blur-css">blur(16px)</td>
+          <td class="blur-desc">Blur/md · b:32</td>
+          <td class="blur-desc">Modals, sheets</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="blur-scene">
+              <div class="blur-overlay" style="backdrop-filter:var(--blur-lg)"></div>
+            </div>
+          </td>
+          <td>blur.lg</td>
+          <td><span class="blur-token">--blur-lg</span></td>
+          <td class="blur-css">blur(24px)</td>
+          <td class="blur-desc">Blur/lg · b:48</td>
+          <td class="blur-desc">Full overlays</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="blur-scene">
+              <div class="blur-overlay" style="backdrop-filter:var(--blur-xl)"></div>
+            </div>
+          </td>
+          <td>blur.xl</td>
+          <td><span class="blur-token">--blur-xl</span></td>
+          <td class="blur-css">blur(32px)</td>
+          <td class="blur-desc">Blur/xl · b:64</td>
+          <td class="blur-desc">Hero glass panels</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Gradients ── -->
+  <div class="section">
+    <h2 class="section-title">Gradients</h2>
+    <p class="section-desc">Two system gradients. Use <code>background: var(--gradient-*)</code> — never hardcode gradient colors.</p>
+    <div class="gradient-grid">
+
+      <div class="gradient-card">
+        <div class="gradient-preview" style="background:var(--gradient-bubble-bot)"></div>
+        <div class="gradient-info">
+          <div class="gradient-name">Bubble From Bot</div>
+          <div class="gradient-token">--gradient-bubble-bot</div>
+          <div class="gradient-value">linear-gradient(142deg,<br>rgba(181,210,243,0.10) 0%,<br>#1a5896 100%)</div>
+          <div class="gradient-use">AI chat bubble backgrounds (bot side)</div>
+        </div>
+      </div>
+
+      <div class="gradient-card">
+        <div class="gradient-preview" style="background:var(--gradient-brand)"></div>
+        <div class="gradient-info">
+          <div class="gradient-name">Brand Gradient</div>
+          <div class="gradient-token">--gradient-brand</div>
+          <div class="gradient-value">linear-gradient(135deg,<br>var(--bc-primary-soft) 0%,<br>var(--bc-dark-primary-soft) 100%)</div>
+          <div class="gradient-use">Hero sections, onboarding backgrounds</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Full token reference ── -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <p class="section-desc">All effect tokens from Layer 0 of the MaV token architecture.</p>
+    <table class="token-table">
+      <thead>
+        <tr>
+          <th>Preview</th>
+          <th>Token</th>
+          <th>CSS value</th>
+          <th>Usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="tt-preview" style="box-shadow:var(--shadow-xs)"></div></td>
+          <td><span class="tt-name">--shadow-xs</span></td>
+          <td class="tt-value">0px 2px 4px 0px rgba(16,16,19,0.16)</td>
+          <td class="tt-use">Hover state elevation</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="box-shadow:var(--shadow-sm)"></div></td>
+          <td><span class="tt-name">--shadow-sm</span></td>
+          <td class="tt-value">two-layer y:2/16</td>
+          <td class="tt-use">Cards, dropdowns</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="box-shadow:var(--shadow-md)"></div></td>
+          <td><span class="tt-name">--shadow-md</span></td>
+          <td class="tt-value">two-layer y:2/24</td>
+          <td class="tt-use">Modals, dialogs</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="box-shadow:var(--shadow-lg)"></div></td>
+          <td><span class="tt-name">--shadow-lg</span></td>
+          <td class="tt-value">two-layer y:2/40</td>
+          <td class="tt-use">Floating panels</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="box-shadow:var(--shadow-xl)"></div></td>
+          <td><span class="tt-name">--shadow-xl</span></td>
+          <td class="tt-value">two-layer y:2/56</td>
+          <td class="tt-use">Deep elevation</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="box-shadow:var(--shadow-custom)"></div></td>
+          <td><span class="tt-name">--shadow-custom</span></td>
+          <td class="tt-value">border-ring + glow</td>
+          <td class="tt-use">Subtle containers</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="box-shadow:var(--shadow-input)"></div></td>
+          <td><span class="tt-name">--shadow-input</span></td>
+          <td class="tt-value">4-layer inset depth</td>
+          <td class="tt-use">Input fields (default, hover)</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="box-shadow:var(--shadow-focus);border:1px solid var(--mav-primary)"></div></td>
+          <td><span class="tt-name">--shadow-focus</span></td>
+          <td class="tt-value">0 0 0 3px rgba(53,46,255,0.4)</td>
+          <td class="tt-use">Input focus ring — fixed value, both themes</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="background:var(--gradient-bubble-bot)"></div></td>
+          <td><span class="tt-name">--gradient-bubble-bot</span></td>
+          <td class="tt-value">142deg → #1a5896</td>
+          <td class="tt-use">Bot chat bubble</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="background:var(--gradient-brand)"></div></td>
+          <td><span class="tt-name">--gradient-brand</span></td>
+          <td class="tt-value">135deg primary-soft tones</td>
+          <td class="tt-use">Hero & onboarding</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="filter:var(--blur-xs);background:linear-gradient(135deg,var(--bc-primary),var(--bc-neon-primary))"></div></td>
+          <td><span class="tt-name">--blur-xs</span></td>
+          <td class="tt-value">blur(4px)</td>
+          <td class="tt-use">backdrop-filter: tooltips</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="filter:var(--blur-sm);background:linear-gradient(135deg,var(--bc-primary),var(--bc-neon-primary))"></div></td>
+          <td><span class="tt-name">--blur-sm</span></td>
+          <td class="tt-value">blur(8px)</td>
+          <td class="tt-use">backdrop-filter: nav bar</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="filter:var(--blur-md);background:linear-gradient(135deg,var(--bc-primary),var(--bc-neon-primary))"></div></td>
+          <td><span class="tt-name">--blur-md</span></td>
+          <td class="tt-value">blur(16px)</td>
+          <td class="tt-use">backdrop-filter: modals</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="filter:var(--blur-lg);background:linear-gradient(135deg,var(--bc-primary),var(--bc-neon-primary))"></div></td>
+          <td><span class="tt-name">--blur-lg</span></td>
+          <td class="tt-value">blur(24px)</td>
+          <td class="tt-use">backdrop-filter: overlays</td>
+        </tr>
+        <tr>
+          <td><div class="tt-preview" style="filter:var(--blur-xl);background:linear-gradient(135deg,var(--bc-primary),var(--bc-neon-primary))"></div></td>
+          <td><span class="tt-name">--blur-xl</span></td>
+          <td class="tt-value">blur(32px)</td>
+          <td class="tt-use">backdrop-filter: glass panels</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

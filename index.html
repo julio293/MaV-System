@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MaV Design System — Modular App Visualizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:14px;line-height:1.5;
+  color:var(--mav-fg);background:var(--mav-bg);
+  -webkit-font-smoothing:antialiased;
+  transition:background .2s,color .2s;
+}
+
+/* ── Layout ── */
+.shell{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.sidebar{
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  border-right:1px solid var(--mav-border);
+  background:var(--mav-bg);
+  padding:0 0 40px;
+  scrollbar-width:thin;scrollbar-color:var(--mav-border) transparent;
+}
+.main{overflow:auto}
+
+/* ── Sidebar ── */
+.s-head{
+  padding:20px 20px 16px;
+  border-bottom:1px solid var(--mav-border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.s-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.s-mark{
+  width:32px;height:32px;border-radius:8px;
+  background:var(--mav-primary);
+  display:grid;place-items:center;flex-shrink:0;
+}
+.s-mark svg{fill:var(--bc-white)}
+[data-theme=dark] .s-mark svg{fill:var(--mav-fg)}
+.s-name{font-size:15px;font-weight:700;color:var(--mav-fg);letter-spacing:-.01em}
+.s-version{font-size:10px;color:var(--mav-muted);font-weight:500}
+
+.s-search{
+  margin:12px 16px 4px;
+  display:flex;align-items:center;gap:8px;
+  padding:7px 10px;border-radius:6px;
+  border:1px solid var(--mav-border);
+  background:var(--mav-bg);color:var(--mav-muted);
+  font-size:12px;cursor:text;
+}
+
+.s-group-label{
+  font-size:10px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--mav-muted);
+  padding:16px 20px 4px;
+}
+
+.s-link{
+  display:flex;align-items:center;gap:8px;
+  padding:5px 20px;font-size:13px;font-weight:500;
+  color:var(--mav-muted);text-decoration:none;
+  border-left:2px solid transparent;
+  transition:all .12s;
+}
+.s-link:hover{color:var(--mav-fg);background:color-mix(in srgb,var(--mav-border) 50%,transparent)}
+.s-link.active{color:var(--mav-primary);border-left-color:var(--mav-primary);background:color-mix(in srgb,var(--mav-primary) 8%,transparent)}
+.s-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--mav-border);flex-shrink:0;margin-left:auto;
+}
+.s-dot.done{background:var(--mav-success)}
+
+/* ── Theme toggle ── */
+.theme-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:5px 9px;border-radius:6px;
+  border:1px solid var(--mav-border);background:var(--mav-bg);
+  color:var(--mav-muted);font-size:12px;font-weight:500;
+  cursor:pointer;transition:all .12s;font-family:inherit;
+}
+.theme-btn:hover{background:var(--mav-border);color:var(--mav-fg)}
+
+/* ── Hero ── */
+.hero{
+  padding:64px 64px 48px;
+  border-bottom:1px solid var(--mav-border);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-120px;right:-80px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--mav-primary) 12%,transparent) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:3px 10px;border-radius:9999px;
+  background:color-mix(in srgb,var(--mav-primary) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--mav-primary) 20%,transparent);
+  font-size:11px;font-weight:600;color:var(--mav-primary);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;
+}
+.hero-title{
+  font-size:clamp(32px,4vw,48px);font-weight:800;
+  letter-spacing:-.03em;color:var(--mav-fg);
+  line-height:1.1;margin-bottom:12px;
+}
+.hero-title span{color:var(--mav-primary)}
+.hero-desc{
+  font-size:16px;color:var(--mav-muted);max-width:520px;
+  line-height:1.6;margin-bottom:28px;
+}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 10px;border-radius:6px;
+  border:1px solid var(--mav-border);
+  font-size:12px;font-weight:500;color:var(--mav-muted);
+}
+.hero-tag svg{width:12px;height:12px;flex-shrink:0}
+.hero-cta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 18px;border-radius:8px;
+  background:var(--mav-primary);color:var(--bc-white);
+  font-size:13px;font-weight:600;
+  text-decoration:none;transition:all .15s;
+  border:1px solid var(--mav-primary);
+}
+[data-theme=dark] .btn-primary{color:var(--mav-fg)}
+.btn-primary:hover{opacity:.88}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:10px 18px;border-radius:8px;
+  background:transparent;color:var(--mav-fg);
+  font-size:13px;font-weight:600;
+  text-decoration:none;transition:all .15s;
+  border:1px solid var(--mav-border);
+}
+.btn-outline:hover{background:var(--mav-border)}
+
+/* ── Stats bar ── */
+.stats-bar{
+  display:flex;align-items:stretch;
+  border-bottom:1px solid var(--mav-border);
+}
+.stat{
+  flex:1;padding:20px 28px;
+  border-right:1px solid var(--mav-border);
+}
+.stat:last-child{border-right:none}
+.stat-num{
+  font-size:28px;font-weight:800;
+  color:var(--mav-fg);letter-spacing:-.03em;
+  line-height:1;margin-bottom:4px;
+}
+.stat-num em{color:var(--mav-primary);font-style:normal}
+.stat-label{font-size:12px;color:var(--mav-muted);font-weight:500}
+
+/* ── Section grid ── */
+.sections{padding:48px 64px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.section-card{
+  border:1px solid var(--mav-border);border-radius:12px;overflow:hidden;
+  text-decoration:none;transition:all .15s;
+  display:flex;flex-direction:column;
+}
+.section-card:hover{border-color:var(--mav-primary);box-shadow:0 4px 16px color-mix(in srgb,var(--mav-primary) 12%,transparent)}
+.sc-preview{
+  height:140px;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.sc-preview.clr-blue{background:color-mix(in srgb,var(--mav-primary) 8%,var(--mav-bg))}
+.sc-preview.clr-lime{background:var(--mav-code-bg)}
+.sc-preview.clr-neutral{background:var(--mav-bg-secondary)}
+.sc-preview.clr-dark{background:var(--mav-fg)}
+.sc-preview.clr-code{background:var(--mav-code-bg)}
+.sc-preview.clr-ios{background:linear-gradient(135deg,#1c1c1e 0%,var(--mav-border) 100%)}
+.sc-preview.clr-android{background:linear-gradient(135deg,var(--bc-android-bg) 0%,var(--bc-android-brand) 100%)}
+.sc-preview.clr-web{background:linear-gradient(135deg,var(--mav-bg-tertiary) 0%,var(--bc-white) 100%)}
+.sc-preview.clr-dev{background:var(--mav-code-bg)}
+
+.sc-body{padding:20px 24px 24px}
+.sc-category{
+  font-size:10px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.07em;
+  color:var(--mav-muted);margin-bottom:6px;
+}
+.sc-title{
+  font-size:17px;font-weight:700;color:var(--mav-fg);
+  letter-spacing:-.015em;margin-bottom:6px;
+}
+.sc-desc{font-size:13px;color:var(--mav-muted);line-height:1.5}
+.sc-links{
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;
+}
+.sc-link{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 9px;border-radius:9999px;
+  font-size:11px;font-weight:500;
+  border:1px solid var(--mav-border);color:var(--mav-muted);
+  text-decoration:none;transition:all .12s;
+  cursor:pointer;
+}
+.sc-link:hover{border-color:var(--mav-primary);color:var(--mav-primary)}
+
+/* ── Color preview row ── */
+.color-row{display:flex;height:100%;width:100%;align-items:stretch}
+.cr-swatch{flex:1;height:100%}
+
+/* ── Type preview ── */
+.type-preview-content{
+  padding:20px 24px;width:100%;
+  display:flex;flex-direction:column;gap:4px;
+}
+.tp-line{color:var(--mav-fg)}
+.tp-xs{font-size:12px;font-weight:400}
+.tp-sm{font-size:14px;font-weight:400}
+.tp-md{font-size:16px;font-weight:500}
+.tp-lg{font-size:20px;font-weight:600}
+.tp-xl{font-size:28px;font-weight:700;letter-spacing:-.02em}
+
+/* ── Component preview grid ── */
+.comp-preview{
+  display:flex;flex-wrap:wrap;align-items:center;
+  gap:8px;padding:20px 24px;
+}
+.cp-btn{
+  padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;
+  font-family:inherit;cursor:default;border:none;
+}
+.cp-btn-p{background:var(--mav-primary);color:var(--bc-white)}
+.cp-btn-s{background:transparent;border:1px solid var(--mav-border);color:var(--mav-fg)}
+.cp-btn-d{background:var(--bc-mono100-l);color:var(--mav-placeholder)}
+.cp-badge{padding:2px 8px;border-radius:9999px;font-size:11px;font-weight:600}
+.cp-badge-p{background:var(--mav-primary);color:var(--bc-white)}
+.cp-badge-g{background:color-mix(in srgb,var(--mav-success) 12%,transparent);color:var(--mav-success)}
+.cp-badge-r{background:color-mix(in srgb,var(--mav-danger) 10%,transparent);color:var(--mav-danger)}
+.cp-badge-y{background:color-mix(in srgb,var(--mav-warning) 12%,transparent);color:var(--mav-warning)}
+.cp-input{
+  padding:8px 12px;border-radius:4px;
+  border:1px solid var(--bc-mono200-l);font-size:13px;font-family:inherit;
+  background:var(--bc-white);color:var(--mav-placeholder);outline:none;width:140px;
+}
+.cp-tag-blue{background:var(--mav-primary);color:var(--bc-white);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600}
+.cp-tag-green{background:var(--mav-primary-dark);color:var(--mav-fg);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600}
+
+/* ── iOS preview ── */
+.ios-thumb{
+  width:80px;height:160px;border-radius:16px;
+  background:#1c1c1e;border:2px solid #3a3a3c;
+  overflow:hidden;display:flex;flex-direction:column;
+  position:relative;flex-shrink:0;
+}
+.ios-notch{
+  height:10px;background:#000;display:flex;align-items:center;
+  justify-content:center;
+}
+.ios-di{width:30px;height:6px;background:#000;border-radius:3px;position:absolute;top:2px;left:50%;transform:translateX(-50%)}
+.ios-screen{flex:1;overflow:hidden}
+.ios-home{height:3px;background:var(--bc-white);border-radius:2px;width:36px;margin:4px auto}
+
+/* ── Android preview ── */
+.and-thumb{
+  width:80px;height:160px;border-radius:12px;
+  background:var(--bc-android-bg);border:2px solid var(--bc-android-brand);
+  overflow:hidden;display:flex;flex-direction:column;
+  position:relative;flex-shrink:0;
+}
+.and-status{height:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center}
+.and-dot{width:5px;height:5px;background:rgba(255,255,255,.6);border-radius:50%}
+.and-screen{flex:1;overflow:hidden}
+.and-nav{height:10px;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;gap:12px}
+
+/* ── Web preview ── */
+.web-preview-browser{
+  width:100%;max-width:240px;border-radius:8px;
+  background:var(--bc-white);border:1px solid var(--mav-border);overflow:hidden;
+}
+.browser-bar{
+  height:24px;background:var(--bc-mono100-l);border-bottom:1px solid var(--mav-border);
+  display:flex;align-items:center;padding:0 8px;gap:4px;
+}
+.browser-dot{width:7px;height:7px;border-radius:50%}
+.browser-url{flex:1;background:var(--bc-white);height:12px;border-radius:3px;border:1px solid var(--mav-border);margin-left:8px}
+
+/* ── Full section list ── */
+.screen-list{
+  padding:0 64px 64px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+}
+
+.screen-item{
+  display:flex;flex-direction:column;gap:4px;
+  padding:14px 16px;border-radius:8px;border:1px solid var(--mav-border);
+  text-decoration:none;transition:all .12s;
+  position:relative;overflow:hidden;
+}
+.screen-item:hover{border-color:var(--mav-primary);background:color-mix(in srgb,var(--mav-primary) 4%,transparent)}
+.screen-item-num{
+  font-size:10px;font-weight:600;color:var(--mav-muted);
+  font-family:'JetBrains Mono',monospace;letter-spacing:.04em;
+}
+.screen-item-title{font-size:13px;font-weight:600;color:var(--mav-fg)}
+.screen-item-cat{font-size:11px;color:var(--mav-muted)}
+
+.cat-badge{
+  position:absolute;top:14px;right:14px;
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;
+}
+.cat-f{background:var(--mav-tertiary-1)}
+.cat-c{background:var(--mav-primary)}
+.cat-i{background:var(--bc-mono300-d)}
+.cat-a{background:var(--bc-android-brand)}
+.cat-w{background:var(--mav-success)}
+.cat-d{background:var(--mav-warning)}
+
+/* ── Color swatches ── */
+.clr-blue .cr-swatch:nth-child(1){background:var(--bc-primary-light)}
+.clr-blue .cr-swatch:nth-child(2){background:var(--bc-secondary)}
+.clr-blue .cr-swatch:nth-child(3){background:var(--bc-tertiary1)}
+.clr-blue .cr-swatch:nth-child(4){background:var(--bc-tertiary2)}
+.clr-blue .cr-swatch:nth-child(5){background:var(--bc-primary-dark)}
+.clr-blue .cr-swatch:nth-child(6){background:var(--bc-neon-primary)}
+
+/* ── Dark mode preview ── */
+.clr-dark>div{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;width:100%}
+.clr-dark>div>div:first-child{font-size:13px;font-weight:700;color:var(--bc-white)}
+.clr-dark .dm-chips{display:flex;gap:6px}
+.clr-dark .dm-dots{display:flex;gap:5px}
+.clr-dark .dm-dots>div{width:20px;height:20px;border-radius:3px}
+.clr-dark .dm-dots>div:nth-child(1){background:var(--bc-primary-dark)}
+.clr-dark .dm-dots>div:nth-child(2){background:var(--bc-primary-dark);opacity:.7}
+.clr-dark .dm-dots>div:nth-child(3){background:var(--bc-primary-dark);opacity:.4}
+.clr-dark .dm-dots>div:nth-child(4){background:var(--bc-neon-primary)}
+.clr-dark .dm-dots>div:nth-child(5){background:var(--bc-neon-primary);opacity:.5}
+
+/* ── Screen inventory header ── */
+.screen-inventory-header{padding:48px 64px 24px}
+.screen-inventory-header h2{font-size:22px;font-weight:800;color:var(--mav-fg);letter-spacing:-.02em;margin-bottom:6px}
+.screen-inventory-header p{font-size:14px;color:var(--mav-muted)}
+
+/* ── Footer ── */
+footer{padding:28px 64px;border-top:1px solid var(--mav-border);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.footer-left{display:flex;align-items:center;gap:10px;font-size:13px}
+.footer-logo-mark{width:24px;height:24px;border-radius:6px;background:var(--mav-primary);display:grid;place-items:center;flex-shrink:0}
+.footer-left .f-name{font-weight:700;color:var(--mav-fg)}
+.footer-left .f-src{color:var(--mav-muted);font-size:12px}
+.footer-right{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--mav-muted)}
+.badge{display:inline-flex;padding:2px 8px;border-radius:9999px;background:color-mix(in srgb,var(--mav-border) 80%,transparent);border:1px solid var(--mav-border);font-size:10px;font-weight:600;color:var(--mav-fg);font-family:'JetBrains Mono',monospace}
+
+/* ── Web preview browser content ── */
+.browser-content{padding:8px;background:var(--mav-bg);display:flex;gap:4px;min-height:88px;overflow:hidden}
+.bc-sidebar{width:28px;background:var(--mav-bg-secondary);border-radius:2px;flex-shrink:0}
+.bc-main{flex:1;display:flex;flex-direction:column;gap:3px}
+.bc-row{height:7px;background:var(--mav-border);border-radius:2px}
+.bc-row.accent{background:color-mix(in srgb,var(--mav-primary) 20%,transparent);width:60%}
+.bc-row.short{width:40%}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--mav-border);border-radius:999px}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .hero{padding:32px 20px 28px}
+  .stats-bar{flex-wrap:wrap}
+  .stat{min-width:50%;border-bottom:1px solid var(--mav-border)}
+  .sections{padding:24px 20px;grid-template-columns:1fr}
+  .screen-list{padding:0 20px 40px;grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .screen-list{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="s-head">
+      <a href="index.html" class="s-logo">
+        <div class="s-mark">
+          <svg width="16" height="16" viewBox="0 0 16 16">
+            <rect x="2" y="2" width="5" height="5" rx="1"/>
+            <rect x="9" y="2" width="5" height="5" rx="1"/>
+            <rect x="2" y="9" width="5" height="5" rx="1"/>
+            <rect x="9" y="9" width="5" height="5" rx="1" opacity=".4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="s-name">MaV</div>
+          <div class="s-version">Design System v1.0</div>
+        </div>
+      </a>
+      <button class="theme-btn" data-theme-toggle>
+        <span data-theme-icon>☾</span>
+      </button>
+    </div>
+
+    <div class="s-group-label">Getting Started</div>
+    <a href="index.html" class="s-link active">Overview</a>
+    <a href="foundations/tokens.html" class="s-link">Token Architecture</a>
+    <a href="dev/css-variables.html" class="s-link">CSS Variables</a>
+
+    <div class="s-group-label">Foundations</div>
+    <a href="foundations/colors.html" class="s-link">Color System</a>
+    <a href="foundations/typography.html" class="s-link">Typography</a>
+    <a href="foundations/spacing.html" class="s-link">Spacing & Layout</a>
+    <a href="foundations/effects.html" class="s-link">Shadows & Effects</a>
+    <a href="foundations/dark-mode.html" class="s-link">Dark Mode</a>
+
+    <div class="s-group-label">Components</div>
+    <a href="components/buttons.html" class="s-link">Buttons</a>
+    <a href="components/inputs.html" class="s-link">Input Fields</a>
+    <a href="components/otp.html" class="s-link">OTP Input</a>
+    <a href="components/forms.html" class="s-link">Forms & Controls</a>
+    <a href="components/feedback.html" class="s-link">Alerts & Toasts</a>
+    <a href="components/badges.html" class="s-link">Badges & Chips</a>
+    <a href="components/navigation.html" class="s-link">Navigation</a>
+    <a href="components/chat.html" class="s-link">Chat Bubbles</a>
+    <a href="components/finance.html" class="s-link">Finance Modules</a>
+    <a href="components/all.html" class="s-link">Kitchen Sink</a>
+
+    <div class="s-group-label">iOS Screens</div>
+    <a href="ios/01-onboarding.html" class="s-link">Onboarding</a>
+    <a href="ios/02-login.html" class="s-link">Login</a>
+    <a href="ios/03-otp.html" class="s-link">OTP Verify</a>
+    <a href="ios/04-home.html" class="s-link">Home</a>
+    <a href="ios/05-profile.html" class="s-link">Profile</a>
+    <a href="ios/06-settings.html" class="s-link">Settings</a>
+    <a href="ios/07-notifications.html" class="s-link">Notifications</a>
+    <a href="ios/08-dark-mode.html" class="s-link">Dark Mode</a>
+    <a href="ios/09-explore.html" class="s-link">Explore</a>
+    <a href="ios/10-payment.html" class="s-link">Payment</a>
+
+    <div class="s-group-label">Android Screens</div>
+    <a href="android/01-onboarding.html" class="s-link">Onboarding</a>
+    <a href="android/02-login.html" class="s-link">Login</a>
+    <a href="android/03-otp.html" class="s-link">OTP Verify</a>
+    <a href="android/04-home.html" class="s-link">Home</a>
+    <a href="android/05-profile.html" class="s-link">Profile</a>
+    <a href="android/06-settings.html" class="s-link">Settings</a>
+    <a href="android/07-notifications.html" class="s-link">Notifications</a>
+    <a href="android/08-dark-mode.html" class="s-link">Dark Mode</a>
+    <a href="android/09-explore.html" class="s-link">Explore</a>
+    <a href="android/10-payment.html" class="s-link">Payment</a>
+
+    <div class="s-group-label">Web App</div>
+    <a href="web/01-landing.html" class="s-link">Landing</a>
+    <a href="web/02-login.html" class="s-link">Login</a>
+    <a href="web/03-dashboard.html" class="s-link">Dashboard</a>
+    <a href="web/04-explore.html" class="s-link">Explore</a>
+    <a href="web/05-profile.html" class="s-link">Profile</a>
+    <a href="web/06-settings.html" class="s-link">Settings</a>
+    <a href="web/07-notifications.html" class="s-link">Notifications</a>
+    <a href="web/08-dark-mode.html" class="s-link">Dark Mode</a>
+    <a href="web/09-checkout.html" class="s-link">Checkout</a>
+    <a href="web/10-playground.html" class="s-link">Component Playground</a>
+
+    <div class="s-group-label">Developer Reference</div>
+    <a href="dev/css-variables.html" class="s-link">CSS Variables</a>
+    <a href="dev/token-architecture.html" class="s-link">Token Architecture</a>
+    <a href="dev/otp-spec.html" class="s-link">OTP Spec</a>
+    <a href="dev/accessibility.html" class="s-link">Accessibility</a>
+    <a href="dev/grid-breakpoints.html" class="s-link">Grid & Breakpoints</a>
+  </nav>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-kicker">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><rect x="0" y="0" width="4" height="4" rx="1"/><rect x="6" y="0" width="4" height="4" rx="1"/><rect x="0" y="6" width="4" height="4" rx="1"/><rect x="6" y="6" width="4" height="4" rx="1" opacity=".4"/></svg>
+        Modular App Visualizer
+      </div>
+      <h1 class="hero-title">
+        MaV<br><span>Design System</span>
+      </h1>
+      <p class="hero-desc">
+        A three-layer token architecture built for React Native, React Web, and cross-platform delivery. Electric blue in the light. Lime in the dark.
+      </p>
+      <div class="hero-tags">
+        <span class="hero-tag">
+          <svg viewBox="0 0 12 12" fill="currentColor"><rect x="1" y="1" width="4.5" height="4.5" rx=".8"/><rect x="6.5" y="1" width="4.5" height="4.5" rx=".8"/><rect x="1" y="6.5" width="4.5" height="4.5" rx=".8"/><rect x="6.5" y="6.5" width="4.5" height="4.5" rx=".8" opacity=".4"/></svg>
+          Figma 8dGEq5WuFEitIQxYUmezTr
+        </span>
+        <span class="hero-tag">Plus Jakarta Sans</span>
+        <span class="hero-tag">Light + Dark</span>
+        <span class="hero-tag">React Native 0.73</span>
+        <span class="hero-tag">React 18 + MUI v5</span>
+        <span class="hero-tag">3-Layer Tokens</span>
+      </div>
+      <div class="hero-cta">
+        <a href="foundations/colors.html" class="btn-primary">Explore System →</a>
+        <a href="customiser.html" class="btn-primary" style="background:var(--mav-success);border-color:var(--mav-success)">Live Customiser ✦</a>
+        <a href="dev/css-variables.html" class="btn-outline">CSS Variables</a>
+        <a href="dev/token-architecture.html" class="btn-outline">Token Layers</a>
+        <button class="theme-btn" data-theme-toggle>
+          <span data-theme-icon>☾</span>
+          <span data-theme-label>Dark mode</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-num"><em>50</em></div><div class="stat-label">Screens</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Platforms</div></div>
+      <div class="stat"><div class="stat-num"><em>2</em></div><div class="stat-label">Themes</div></div>
+      <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Tokens</div></div>
+      <div class="stat"><div class="stat-num">18</div><div class="stat-label">Components</div></div>
+      <div class="stat"><div class="stat-num"><em>3</em></div><div class="stat-label">Token Layers</div></div>
+    </div>
+
+    <!-- Section cards grid -->
+    <div class="sections">
+
+      <!-- Foundations -->
+      <a href="foundations/colors.html" class="section-card">
+        <div class="sc-preview clr-blue">
+          <div class="color-row">
+            <div class="cr-swatch"></div>
+            <div class="cr-swatch"></div>
+            <div class="cr-swatch"></div>
+            <div class="cr-swatch"></div>
+            <div class="cr-swatch"></div>
+            <div class="cr-swatch"></div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-category">Foundations</div>
+          <div class="sc-title">Color System</div>
+          <div class="sc-desc">Primitive palette, foundation tokens, semantic tokens. Light + dark mode with full token reference.</div>
+          <div class="sc-links">
+            <span class="sc-link" data-href="foundations/colors.html">Palette →</span>
+            <span class="sc-link" data-href="foundations/dark-mode.html">Dark mode →</span>
+            <span class="sc-link" data-href="foundations/tokens.html">Token layers →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Typography -->
+      <a href="foundations/typography.html" class="section-card">
+        <div class="sc-preview">
+          <div class="type-preview-content">
+            <div class="tp-line tp-xl">Heading Bold</div>
+            <div class="tp-line tp-lg">Section Title 600</div>
+            <div class="tp-line tp-md">Body medium text 500</div>
+            <div class="tp-line tp-sm">Caption regular 400</div>
+            <div class="tp-line tp-xs">0x352eff — Mono</div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-category">Foundations</div>
+          <div class="sc-title">Typography</div>
+          <div class="sc-desc">Plus Jakarta Sans at every scale — 10px to 64px. Heading, body, medium, and bold stacks.</div>
+          <div class="sc-links">
+            <span class="sc-link" data-href="foundations/typography.html">Type scale →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Components -->
+      <a href="components/all.html" class="section-card">
+        <div class="sc-preview">
+          <div class="comp-preview">
+            <button class="cp-btn cp-btn-p">Primary</button>
+            <button class="cp-btn cp-btn-s">Secondary</button>
+            <button class="cp-btn cp-btn-d" disabled>Disabled</button>
+            <span class="cp-badge cp-badge-p">Primary</span>
+            <span class="cp-badge cp-badge-g">Success</span>
+            <span class="cp-badge cp-badge-r">Danger</span>
+            <span class="cp-badge cp-badge-y">Warning</span>
+            <input class="cp-input" placeholder="Input field..." readonly>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-category">Components</div>
+          <div class="sc-title">Component Library</div>
+          <div class="sc-desc">Buttons, inputs, OTP, checkbox, toggle, alerts, badges, nav, chat bubbles, and more.</div>
+          <div class="sc-links">
+            <span class="sc-link" data-href="components/buttons.html">Buttons →</span>
+            <span class="sc-link" data-href="components/inputs.html">Inputs →</span>
+            <span class="sc-link" data-href="components/otp.html">OTP →</span>
+            <span class="sc-link" data-href="components/all.html">All →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Dark mode showcase -->
+      <a href="foundations/dark-mode.html" class="section-card">
+        <div class="sc-preview clr-dark">
+          <div>
+            <div>Dark Mode</div>
+            <div class="dm-chips">
+              <span class="cp-tag-blue">Primary</span>
+              <span class="cp-tag-green">Dark Primary</span>
+            </div>
+            <div class="dm-dots">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-category">Foundations</div>
+          <div class="sc-title">Dark Mode</div>
+          <div class="sc-desc">#171717 base + #a1ff5b lime accent. Full token override map, all component states.</div>
+          <div class="sc-links">
+            <span class="sc-link" data-href="foundations/dark-mode.html">Dark tokens →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- iOS -->
+      <a href="ios/04-home.html" class="section-card">
+        <div class="sc-preview clr-ios">
+          <!-- 3 mini iPhone thumbs -->
+          <div class="ios-thumb">
+            <div class="ios-notch"><div class="ios-di"></div></div>
+            <div class="ios-screen" style="padding:6px 4px;display:flex;flex-direction:column;gap:3px;background:#1c1c1e">
+              <div style="font-size:7px;font-weight:700;color:var(--bc-white);padding:2px 0">MaV</div>
+              <div style="height:5px;background:var(--bc-primary-light);border-radius:2px;width:70%"></div>
+              <div style="height:5px;background:rgba(255,255,255,.15);border-radius:2px"></div>
+              <div style="display:flex;gap:2px;margin-top:2px">
+                <div style="flex:1;height:16px;background:rgba(255,255,255,.08);border-radius:2px"></div>
+                <div style="flex:1;height:16px;background:rgba(255,255,255,.08);border-radius:2px"></div>
+                <div style="flex:1;height:16px;background:rgba(255,255,255,.08);border-radius:2px"></div>
+                <div style="flex:1;height:16px;background:rgba(255,255,255,.08);border-radius:2px"></div>
+              </div>
+            </div>
+            <div class="ios-home"></div>
+          </div>
+          <div class="ios-thumb">
+            <div class="ios-notch"><div class="ios-di"></div></div>
+            <div class="ios-screen" style="padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;background:#1c1c1e">
+              <div style="height:5px;background:rgba(255,255,255,.15);border-radius:2px;width:50%"></div>
+              <div style="font-size:7px;font-weight:700;color:var(--bc-white)">Log In</div>
+              <div style="height:5px;background:rgba(255,255,255,.1);border-radius:2px;width:80%"></div>
+              <div style="height:12px;background:var(--bc-primary-light);border-radius:2px;width:80%"></div>
+            </div>
+            <div class="ios-home"></div>
+          </div>
+          <div class="ios-thumb">
+            <div class="ios-notch"><div class="ios-di"></div></div>
+            <div class="ios-screen" style="padding:6px 4px;display:flex;flex-direction:column;gap:3px;background:#1c1c1e">
+              <div style="height:5px;background:rgba(255,255,255,.15);border-radius:2px;width:60%"></div>
+              <div style="display:flex;gap:2px;align-items:center">
+                <div style="width:16px;height:16px;background:var(--bc-primary-dark);border-radius:50%"></div>
+                <div style="flex:1;height:4px;background:rgba(255,255,255,.1);border-radius:2px"></div>
+              </div>
+              <div style="height:5px;background:rgba(255,255,255,.08);border-radius:2px"></div>
+            </div>
+            <div class="ios-home"></div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-category">Platform — iOS</div>
+          <div class="sc-title">iOS App Screens</div>
+          <div class="sc-desc">10 screens with Dynamic Island frame — onboarding through payment, light and dark modes.</div>
+          <div class="sc-links">
+            <span class="sc-link" data-href="ios/01-onboarding.html">Onboarding →</span>
+            <span class="sc-link" data-href="ios/02-login.html">Login →</span>
+            <span class="sc-link" data-href="ios/04-home.html">Home →</span>
+            <span class="sc-link" data-href="ios/03-otp.html">OTP →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Android -->
+      <a href="android/04-home.html" class="section-card">
+        <div class="sc-preview clr-android">
+          <div class="and-thumb">
+            <div class="and-status"><div class="and-dot"></div></div>
+            <div class="and-screen" style="padding:6px 4px;display:flex;flex-direction:column;gap:3px;background:var(--bc-android-bg)">
+              <div style="font-size:7px;font-weight:700;color:var(--bc-white)">MaV</div>
+              <div style="height:5px;background:var(--bc-primary-dark);border-radius:2px;width:60%"></div>
+              <div style="height:5px;background:rgba(255,255,255,.12);border-radius:2px"></div>
+              <div style="display:flex;gap:2px;margin-top:2px">
+                <div style="flex:1;height:16px;background:rgba(255,255,255,.08);border-radius:2px"></div>
+                <div style="flex:1;height:16px;background:rgba(255,255,255,.08);border-radius:2px"></div>
+                <div style="flex:1;height:16px;background:rgba(255,255,255,.08);border-radius:2px"></div>
+                <div style="flex:1;height:16px;background:rgba(255,255,255,.08);border-radius:2px"></div>
+              </div>
+            </div>
+            <div class="and-nav"><div></div><div></div><div></div></div>
+          </div>
+          <div class="and-thumb">
+            <div class="and-status"><div class="and-dot"></div></div>
+            <div class="and-screen" style="padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--bc-android-bg)">
+              <div style="height:5px;background:rgba(255,255,255,.12);border-radius:2px;width:50%"></div>
+              <div style="font-size:7px;font-weight:700;color:var(--bc-white)">Sign In</div>
+              <div style="height:5px;background:rgba(255,255,255,.08);border-radius:2px;width:80%"></div>
+              <div style="height:12px;background:var(--bc-primary-dark);border-radius:2px;width:80%"></div>
+            </div>
+            <div class="and-nav"><div></div><div></div><div></div></div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-category">Platform — Android</div>
+          <div class="sc-title">Android App Screens</div>
+          <div class="sc-desc">10 screens with Pixel frame and Material nav — onboarding through payment.</div>
+          <div class="sc-links">
+            <span class="sc-link" data-href="android/01-onboarding.html">Onboarding →</span>
+            <span class="sc-link" data-href="android/02-login.html">Login →</span>
+            <span class="sc-link" data-href="android/04-home.html">Home →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Web -->
+      <a href="web/03-dashboard.html" class="section-card">
+        <div class="sc-preview clr-web">
+          <div>
+            <div class="web-preview-browser">
+              <div class="browser-bar">
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-dot"></div>
+                <div class="browser-url"></div>
+              </div>
+              <div class="browser-content">
+                <div class="bc-sidebar"></div>
+                <div class="bc-main">
+                  <div class="bc-row accent"></div>
+                  <div class="bc-row"></div>
+                  <div class="bc-row short"></div>
+                  <div class="bc-row"></div>
+                  <div class="bc-row short"></div>
+                  <div class="bc-row"></div>
+                  <div class="bc-row accent" style="width:50%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-category">Platform — Web</div>
+          <div class="sc-title">Web App Screens</div>
+          <div class="sc-desc">10 responsive screens — landing to checkout. React 18 + MUI v5 patterns. Full breakpoint coverage.</div>
+          <div class="sc-links">
+            <span class="sc-link" data-href="web/01-landing.html">Landing →</span>
+            <span class="sc-link" data-href="web/02-login.html">Login →</span>
+            <span class="sc-link" data-href="web/03-dashboard.html">Dashboard →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Developer Reference -->
+      <a href="dev/css-variables.html" class="section-card">
+        <div class="sc-preview clr-code">
+          <div>
+            <div>
+              <span>:root</span> {<br>
+              &nbsp;&nbsp;<span>--Main\/Primary</span>: <span>#352eff</span>;<br>
+              &nbsp;&nbsp;<span>--btn\/primary\/default</span>: <span>#352eff</span>;<br>
+              &nbsp;&nbsp;<span>--input-field\/focus\/outline-box</span>: <span>#352eff</span>;<br>
+              }<br>
+              <span>/* devider: intentional typo */</span>
+            </div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-category">Developer Reference</div>
+          <div class="sc-title">Dev Reference</div>
+          <div class="sc-desc">CSS variables cheatsheet, token architecture, component specs, accessibility, breakpoints.</div>
+          <div class="sc-links">
+            <span class="sc-link" data-href="dev/css-variables.html">CSS Vars →</span>
+            <span class="sc-link" data-href="dev/token-architecture.html">Token Layers →</span>
+            <span class="sc-link" data-href="dev/otp-spec.html">OTP Spec →</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- All screens list -->
+    <div class="screen-inventory-header">
+      <h2>All 50 Screens</h2>
+      <p>Complete screen inventory across foundations, components, iOS, Android, web, and dev reference.</p>
+    </div>
+
+    <div class="screen-list">
+      <!-- Foundations -->
+      <a href="foundations/colors.html" class="screen-item"><div class="screen-item-num">01</div><div class="screen-item-title">Color System</div><div class="screen-item-cat">Foundations</div><div class="cat-badge cat-f"></div></a>
+      <a href="foundations/typography.html" class="screen-item"><div class="screen-item-num">02</div><div class="screen-item-title">Typography</div><div class="screen-item-cat">Foundations</div><div class="cat-badge cat-f"></div></a>
+      <a href="foundations/spacing.html" class="screen-item"><div class="screen-item-num">03</div><div class="screen-item-title">Spacing & Layout</div><div class="screen-item-cat">Foundations</div><div class="cat-badge cat-f"></div></a>
+      <a href="foundations/effects.html" class="screen-item"><div class="screen-item-num">04</div><div class="screen-item-title">Shadows & Effects</div><div class="screen-item-cat">Foundations</div><div class="cat-badge cat-f"></div></a>
+      <a href="foundations/dark-mode.html" class="screen-item"><div class="screen-item-num">05</div><div class="screen-item-title">Dark Mode</div><div class="screen-item-cat">Foundations</div><div class="cat-badge cat-f"></div></a>
+      <a href="foundations/tokens.html" class="screen-item"><div class="screen-item-num">06</div><div class="screen-item-title">Token Layers</div><div class="screen-item-cat">Foundations</div><div class="cat-badge cat-f"></div></a>
+      <!-- Components -->
+      <a href="components/buttons.html" class="screen-item"><div class="screen-item-num">07</div><div class="screen-item-title">Buttons</div><div class="screen-item-cat">Components</div><div class="cat-badge cat-c"></div></a>
+      <a href="components/inputs.html" class="screen-item"><div class="screen-item-num">08</div><div class="screen-item-title">Input Fields</div><div class="screen-item-cat">Components</div><div class="cat-badge cat-c"></div></a>
+      <a href="components/otp.html" class="screen-item"><div class="screen-item-num">09</div><div class="screen-item-title">OTP Input</div><div class="screen-item-cat">Components</div><div class="cat-badge cat-c"></div></a>
+      <a href="components/forms.html" class="screen-item"><div class="screen-item-num">10</div><div class="screen-item-title">Forms & Controls</div><div class="screen-item-cat">Components</div><div class="cat-badge cat-c"></div></a>
+      <a href="components/feedback.html" class="screen-item"><div class="screen-item-num">11</div><div class="screen-item-title">Alerts & Toasts</div><div class="screen-item-cat">Components</div><div class="cat-badge cat-c"></div></a>
+      <a href="components/badges.html" class="screen-item"><div class="screen-item-num">12</div><div class="screen-item-title">Badges & Chips</div><div class="screen-item-cat">Components</div><div class="cat-badge cat-c"></div></a>
+      <a href="components/navigation.html" class="screen-item"><div class="screen-item-num">13</div><div class="screen-item-title">Navigation</div><div class="screen-item-cat">Components</div><div class="cat-badge cat-c"></div></a>
+      <a href="components/chat.html" class="screen-item"><div class="screen-item-num">14</div><div class="screen-item-title">Chat Bubbles</div><div class="screen-item-cat">Components</div><div class="cat-badge cat-c"></div></a>
+      <a href="components/finance.html" class="screen-item"><div class="screen-item-num">15</div><div class="screen-item-title">Finance Modules</div><div class="screen-item-cat">Components</div><div class="cat-badge cat-c"></div></a>
+      <a href="components/all.html" class="screen-item"><div class="screen-item-num">16</div><div class="screen-item-title">Kitchen Sink</div><div class="screen-item-cat">Components</div><div class="cat-badge cat-c"></div></a>
+      <!-- iOS -->
+      <a href="ios/01-onboarding.html" class="screen-item"><div class="screen-item-num">17</div><div class="screen-item-title">iOS — Onboarding</div><div class="screen-item-cat">iOS</div><div class="cat-badge cat-i"></div></a>
+      <a href="ios/02-login.html" class="screen-item"><div class="screen-item-num">18</div><div class="screen-item-title">iOS — Login</div><div class="screen-item-cat">iOS</div><div class="cat-badge cat-i"></div></a>
+      <a href="ios/03-otp.html" class="screen-item"><div class="screen-item-num">19</div><div class="screen-item-title">iOS — OTP Verify</div><div class="screen-item-cat">iOS</div><div class="cat-badge cat-i"></div></a>
+      <a href="ios/04-home.html" class="screen-item"><div class="screen-item-num">20</div><div class="screen-item-title">iOS — Home</div><div class="screen-item-cat">iOS</div><div class="cat-badge cat-i"></div></a>
+      <a href="ios/05-profile.html" class="screen-item"><div class="screen-item-num">21</div><div class="screen-item-title">iOS — Profile</div><div class="screen-item-cat">iOS</div><div class="cat-badge cat-i"></div></a>
+      <a href="ios/06-settings.html" class="screen-item"><div class="screen-item-num">22</div><div class="screen-item-title">iOS — Settings</div><div class="screen-item-cat">iOS</div><div class="cat-badge cat-i"></div></a>
+      <a href="ios/07-notifications.html" class="screen-item"><div class="screen-item-num">23</div><div class="screen-item-title">iOS — Notifications</div><div class="screen-item-cat">iOS</div><div class="cat-badge cat-i"></div></a>
+      <a href="ios/08-dark-mode.html" class="screen-item"><div class="screen-item-num">24</div><div class="screen-item-title">iOS — Dark Mode</div><div class="screen-item-cat">iOS</div><div class="cat-badge cat-i"></div></a>
+      <a href="ios/09-explore.html" class="screen-item"><div class="screen-item-num">25</div><div class="screen-item-title">iOS — Explore</div><div class="screen-item-cat">iOS</div><div class="cat-badge cat-i"></div></a>
+      <a href="ios/10-payment.html" class="screen-item"><div class="screen-item-num">26</div><div class="screen-item-title">iOS — Payment</div><div class="screen-item-cat">iOS</div><div class="cat-badge cat-i"></div></a>
+      <!-- Android -->
+      <a href="android/01-onboarding.html" class="screen-item"><div class="screen-item-num">27</div><div class="screen-item-title">Android — Onboarding</div><div class="screen-item-cat">Android</div><div class="cat-badge cat-a"></div></a>
+      <a href="android/02-login.html" class="screen-item"><div class="screen-item-num">28</div><div class="screen-item-title">Android — Login</div><div class="screen-item-cat">Android</div><div class="cat-badge cat-a"></div></a>
+      <a href="android/03-otp.html" class="screen-item"><div class="screen-item-num">29</div><div class="screen-item-title">Android — OTP Verify</div><div class="screen-item-cat">Android</div><div class="cat-badge cat-a"></div></a>
+      <a href="android/04-home.html" class="screen-item"><div class="screen-item-num">30</div><div class="screen-item-title">Android — Home</div><div class="screen-item-cat">Android</div><div class="cat-badge cat-a"></div></a>
+      <a href="android/05-profile.html" class="screen-item"><div class="screen-item-num">31</div><div class="screen-item-title">Android — Profile</div><div class="screen-item-cat">Android</div><div class="cat-badge cat-a"></div></a>
+      <a href="android/06-settings.html" class="screen-item"><div class="screen-item-num">32</div><div class="screen-item-title">Android — Settings</div><div class="screen-item-cat">Android</div><div class="cat-badge cat-a"></div></a>
+      <a href="android/07-notifications.html" class="screen-item"><div class="screen-item-num">33</div><div class="screen-item-title">Android — Notifications</div><div class="screen-item-cat">Android</div><div class="cat-badge cat-a"></div></a>
+      <a href="android/08-dark-mode.html" class="screen-item"><div class="screen-item-num">34</div><div class="screen-item-title">Android — Dark Mode</div><div class="screen-item-cat">Android</div><div class="cat-badge cat-a"></div></a>
+      <a href="android/09-explore.html" class="screen-item"><div class="screen-item-num">35</div><div class="screen-item-title">Android — Explore</div><div class="screen-item-cat">Android</div><div class="cat-badge cat-a"></div></a>
+      <a href="android/10-payment.html" class="screen-item"><div class="screen-item-num">36</div><div class="screen-item-title">Android — Payment</div><div class="screen-item-cat">Android</div><div class="cat-badge cat-a"></div></a>
+      <!-- Web -->
+      <a href="web/01-landing.html" class="screen-item"><div class="screen-item-num">37</div><div class="screen-item-title">Web — Landing</div><div class="screen-item-cat">Web App</div><div class="cat-badge cat-w"></div></a>
+      <a href="web/02-login.html" class="screen-item"><div class="screen-item-num">38</div><div class="screen-item-title">Web — Login</div><div class="screen-item-cat">Web App</div><div class="cat-badge cat-w"></div></a>
+      <a href="web/03-dashboard.html" class="screen-item"><div class="screen-item-num">39</div><div class="screen-item-title">Web — Dashboard</div><div class="screen-item-cat">Web App</div><div class="cat-badge cat-w"></div></a>
+      <a href="web/04-explore.html" class="screen-item"><div class="screen-item-num">40</div><div class="screen-item-title">Web — Explore</div><div class="screen-item-cat">Web App</div><div class="cat-badge cat-w"></div></a>
+      <a href="web/05-profile.html" class="screen-item"><div class="screen-item-num">41</div><div class="screen-item-title">Web — Profile</div><div class="screen-item-cat">Web App</div><div class="cat-badge cat-w"></div></a>
+      <a href="web/06-settings.html" class="screen-item"><div class="screen-item-num">42</div><div class="screen-item-title">Web — Settings</div><div class="screen-item-cat">Web App</div><div class="cat-badge cat-w"></div></a>
+      <a href="web/07-notifications.html" class="screen-item"><div class="screen-item-num">43</div><div class="screen-item-title">Web — Notifications</div><div class="screen-item-cat">Web App</div><div class="cat-badge cat-w"></div></a>
+      <a href="web/08-dark-mode.html" class="screen-item"><div class="screen-item-num">44</div><div class="screen-item-title">Web — Dark Mode</div><div class="screen-item-cat">Web App</div><div class="cat-badge cat-w"></div></a>
+      <a href="web/09-checkout.html" class="screen-item"><div class="screen-item-num">45</div><div class="screen-item-title">Web — Checkout</div><div class="screen-item-cat">Web App</div><div class="cat-badge cat-w"></div></a>
+      <a href="web/10-playground.html" class="screen-item"><div class="screen-item-num">46</div><div class="screen-item-title">Web — Playground</div><div class="screen-item-cat">Web App</div><div class="cat-badge cat-w"></div></a>
+      <!-- Dev -->
+      <a href="dev/css-variables.html" class="screen-item"><div class="screen-item-num">47</div><div class="screen-item-title">CSS Variables</div><div class="screen-item-cat">Dev Reference</div><div class="cat-badge cat-d"></div></a>
+      <a href="dev/token-architecture.html" class="screen-item"><div class="screen-item-num">48</div><div class="screen-item-title">Token Architecture</div><div class="screen-item-cat">Dev Reference</div><div class="cat-badge cat-d"></div></a>
+      <a href="dev/otp-spec.html" class="screen-item"><div class="screen-item-num">49</div><div class="screen-item-title">OTP Component Spec</div><div class="screen-item-cat">Dev Reference</div><div class="cat-badge cat-d"></div></a>
+      <a href="dev/accessibility.html" class="screen-item"><div class="screen-item-num">50</div><div class="screen-item-title">Accessibility</div><div class="screen-item-cat">Dev Reference</div><div class="cat-badge cat-d"></div></a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-left">
+        <div class="footer-logo-mark">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="var(--bc-white)"><rect x="1" y="1" width="4" height="4" rx="1"/><rect x="7" y="1" width="4" height="4" rx="1"/><rect x="1" y="7" width="4" height="4" rx="1"/><rect x="7" y="7" width="4" height="4" rx="1" opacity=".4"/></svg>
+        </div>
+        <span class="f-name">MaV Design System</span>
+        <span class="f-src">Figma source: 8dGEq5WuFEitIQxYUmezTr</span>
+      </div>
+      <div class="footer-right">
+        <span class="badge">v1.0</span>
+        <span>Plus Jakarta Sans · 3-layer tokens · Light / Dark</span>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script src="js/theme.js"></script>
+<script>
+/* sc-link spans: navigate via data-href without nesting <a> inside <a> */
+document.addEventListener('click', function(e) {
+  var el = e.target.closest('.sc-link[data-href]');
+  if (el) {
+    e.stopPropagation();
+    location.href = el.getAttribute('data-href');
+  }
+});
+</script>
+</body>
+</html>

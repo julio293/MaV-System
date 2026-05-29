@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buttons — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+.btn-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:20px 0;border-bottom:1px solid var(--mav-border)}
+.btn-row:last-child{border-bottom:none}
+.btn-state-label{font-size:11px;color:var(--mav-muted);font-weight:500;min-width:70px;flex-shrink:0}
+
+/* MaV Buttons */
+.mav-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px 16px;border-radius:4px;font-size:14px;font-weight:500;
+  font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;
+  border:none;transition:all .15s;white-space:nowrap;
+}
+.mav-btn-primary{background:var(--mav-primary);color:var(--bc-white)}
+.mav-btn-primary:hover{background:var(--mav-tertiary-2)}
+.mav-btn-secondary{background:transparent;color:var(--mav-fg);border:1px solid var(--mav-border)}
+.mav-btn-secondary:hover{background:var(--mav-border)}
+.mav-btn-text{background:transparent;color:var(--mav-primary);border:none;padding:10px 8px}
+.mav-btn-text:hover{color:var(--mav-tertiary-2)}
+.mav-btn-disabled{background:var(--bc-mono100-l);color:var(--mav-placeholder);cursor:not-allowed}
+.mav-btn-loading{background:var(--mav-primary);color:var(--bc-white);position:relative;opacity:.8}
+
+/* Dark bg versions */
+.dark-preview{background:var(--mav-fg);padding:24px;border-radius:8px}
+.mav-btn-primary-dk{background:var(--mav-primary-dark);color:var(--mav-fg)}
+.mav-btn-text-dk{color:var(--mav-primary-dark)}
+.mav-btn-disabled-dk{background:var(--bc-mono100-d);color:var(--bc-mono200-d)}
+
+/* Sizing */
+.mav-btn-sm{padding:6px 12px;font-size:12px}
+.mav-btn-lg{padding:14px 20px;font-size:16px}
+.mav-btn-xl{padding:16px 24px;font-size:16px;width:100%;max-width:343px}
+
+/* Sliding button */
+.mav-btn-sliding{
+  position:relative;overflow:hidden;
+  background:var(--mav-primary);color:var(--bc-white);
+  padding:10px 20px 10px 48px;
+}
+.sliding-handle{
+  position:absolute;left:4px;top:50%;transform:translateY(-50%);
+  width:32px;height:32px;border-radius:3px;
+  background:var(--bc-white);display:flex;align-items:center;justify-content:center;
+}
+.sliding-handle svg{stroke:var(--mav-primary);fill:none;width:16px;height:16px}
+
+/* Swipe-up button */
+.mav-btn-swipeup{
+  background:var(--mav-bg-tertiary);color:var(--mav-primary);
+  padding:10px 16px;display:flex;align-items:center;gap:8px;
+}
+.swipeup-arrow{font-size:16px}
+
+/* Loader spinner */
+.spinner{
+  width:16px;height:16px;border:2px solid rgba(255,255,255,.3);
+  border-top-color:var(--bc-white);border-radius:50%;
+  animation:spin .6s linear infinite;display:inline-block;flex-shrink:0;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.state-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.state-card{
+  border:1px solid var(--mav-border);border-radius:8px;padding:16px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+  background:var(--mav-bg);
+}
+.state-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mav-muted)}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link active">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+  <div class="sidebar-section-label">Foundations</div>
+  <a href="../foundations/colors.html" class="sidebar-link">Colors</a>
+  <a href="../foundations/tokens.html" class="sidebar-link">Token Layers</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Buttons</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Buttons</h1>
+    <p class="page-desc">Five button types: Primary, Secondary, Text-only, Sliding, and Swipe-up. All driven by <code>btn/*</code> tokens. Border-radius: 4px. Font: Medium 14px.</p>
+  </div>
+
+  <!-- Primary -->
+  <div class="section">
+    <h2 class="section-title">Primary Button</h2>
+    <p class="section-desc">Full background. <code>btn/primary/default</code> background, white text.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div class="btn-row">
+            <span class="btn-state-label">Default</span>
+            <button class="mav-btn mav-btn-primary">Primary Button</button>
+          </div>
+          <div class="btn-row">
+            <span class="btn-state-label">Hover</span>
+            <button class="mav-btn">Hover State</button>
+          </div>
+          <div class="btn-row">
+            <span class="btn-state-label">Clicked</span>
+            <button class="mav-btn">Clicked State</button>
+          </div>
+          <div class="btn-row">
+            <span class="btn-state-label">Loading</span>
+            <button class="mav-btn mav-btn-loading">
+              <span class="spinner"></span>Loading...
+            </button>
+          </div>
+          <div class="btn-row">
+            <span class="btn-state-label">Disabled</span>
+            <button class="mav-btn mav-btn-disabled" disabled>Disabled</button>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Primary — Light Mode</span>
+        <span class="preview-sublabel">border-radius: 4px · font-weight: 500 · 14px</span>
+      </div>
+    </div>
+
+    <!-- Dark mode preview -->
+    <div class="preview-card">
+      <div class="preview-canvas dark-bg">
+        <div>
+          <div class="btn-row">
+            <span class="btn-state-label">Default</span>
+            <button class="mav-btn mav-btn-primary-dk">Primary Button</button>
+          </div>
+          <div class="btn-row">
+            <span class="btn-state-label">Disabled</span>
+            <button class="mav-btn mav-btn-disabled-dk" disabled>Disabled</button>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Primary — Dark Mode</span>
+        <span class="preview-sublabel">#a1ff5b background · #171717 text</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Secondary -->
+  <div class="section">
+    <h2 class="section-title">Secondary Button</h2>
+    <p class="section-desc">Transparent background with border. Becomes primary on clicked state.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div class="btn-row">
+            <span class="btn-state-label">Default</span>
+            <button class="mav-btn mav-btn-secondary">Secondary</button>
+          </div>
+          <div class="btn-row">
+            <span class="btn-state-label">Hover</span>
+            <button class="mav-btn">Hover</button>
+          </div>
+          <div class="btn-row">
+            <span class="btn-state-label">Clicked</span>
+            <button class="mav-btn">Clicked → Primary</button>
+          </div>
+          <div class="btn-row">
+            <span class="btn-state-label">Disabled</span>
+            <button class="mav-btn" disabled>Disabled</button>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Secondary</span>
+        <span class="preview-sublabel">btn/secondary/default: transparent · outline: #efefef</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Text-only -->
+  <div class="section">
+    <h2 class="section-title">Text-only Button</h2>
+    <p class="section-desc">No background or border. Used for secondary actions like "Resend Code".</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="btn-row">
+          <span class="btn-state-label">Default</span>
+          <button class="mav-btn mav-btn-text">Text Action</button>
+          <button class="mav-btn mav-btn-text">Resend Code</button>
+        </div>
+        <div class="btn-row">
+          <span class="btn-state-label">Hover</span>
+          <button class="mav-btn">Hover State</button>
+        </div>
+        <div class="btn-row">
+          <span class="btn-state-label">Disabled</span>
+          <button class="mav-btn" disabled>Disabled</button>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Text-only — Medium 12px</span>
+        <span class="preview-sublabel">btn/textonly/default: #352eff · no background</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Sliding -->
+  <div class="section">
+    <h2 class="section-title">Sliding Button</h2>
+    <p class="section-desc">Primary background with a draggable handle on the left. Used for high-stakes actions (confirm, send).</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <button class="mav-btn mav-btn-sliding">
+          <span class="sliding-handle">
+            <svg viewBox="0 0 16 16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 8 12 8"/><polyline points="8 4 12 8 8 12"/></svg>
+          </span>
+          Slide to Confirm
+        </button>
+        <button class="mav-btn mav-btn-sliding">
+          <span class="sliding-handle">
+            <svg viewBox="0 0 16 16" stroke-width="2" stroke="var(--bc-mono200-l)" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 8 12 8"/><polyline points="8 4 12 8 8 12"/></svg>
+          </span>
+          Disabled
+        </button>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Sliding — btn/sliding/*</span>
+        <span class="preview-sublabel">handle: white surface · bg: primary</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Swipe-up -->
+  <div class="section">
+    <h2 class="section-title">Swipe-up Button</h2>
+    <p class="section-desc">Tinted background (Tint/Secondary/100). Used in sheet footers and action prompts.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <button class="mav-btn mav-btn-swipeup">
+          <span class="swipeup-arrow">↑</span>
+          Swipe up to proceed
+        </button>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Swipe-up — btn/swipeup/Bg 2: #e6edff</span>
+        <span class="preview-sublabel">color: Main/Primary · no border</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Sizes -->
+  <div class="section">
+    <h2 class="section-title">Sizes</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <button class="mav-btn mav-btn-primary mav-btn-sm">Small</button>
+          <span>padding: 6px 12px · font: 12px</span>
+        </div>
+        <div>
+          <button class="mav-btn mav-btn-primary">Default</button>
+          <span>padding: 10px 16px · font: 14px</span>
+        </div>
+        <div>
+          <button class="mav-btn mav-btn-primary mav-btn-lg">Large</button>
+          <span>padding: 14px 20px · font: 16px</span>
+        </div>
+        <button class="mav-btn mav-btn-primary mav-btn-xl">Full Width (max 343px) — Verify</button>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Button Sizes</span>
+        <span class="preview-sublabel">border-radius always 4px</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--btn\/primary\/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td><td class="token-value">Primary bg</td></tr>
+        <tr><td class="token-name">--btn\/primary\/hover</td><td><span class="token-swatch-sm" style="background:#7c9dff"></span><span class="token-value">#7c9dff</span></td><td><span class="token-swatch-sm" style="background:#7c9dff"></span><span class="token-value">#7c9dff</span></td><td class="token-value">Hover state</td></tr>
+        <tr><td class="token-name">--btn\/primary\/clicked</td><td><span class="token-swatch-sm" style="background:#030192"></span><span class="token-value">#030192</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td><td class="token-value">Pressed</td></tr>
+        <tr><td class="token-name">--btn\/primary\/disabled</td><td><span class="token-swatch-sm" style="background:#e5e5e5"></span><span class="token-value">#e5e5e5</span></td><td><span class="token-swatch-sm" style="background:#242424"></span><span class="token-value">#242424</span></td><td class="token-value">Disabled bg</td></tr>
+        <tr><td class="token-name">--btn\/primary\/text-default</td><td><span class="token-swatch-sm" style="background:#fff;border:1px solid #e0e0e0"></span><span class="token-value">#ffffff</span></td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">#171717</span></td><td class="token-value">Button text</td></tr>
+        <tr><td class="token-name">--btn\/textonly\/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td><td class="token-value">Text-only color</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

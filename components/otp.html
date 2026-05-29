@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OTP Input — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+.otp-showcase{display:flex;flex-direction:column;gap:32px}
+.otp-variant{border:1px solid var(--mav-border);border-radius:12px;overflow:hidden}
+.otp-canvas{
+  padding:40px;display:flex;justify-content:center;
+  background:var(--mav-bg);
+}
+.otp-canvas.dk{background:var(--mav-fg)}
+.otp-meta{padding:14px 20px;background:var(--mav-border);border-top:1px solid var(--mav-border)}
+
+/* OTP Root */
+.otp-root{
+  display:flex;flex-direction:column;align-items:center;
+  gap:32px;padding:0 20px;width:100%;max-width:383px;
+}
+.otp-header{display:flex;flex-direction:column;gap:4px;width:343px}
+.otp-title{font-size:20px;font-weight:700;color:var(--mav-fg);letter-spacing:-.015em}
+.otp-desc{font-size:16px;color:var(--mav-muted)}
+
+.otp-field-area{display:flex;flex-direction:column;gap:16px;width:343px}
+.otp-slots{display:flex;gap:8px}
+.otp-resend{display:flex;justify-content:space-between;align-items:center;width:100%}
+.resend-timer{font-size:14px;font-weight:700;color:var(--mav-muted)}
+.resend-btn{font-size:12px;font-weight:500;color:var(--mav-primary);background:none;border:none;cursor:pointer;font-family:inherit}
+
+/* Box variant slots */
+.slot{
+  width:48px;height:48px;
+  border-radius:4px;border:1px solid;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:500;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  flex-shrink:0;transition:all .15s;
+  box-shadow:0px 1px 0px -1px rgba(0,0,0,0.05),0px 1px 2px -1px rgba(0,0,0,0.05),0px 2px 4px -2px rgba(0,0,0,0.05),0px 3px 6px -3px rgba(0,0,0,0.05);
+}
+.slot-empty{border-color:var(--bc-mono200-l);background:var(--bc-white);color:var(--mav-placeholder)}
+.slot-filled{border-color:var(--bc-mono900-l);background:var(--bc-white);color:var(--bc-mono900-l)}
+.slot-focus{border-color:var(--mav-primary);background:var(--bc-white);color:var(--bc-mono900-l);box-shadow:0px 1px 0px -1px rgba(0,0,0,0.05),0px 1px 2px -1px rgba(0,0,0,0.05),0px 2px 4px -2px rgba(0,0,0,0.05),0px 3px 6px -3px rgba(0,0,0,0.05),0 0 0 3px var(--mav-focus-ring)}
+.slot-error{border-color:var(--mav-danger);background:color-mix(in srgb,var(--mav-danger) 10%,transparent);color:var(--bc-mono900-l);box-shadow:none}
+.slot-disabled{border-color:var(--bc-mono200-l);background:var(--mav-border);color:var(--mav-placeholder)}
+
+/* Boxless variant */
+.slot-bl{
+  width:48px;height:48px;
+  border-bottom:1px solid;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:500;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  flex-shrink:0;border-radius:0;
+  background:transparent;
+  transition:all .15s;
+}
+.slot-bl-empty{border-color:var(--mav-border);color:var(--mav-placeholder)}
+.slot-bl-filled{border-color:var(--bc-mono900-l);color:var(--bc-mono900-l)}
+.slot-bl-focus{border-color:var(--mav-primary);color:var(--bc-mono900-l)}
+.slot-bl-error{border-color:var(--mav-danger);color:var(--mav-danger)}
+
+/* Verify button */
+.verify-btn{
+  width:100%;padding:10px 16px;
+  border-radius:4px;border:none;
+  font-size:14px;font-weight:500;
+  font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;
+}
+.verify-enabled{background:var(--mav-primary);color:var(--bc-white)}
+.verify-disabled{background:var(--bc-mono100-l);color:var(--mav-placeholder);cursor:not-allowed}
+
+/* Dark slot variants */
+.slot-empty-dk{border-color:var(--bc-mono200-d);background:var(--mav-fg);color:var(--bc-mono300-d)}
+.slot-filled-dk{border-color:var(--bc-mono100-l);background:var(--mav-fg);color:var(--bc-mono100-l)}
+.slot-focus-dk{border-color:var(--mav-primary-dark);background:var(--mav-fg);color:var(--bc-mono100-l);box-shadow:0 0 0 3px var(--mav-focus-ring)}
+
+.state-label-row{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;
+}
+.st{
+  font-size:11px;font-weight:600;padding:3px 9px;
+  border-radius:9999px;
+}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link active">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">OTP Input</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">OTP Input</h1>
+    <p class="page-desc">Two variants: Box (48×48 bordered square) and Boxless (character above 1px underline). 6 slots, 8px gap. Global states: Error + Disabled. Per-slot states: Focus + Default/Filled.</p>
+  </div>
+
+  <!-- Interactive Demo -->
+  <div class="section">
+    <h2 class="section-title">Interactive OTP</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="otp-root" id="live-otp">
+          <div class="otp-header">
+            <div class="otp-title">Verify your number</div>
+            <div class="otp-desc">Enter the 6-digit code sent to +62 8xx xxx xxxx</div>
+          </div>
+          <div class="otp-field-area">
+            <div class="otp-slots" id="otp-slots"></div>
+            <div class="otp-resend">
+              <span class="resend-timer">Reset in <span id="timer">01.59</span></span>
+              <button class="resend-btn" id="resend-btn" disabled>Resend Code</button>
+            </div>
+          </div>
+          <button class="verify-btn verify-disabled" id="verify-btn">Verify</button>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Box Variant — Interactive</span>
+        <span class="preview-sublabel">Type digits to test focus/fill behavior · autocomplete="one-time-code"</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- All states grid -->
+  <div class="section">
+    <h2 class="section-title">Box Variant — All States</h2>
+    <div class="otp-showcase">
+
+      <div class="otp-variant">
+        <div class="otp-canvas">
+          <div>
+            <div><div class="state-label-row"><span class="st">Default (empty)</span></div>
+            <div class="otp-slots">
+              <div class="slot slot-empty">·</div>
+              <div class="slot slot-empty">·</div>
+              <div class="slot slot-empty">·</div>
+              <div class="slot slot-empty">·</div>
+              <div class="slot slot-empty">·</div>
+              <div class="slot slot-empty">·</div>
+            </div></div>
+
+            <div><div class="state-label-row"><span class="st">Filled (active)</span></div>
+            <div class="otp-slots">
+              <div class="slot slot-filled">•</div>
+              <div class="slot slot-filled">•</div>
+              <div class="slot slot-filled">•</div>
+              <div class="slot slot-focus">·</div>
+              <div class="slot slot-empty">·</div>
+              <div class="slot slot-empty">·</div>
+            </div></div>
+
+            <div><div class="state-label-row"><span class="st">All Filled + Focus</span></div>
+            <div class="otp-slots">
+              <div class="slot slot-filled">•</div>
+              <div class="slot slot-filled">•</div>
+              <div class="slot slot-filled">•</div>
+              <div class="slot slot-filled">•</div>
+              <div class="slot slot-filled">•</div>
+              <div class="slot slot-focus">•</div>
+            </div></div>
+
+            <div><div class="state-label-row"><span class="st">Error (global)</span></div>
+            <div class="otp-slots">
+              <div class="slot slot-error">•</div>
+              <div class="slot slot-error">•</div>
+              <div class="slot slot-error">•</div>
+              <div class="slot slot-error">•</div>
+              <div class="slot slot-error">•</div>
+              <div class="slot slot-error">•</div>
+            </div>
+            <div class="error-msg">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--mav-danger)" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5M8 11h.01"/></svg>
+              Invalid code. Please try again.
+            </div></div>
+
+            <div><div class="state-label-row"><span class="st">Disabled (global)</span></div>
+            <div class="otp-slots">
+              <div class="slot slot-disabled">·</div>
+              <div class="slot slot-disabled">·</div>
+              <div class="slot slot-disabled">·</div>
+              <div class="slot slot-disabled">·</div>
+              <div class="slot slot-disabled">·</div>
+              <div class="slot slot-disabled">·</div>
+            </div></div>
+          </div>
+        </div>
+        <div class="preview-meta">
+          <span class="preview-label">Box Variant</span>
+          <span class="preview-sublabel">48×48px · border-radius 4px · slot gap 8px · placeholder: space (empty), • (filled)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Boxless variant -->
+  <div class="section">
+    <h2 class="section-title">Boxless Variant</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>
+          <div class="state-label-row"><span class="st">Default</span></div>
+          <div class="otp-slots">
+            <div class="slot-bl slot-bl-empty">-</div>
+            <div class="slot-bl slot-bl-empty">-</div>
+            <div class="slot-bl slot-bl-empty">-</div>
+            <div class="slot-bl slot-bl-empty">-</div>
+            <div class="slot-bl slot-bl-empty">-</div>
+            <div class="slot-bl slot-bl-empty">-</div>
+          </div>
+        </div>
+        <div>
+          <div class="state-label-row"><span class="st">Filling — focus on slot 4</span></div>
+          <div class="otp-slots">
+            <div class="slot-bl slot-bl-filled">•</div>
+            <div class="slot-bl slot-bl-filled">•</div>
+            <div class="slot-bl slot-bl-filled">•</div>
+            <div class="slot-bl slot-bl-focus">4</div>
+            <div class="slot-bl slot-bl-empty">-</div>
+            <div class="slot-bl slot-bl-empty">-</div>
+          </div>
+        </div>
+        <div>
+          <div class="state-label-row"><span class="st">Error</span></div>
+          <div class="otp-slots">
+            <div class="slot-bl slot-bl-error">•</div>
+            <div class="slot-bl slot-bl-error">•</div>
+            <div class="slot-bl slot-bl-error">•</div>
+            <div class="slot-bl slot-bl-error">•</div>
+            <div class="slot-bl slot-bl-error">•</div>
+            <div class="slot-bl slot-bl-error">•</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Boxless Variant</span>
+        <span class="preview-sublabel">No box — 1px bottom border only · focus slot shows actual digit · dash placeholder (default)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Dark mode -->
+  <div class="section">
+    <h2 class="section-title">Dark Mode — Box Variant</h2>
+    <div class="preview-card">
+      <div class="preview-canvas dark-bg">
+        <div>
+          <div>
+            <div class="otp-slots">
+              <div class="slot slot-empty-dk">·</div>
+              <div class="slot slot-empty-dk">·</div>
+              <div class="slot slot-filled-dk">•</div>
+              <div class="slot slot-focus-dk">•</div>
+              <div class="slot slot-empty-dk">·</div>
+              <div class="slot slot-empty-dk">·</div>
+            </div>
+            <div>Default · Filled · Focus · Empty</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Dark Mode</span>
+        <span class="preview-sublabel">background: #171717 · outline: #484848 (default) / #a1ff5b (focus)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Spec table -->
+  <div class="section">
+    <h2 class="section-title">Placeholder Character Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Variant</th><th>State</th><th>Character</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Box</td><td class="token-value">Default (empty)</td><td> </td><td class="token-value">Space — slot appears empty</td></tr>
+        <tr><td>Box</td><td class="token-value">Filled / Error / Focus active</td><td>•</td><td class="token-value">Bullet — masking via display, NOT type=password</td></tr>
+        <tr><td>Boxless</td><td class="token-value">Default (empty)</td><td>-</td><td class="token-value">Dash</td></tr>
+        <tr><td>Boxless</td><td class="token-value">Filled / Error</td><td>•</td><td class="token-value">Bullet</td></tr>
+        <tr><td>Boxless</td><td class="token-value">Focus active slot</td><td>4</td><td class="token-value">Actual digit shown</td></tr>
+        <tr><td>Boxless</td><td class="token-value">Focus subsequent empty</td><td>-</td><td class="token-value">Dash continues</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+<script>
+// Interactive OTP demo
+(function(){
+  const slotsEl = document.getElementById('otp-slots');
+  const verifyBtn = document.getElementById('verify-btn');
+  const timerEl = document.getElementById('timer');
+  const resendBtn = document.getElementById('resend-btn');
+  const values = Array(6).fill('');
+  let focusedIdx = 0;
+  let timerVal = 119;
+
+  function updateTimer(){
+    const m = Math.floor(timerVal/60).toString().padStart(2,'0');
+    const s = (timerVal%60).toString().padStart(2,'0');
+    timerEl.textContent = m+'.'+s;
+    if(timerVal<=0){
+      resendBtn.disabled=false;resendBtn.style.opacity='1';
+      timerEl.textContent='Resend available';
+      return;
+    }
+    timerVal--;
+    setTimeout(updateTimer,1000);
+  }
+  updateTimer();
+
+  function render(){
+    const allFilled = values.every(v=>v!=='');
+    if(allFilled){
+      verifyBtn.className='verify-btn verify-enabled';
+    } else {
+      verifyBtn.className='verify-btn verify-disabled';
+    }
+
+    slotsEl.innerHTML='';
+    for(let i=0;i<6;i++){
+      const inp = document.createElement('input');
+      inp.type='text';
+      inp.maxLength=1;
+      inp.inputMode='numeric';
+      inp.autocomplete='one-time-code';
+      const isFocus = i===focusedIdx;
+      const isFilled = values[i]!=='';
+      let cls='slot ';
+      if(isFocus) cls+='slot-focus';
+      else if(isFilled) cls+='slot-filled';
+      else cls+='slot-empty';
+      inp.className=cls;
+      inp.style.textAlign='center';inp.style.cursor='text';
+      inp.style.fontSize='18px';inp.style.fontWeight='500';
+      inp.style.fontFamily="'Plus Jakarta Sans',sans-serif";
+      inp.style.boxSizing='border-box';
+      inp.value = isFilled?(isFocus?values[i]:'•'):'';
+      if(i===focusedIdx) setTimeout(()=>inp.focus(),0);
+
+      inp.addEventListener('keydown',function(e){
+        if(e.key>='0'&&e.key<='9'){
+          values[i]=e.key;
+          if(i<5)focusedIdx=i+1;
+          render();
+        } else if(e.key==='Backspace'){
+          if(values[i]!==''){values[i]='';} else if(i>0){focusedIdx=i-1;values[i-1]='';}
+          render();
+        } else if(e.key==='ArrowRight'&&i<5){focusedIdx=i+1;render();}
+        else if(e.key==='ArrowLeft'&&i>0){focusedIdx=i-1;render();}
+        e.preventDefault();
+      });
+      inp.addEventListener('focus',()=>{focusedIdx=i;render();});
+      inp.addEventListener('paste',function(e){
+        const txt=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'');
+        for(let j=0;j<txt.length&&(i+j)<6;j++)values[i+j]=txt[j];
+        focusedIdx=Math.min(i+txt.length,5);
+        render();e.preventDefault();
+      });
+      slotsEl.appendChild(inp);
+    }
+  }
+  render();
+})();
+</script>
+</body>
+</html>

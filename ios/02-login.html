@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phone Entry — iOS — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-surface-ios);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+
+/* ── Device frame ─────────────────────────────── */
+.device{width:393px;height:852px;border-radius:54px;background:#1c1c1e;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.35),inset 0 0 0 2px #3a3a3c,inset 0 0 0 3px #1c1c1e;overflow:hidden;flex-shrink:0}
+.device-screen{position:absolute;inset:0;border-radius:52px;overflow:hidden;background:var(--bc-white);display:flex;flex-direction:column}
+.di{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:126px;height:37px;background:#000;border-radius:20px;z-index:100}
+.status{position:absolute;top:0;left:0;right:0;padding:16px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:99;height:54px}
+.status-time{font-size:15px;font-weight:600;color:var(--bc-black);padding-left:8px}
+.status-icons{display:flex;align-items:center;gap:6px;padding-right:8px}
+.status-icons svg{fill:var(--bc-black)}
+.home{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:134px;height:5px;background:var(--bc-black);border-radius:3px;opacity:.2;z-index:99}
+
+/* ── Screen body ─────────────────────────────── */
+.screen-body{flex:1;overflow-y:auto;padding:68px 24px 32px;display:flex;flex-direction:column}
+
+/* ── Logo ─────────────────────────────────────── */
+.logo-area{display:flex;align-items:center;gap:10px;margin-bottom:28px;margin-top:4px}
+.logo-mark{width:40px;height:40px;border-radius:10px;background:var(--bc-primary-light);display:grid;place-items:center;flex-shrink:0}
+.logo-mark svg{fill:var(--bc-white)}
+.logo-name{font-size:20px;font-weight:800;color:var(--bc-black);letter-spacing:-.02em}
+
+/* ── Headline ─────────────────────────────────── */
+.auth-title{font-size:24px;font-weight:800;color:var(--bc-black);letter-spacing:-.03em;line-height:1.15;margin-bottom:5px}
+.auth-sub{font-size:14px;color:var(--bc-mono500);margin-bottom:24px;line-height:1.5}
+
+/* ── Input group ──────────────────────────────── */
+.form-group{margin-bottom:14px}
+.form-label{font-size:12px;font-weight:600;color:var(--bc-black);margin-bottom:6px;display:block;letter-spacing:.01em}
+
+/* Organism input: 48px height, 4px radius, 1px border */
+.mav-input{
+  width:100%;padding:12px 14px;height:48px;
+  border-radius:4px;border:1px solid var(--bc-mono200-l);
+  font-size:14px;font-family:inherit;color:var(--bc-black);
+  background:var(--bc-white);outline:none;
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+  transition:border-color .15s,box-shadow .15s;
+}
+.mav-input::placeholder{color:var(--bc-mono300-l)}
+.mav-input:focus{border-color:var(--mav-primary);box-shadow:0 0 0 3px var(--mav-focus-ring)}
+
+/* ── Phone row: flag + code + number ─────────── */
+.phone-row{display:flex;height:48px;border-radius:4px;border:1px solid var(--bc-mono200-l);overflow:hidden;background:var(--bc-white);box-shadow:0 1px 2px rgba(0,0,0,.04);transition:border-color .15s,box-shadow .15s}
+.phone-row:focus-within{border-color:var(--mav-primary);box-shadow:0 0 0 3px var(--mav-focus-ring)}
+.phone-flag-btn{display:flex;align-items:center;gap:5px;padding:0 10px;border:none;background:transparent;cursor:pointer;font-size:14px;font-family:inherit;color:var(--bc-black);border-right:1px solid var(--bc-mono200-l);white-space:nowrap;flex-shrink:0}
+.phone-flag{font-size:18px;line-height:1}
+.phone-code{font-size:13px;font-weight:600;color:var(--bc-black)}
+.phone-chevron{font-size:9px;color:var(--bc-mono400-l)}
+.phone-number{flex:1;border:none;background:transparent;padding:0 12px;font-size:14px;font-family:inherit;color:var(--bc-black);outline:none}
+.phone-number::placeholder{color:var(--bc-mono300-l)}
+
+/* ── Primary button (organism: 4px radius) ───── */
+.mav-btn-primary{
+  width:100%;height:48px;border-radius:4px;
+  background:var(--mav-primary);color:var(--bc-white);
+  font-size:14px;font-weight:600;font-family:inherit;
+  border:none;cursor:pointer;letter-spacing:-.01em;
+  transition:opacity .15s,transform .1s;
+  margin-top:4px;
+}
+.mav-btn-primary:active{opacity:.9;transform:scale(.985)}
+.mav-btn-primary:disabled{background:var(--bc-mono200-l);color:var(--bc-mono400-l);cursor:not-allowed;transform:none;opacity:1}
+
+/* ── Divider ─────────────────────────────────── */
+.divider{display:flex;align-items:center;gap:10px;margin:18px 0}
+.div-line{flex:1;height:1px;background:var(--bc-mono200-l)}
+.div-text{font-size:11px;color:var(--bc-mono400-l);font-weight:500;white-space:nowrap}
+
+/* ── Social buttons (organism: 1px border, 4px radius) */
+.social-stack{display:flex;flex-direction:column;gap:8px}
+.social-btn{
+  width:100%;height:44px;border-radius:4px;
+  border:1px solid var(--bc-mono200-l);background:var(--bc-white);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  font-size:13px;font-weight:600;font-family:inherit;color:var(--bc-black);
+  cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.04);
+  transition:background .15s;
+}
+.social-btn:active{background:var(--bc-mono100-l)}
+.social-icon{width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+
+/* ── Back nav ────────────────────────────────── */
+.back-link{text-align:center;margin-top:20px;font-size:13px;color:var(--bc-mono500)}
+.back-link a{color:var(--mav-primary);text-decoration:none;font-weight:600}
+
+/* ── Country picker modal ────────────────────── */
+.picker-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.picker-overlay.open{display:flex}
+.picker-sheet{width:393px;background:var(--bc-white);border-radius:16px 16px 0 0;padding:16px 0 40px;max-height:60vh;display:flex;flex-direction:column}
+.picker-handle{width:36px;height:4px;background:var(--bc-mono200-l);border-radius:2px;margin:0 auto 14px}
+.picker-title{font-size:15px;font-weight:700;color:var(--bc-black);text-align:center;margin-bottom:12px}
+.picker-list{overflow-y:auto;flex:1}
+.picker-item{display:flex;align-items:center;gap:12px;padding:11px 20px;cursor:pointer;transition:background .1s}
+.picker-item:active{background:var(--bc-mono100-l)}
+.picker-flag{font-size:22px;width:28px;text-align:center}
+.picker-country{flex:1;font-size:14px;color:var(--bc-black);font-weight:500}
+.picker-code{font-size:13px;color:var(--bc-mono500)}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="device-screen">
+    <div class="di"></div>
+    <div class="status">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="1" width="3" height="11" rx="1" opacity=".3"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 5C9.8 5 11.4 5.8 12.5 7L13.8 5.7C12.4 4.2 10.3 3.3 8 3.3 5.7 3.3 3.6 4.2 2.2 5.7L3.5 7C4.6 5.8 6.2 5 8 5Z"/><path d="M8 7.5C9.1 7.5 10 7.9 10.7 8.6L8 12 5.3 8.6C6 7.9 6.9 7.5 8 7.5Z"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="var(--bc-black)" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="16" height="6" rx="1.5" fill="var(--bc-black)"/><path d="M22.5 4.5v3a1.5 1.5 0 000-3z"/></svg>
+      </div>
+    </div>
+
+    <div class="screen-body">
+      <!-- Logo -->
+      <div class="logo-area">
+        <div class="logo-mark">
+          <svg width="18" height="18" viewBox="0 0 20 20"><rect x="2" y="2" width="7" height="7" rx="2"/><rect x="11" y="2" width="7" height="7" rx="2"/><rect x="2" y="11" width="7" height="7" rx="2"/><rect x="11" y="11" width="7" height="7" rx="2" opacity=".4"/></svg>
+        </div>
+        <span class="logo-name">MaV</span>
+      </div>
+
+      <!-- Phone entry -->
+      <h1 class="auth-title">Enter your phone number</h1>
+      <p class="auth-sub">We'll send a verification code. New users will be asked to create a profile.</p>
+
+      <div class="form-group">
+        <label class="form-label">Phone number</label>
+        <div class="phone-row" id="phone-row">
+          <button class="phone-flag-btn" id="flag-btn" type="button">
+            <span class="phone-flag" id="flag-display">🇮🇩</span>
+            <span class="phone-code" id="code-display">+62</span>
+            <span class="phone-chevron">▾</span>
+          </button>
+          <input class="phone-number" id="phone-input" type="tel" placeholder="812 0000 0000" inputmode="numeric" autocomplete="tel">
+        </div>
+      </div>
+
+      <button class="mav-btn-primary" id="continue-btn" disabled>Continue</button>
+
+      <div class="divider">
+        <span class="div-line"></span>
+        <span class="div-text">or continue with</span>
+        <span class="div-line"></span>
+      </div>
+
+      <div class="social-stack">
+        <button class="social-btn">
+          <span class="social-icon">
+            <svg width="16" height="18" viewBox="0 0 16 18" fill="var(--bc-black)"><path d="M13.24 9.55c-.02-2.2 1.8-3.28 1.88-3.34-1.03-1.5-2.62-1.7-3.18-1.72-1.35-.14-2.64.8-3.32.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.83.86-3.59 2.17-1.53 2.65-.4 6.57 1.1 8.72.73 1.05 1.6 2.23 2.74 2.19 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.71.71 2.87.69 1.18-.02 1.93-1.07 2.65-2.13a9.6 9.6 0 001.2-2.46c-.03-.01-2.31-.89-2.33-3.45zM11.06 3c.61-.73 1.02-1.74.91-2.76-.88.04-1.94.59-2.57 1.3-.56.64-1.06 1.67-.93 2.66 1 .07 2.01-.5 2.59-1.2z"/></svg>
+          </span>
+          Continue with Apple
+        </button>
+        <button class="social-btn">
+          <span class="social-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2A10.3 10.3 0 0017.52 8H9v2.64h4.84A4.14 4.14 0 0112.1 13l2.57 2c1.52-1.4 2.4-3.47 2.4-5.8z" fill="#4285F4"/><path d="M9 18c2.43 0 4.47-.8 5.96-2.17L12.1 13A5.44 5.44 0 019 14a5.4 5.4 0 01-5.1-3.73L1.23 12.4A9 9 0 009 18z" fill="#34A853"/><path d="M3.9 10.27A5.43 5.43 0 013.58 9c0-.45.08-.88.22-1.27L1.23 5.6A9 9 0 000 9c0 1.45.35 2.82.97 4.04L3.9 10.27z" fill="#FBBC05"/><path d="M9 3.6c1.32 0 2.5.45 3.44 1.35L14.97 2.43A9 9 0 009 0 9 9 0 001.23 5.6L3.9 7.73A5.4 5.4 0 019 3.6z" fill="#EA4335"/></svg>
+          </span>
+          Continue with Google
+        </button>
+        <button class="social-btn">
+          <span class="social-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 .5C4.3.5.5 4.3.5 9A8.5 8.5 0 007 17.4v-5.9H5V9h2V7.2C7 5.2 8.2 4 10 4c.9 0 1.8.1 2.7.2V6.2H11.6c-.9 0-1.1.4-1.1 1v1.8H12.6l-.3 2.5H10.5V17.4A8.5 8.5 0 0017.5 9C17.5 4.3 13.7.5 9 .5z" fill="#1877F2"/></svg>
+          </span>
+          Continue with Facebook
+        </button>
+      </div>
+    </div><!-- /screen-body -->
+
+    <div class="home"></div>
+  </div>
+</div>
+
+<!-- Country picker sheet -->
+<div class="picker-overlay" id="picker-overlay" onclick="closePicker(event)">
+  <div class="picker-sheet">
+    <div class="picker-handle"></div>
+    <div class="picker-title">Select country</div>
+    <div class="picker-list" id="picker-list"></div>
+  </div>
+</div>
+
+<div class="back-link">
+  <a href="01-onboarding.html">← Onboarding</a> &nbsp;·&nbsp;
+  <a href="03-otp.html">OTP →</a>
+</div>
+
+<script>
+var COUNTRIES=[
+  {flag:'🇮🇩',name:'Indonesia',code:'+62'},
+  {flag:'🇺🇸',name:'United States',code:'+1'},
+  {flag:'🇬🇧',name:'United Kingdom',code:'+44'},
+  {flag:'🇸🇬',name:'Singapore',code:'+65'},
+  {flag:'🇲🇾',name:'Malaysia',code:'+60'},
+  {flag:'🇦🇺',name:'Australia',code:'+61'},
+  {flag:'🇨🇦',name:'Canada',code:'+1'},
+  {flag:'🇩🇪',name:'Germany',code:'+49'},
+  {flag:'🇫🇷',name:'France',code:'+33'},
+  {flag:'🇯🇵',name:'Japan',code:'+81'},
+  {flag:'🇰🇷',name:'South Korea',code:'+82'},
+  {flag:'🇮🇳',name:'India',code:'+91'},
+  {flag:'🇧🇷',name:'Brazil',code:'+55'},
+];
+
+// Build picker list
+var list=document.getElementById('picker-list');
+list.innerHTML=COUNTRIES.map(function(c,i){
+  return '<div class="picker-item" onclick="selectCountry('+i+')">'
+    +'<span class="picker-flag">'+c.flag+'</span>'
+    +'<span class="picker-country">'+c.name+'</span>'
+    +'<span class="picker-code">'+c.code+'</span>'
+    +'</div>';
+}).join('');
+
+document.getElementById('flag-btn').addEventListener('click',function(){
+  document.getElementById('picker-overlay').classList.add('open');
+});
+document.getElementById('picker-overlay').addEventListener('click',function(e){
+  if(e.target===this) this.classList.remove('open');
+});
+
+function selectCountry(idx){
+  var c=COUNTRIES[idx];
+  document.getElementById('flag-display').textContent=c.flag;
+  document.getElementById('code-display').textContent=c.code;
+  document.getElementById('picker-overlay').classList.remove('open');
+}
+
+// Enable Continue only when number has digits
+var phoneInput=document.getElementById('phone-input');
+var continueBtn=document.getElementById('continue-btn');
+phoneInput.addEventListener('input',function(){
+  continueBtn.disabled=this.value.replace(/\D/g,'').length<6;
+});
+
+// Continue → navigate to OTP (backend decides registered vs new)
+continueBtn.addEventListener('click',function(){
+  window.location.href='03-otp.html';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings — Web — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.browser{width:1080px;border-radius:12px;background:var(--bc-surface-soft);box-shadow:0 24px 64px rgba(0,0,0,.15);overflow:hidden}
+.browser-bar{background:var(--bc-surface);border-bottom:1px solid var(--bc-mono100-l);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.browser-dots{display:flex;gap:6px}.bd{width:12px;height:12px;border-radius:6px}
+.bd-r{background:#ff5f57}.bd-y{background:#febc2e}.bd-g{background:#28c840}
+.browser-url{flex:1;background:var(--bc-white);border:1px solid var(--bc-mono100-l);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--bc-mono500);font-family:'JetBrains Mono',monospace;max-width:400px;margin:0 auto}
+.back-link{margin-bottom:16px;font-size:12px;color:var(--bc-primary-light);text-decoration:none;display:block;text-align:left;width:1080px}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:620px}
+.sidebar{background:var(--bc-white);border-right:1px solid var(--bc-grey);padding:0 0 24px}
+.sb-head{padding:18px 16px 16px;border-bottom:1px solid var(--bc-grey);display:flex;align-items:center;gap:10px}
+.sb-icon{width:32px;height:32px;border-radius:8px;background:var(--bc-primary-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-title{font-size:14px;font-weight:800;color:var(--bc-black)}
+.sb-nav{padding:12px 8px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--bc-mono500);cursor:pointer;transition:all .12s;text-decoration:none}
+.sb-item:hover{background:var(--bc-surface);color:var(--bc-black)}
+.sb-item.active{background:rgba(53,46,255,.08);color:var(--bc-primary-light);font-weight:600}
+.main{overflow-y:auto;max-height:620px;display:grid;grid-template-columns:200px 1fr}
+/* Settings sidebar */
+.settings-nav{background:var(--bc-white);border-right:1px solid var(--bc-grey);padding:20px 12px}
+.settings-title{font-size:15px;font-weight:800;color:var(--bc-black);padding:0 8px;margin-bottom:16px;letter-spacing:-.01em}
+.sn-group{margin-bottom:4px}
+.sn-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--bc-mono300-l);padding:8px 10px 3px}
+.sn-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;font-size:12px;font-weight:500;color:var(--bc-mono700-l);cursor:pointer;transition:all .12s}
+.sn-item:hover{background:var(--bc-surface);color:var(--bc-black)}
+.sn-item.active{background:rgba(53,46,255,.08);color:var(--bc-primary-light);font-weight:600}
+/* Content */
+.settings-content{padding:24px 28px;overflow-y:auto}
+.section-head{margin-bottom:20px}
+.sh-title{font-size:16px;font-weight:800;color:var(--bc-black);letter-spacing:-.01em;margin-bottom:4px}
+.sh-sub{font-size:12px;color:var(--bc-mono500)}
+.settings-card{background:var(--bc-white);border-radius:10px;border:1px solid var(--bc-grey);padding:20px;margin-bottom:16px}
+.sc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--bc-surface)}
+.sc-title{font-size:13px;font-weight:700;color:var(--bc-black)}
+.sc-action{font-size:12px;font-weight:600;color:var(--bc-primary-light);cursor:pointer;background:none;border:none;font-family:inherit}
+.field{margin-bottom:14px}
+.field-label{font-size:11px;font-weight:600;color:var(--bc-mono700-l);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:.04em}
+.field-input{width:100%;padding:9px 12px;border-radius:7px;border:1.5px solid var(--bc-mono100-l);font-size:13px;font-family:inherit;color:var(--bc-black);outline:none;transition:border-color .15s}
+.field-input:focus{border-color:var(--bc-primary-light)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* Toggle */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bc-surface)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-label{font-size:13px;font-weight:500;color:var(--bc-black)}
+.toggle-sub{font-size:11px;color:var(--bc-mono300-l);margin-top:2px}
+.toggle{width:40px;height:22px;border-radius:11px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.toggle.on{background:var(--bc-primary-light)}
+.toggle.off{background:var(--bc-mono100-l)}
+.toggle-thumb{width:18px;height:18px;border-radius:9px;background:var(--bc-white);position:absolute;top:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on .toggle-thumb{left:20px}
+.toggle.off .toggle-thumb{left:2px}
+/* Avatar */
+.avatar-row{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.big-avatar{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--bc-primary-light),var(--bc-tertiary1));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:var(--bc-white);flex-shrink:0}
+.avatar-btns{display:flex;flex-direction:column;gap:6px}
+.btn-upload{padding:7px 14px;border-radius:7px;background:var(--bc-primary-light);color:var(--bc-white);font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:inherit}
+.btn-remove{padding:7px 14px;border-radius:7px;background:none;border:1.5px solid var(--bc-mono100-l);color:var(--bc-mono500);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.save-bar{display:flex;justify-content:flex-end;gap:10px;padding-top:8px}
+.btn-cancel{padding:8px 18px;border-radius:8px;background:none;border:1.5px solid var(--bc-mono100-l);color:var(--bc-mono700-l);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-save{padding:8px 18px;border-radius:8px;background:var(--bc-primary-light);color:var(--bc-white);font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:inherit}
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← Back to MaV Design System</a>
+<div class="browser">
+  <div class="browser-bar">
+    <div class="browser-dots"><div class="bd bd-r"></div><div class="bd bd-y"></div><div class="bd bd-g"></div></div>
+    <div class="browser-url">mav.app/settings</div>
+  </div>
+  <div class="app">
+    <div class="sidebar">
+      <div class="sb-head">
+        <div class="sb-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L3 7v6l7 5 7-5V7L10 2z" fill="var(--bc-primary-dark)"/></svg></div>
+        <div><div class="sb-title">MaV</div></div>
+      </div>
+      <div class="sb-nav">
+        <a class="sb-item" href="03-dashboard.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a>
+        <a class="sb-item" href="04-explore.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Explore</a>
+        <a class="sb-item" href="05-profile.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+        <a class="sb-item" href="07-notifications.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications</a>
+        <a class="sb-item active" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+      </div>
+    </div>
+    <div class="main">
+      <div class="settings-nav">
+        <div class="settings-title">Settings</div>
+        <div class="sn-group">
+          <div class="sn-label">Account</div>
+          <div class="sn-item active" onclick="setNav(this)">Profile</div>
+          <div class="sn-item" onclick="setNav(this)">Security</div>
+          <div class="sn-item" onclick="setNav(this)">Billing</div>
+        </div>
+        <div class="sn-group">
+          <div class="sn-label">Preferences</div>
+          <div class="sn-item" onclick="setNav(this)">Appearance</div>
+          <div class="sn-item" onclick="setNav(this)">Notifications</div>
+          <div class="sn-item" onclick="setNav(this)">Language</div>
+        </div>
+        <div class="sn-group">
+          <div class="sn-label">Developer</div>
+          <div class="sn-item" onclick="setNav(this)">API Keys</div>
+          <div class="sn-item" onclick="setNav(this)">Webhooks</div>
+        </div>
+        <div class="sn-group">
+          <div class="sn-item">Sign Out</div>
+        </div>
+      </div>
+      <div class="settings-content">
+        <div class="section-head">
+          <div class="sh-title">Profile Settings</div>
+          <div class="sh-sub">Manage your account details and public info</div>
+        </div>
+        <!-- Avatar -->
+        <div class="settings-card">
+          <div class="sc-head"><span class="sc-title">Photo</span></div>
+          <div class="avatar-row">
+            <div class="big-avatar">AK</div>
+            <div>
+              <div>JPG, PNG or GIF. Max 2MB.</div>
+              <div class="avatar-btns">
+                <button class="btn-upload">Upload Photo</button>
+                <button class="btn-remove">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Basic info -->
+        <div class="settings-card">
+          <div class="sc-head"><span class="sc-title">Basic Information</span></div>
+          <div class="field-row">
+            <div class="field"><label class="field-label">First Name</label><input class="field-input" value="Alex"></div>
+            <div class="field"><label class="field-label">Last Name</label><input class="field-input" value="Kim"></div>
+          </div>
+          <div class="field"><label class="field-label">Username</label><input class="field-input" value="alexkim"></div>
+          <div class="field"><label class="field-label">Email</label><input class="field-input" type="email" value="alex@mavdesign.io"></div>
+          <div class="field"><label class="field-label">Bio</label><textarea class="field-input">Building the MaV design system — modular tokens, accessible components, and cross-platform screens.</textarea></div>
+          <div class="save-bar">
+            <button class="btn-cancel">Cancel</button>
+            <button class="btn-save">Save Changes</button>
+          </div>
+        </div>
+        <!-- Notifications toggle block -->
+        <div class="settings-card">
+          <div class="sc-head"><span class="sc-title">Notification Preferences</span><button class="sc-action">Edit all</button></div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Component updates</div><div class="toggle-sub">When a component in your system changes</div></div>
+            <div class="toggle on" onclick="tog(this)"><div class="toggle-thumb"></div></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Token changes</div><div class="toggle-sub">When design tokens are updated</div></div>
+            <div class="toggle on" onclick="tog(this)"><div class="toggle-thumb"></div></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Weekly digest</div><div class="toggle-sub">Summary of activity every Monday</div></div>
+            <div class="toggle off" onclick="tog(this)"><div class="toggle-thumb"></div></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">Marketing emails</div><div class="toggle-sub">Product updates and tips</div></div>
+            <div class="toggle off" onclick="tog(this)"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function tog(el){el.classList.toggle('on');el.classList.toggle('off')}
+function setNav(el){document.querySelectorAll('.sn-item').forEach(i=>i.classList.remove('active'));el.classList.add('active')}
+</script>
+</body>
+</html>

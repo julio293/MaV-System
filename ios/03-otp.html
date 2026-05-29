@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OTP Verify — iOS — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-surface-ios);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+
+/* Device shell */
+.device{width:393px;height:852px;border-radius:54px;background:#1c1c1e;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.35),inset 0 0 0 2px #3a3a3c,inset 0 0 0 3px #1c1c1e;overflow:hidden;flex-shrink:0}
+.device-screen{position:absolute;inset:0;border-radius:52px;overflow:hidden;background:var(--bc-white);display:flex;flex-direction:column}
+.di{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:126px;height:37px;background:#000;border-radius:20px;z-index:100}
+.status{position:absolute;top:0;left:0;right:0;padding:16px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:99;height:54px}
+.status-time{font-size:15px;font-weight:600;color:var(--bc-black);padding-left:8px}
+.status-icons{display:flex;align-items:center;gap:6px;padding-right:8px}
+.status-icons svg{fill:var(--bc-black)}
+.home{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:134px;height:5px;background:var(--bc-black);border-radius:3px;opacity:.2;z-index:99}
+
+/* Nav */
+.nav-bar{position:absolute;top:54px;left:0;right:0;height:44px;display:flex;align-items:center;padding:0 20px;z-index:50}
+.back-btn{display:flex;align-items:center;gap:4px;padding:8px 0;color:var(--bc-primary-light);font-size:16px;font-weight:500;background:none;border:none;cursor:pointer;font-family:inherit}
+
+/* Screen content */
+.screen-body{
+  flex:1;
+  padding:108px 24px 96px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow:hidden;
+}
+
+/* Organism: otp-root */
+.otp-root{
+  display:flex;flex-direction:column;align-items:center;
+  gap:32px;width:100%;
+}
+
+/* Organism: otp-header */
+.otp-header{display:flex;flex-direction:column;gap:4px;width:100%}
+.otp-title{font-size:24px;font-weight:800;color:var(--mav-fg);letter-spacing:-.025em;line-height:1.15}
+.otp-desc{font-size:15px;color:var(--mav-muted);line-height:1.5}
+.otp-phone{font-size:15px;font-weight:600;color:var(--mav-fg)}
+
+/* Organism: otp-field-area */
+.otp-field-area{display:flex;flex-direction:column;gap:16px;width:100%}
+
+/* Organism: otp-slots — box variant */
+.otp-slots{display:flex;gap:8px;justify-content:center}
+
+/* Box variant slots — from organism */
+.slot{
+  width:48px;height:48px;
+  border-radius:4px;border:1px solid;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:500;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  flex-shrink:0;transition:all .15s;
+  box-sizing:border-box;
+  box-shadow:0px 1px 0px -1px rgba(0,0,0,.05),0px 1px 2px -1px rgba(0,0,0,.05),0px 2px 4px -2px rgba(0,0,0,.05),0px 3px 6px -3px rgba(0,0,0,.05);
+}
+.slot-empty{border-color:var(--bc-mono200-l);background:var(--bc-white);color:var(--mav-placeholder)}
+.slot-filled{border-color:var(--bc-mono900-l);background:var(--bc-white);color:var(--bc-mono900-l)}
+.slot-focus{border-color:var(--mav-primary);background:var(--bc-white);color:var(--bc-mono900-l);box-shadow:0px 1px 0px -1px rgba(0,0,0,.05),0px 1px 2px -1px rgba(0,0,0,.05),0px 2px 4px -2px rgba(0,0,0,.05),0px 3px 6px -3px rgba(0,0,0,.05),0 0 0 3px var(--mav-focus-ring)}
+.slot-error{border-color:var(--mav-danger);background:color-mix(in srgb,var(--mav-danger) 10%,transparent);color:var(--bc-mono900-l);box-shadow:none}
+
+/* Organism: otp-resend row */
+.otp-resend{display:flex;justify-content:space-between;align-items:center;width:100%}
+.resend-timer{font-size:14px;font-weight:700;color:var(--mav-muted)}
+.resend-btn{font-size:12px;font-weight:500;color:var(--mav-primary);background:none;border:none;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.resend-btn:disabled{opacity:.4;cursor:default}
+
+/* Error message */
+.error-msg{display:flex;align-items:center;gap:6px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--mav-danger) 10%,transparent);display:none}
+.error-msg svg{flex-shrink:0}
+.error-msg span{font-size:13px;color:var(--mav-danger);font-weight:500}
+
+/* Organism: verify button */
+.verify-btn{
+  width:100%;padding:14px 16px;
+  border-radius:14px;border:none;
+  font-size:16px;font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;
+  transition:all .15s;letter-spacing:-.01em;
+}
+.verify-enabled{background:var(--mav-primary);color:var(--bc-white)}
+.verify-enabled:active{transform:scale(.97)}
+.verify-disabled{background:var(--bc-mono100-l);color:var(--mav-placeholder);cursor:not-allowed}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="device-screen">
+    <div class="di"></div>
+    <div class="status">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="1" width="3" height="11" rx="1" opacity=".3"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 5C9.8 5 11.4 5.8 12.5 7L13.8 5.7C12.4 4.2 10.3 3.3 8 3.3 5.7 3.3 3.6 4.2 2.2 5.7L3.5 7C4.6 5.8 6.2 5 8 5Z"/><path d="M8 7.5C9.1 7.5 10 7.9 10.7 8.6L8 12 5.3 8.6C6 7.9 6.9 7.5 8 7.5Z"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="var(--bc-black)" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="16" height="6" rx="1.5" fill="var(--bc-black)"/><path d="M22.5 4.5v3a1.5 1.5 0 000-3z"/></svg>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <button class="back-btn" onclick="window.location.href='02-login.html'">
+        <svg width="10" height="16" viewBox="0 0 10 16" fill="none"><path d="M8.5 1.5L2 8l6.5 6.5" stroke="var(--bc-primary-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back
+      </button>
+    </div>
+
+    <div class="screen-body">
+      <div class="otp-root">
+        <!-- Header -->
+        <div class="otp-header">
+          <div class="otp-title">Verify your number</div>
+          <div class="otp-desc">Enter the 6-digit code sent to</div>
+          <div class="otp-phone">+1 (555) 012-3456</div>
+        </div>
+
+        <!-- OTP field area -->
+        <div class="otp-field-area">
+          <div class="otp-slots" id="otp-slots"></div>
+
+          <!-- Error message (shown on wrong code) -->
+          <div class="error-msg" id="error-msg">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--mav-danger)" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5M8 11h.01"/></svg>
+            <span>Invalid code. Please try again.</span>
+          </div>
+
+          <div class="otp-resend">
+            <span class="resend-timer">Reset in <span id="timer">01:59</span></span>
+            <button class="resend-btn" id="resend-btn" disabled>Resend Code</button>
+          </div>
+        </div>
+
+        <!-- Verify button -->
+        <button class="verify-btn verify-disabled" id="verify-btn" onclick="window.location.href='04-home.html'">Verify</button>
+      </div>
+    </div>
+
+    <div class="home"></div>
+  </div>
+</div>
+
+<div style="margin-top:20px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--mav-muted)">
+  <a href="02-login.html" style="color:var(--mav-primary);text-decoration:none;font-weight:600">← Login</a>
+  &nbsp;·&nbsp;
+  <a href="04-home.html" style="color:var(--mav-primary);text-decoration:none;font-weight:600">Next: Home →</a>
+</div>
+
+<script>
+(function(){
+  const slotsEl = document.getElementById('otp-slots');
+  const verifyBtn = document.getElementById('verify-btn');
+  const timerEl = document.getElementById('timer');
+  const resendBtn = document.getElementById('resend-btn');
+  const errorEl = document.getElementById('error-msg');
+  const values = Array(6).fill('');
+  let focusedIdx = 0;
+  let timerVal = 119;
+  let isError = false;
+
+  function updateTimer(){
+    const m = Math.floor(timerVal/60).toString().padStart(2,'0');
+    const s = (timerVal%60).toString().padStart(2,'0');
+    timerEl.textContent = m+':'+s;
+    if(timerVal<=0){
+      resendBtn.disabled=false;
+      resendBtn.style.opacity='1';
+      timerEl.textContent='Ready';
+      return;
+    }
+    timerVal--;
+    setTimeout(updateTimer,1000);
+  }
+  updateTimer();
+
+  function render(){
+    const allFilled = values.every(v=>v!=='');
+    verifyBtn.className = 'verify-btn ' + (allFilled ? 'verify-enabled' : 'verify-disabled');
+    errorEl.style.display = (isError && allFilled) ? 'flex' : 'none';
+
+    slotsEl.innerHTML='';
+    for(let i=0;i<6;i++){
+      const inp = document.createElement('input');
+      inp.type='text';
+      inp.maxLength=1;
+      inp.inputMode='numeric';
+      inp.autocomplete='one-time-code';
+      inp.style.cssText='text-align:center;cursor:text;font-size:18px;font-weight:500;font-family:"Plus Jakarta Sans",sans-serif;box-sizing:border-box;width:48px;height:48px;border-radius:4px;outline:none;';
+
+      const isFocus = i===focusedIdx;
+      const isFilled = values[i]!=='';
+
+      if(isError){
+        inp.className='slot slot-error';
+        inp.value=isFilled?'•':'';
+      } else if(isFocus){
+        inp.className='slot slot-focus';
+        inp.value=isFilled?values[i]:'';
+      } else if(isFilled){
+        inp.className='slot slot-filled';
+        inp.value='•';
+      } else {
+        inp.className='slot slot-empty';
+        inp.value='';
+      }
+
+      if(i===focusedIdx) setTimeout(()=>inp.focus(),0);
+
+      inp.addEventListener('keydown',function(e){
+        isError=false;
+        if(e.key>='0'&&e.key<='9'){
+          values[i]=e.key;
+          if(i<5)focusedIdx=i+1;
+          render();
+        } else if(e.key==='Backspace'){
+          if(values[i]!==''){values[i]='';} else if(i>0){focusedIdx=i-1;values[i-1]='';}
+          render();
+        } else if(e.key==='ArrowRight'&&i<5){focusedIdx=i+1;render();}
+        else if(e.key==='ArrowLeft'&&i>0){focusedIdx=i-1;render();}
+        e.preventDefault();
+      });
+      inp.addEventListener('focus',()=>{focusedIdx=i;render();});
+      inp.addEventListener('paste',function(e){
+        isError=false;
+        const txt=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'');
+        for(let j=0;j<txt.length&&(i+j)<6;j++)values[i+j]=txt[j];
+        focusedIdx=Math.min(i+txt.length,5);
+        render();e.preventDefault();
+      });
+      slotsEl.appendChild(inp);
+    }
+  }
+  render();
+
+  resendBtn.addEventListener('click',function(){
+    if(resendBtn.disabled)return;
+    values.fill('');focusedIdx=0;isError=false;
+    timerVal=119;resendBtn.disabled=true;
+    updateTimer();render();
+  });
+})();
+</script>
+</body>
+</html>

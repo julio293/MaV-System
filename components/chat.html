@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat Bubbles — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* Chat frame */
+.chat-frame{
+  width:375px;border:1px solid var(--mav-border);border-radius:24px;overflow:hidden;
+  box-shadow:var(--shadow-md);background:var(--mav-bg);
+}
+.chat-header{
+  padding:16px 20px;border-bottom:1px solid var(--mav-border);
+  display:flex;align-items:center;gap:12px;
+}
+.chat-avatar{width:40px;height:40px;border-radius:50%;background:var(--mav-primary);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--bc-white);flex-shrink:0}
+[data-theme=dark] .chat-avatar{color:var(--mav-fg)}
+.chat-name{font-size:15px;font-weight:700;color:var(--mav-fg)}
+.chat-status{font-size:11px;color:var(--mav-success);font-weight:500}
+.chat-body{padding:16px;display:flex;flex-direction:column;gap:10px;min-height:300px}
+
+/* Bubbles */
+.bubble-wrap{display:flex;flex-direction:column;max-width:75%}
+.bubble-wrap.sent{align-self:flex-end;align-items:flex-end}
+.bubble-wrap.recv{align-self:flex-start;align-items:flex-start}
+.bubble{
+  padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.45;
+}
+.bubble.sent{
+  background:var(--mav-primary);color:var(--bc-white);
+  border-bottom-right-radius:4px;
+}
+[data-theme=dark] .bubble.sent{color:var(--mav-fg)}
+.bubble.recv{
+  background:var(--mav-border);color:var(--mav-fg);
+  border-bottom-left-radius:4px;
+}
+.bubble-time{font-size:10px;color:var(--mav-muted);margin-top:3px;padding:0 2px}
+.bubble-read{font-size:10px;color:var(--mav-primary);margin-left:4px}
+
+/* Gradient bubble */
+.bubble.gradient{
+  background:linear-gradient(135deg,var(--mav-primary) 0%,var(--mav-tertiary-1) 100%);
+  color:var(--bc-white);
+}
+
+/* System message */
+.sys-msg{
+  align-self:center;font-size:11px;color:var(--mav-muted);
+  background:var(--mav-border);padding:3px 10px;border-radius:9999px;
+}
+
+/* Money request bubble */
+.money-bubble{
+  background:var(--mav-border);border-radius:16px;border-bottom-left-radius:4px;
+  padding:14px;min-width:200px;
+}
+.money-amount{font-size:22px;font-weight:700;color:var(--mav-fg);margin-bottom:2px}
+.money-note{font-size:12px;color:var(--mav-muted);margin-bottom:12px}
+.money-actions{display:flex;gap:8px}
+.money-btn{flex:1;padding:8px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.money-btn-accept{background:var(--mav-primary);color:var(--bc-white)}
+[data-theme=dark] .money-btn-accept{color:var(--mav-fg)}
+.money-btn-decline{background:var(--mav-bg);color:var(--mav-muted);border:1px solid var(--mav-border)}
+
+/* Chat input */
+.chat-input-row{
+  padding:12px 16px;border-top:1px solid var(--mav-border);
+  display:flex;align-items:center;gap:10px;
+}
+.chat-input{
+  flex:1;background:var(--mav-border);border:none;border-radius:20px;
+  padding:10px 14px;font-size:14px;font-family:inherit;outline:none;
+  color:var(--mav-fg);
+}
+.chat-send{
+  width:36px;height:36px;border-radius:50%;background:var(--mav-primary);
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+
+/* Typing indicator */
+.typing-dots{display:flex;gap:4px;padding:10px 14px;background:var(--mav-border);border-radius:16px;border-bottom-left-radius:4px;width:fit-content}
+.typing-dot{width:6px;height:6px;border-radius:50%;background:var(--mav-muted);animation:bounce .8s infinite}
+.typing-dot:nth-child(2){animation-delay:.15s}
+.typing-dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link active">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Chat Bubbles</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Chat Bubbles</h1>
+    <p class="page-desc">Messaging UI for P2P transfer chat, support, and notifications. Includes money request bubbles.</p>
+  </div>
+
+  <!-- Main chat frame -->
+  <div class="section">
+    <h2 class="section-title">Chat Thread</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="chat-frame">
+          <div class="chat-header">
+            <div class="chat-avatar">J</div>
+            <div>
+              <div class="chat-name">James Kalu</div>
+              <div class="chat-status">● Online</div>
+            </div>
+          </div>
+          <div class="chat-body">
+            <div class="sys-msg">Today 2:30 PM</div>
+
+            <div class="bubble-wrap recv">
+              <div class="bubble recv">Hey! Can you send me ₦20k for the groceries?</div>
+              <div class="bubble-time">2:31 PM</div>
+            </div>
+
+            <div class="bubble-wrap sent">
+              <div class="bubble sent">Sure, sending now 👍</div>
+              <div class="bubble-time">2:32 PM <span class="bubble-read">✓✓</span></div>
+            </div>
+
+            <div class="bubble-wrap recv">
+              <div class="money-bubble">
+                <div class="money-amount">₦ 20,000</div>
+                <div class="money-note">For groceries · from James</div>
+                <div class="money-actions">
+                  <button class="money-btn money-btn-accept">Accept</button>
+                  <button class="money-btn money-btn-decline">Decline</button>
+                </div>
+              </div>
+              <div class="bubble-time">2:33 PM</div>
+            </div>
+
+            <div class="bubble-wrap sent">
+              <div class="bubble sent">Sent! Let me know when you get it ✅</div>
+              <div class="bubble-time">2:33 PM <span class="bubble-read">✓✓</span></div>
+            </div>
+
+            <div class="bubble-wrap recv">
+              <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-row">
+            <input class="chat-input" placeholder="Type a message..." readonly>
+            <button class="chat-send">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="var(--bc-white)"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Chat bubble — sent: primary bg · recv: border bg · border-radius 16px/4px corner</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Bubble variants -->
+  <div class="section">
+    <h2 class="section-title">Bubble Variants</h2>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div>Sent — primary fill</div>
+        <div class="bubble sent">Transfer of ₦50,000 has been initiated.</div>
+        <div>Sent — gradient</div>
+        <div class="bubble gradient">Your account has been verified successfully 🎉</div>
+        <div>Received — neutral</div>
+        <div class="bubble recv">We've received your request and will process it within 24 hours.</div>
+        <div>System message</div>
+        <div class="sys-msg">Transfer completed successfully</div>
+        <div>Typing indicator</div>
+        <div class="typing-dots">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Variants — solid / gradient / neutral / system</span>
+        <span class="preview-sublabel">Gradient: linear-gradient(135deg, #352eff, #7c9dff)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Dark mode chat -->
+  <div class="section">
+    <h2 class="section-title">Dark Mode</h2>
+    <div class="preview-card">
+      <div class="preview-canvas dark-bg">
+        <div class="chat-frame">
+          <div class="chat-header">
+            <div class="chat-avatar">A</div>
+            <div>
+              <div class="chat-name">Ada Okonkwo</div>
+              <div class="chat-status">● Online</div>
+            </div>
+          </div>
+          <div class="chat-body">
+            <div class="sys-msg">Yesterday 6:00 PM</div>
+            <div class="bubble-wrap recv">
+              <div class="bubble recv">Did you receive the refund?</div>
+              <div class="bubble-time">6:01 PM</div>
+            </div>
+            <div class="bubble-wrap sent">
+              <div class="bubble sent">Yes! Got it just now 🙌</div>
+              <div class="bubble-time">6:02 PM <span>✓✓</span></div>
+            </div>
+          </div>
+          <div class="chat-input-row">
+            <input class="chat-input" placeholder="Type a message..." readonly>
+            <button class="chat-send">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="var(--mav-fg)"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Dark chat — sent bubble: #a1ff5b · recv: #2a2a2a · send btn: #a1ff5b</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Property</th><th>Light</th><th>Dark</th></tr></thead>
+      <tbody>
+        <tr><td>Sent bubble bg</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td></tr>
+        <tr><td>Sent bubble text</td><td><span class="token-value">#ffffff</span></td><td><span class="token-value">#171717</span></td></tr>
+        <tr><td>Received bubble bg</td><td><span class="token-swatch-sm" style="background:#efefef;border:1px solid #ddd"></span><span class="token-value">#efefef</span></td><td><span class="token-swatch-sm" style="background:var(--bc-mono100-d)"></span><span class="token-value">#2a2a2a</span></td></tr>
+        <tr><td>Gradient start</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td><span class="token-value">same</span></td></tr>
+        <tr><td>Gradient end</td><td><span class="token-swatch-sm" style="background:#7c9dff"></span><span class="token-value">#7c9dff</span></td><td><span class="token-value">same</span></td></tr>
+        <tr><td>Read receipt color</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

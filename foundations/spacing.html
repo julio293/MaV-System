@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spacing & Layout — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+.sp-row{display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--mav-border)}
+.sp-bar{background:var(--mav-primary);height:16px;border-radius:var(--border\/border-radius\/xs);opacity:.7;flex-shrink:0;min-width:2px}
+.sp-name{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mav-primary);min-width:100px}
+.sp-px{font-size:12px;color:var(--mav-muted);min-width:40px}
+.sp-use{font-size:12px;color:var(--mav-fg)}
+.sp-alias{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mav-muted)}
+
+.radius-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.r-card{border:1px solid var(--mav-border);padding:20px;text-align:center;background:var(--mav-bg)}
+.r-swatch{width:64px;height:64px;background:var(--mav-primary);opacity:.15;margin:0 auto 10px}
+.r-label{font-size:12px;font-weight:600;color:var(--mav-fg);margin-bottom:2px}
+.r-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mav-muted)}
+
+.layout-demo{
+  border:2px dashed var(--mav-border);border-radius:8px;
+  padding:20px;margin-top:12px;position:relative;
+  background:var(--mav-bg);
+}
+.layout-label{
+  position:absolute;top:-10px;left:12px;
+  background:var(--mav-bg);padding:0 6px;
+  font-size:11px;color:var(--mav-muted);font-family:monospace;
+}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Foundations</div>
+  <a href="colors.html" class="sidebar-link">Color System</a>
+  <a href="typography.html" class="sidebar-link">Typography</a>
+  <a href="spacing.html" class="sidebar-link active">Spacing & Layout</a>
+  <a href="effects.html" class="sidebar-link">Shadows & Effects</a>
+  <a href="dark-mode.html" class="sidebar-link">Dark Mode</a>
+  <a href="tokens.html" class="sidebar-link">Token Layers</a>
+  <div class="sidebar-section-label">Components</div>
+  <a href="../components/buttons.html" class="sidebar-link">Buttons</a>
+  <a href="../components/inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="../components/all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Spacing & Layout</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Foundations</div>
+    <h1 class="page-title">Spacing & Layout</h1>
+    <p class="page-desc">Discrete spacing scale from 0–54px. OTP slots fixed at 48×48. Container padding 20px. Max content width 343px.</p>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Spacing Scale</h2>
+    <p class="section-desc">Source: <code>tokens/spacing.js</code> — Figma fyscalToken namespace.</p>
+    <div>
+      <div class="sp-row"><div class="sp-name">--Spacing/0</div><div class="sp-px">0px</div><div class="sp-bar" style="width:2px;opacity:.3"></div><div class="sp-use">None — reset</div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/4</div><div class="sp-px">4px</div><div class="sp-bar" style="width:4px"></div><div class="sp-use">Micro gap — kicker label padding<br><span class="sp-alias">--spacing/header/xs</span></div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/8</div><div class="sp-px">8px</div><div class="sp-bar" style="width:8px"></div><div class="sp-use">Small gap — OTP slot gap<br><span class="sp-alias">--otp-slot/gap</span></div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/10</div><div class="sp-px">10px</div><div class="sp-bar" style="width:10px"></div><div class="sp-use">Button padding vertical</div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/12</div><div class="sp-px">12px</div><div class="sp-bar" style="width:12px"></div><div class="sp-use">Input vertical padding</div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/14</div><div class="sp-px">14px</div><div class="sp-bar" style="width:14px"></div><div class="sp-use">OTP slot padding vertical<br><span class="sp-alias">--otp-slot/padding-v</span></div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/16</div><div class="sp-px">16px</div><div class="sp-bar" style="width:16px"></div><div class="sp-use">Medium — OTP slot padding horizontal, card padding<br><span class="sp-alias">--otp-slot/padding-h · --layout/otp-field-gap</span></div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/18</div><div class="sp-px">18px</div><div class="sp-bar" style="width:18px"></div><div class="sp-use">Component inner padding</div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/20</div><div class="sp-px">20px</div><div class="sp-bar" style="width:20px"></div><div class="sp-use">Container horizontal padding<br><span class="sp-alias">--layout/container-padding</span></div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/24</div><div class="sp-px">24px</div><div class="sp-bar" style="width:24px"></div><div class="sp-use">Large — section gap<br><span class="sp-alias">--spacing/header/lg</span></div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/28</div><div class="sp-px">28px</div><div class="sp-bar" style="width:28px"></div><div class="sp-use">Component group gap</div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/32</div><div class="sp-px">32px</div><div class="sp-bar" style="width:32px"></div><div class="sp-use">OTP root gap between sections<br><span class="sp-alias">--layout/otp-root-gap</span></div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/38</div><div class="sp-px">38px</div><div class="sp-bar" style="width:38px"></div><div class="sp-use">Extra large component padding</div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/44</div><div class="sp-px">44px</div><div class="sp-bar" style="width:44px"></div><div class="sp-use">Minimum touch target height (iOS HIG)</div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/48</div><div class="sp-px">48px</div><div class="sp-bar" style="width:48px"></div><div class="sp-use">OTP slot size — fixed, never scale<br><span class="sp-alias">--otp-slot/width · --otp-slot/height</span></div></div>
+      <div class="sp-row"><div class="sp-name">--Spacing/54</div><div class="sp-px">54px</div><div class="sp-bar" style="width:54px"></div><div class="sp-use">Navigation bar height, large headers</div></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <h2 class="section-title">Border Radius</h2>
+    <div class="radius-grid">
+      <div class="r-card">
+        <div class="r-swatch" style="border-radius:var(--border\/border-radius\/xs)"></div>
+        <div class="r-label">--border/border-radius/xs</div>
+        <div class="r-val">2px</div>
+        <div>Tag edges</div>
+      </div>
+      <div class="r-card">
+        <div class="r-swatch" style="border-radius:var(--border\/border-radius\/sm)"></div>
+        <div class="r-label">--border/border-radius/sm</div>
+        <div class="r-val">4px</div>
+        <div>Input, button, OTP slot</div>
+      </div>
+      <div class="r-card">
+        <div class="r-swatch" style="border-radius:var(--border\/border-radius\/md)"></div>
+        <div class="r-label">--border/border-radius/md</div>
+        <div class="r-val">8px</div>
+        <div>Cards, panels</div>
+      </div>
+      <div class="r-card">
+        <div class="r-swatch" style="border-radius:var(--border\/border-radius\/lg)"></div>
+        <div class="r-label">--border/border-radius/lg</div>
+        <div class="r-val">16px</div>
+        <div>Modal, sheet</div>
+      </div>
+      <div class="r-card">
+        <div class="r-swatch" style="border-radius:var(--border\/border-radius\/full)"></div>
+        <div class="r-label">--border/border-radius/full</div>
+        <div class="r-val">9999px</div>
+        <div>Badges, chips, pills</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <h2 class="section-title">Layout Constraints</h2>
+    <div class="grid-2">
+      <div>
+        <div>OTP Component Layout</div>
+        <table class="token-table">
+          <tbody>
+            <tr><td class="token-name">--otp-slot/width</td><td class="token-value">var(--Spacing\/48) → 48px</td></tr>
+            <tr><td class="token-name">--otp-slot/height</td><td class="token-value">var(--Spacing\/48) → 48px (fixed)</td></tr>
+            <tr><td class="token-name">--otp-slot/padding-h</td><td class="token-value">var(--Spacing\/16) → 16px</td></tr>
+            <tr><td class="token-name">--otp-slot/padding-v</td><td class="token-value">var(--Spacing\/14) → 14px</td></tr>
+            <tr><td class="token-name">--otp-slot/gap</td><td class="token-value">var(--Spacing\/8) → 8px</td></tr>
+            <tr><td class="token-name">--layout/container-padding</td><td class="token-value">var(--Spacing\/20) → 20px</td></tr>
+            <tr><td class="token-name">--layout/max-content-width</td><td class="token-value">343px</td></tr>
+            <tr><td class="token-name">--layout/otp-root-gap</td><td class="token-value">var(--Spacing\/32) → 32px</td></tr>
+            <tr><td class="token-name">--layout/otp-field-gap</td><td class="token-value">var(--Spacing\/16) → 16px</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--mav-fg);margin-bottom:8px">Border Widths</div>
+        <table class="token-table">
+          <tbody>
+            <tr><td class="token-name">--border-width/xs</td><td class="token-value">1px — default borders, input outline</td></tr>
+            <tr><td class="token-name">--border-width/sm</td><td class="token-value">2px — emphasised borders</td></tr>
+            <tr><td class="token-name">--border-width/md</td><td class="token-value">4px — heavy / feature borders</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:13px;font-weight:600;color:var(--mav-fg);margin:16px 0 8px">Divider Heights</div>
+        <table class="token-table">
+          <tbody>
+            <tr><td class="token-name">--border-width/xs</td><td class="token-value">1px — standard divider</td></tr>
+            <tr><td class="token-name">--border-width/sm</td><td class="token-value">2px — section divider</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

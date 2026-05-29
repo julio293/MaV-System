@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Onboarding — iOS — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bc-surface-ios);
+  display:flex;flex-direction:column;align-items:center;
+  min-height:100vh;padding:32px 16px 48px;
+  -webkit-font-smoothing:antialiased
+}
+
+/* ── Device frame ── */
+.device{
+  width:393px;height:852px;border-radius:54px;
+  background:#1c1c1e;position:relative;
+  box-shadow:0 32px 80px rgba(0,0,0,.35),inset 0 0 0 2px #3a3a3c,inset 0 0 0 3px #1c1c1e;
+  overflow:hidden;flex-shrink:0
+}
+.device-screen{
+  position:absolute;inset:0;border-radius:52px;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  background:var(--bc-white)
+}
+/* Dynamic Island */
+.di{
+  position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  width:126px;height:37px;background:#000;border-radius:20px;z-index:200
+}
+/* Status bar */
+.status{
+  position:absolute;top:0;left:0;right:0;
+  padding:16px 28px 0;height:54px;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:100
+}
+.status-time{font-size:15px;font-weight:600;padding-left:8px}
+.status-icons{display:flex;align-items:center;gap:6px;padding-right:8px}
+/* Home indicator */
+.home-ind{
+  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  width:134px;height:5px;border-radius:3px;opacity:.25;z-index:100
+}
+
+/* ── Slide container ── */
+.ob-track{
+  width:100%;overflow:hidden;
+  flex:1;
+  display:flex;flex-direction:column
+}
+.ob-slides{
+  display:flex;width:300%;
+  transition:transform .45s cubic-bezier(.4,0,.2,1);
+  flex:1
+}
+.ob-slide{
+  width:33.333%;
+  display:flex;flex-direction:column;
+  flex-shrink:0
+}
+
+/* ── Slide hero (top illustration area) ── */
+.ob-hero{
+  height:420px;
+  position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:32px;
+  flex-shrink:0
+}
+.ob-hero-1{background:linear-gradient(160deg,var(--bc-tertiary2) 0%,var(--bc-primary-light) 60%,var(--bc-tertiary1) 100%)}
+.ob-hero-2{background:linear-gradient(160deg,var(--bc-polipurple-800) 0%,var(--bc-primary-light) 55%,var(--bc-pink-500) 100%)}
+.ob-hero-3{background:linear-gradient(160deg,var(--bc-secondary) 0%,var(--bc-primary-light) 50%,var(--bc-polipurple-400) 100%)}
+
+/* circle blob behind illustration */
+.ob-blob{
+  position:absolute;width:280px;height:280px;
+  border-radius:50%;opacity:.15;
+  background:var(--bc-white);
+  top:60px;left:50%;transform:translateX(-50%)
+}
+
+/* ── Slide 1 illustration: balance card + quick actions ── */
+.ill-card{
+  width:296px;background:rgba(255,255,255,.18);border-radius:20px;
+  padding:20px;backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.3);
+  box-shadow:0 8px 32px rgba(0,0,0,.18)
+}
+.ill-label{font-size:10px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.ill-balance{font-size:28px;font-weight:800;color:var(--bc-white);letter-spacing:-.02em;margin-bottom:16px}
+.ill-actions{display:flex;gap:8px}
+.ill-act{
+  flex:1;background:rgba(255,255,255,.18);border-radius:10px;
+  padding:10px 4px;
+  display:flex;flex-direction:column;align-items:center;gap:4px
+}
+.ill-act-icon{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center}
+.ill-act-lbl{font-size:9px;color:rgba(255,255,255,.85);font-weight:600}
+
+/* ── Slide 2 illustration: spending chart + transactions ── */
+.ill-chart-wrap{
+  width:296px;background:rgba(255,255,255,.18);border-radius:20px;
+  padding:20px;backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.3);
+  box-shadow:0 8px 32px rgba(0,0,0,.18)
+}
+.ill-chart-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.ill-chart-title{font-size:11px;color:rgba(255,255,255,.7);font-weight:600}
+.ill-chart-val{font-size:20px;font-weight:800;color:var(--bc-white)}
+.ill-bars{display:flex;align-items:flex-end;gap:6px;height:56px}
+.ill-bar{border-radius:4px 4px 0 0;background:rgba(255,255,255,.25)}
+.ill-bar.hi{background:var(--bc-primary-dark)}
+.ill-txns{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.ill-txn{display:flex;align-items:center;gap:10px}
+.ill-txn-ico{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ill-txn-body{flex:1}
+.ill-txn-name{font-size:11px;color:var(--bc-white);font-weight:600}
+.ill-txn-date{font-size:9px;color:rgba(255,255,255,.6)}
+.ill-txn-amt{font-size:11px;font-weight:700}
+.ill-txn-amt.cr{color:var(--bc-primary-dark)}
+.ill-txn-amt.db{color:rgba(255,255,255,.85)}
+
+/* ── Slide 3 illustration: security / shield ── */
+.ill-shield-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:16px
+}
+.ill-shield{
+  width:120px;height:120px;
+  background:rgba(255,255,255,.18);
+  border-radius:30px;border:1px solid rgba(255,255,255,.3);
+  backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 32px rgba(0,0,0,.2)
+}
+.ill-checks{
+  display:flex;flex-direction:column;gap:8px;width:200px
+}
+.ill-check{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.15);border-radius:10px;
+  padding:8px 12px;border:1px solid rgba(255,255,255,.25)
+}
+.ill-check-dot{width:18px;height:18px;border-radius:50%;background:var(--bc-primary-dark);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ill-check-txt{font-size:11px;color:var(--bc-white);font-weight:600}
+
+/* ── Slide body (bottom text area) ── */
+.ob-body{
+  padding:28px 32px 0;
+  display:flex;flex-direction:column;align-items:center;
+  flex:1
+}
+.ob-headline{
+  font-size:26px;font-weight:800;color:var(--bc-mono900-l);
+  text-align:center;letter-spacing:-.025em;line-height:1.2;
+  margin-bottom:10px
+}
+.ob-headline span{color:var(--bc-primary-light)}
+.ob-sub{
+  font-size:15px;color:var(--bc-mono500);
+  text-align:center;line-height:1.55;max-width:280px
+}
+
+/* ── Progress dots + CTA ── */
+.ob-footer{
+  padding:20px 32px 36px;
+  display:flex;flex-direction:column;align-items:center;gap:0;
+  flex-shrink:0
+}
+.ob-dots{display:flex;gap:6px;margin-bottom:20px}
+.dot{
+  width:8px;height:8px;border-radius:4px;
+  background:var(--bc-mono200-l);
+  transition:width .3s,background .3s
+}
+.dot.active{width:24px;background:var(--bc-primary-light)}
+
+.btn-primary{
+  width:100%;padding:16px;border-radius:14px;
+  background:var(--bc-primary-light);
+  color:var(--bc-white);
+  font-size:16px;font-weight:700;
+  border:none;cursor:pointer;font-family:inherit;
+  transition:transform .12s,background .12s;
+  letter-spacing:-.01em;
+  margin-bottom:10px
+}
+.btn-primary:active{transform:scale(.97);background:var(--bc-tertiary2)}
+
+.btn-ghost{
+  width:100%;padding:12px;border-radius:14px;
+  background:transparent;
+  color:var(--bc-mono500);
+  font-size:14px;font-weight:600;
+  border:none;cursor:pointer;font-family:inherit;
+  letter-spacing:-.01em
+}
+
+/* ── Nav link below device ── */
+.back-link{margin-top:24px;font-size:13px;color:var(--bc-mono500)}
+.back-link a{color:var(--bc-primary-light);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="device">
+  <div class="device-screen">
+    <!-- Dynamic Island -->
+    <div class="di"></div>
+
+    <!-- Status bar (style toggles per slide) -->
+    <div class="status" id="statusBar">
+      <span class="status-time" style="color:var(--bc-white)">9:41</span>
+      <div class="status-icons">
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="white"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="1" width="3" height="11" rx="1" opacity=".3"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="white"><path d="M8 2.5C10.5 2.5 12.7 3.6 14.2 5.3L15.5 4C13.7 2 11 1 8 1 5 1 2.3 2 .5 4L1.8 5.3C3.3 3.6 5.5 2.5 8 2.5Z" opacity=".3"/><path d="M8 5C9.8 5 11.4 5.8 12.5 7L13.8 5.7C12.4 4.2 10.3 3.3 8 3.3 5.7 3.3 3.6 4.2 2.2 5.7L3.5 7C4.6 5.8 6.2 5 8 5Z" opacity=".6"/><path d="M8 7.5C9.1 7.5 10 7.9 10.7 8.6L8 12 5.3 8.6C6 7.9 6.9 7.5 8 7.5Z"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12" fill="white"><rect x="0" y="1" width="21" height="10" rx="3" stroke="white" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="16" height="6" rx="1.5" fill="white"/><path d="M22.5 4.5v3a1.5 1.5 0 000-3z" fill="white"/></svg>
+      </div>
+    </div>
+
+    <!-- Slides track -->
+    <div class="ob-track">
+      <div class="ob-slides" id="obSlides">
+
+        <!-- ── Slide 1: Send Money ── -->
+        <div class="ob-slide">
+          <div class="ob-hero ob-hero-1">
+            <div class="ob-blob"></div>
+            <div class="ill-card">
+              <div class="ill-label">Total Balance</div>
+              <div class="ill-balance">₦2,450,000</div>
+              <div class="ill-actions">
+                <div class="ill-act">
+                  <div class="ill-act-icon">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8"><path d="M7 2v10M2 7l5-5 5 5"/></svg>
+                  </div>
+                  <span class="ill-act-lbl">Add</span>
+                </div>
+                <div class="ill-act">
+                  <div class="ill-act-icon">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8"><path d="M2 7h10M7 2l5 5-5 5"/></svg>
+                  </div>
+                  <span class="ill-act-lbl">Send</span>
+                </div>
+                <div class="ill-act">
+                  <div class="ill-act-icon">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8"><rect x="2" y="3" width="10" height="8" rx="1.5"/><path d="M2 6h10"/></svg>
+                  </div>
+                  <span class="ill-act-lbl">Pay</span>
+                </div>
+                <div class="ill-act">
+                  <div class="ill-act-icon">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8"><circle cx="7" cy="7" r="5"/><path d="M7 4v3l2 2"/></svg>
+                  </div>
+                  <span class="ill-act-lbl">History</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ob-body">
+            <h2 class="ob-headline">Send money<br><span>in seconds</span></h2>
+            <p class="ob-sub">Transfer to anyone, anywhere. No queues, no branches — just tap and it's done.</p>
+          </div>
+        </div>
+
+        <!-- ── Slide 2: Track Spending ── -->
+        <div class="ob-slide">
+          <div class="ob-hero ob-hero-2">
+            <div class="ob-blob"></div>
+            <div class="ill-chart-wrap">
+              <div class="ill-chart-header">
+                <div>
+                  <div class="ill-chart-title">Monthly Spending</div>
+                  <div class="ill-chart-val">₦840,500</div>
+                </div>
+                <div style="font-size:10px;background:rgba(161,255,91,.2);color:var(--bc-primary-dark);padding:3px 8px;border-radius:20px;font-weight:700">↓ 12%</div>
+              </div>
+              <div class="ill-bars">
+                <div class="ill-bar" style="width:24px;height:32px"></div>
+                <div class="ill-bar" style="width:24px;height:44px"></div>
+                <div class="ill-bar" style="width:24px;height:28px"></div>
+                <div class="ill-bar hi" style="width:24px;height:52px"></div>
+                <div class="ill-bar" style="width:24px;height:38px"></div>
+                <div class="ill-bar" style="width:24px;height:20px"></div>
+                <div class="ill-bar" style="width:24px;height:42px"></div>
+              </div>
+              <div class="ill-txns">
+                <div class="ill-txn">
+                  <div class="ill-txn-ico">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><path d="M7 1a6 6 0 100 12A6 6 0 007 1zm0 2a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0 8a4 4 0 01-3.2-1.6C3.8 8.4 5.8 7.5 7 7.5c1.2 0 3.2.9 3.2 1.9A4 4 0 017 11z"/></svg>
+                  </div>
+                  <div class="ill-txn-body">
+                    <div class="ill-txn-name">Salary Credit</div>
+                    <div class="ill-txn-date">Today · 09:00</div>
+                  </div>
+                  <div class="ill-txn-amt cr">+₦5.2M</div>
+                </div>
+                <div class="ill-txn">
+                  <div class="ill-txn-ico">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="white"><rect x="2" y="3" width="10" height="8" rx="1.5"/><path d="M2 6h10" stroke="white" stroke-width="1"/></svg>
+                  </div>
+                  <div class="ill-txn-body">
+                    <div class="ill-txn-name">Netflix</div>
+                    <div class="ill-txn-date">Yesterday</div>
+                  </div>
+                  <div class="ill-txn-amt db">−₦4,900</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ob-body">
+            <h2 class="ob-headline">Know where<br><span>your money goes</span></h2>
+            <p class="ob-sub">Real-time spending insights and smart summaries — so you're always in control.</p>
+          </div>
+        </div>
+
+        <!-- ── Slide 3: Security ── -->
+        <div class="ob-slide">
+          <div class="ob-hero ob-hero-3">
+            <div class="ob-blob"></div>
+            <div class="ill-shield-wrap">
+              <div class="ill-shield">
+                <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                  <path d="M28 6L8 14v14c0 12.7 8.6 24.6 20 27.4C40.4 52.6 49 40.7 49 28V14L28 6z" fill="rgba(255,255,255,.25)" stroke="rgba(255,255,255,.6)" stroke-width="2"/>
+                  <path d="M20 28l6 6 10-12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="ill-checks">
+                <div class="ill-check">
+                  <div class="ill-check-dot">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 2.5" stroke="#030192" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </div>
+                  <span class="ill-check-txt">Bank-grade encryption</span>
+                </div>
+                <div class="ill-check">
+                  <div class="ill-check-dot">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 2.5" stroke="#030192" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </div>
+                  <span class="ill-check-txt">Biometric authentication</span>
+                </div>
+                <div class="ill-check">
+                  <div class="ill-check-dot">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 2.5" stroke="#030192" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </div>
+                  <span class="ill-check-txt">Instant fraud alerts</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ob-body">
+            <h2 class="ob-headline">Your money,<br><span>always protected</span></h2>
+            <p class="ob-sub">Military-grade security with biometric login. Your funds are safe — always.</p>
+          </div>
+        </div>
+
+      </div><!-- /ob-slides -->
+    </div><!-- /ob-track -->
+
+    <!-- Footer: dots + CTA -->
+    <div class="ob-footer">
+      <div class="ob-dots">
+        <div class="dot active" id="d0"></div>
+        <div class="dot" id="d1"></div>
+        <div class="dot" id="d2"></div>
+      </div>
+      <button class="btn-primary" id="obNext">Get Started</button>
+      <button class="btn-ghost" id="obSkip">I already have an account</button>
+    </div>
+
+    <!-- Home indicator -->
+    <div class="home-ind" style="background:var(--bc-mono900-l)"></div>
+  </div><!-- /device-screen -->
+</div><!-- /device -->
+
+<div class="back-link">
+  <a href="../index.html">← MaV Design System</a> &nbsp;·&nbsp;
+  <a href="02-login.html">Login →</a>
+</div>
+
+<script>
+(function () {
+  var cur = 0;
+  var total = 3;
+  var slides = document.getElementById('obSlides');
+  var nextBtn = document.getElementById('obNext');
+  var skipBtn = document.getElementById('obSkip');
+  var dots = [0,1,2].map(function(i){ return document.getElementById('d'+i); });
+
+  function go(n) {
+    cur = Math.max(0, Math.min(total - 1, n));
+    // Move track (each slide is 1/3 of the 300% wide strip)
+    slides.style.transform = 'translateX(-' + (cur * 33.333) + '%)';
+    // Update dots
+    dots.forEach(function(d, i) {
+      d.className = 'dot' + (i === cur ? ' active' : '');
+    });
+    // Update button label
+    nextBtn.textContent = cur === total - 1 ? 'Create Account' : 'Next';
+  }
+
+  // Touch swipe support
+  var touchStartX = 0;
+  slides.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
+  slides.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) { go(dx < 0 ? cur + 1 : cur - 1); }
+  }, {passive:true});
+
+  nextBtn.addEventListener('click', function () {
+    if (cur < total - 1) { go(cur + 1); }
+    else { window.location.href = '02-login.html'; }
+  });
+
+  skipBtn.addEventListener('click', function () {
+    window.location.href = '02-login.html';
+  });
+
+  // Init
+  go(0);
+}());
+</script>
+</body>
+</html>

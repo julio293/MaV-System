@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kitchen Sink — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* Kitchen sink layout — all components on one canvas */
+.ks-section{margin-bottom:48px}
+.ks-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mav-muted);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.ks-title::after{content:'';flex:1;height:1px;background:var(--mav-border)}
+.ks-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:4px;border:none;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;text-decoration:none}
+.btn-primary{background:var(--mav-primary);color:var(--bc-white)}
+[data-theme=dark] .btn-primary{color:var(--mav-fg)}
+.btn-secondary{background:transparent;color:var(--mav-primary);border:1.5px solid var(--mav-primary)}
+.btn-text{background:transparent;color:var(--mav-primary);padding:12px 8px}
+.btn-sm{padding:8px 16px;font-size:12px}
+.btn-disabled{opacity:.4;cursor:not-allowed}
+
+/* Inputs */
+.mav-input{width:100%;padding:12px 16px;font-size:14px;font-family:inherit;border-radius:4px;border:1px solid;outline:none;transition:all .15s}
+.inp-default{border-color:var(--bc-mono200-l);background:var(--bc-white);color:var(--bc-mono900-l)}
+.inp-focus{border-color:var(--mav-primary);background:var(--bc-white);color:var(--bc-mono900-l);box-shadow:0 0 0 3px var(--mav-focus-ring)}
+.inp-error{border-color:var(--mav-danger);background:rgba(255,0,0,.08);color:var(--bc-mono900-l)}
+
+/* OTP row */
+.otp-slot{width:48px;height:48px;border:1px solid var(--bc-mono200-l);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--mav-fg)}
+.otp-slot.filled{border-color:var(--bc-mono900-l)}
+.otp-slot.otp-focus{border-color:var(--mav-primary);box-shadow:0 0 0 3px var(--mav-focus-ring)}
+
+/* Checkbox */
+.mav-checkbox{width:20px;height:20px;border-radius:4px;border:1px solid;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer}
+.cb-default{border-color:var(--bc-mono200-l);background:var(--bc-white)}
+.cb-active{border-color:var(--mav-primary);background:var(--mav-primary);border:none}
+.checkmark{color:var(--bc-white);font-size:12px;font-weight:700}
+
+/* Toggle */
+.mav-toggle{position:relative;width:44px;height:24px;border-radius:9999px;cursor:pointer;flex-shrink:0}
+.toggle-off{background:var(--bc-mono100-l)}
+.toggle-on{background:var(--mav-primary)}
+[data-theme=dark] .toggle-on{background:var(--mav-primary-dark)}
+.toggle-handle{position:absolute;top:3px;width:18px;height:18px;border-radius:50%;background:var(--bc-white);box-shadow:0 1px 3px rgba(0,0,0,0.15)}
+.toggle-handle-off{left:3px}
+.toggle-handle-on{left:23px}
+[data-theme=dark] .toggle-handle{background:var(--mav-fg)}
+
+/* Badges */
+.b{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:9999px;font-size:12px;font-weight:600}
+.b-primary{background:var(--mav-primary);color:var(--bc-white)}
+[data-theme=dark] .b-primary{color:var(--mav-fg)}
+.b-success{background:color-mix(in srgb,var(--mav-success) 12%,transparent);color:var(--mav-success)}
+.b-warning{background:color-mix(in srgb,var(--mav-warning) 12%,transparent);color:var(--mav-warning)}
+.b-danger{background:rgba(255,0,0,0.10);color:var(--mav-danger)}
+.b-neutral{background:var(--mav-border);color:var(--mav-muted)}
+
+/* Alert */
+.mav-alert{display:flex;align-items:flex-start;gap:10px;padding:14px;border-radius:8px;border:1px solid;font-size:13px}
+.alert-icon{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-top:1px}
+.alert-success{background:rgba(98,156,40,0.08);border-color:rgba(98,156,40,0.25);color:var(--mav-success)}
+.alert-success .alert-icon{background:var(--mav-success);color:var(--bc-white)}
+.alert-danger{background:rgba(255,0,0,0.08);border-color:rgba(255,0,0,0.25);color:var(--mav-danger)}
+.alert-danger .alert-icon{background:var(--mav-danger);color:var(--bc-white)}
+
+/* Toast */
+.mav-toast{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:var(--bc-mono900-l);color:var(--bc-white);box-shadow:0 8px 24px rgba(0,0,0,0.2);font-size:13px;max-width:320px}
+.toast-icon{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+
+/* Nav tab */
+.tab-strip{display:flex;border-bottom:2px solid var(--mav-border)}
+.tab-item{padding:8px 16px;font-size:13px;font-weight:500;color:var(--mav-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab-item.active{color:var(--mav-primary);border-bottom-color:var(--mav-primary);font-weight:600}
+
+/* Bubble */
+.bubble-sent{display:inline-block;padding:10px 14px;border-radius:16px 16px 4px 16px;background:var(--mav-primary);color:var(--bc-white);font-size:13px;max-width:220px}
+[data-theme=dark] .bubble-sent{color:var(--mav-fg)}
+.bubble-recv{display:inline-block;padding:10px 14px;border-radius:16px 16px 16px 4px;background:var(--mav-border);color:var(--mav-fg);font-size:13px;max-width:220px}
+
+/* Balance mini */
+.bal-mini{background:linear-gradient(135deg,var(--mav-primary),var(--mav-secondary));color:var(--bc-white);border-radius:16px;padding:20px;width:220px}
+.bal-mini-label{font-size:11px;opacity:.7;margin-bottom:4px}
+.bal-mini-amount{font-size:24px;font-weight:700;letter-spacing:-0.02em}
+
+/* Chip */
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:9999px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid;transition:all .15s}
+.chip-default{background:var(--mav-bg);border-color:var(--mav-border);color:var(--mav-muted)}
+.chip-selected{background:var(--mav-primary);border-color:var(--mav-primary);color:var(--bc-white)}
+[data-theme=dark] .chip-selected{color:var(--mav-fg)}
+
+/* Radio */
+.radio-outer{width:20px;height:20px;border-radius:50%;border:1.5px solid;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.radio-selected{border-color:var(--mav-primary)}
+.radio-dot{width:10px;height:10px;border-radius:50%;background:var(--mav-primary)}
+
+/* Stepper mini */
+.step-c{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.step-done{background:var(--mav-primary);color:var(--bc-white)}
+[data-theme=dark] .step-done{color:var(--mav-fg)}
+.step-todo{background:var(--mav-border);color:var(--mav-muted)}
+.step-conn{flex:1;height:2px;background:var(--mav-primary)}
+.step-conn-todo{background:var(--mav-border)}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="all.html" class="sidebar-link active">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Kitchen Sink</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Kitchen Sink</h1>
+    <p class="page-desc">All 18 components at a glance. Use the theme toggle to see both light and dark mode simultaneously.</p>
+  </div>
+
+  <div class="preview-card">
+    <div class="preview-canvas">
+
+      <!-- Buttons -->
+      <div class="ks-section">
+        <div class="ks-title">Buttons <a href="buttons.html">→ details</a></div>
+        <div class="ks-row">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-text">Text</button>
+          <button class="btn btn-primary btn-disabled" disabled>Disabled</button>
+          <button class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="white" stroke-width="1.5" stroke-dasharray="6 4"><animateTransform attributeName="transform" type="rotate" from="0 7 7" to="360 7 7" dur=".8s" repeatCount="indefinite"/></circle></svg>
+            Loading
+          </button>
+        </div>
+      </div>
+
+      <!-- Inputs -->
+      <div class="ks-section">
+        <div class="ks-title">Input Fields <a href="inputs.html">→ details</a></div>
+        <div>
+          <div><input class="mav-input inp-default" placeholder="Default..." readonly></div>
+          <div><input class="mav-input inp-focus" value="Focus state" readonly></div>
+          <div><input class="mav-input inp-error" value="Error state" readonly></div>
+        </div>
+      </div>
+
+      <!-- OTP -->
+      <div class="ks-section">
+        <div class="ks-title">OTP Input <a href="otp.html">→ details</a></div>
+        <div class="ks-row">
+          <div class="otp-slot filled">3</div>
+          <div class="otp-slot filled">7</div>
+          <div class="otp-slot otp-focus"></div>
+          <div class="otp-slot">—</div>
+          <div class="otp-slot">—</div>
+          <div class="otp-slot">—</div>
+        </div>
+      </div>
+
+      <!-- Checkbox + Toggle + Radio -->
+      <div class="ks-section">
+        <div class="ks-title">Forms & Controls <a href="forms.html">→ details</a></div>
+        <div class="ks-row">
+          <div>
+            <div class="mav-checkbox cb-default"></div>
+            <span>Unchecked</span>
+          </div>
+          <div>
+            <div class="mav-checkbox cb-active"><span class="checkmark">✓</span></div>
+            <span>Checked</span>
+          </div>
+          <div>
+            <div class="mav-toggle toggle-off"><div class="toggle-handle toggle-handle-off"></div></div>
+            <span>Off</span>
+          </div>
+          <div>
+            <div class="mav-toggle toggle-on"><div class="toggle-handle toggle-handle-on"></div></div>
+            <span>On</span>
+          </div>
+          <div>
+            <div class="radio-outer radio-selected"><div class="radio-dot"></div></div>
+            <span>Selected</span>
+          </div>
+          <div>
+            <div class="radio-outer"></div>
+            <span>Unselected</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badges & Chips -->
+      <div class="ks-section">
+        <div class="ks-title">Badges & Chips <a href="badges.html">→ details</a></div>
+        <div class="ks-row">
+          <span class="b b-primary">Primary</span>
+          <span class="b b-success">Success</span>
+          <span class="b b-warning">Warning</span>
+          <span class="b b-danger">Error</span>
+          <span class="b b-neutral">Neutral</span>
+          <div class="chip chip-default">Filter</div>
+          <div class="chip chip-selected">Active</div>
+        </div>
+      </div>
+
+      <!-- Alerts -->
+      <div class="ks-section">
+        <div class="ks-title">Alerts & Toasts <a href="feedback.html">→ details</a></div>
+        <div>
+          <div class="mav-alert alert-success">
+            <div class="alert-icon">✓</div>
+            <div>Transfer of ₦50,000 was successful.</div>
+          </div>
+          <div class="mav-alert alert-danger">
+            <div class="alert-icon">!</div>
+            <div>Payment failed — insufficient funds.</div>
+          </div>
+          <div>
+            <div class="mav-toast">
+              <div class="toast-icon">✓</div>
+              <span>Transfer complete</span>
+              <span>View</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="ks-section">
+        <div class="ks-title">Navigation <a href="navigation.html">→ details</a></div>
+        <div>
+          <div class="tab-strip">
+            <div class="tab-item active">Overview</div>
+            <div class="tab-item">Transactions</div>
+            <div class="tab-item">Analytics</div>
+          </div>
+          <div>
+            <div class="step-c step-done">✓</div>
+            <div class="step-conn"></div>
+            <div class="step-c step-done">✓</div>
+            <div class="step-conn"></div>
+            <div class="step-c step-done">3</div>
+            <div class="step-conn step-conn-todo"></div>
+            <div class="step-c step-todo">4</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat -->
+      <div class="ks-section">
+        <div class="ks-title">Chat Bubbles <a href="chat.html">→ details</a></div>
+        <div>
+          <div class="bubble-recv">Can you send me ₦20k?</div>
+          <div><div class="bubble-sent">Sure, done! ✅</div></div>
+        </div>
+      </div>
+
+      <!-- Finance -->
+      <div class="ks-section">
+        <div class="ks-title">Finance Modules <a href="finance.html">→ details</a></div>
+        <div class="ks-row">
+          <div class="bal-mini">
+            <div class="bal-mini-label">Balance</div>
+            <div class="bal-mini-amount">₦ 284,500</div>
+          </div>
+          <div>
+            <div>
+              <div>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 13l4-4 3 3 4-5" stroke="var(--mav-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div>Monthly income</div>
+                <div>+₦ 350,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="preview-meta">
+      <span class="preview-label">Kitchen Sink — all 18 components · light + dark</span>
+      <span class="preview-sublabel">Toggle theme to preview dark mode</span>
+    </div>
+  </div>
+
+  <!-- Component index -->
+  <div class="section">
+    <h2 class="section-title">Component Index</h2>
+    <div>
+      <a href="buttons.html" onmouseover="this.style.borderColor='var(--mav-primary)'" onmouseout="this.style.borderColor='var(--mav-border)'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--mav-primary)" stroke-width="1.5"><rect x="2" y="5" width="12" height="6" rx="2"/></svg>
+        Buttons
+      </a>
+      <a href="inputs.html" onmouseover="this.style.borderColor='var(--mav-primary)'" onmouseout="this.style.borderColor='var(--mav-border)'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--mav-primary)" stroke-width="1.5"><rect x="1" y="4" width="14" height="8" rx="2"/><path d="M4 8h1"/></svg>
+        Input Fields
+      </a>
+      <a href="otp.html" onmouseover="this.style.borderColor='var(--mav-primary)'" onmouseout="this.style.borderColor='var(--mav-border)'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--mav-primary)" stroke-width="1.5"><rect x="1" y="4" width="3" height="8" rx="1"/><rect x="6.5" y="4" width="3" height="8" rx="1"/><rect x="12" y="4" width="3" height="8" rx="1"/></svg>
+        OTP Input
+      </a>
+      <a href="forms.html" onmouseover="this.style.borderColor='var(--mav-primary)'" onmouseout="this.style.borderColor='var(--mav-border)'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--mav-primary)" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><path d="M10 8h4M10 12h4"/></svg>
+        Forms & Controls
+      </a>
+      <a href="feedback.html" onmouseover="this.style.borderColor='var(--mav-primary)'" onmouseout="this.style.borderColor='var(--mav-border)'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--mav-primary)" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 10v.5"/></svg>
+        Alerts & Toasts
+      </a>
+      <a href="badges.html" onmouseover="this.style.borderColor='var(--mav-primary)'" onmouseout="this.style.borderColor='var(--mav-border)'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="5" width="12" height="6" rx="9" fill="none" stroke="var(--mav-primary)" stroke-width="1.5"/></svg>
+        Badges & Chips
+      </a>
+      <a href="navigation.html" onmouseover="this.style.borderColor='var(--mav-primary)'" onmouseout="this.style.borderColor='var(--mav-border)'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--mav-primary)" stroke-width="1.5"><path d="M2 5h12M2 8h12M2 11h12"/></svg>
+        Navigation
+      </a>
+      <a href="chat.html" onmouseover="this.style.borderColor='var(--mav-primary)'" onmouseout="this.style.borderColor='var(--mav-border)'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--mav-primary)" stroke-width="1.5"><path d="M14 10a2 2 0 01-2 2H5l-3 2V4a2 2 0 012-2h8a2 2 0 012 2v6z"/></svg>
+        Chat Bubbles
+      </a>
+      <a href="finance.html" onmouseover="this.style.borderColor='var(--mav-primary)'" onmouseout="this.style.borderColor='var(--mav-border)'">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--mav-primary)" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v1.5M8 9v1.5M6.5 7A1.5 1.5 0 018 5.5h1a1 1 0 010 2H7a1 1 0 000 2h1A1.5 1.5 0 019.5 11"/></svg>
+        Finance Modules
+      </a>
+    </div>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "design-token-bridge": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "design-token-bridge-mcp"
+      ]
+    },
+    "figma-context": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--stdio"
+      ]
+    },
+    "figma-use": {
+      "type": "http",
+      "url": "http://localhost:38451/mcp"
+    }
+  }
+}

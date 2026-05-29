@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Onboarding — Android — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.device{width:393px;height:851px;border-radius:48px;background:var(--bc-black);position:relative;box-shadow:0 32px 80px rgba(0,0,0,.4),inset 0 0 0 1.5px var(--mav-border);overflow:hidden;flex-shrink:0}
+.device-screen{position:absolute;inset:0;border-radius:46px;overflow:hidden;background:var(--bc-surface);display:flex;flex-direction:column}
+/* Punch-hole */
+.ph{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:#000;border-radius:50%;z-index:100}
+/* Status bar */
+.status{position:absolute;top:0;left:0;right:0;padding:14px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:99;height:48px}
+.status-time{font-size:13px;font-weight:600;color:var(--bc-black)}
+.status-icons{display:flex;align-items:center;gap:5px}
+/* Nav gestures */
+.nav-gesture{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:4px;background:var(--bc-black);border-radius:2px;opacity:.15;z-index:99}
+/* Slides */
+.slides{flex:1;display:flex;overflow:hidden;position:relative}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.slide-0{transform:translateX(0)}
+.slide-1{transform:translateX(100%)}
+.slide-2{transform:translateX(200%)}
+/* Slide visuals */
+.slide-visual{height:420px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+/* Content */
+.slide-content{flex:1;padding:28px 28px 0;background:var(--bc-white)}
+.slide-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--bc-mono300-l);margin-bottom:10px}
+.slide-title{font-size:26px;font-weight:800;color:var(--bc-black);letter-spacing:-.03em;line-height:1.2;margin-bottom:10px}
+.slide-body{font-size:14px;color:var(--bc-mono500);line-height:1.55}
+/* Dots + CTAs */
+.bottom-area{background:var(--bc-white);padding:20px 28px 36px}
+.dots{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+.dot{width:6px;height:6px;border-radius:3px;background:var(--bc-mono100-l);transition:all .3s}
+.dot.active{width:20px;background:var(--bc-primary-light)}
+.btn-primary{width:100%;padding:16px;border-radius:14px;background:var(--bc-primary-light);color:var(--bc-white);font-size:16px;font-weight:700;border:none;cursor:pointer;font-family:inherit;margin-bottom:10px}
+.btn-ghost{width:100%;padding:12px;border-radius:14px;background:none;color:var(--bc-primary-light);font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:inherit}
+.back-link{text-align:center;margin-top:24px;font-size:13px;color:var(--bc-mono500)}
+.back-link a{color:var(--bc-primary-light);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="device-screen">
+    <div class="ph"></div>
+    <div class="status">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="var(--bc-black)"><rect x="0" y="4" width="2.5" height="8" rx="1"/><rect x="4" y="2.5" width="2.5" height="9.5" rx="1"/><rect x="8" y="1" width="2.5" height="11" rx="1"/><rect x="12" y="0" width="2.5" height="12" rx="1" opacity=".3"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M1 4.5C3.2 2.3 6.4 1 7.5 1S11.8 2.3 14 4.5" stroke="var(--bc-black)" stroke-width="1.5" stroke-linecap="round"/><path d="M3 7C4.5 5.5 6 4.8 7.5 4.8S10.5 5.5 12 7" stroke="var(--bc-black)" stroke-width="1.5" stroke-linecap="round"/><circle cx="7.5" cy="10" r="1.5" fill="var(--bc-black)"/></svg>
+        <svg width="24" height="12" viewBox="0 0 24 12"><rect x="0" y="1" width="20" height="10" rx="3" stroke="var(--bc-black)" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="13" height="6" rx="1.5" fill="var(--bc-black)"/><path d="M21.5 4.5v3a1.5 1.5 0 000-3z" fill="var(--bc-black)"/></svg>
+      </div>
+    </div>
+
+    <div class="slides" id="slides">
+      <!-- Slide 0 -->
+      <div class="slide slide-0">
+        <div class="slide-visual">
+          <div>
+            <div>
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="14" height="14" rx="4" fill="var(--bc-white)"/><rect x="22" y="4" width="14" height="14" rx="4" fill="rgba(255,255,255,.5)"/><rect x="4" y="22" width="14" height="14" rx="4" fill="rgba(255,255,255,.3)"/><rect x="22" y="22" width="14" height="14" rx="4" fill="rgba(255,255,255,.7)"/></svg>
+            </div>
+            <div>MaV</div>
+            <div>Design System</div>
+          </div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="slide-content">
+          <div class="slide-eyebrow">Welcome</div>
+          <div class="slide-title">Design Systems Made Visual</div>
+          <div class="slide-body">Explore the full MaV design system — tokens, components, and live previews across iOS, Android, and web.</div>
+        </div>
+      </div>
+
+      <!-- Slide 1 -->
+      <div class="slide slide-1">
+        <div class="slide-visual">
+          <div>
+            <div>
+              <div>Layer 0</div>
+              <div>Layer 1</div>
+              <div>Layer 2</div>
+            </div>
+            <div>Primitives → Semantic → Component</div>
+            <div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-content">
+          <div class="slide-eyebrow">Architecture</div>
+          <div class="slide-title">3-Layer Token System</div>
+          <div class="slide-body">Primitive hex values feed semantic roles, which power component tokens. Change once, update everywhere — light, dark, and neon themes.</div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide slide-2">
+        <div class="slide-visual">
+          <div>
+            <div>
+              <div>iOS</div>
+              <div></div>
+            </div>
+            <div>
+              <div>Android</div>
+              <div></div>
+            </div>
+            <div>
+              <div>Web</div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-content">
+          <div class="slide-eyebrow">Cross-Platform</div>
+          <div class="slide-title">One System, Every Screen</div>
+          <div class="slide-body">iOS, Android, and responsive web — all rendered from the same MaV token foundation. Consistent design at scale.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-area">
+      <div class="dots">
+        <div class="dot active" id="d0"></div>
+        <div class="dot" id="d1"></div>
+        <div class="dot" id="d2"></div>
+      </div>
+      <button class="btn-primary" id="mainBtn" onclick="next()">Get Started</button>
+      <button class="btn-ghost" onclick="window.location.href='02-login.html'">Already have an account? Sign in</button>
+    </div>
+    <div class="nav-gesture"></div>
+  </div>
+</div>
+<div class="back-link">
+  <a href="../ios/10-payment.html">← iOS: Payment</a> &nbsp;·&nbsp;
+  <a href="02-login.html">Next: Login →</a>
+</div>
+<script>
+let cur=0;
+const total=3;
+function go(n){
+  const slides=document.querySelectorAll('.slide');
+  slides.forEach((s,i)=>{s.style.transform=`translateX(${(i-n)*100}%)`});
+  document.querySelectorAll('.dot').forEach((d,i)=>{d.classList.toggle('active',i===n)});
+  cur=n;
+  document.getElementById('mainBtn').textContent=n===total-1?'Get Started':'Next';
+  if(n===total-1)document.getElementById('mainBtn').onclick=()=>{window.location.href='02-login.html'};
+  else document.getElementById('mainBtn').onclick=next;
+}
+function next(){if(cur<total-1)go(cur+1);}
+</script>
+</body>
+</html>

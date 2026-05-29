@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Input Fields — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+.input-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:16px}
+.input-demo{display:flex;flex-direction:column;gap:6px}
+.input-label{font-size:12px;font-weight:600;color:var(--mav-fg)}
+.input-wrap{position:relative}
+.mav-input{
+  width:100%;padding:12px 16px;
+  font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;
+  border-radius:4px;border:1px solid;
+  outline:none;transition:all .15s;
+  box-shadow:0px 1px 0px -1px rgba(0,0,0,0.05),0px 1px 2px -1px rgba(0,0,0,0.05),0px 2px 4px -2px rgba(0,0,0,0.05),0px 3px 6px -3px rgba(0,0,0,0.05);
+}
+.mav-input::placeholder{color:var(--input-field\/default\/text-placeholder,var(--mav-placeholder))}
+.inp-default{border-color:var(--bc-mono200-l);background:var(--bc-white);color:var(--bc-mono900-l)}
+.inp-active{border-color:var(--bc-mono900-l);background:var(--bc-white);color:var(--bc-mono900-l)}
+.inp-focus{border-color:var(--mav-primary);background:var(--bc-white);color:var(--bc-mono900-l);box-shadow:0px 1px 0px -1px rgba(0,0,0,0.05),0px 1px 2px -1px rgba(0,0,0,0.05),0px 2px 4px -2px rgba(0,0,0,0.05),0px 3px 6px -3px rgba(0,0,0,0.05),0 0 0 3px var(--mav-focus-ring)}
+.inp-error{border-color:var(--mav-danger);background:color-mix(in srgb,var(--mav-danger) 10%,transparent);color:var(--bc-mono900-l);box-shadow:none}
+.inp-disabled{border-color:var(--bc-mono200-l);background:var(--mav-border);color:var(--mav-placeholder);cursor:not-allowed}
+
+.state-chip{
+  font-size:10px;font-weight:600;
+  padding:2px 7px;border-radius:9999px;
+  display:inline-block;margin-bottom:6px;
+}
+.chip-default{background:var(--mav-border);color:var(--bc-mono600-l)}
+.chip-active{background:var(--bc-mono900-l);color:var(--bc-white)}
+.chip-focus{background:var(--mav-primary);color:var(--bc-white)}
+.chip-error{background:var(--mav-danger);color:var(--bc-white)}
+.chip-disabled{background:var(--bc-mono100-l);color:var(--mav-placeholder)}
+
+.error-msg{
+  font-size:12px;color:var(--mav-danger);display:flex;align-items:center;gap:4px;margin-top:4px;
+}
+.err-icon{width:14px;height:14px;background:var(--mav-danger);color:var(--bc-white);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0}
+
+/* Dark input states */
+.inp-default-dk{border-color:var(--bc-mono200-d);background:var(--mav-fg);color:var(--bc-mono100-l)}
+.inp-focus-dk{border-color:var(--mav-primary-dark);background:var(--mav-fg);color:var(--bc-mono100-l);box-shadow:0 0 0 3px var(--mav-focus-ring)}
+.inp-error-dk{border-color:var(--mav-danger);background:color-mix(in srgb,var(--mav-danger) 10%,transparent);color:var(--bc-mono900-l);box-shadow:none}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link active">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Input Fields</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Input Fields</h1>
+    <p class="page-desc">Five states: Default, Active (filled), Focus, Error, Disabled. 48px height. 16px padding horizontal. 12px padding vertical. Border-radius 4px. Medium 14px font.</p>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">All States — Light Mode</h2>
+    <div class="input-grid">
+      <div class="input-demo">
+        <span class="state-chip chip-default">Default</span>
+        <div class="input-label">Email address</div>
+        <input class="mav-input inp-default" placeholder="Enter email..." readonly>
+      </div>
+      <div class="input-demo">
+        <span class="state-chip chip-active">Active / Filled</span>
+        <div class="input-label">Email address</div>
+        <input class="mav-input inp-active" value="user@example.com" readonly>
+      </div>
+      <div class="input-demo">
+        <span class="state-chip chip-focus">Focus</span>
+        <div class="input-label">Email address</div>
+        <input class="mav-input inp-focus" value="user@exam..." readonly>
+      </div>
+      <div class="input-demo">
+        <span class="state-chip chip-error">Error</span>
+        <div class="input-label">Email address</div>
+        <div class="input-wrap">
+          <input class="mav-input inp-error" value="bad-email" readonly>
+          <span>⊗</span>
+        </div>
+        <div class="error-msg"><span class="err-icon">!</span>Invalid email address</div>
+      </div>
+      <div class="input-demo">
+        <span class="state-chip chip-disabled">Disabled</span>
+        <div class="input-label">Email address</div>
+        <input class="mav-input inp-disabled" placeholder="Not available" disabled readonly>
+      </div>
+      <div class="input-demo">
+        <span class="state-chip chip-focus">Focus w/ Label</span>
+        <div class="input-label">Password</div>
+        <input class="mav-input inp-focus" type="password" value="secret" readonly>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Dark mode -->
+  <div class="section">
+    <h2 class="section-title">Dark Mode States</h2>
+    <div class="preview-card">
+      <div class="preview-canvas dark-bg">
+        <div class="input-grid">
+          <div class="input-demo">
+            <span class="state-chip chip-default">Default</span>
+            <div class="input-label">Email</div>
+            <input class="mav-input inp-default-dk" placeholder="Enter email..." readonly>
+          </div>
+          <div class="input-demo">
+            <span class="state-chip chip-active">Active</span>
+            <div class="input-label">Email</div>
+            <input class="mav-input" value="user@example.com" readonly>
+          </div>
+          <div class="input-demo">
+            <span class="state-chip chip-focus">Focus</span>
+            <div class="input-label">Email</div>
+            <input class="mav-input inp-focus-dk" value="user@exam..." readonly>
+          </div>
+          <div class="input-demo">
+            <span class="state-chip chip-error">Error</span>
+            <div class="input-label">Email</div>
+            <input class="mav-input inp-error-dk" value="bad-email" readonly>
+            <div class="error-msg">Invalid email address</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Dark Mode</span>
+        <span class="preview-sublabel">background: #171717 · outline-box dark: #484848 · focus: #a1ff5b</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Input anatomy -->
+  <div class="section">
+    <h2 class="section-title">Anatomy</h2>
+    <div>
+      <div>
+        <div>
+          <input class="mav-input inp-focus" placeholder="Label text" readonly>
+          <!-- annotations -->
+          <div>border-radius: 4px</div>
+          <div>height: 48px · padding: 12px 16px</div>
+          <div>focus ring: rgba(53,46,255,0.4)</div>
+        </div>
+      </div>
+      <div>
+        <table class="token-table">
+          <thead><tr><th>Property</th><th>Value</th><th>Token</th></tr></thead>
+          <tbody>
+            <tr><td>Height</td><td class="token-value">48px (12px v-pad × 2 + 24px line)</td><td class="token-name">otpSlot.height</td></tr>
+            <tr><td>H-Padding</td><td class="token-value">16px</td><td class="token-name">--Spacing/16</td></tr>
+            <tr><td>V-Padding</td><td class="token-value">12px</td><td class="token-name">space.12</td></tr>
+            <tr><td>Border radius</td><td class="token-value">4px</td><td class="token-name">--border/border-radius/sm</td></tr>
+            <tr><td>Font size</td><td class="token-value">14px Medium</td><td class="token-name">--medium/md</td></tr>
+            <tr><td>Focus ring</td><td class="token-value">0 0 0 3px rgba(53,46,255,0.4)</td><td class="token-name">shadow.focusRing</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>State</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--input-field\/default\/outline-box</td><td><span class="token-swatch-sm" style="background:#cccccc"></span><span class="token-value">#cccccc</span></td><td><span class="token-swatch-sm" style="background:#484848"></span><span class="token-value">#484848</span></td><td class="token-value">Default border</td></tr>
+        <tr><td class="token-name">--input-field\/active\/outline-box-active</td><td><span class="token-swatch-sm" style="background:#191919"></span><span class="token-value">#191919</span></td><td><span class="token-swatch-sm" style="background:#e5e5e5"></span><span class="token-value">#e5e5e5</span></td><td class="token-value">Filled border</td></tr>
+        <tr><td class="token-name">--input-field\/focus\/outline-box</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td><td class="token-value">Focus border</td></tr>
+        <tr><td class="token-name">--input-field\/error\/outline-box</td><td><span class="token-swatch-sm" style="background:#ff0000"></span><span class="token-value">#ff0000</span></td><td><span class="token-swatch-sm" style="background:#ff0000"></span><span class="token-value">#ff0000</span></td><td class="token-value">Error border</td></tr>
+        <tr><td class="token-name">--input-field\/error\/bg-box</td><td><span class="token-swatch-sm" style="background:rgba(255,0,0,.1);border:1px solid #e0e0e0"></span><span class="token-value">rgba(255,0,0,.10)</span></td><td><span class="token-swatch-sm" style="background:rgba(255,0,0,.1);border:1px solid #e0e0e0"></span><span class="token-value">rgba(255,0,0,.10)</span></td><td class="token-value">Error bg (same both)</td></tr>
+        <tr><td class="token-name">--input-field\/disabled\/bg-box-disabled</td><td><span class="token-swatch-sm" style="background:#efefef"></span><span class="token-value">#efefef</span></td><td><span class="token-swatch-sm" style="background:#efefef"></span><span class="token-value">#efefef</span></td><td class="token-value">Disabled bg (same both)</td></tr>
+        <tr><td class="token-name">--input-field\/default\/text-placeholder</td><td><span class="token-swatch-sm" style="background:#b2b2b2"></span><span class="token-value">#b2b2b2</span></td><td><span class="token-swatch-sm" style="background:#6a6a6a"></span><span class="token-value">#6a6a6a</span></td><td class="token-value">Placeholder text</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

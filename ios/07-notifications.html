@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notifications — iOS — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-surface-ios);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.device{width:393px;height:852px;border-radius:54px;background:#1c1c1e;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.35),inset 0 0 0 2px #3a3a3c,inset 0 0 0 3px #1c1c1e;overflow:hidden;flex-shrink:0}
+.device-screen{position:absolute;inset:0;border-radius:52px;overflow:hidden;background:var(--bc-surface);display:flex;flex-direction:column}
+.di{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:126px;height:37px;background:#000;border-radius:20px;z-index:100}
+.status{position:absolute;top:0;left:0;right:0;padding:16px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:99;height:54px}
+.status-time{font-size:15px;font-weight:600;color:var(--bc-black);padding-left:8px}
+.status-icons{display:flex;align-items:center;gap:6px;padding-right:8px}
+.status-icons svg{fill:var(--bc-black)}
+.home{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:134px;height:5px;background:var(--bc-black);border-radius:3px;opacity:.2;z-index:99}
+/* Nav */
+.top-bar{background:var(--bc-surface);padding:54px 20px 12px;display:flex;align-items:center;justify-content:space-between}
+.top-title{font-size:28px;font-weight:800;color:var(--bc-black);letter-spacing:-.03em}
+.mark-all{font-size:14px;font-weight:600;color:var(--bc-primary-light);background:none;border:none;cursor:pointer;font-family:inherit}
+/* Filter chips */
+.filter-row{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none}
+.filter-row::-webkit-scrollbar{display:none}
+.chip{padding:7px 14px;border-radius:20px;font-size:13px;font-weight:600;white-space:nowrap;border:none;cursor:pointer;font-family:inherit;transition:all .15s}
+.chip.active{background:var(--bc-primary-light);color:var(--bc-white)}
+.chip.inactive{background:var(--bc-white);color:var(--bc-mono500)}
+/* Scroll */
+.scroll-body{flex:1;overflow-y:auto;padding:0 16px 80px}
+/* Section */
+.notif-section{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--bc-mono300-l);padding:12px 4px 6px}
+/* Notification item */
+.notif-item{background:var(--bc-white);border-radius:14px;padding:14px;display:flex;gap:12px;margin-bottom:8px;position:relative;overflow:hidden}
+.notif-item.unread::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--bc-primary-light);border-radius:3px}
+.notif-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.notif-body{flex:1;min-width:0}
+.notif-title{font-size:14px;font-weight:600;color:var(--bc-black);margin-bottom:2px;display:flex;align-items:center;gap:6px}
+.unread-dot{width:6px;height:6px;border-radius:3px;background:var(--bc-primary-light);flex-shrink:0}
+.notif-desc{font-size:13px;color:var(--bc-mono500);line-height:1.4;margin-bottom:4px}
+.notif-time{font-size:11px;color:var(--bc-mono300-l)}
+.notif-actions{display:flex;gap:6px;margin-top:8px}
+.notif-btn{padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:inherit}
+.notif-btn-p{background:var(--bc-primary-light);color:var(--bc-white)}
+.notif-btn-s{background:var(--bc-surface);color:var(--bc-black)}
+/* Bottom nav */
+.bottom-nav{position:absolute;bottom:0;left:0;right:0;background:var(--bc-white);border-top:1px solid var(--bc-surface-ios);padding:8px 0 28px;display:flex;z-index:50}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;border:none;background:none;cursor:pointer;font-family:inherit}
+.nav-label{font-size:10px;font-weight:600;color:var(--bc-mono300-l)}
+.nav-item.active .nav-label{color:var(--mav-primary)}
+.nav-dot{width:4px;height:4px;border-radius:2px;background:var(--mav-primary);margin:0 auto}
+.back-link{text-align:center;margin-top:24px;font-size:13px;color:var(--bc-mono500)}
+.back-link a{color:var(--bc-primary-light);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="device-screen">
+    <div class="di"></div>
+    <div class="status">
+      <span class="status-time">9:41</span>
+      <div class="status-icons"><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="var(--bc-black)" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="14" height="6" rx="1.5" fill="var(--bc-black)"/><path d="M22.5 4.5v3a1.5 1.5 0 000-3z"/></svg></div>
+    </div>
+
+    <div class="top-bar">
+      <span class="top-title">Notifications</span>
+      <button class="mark-all">Mark all read</button>
+    </div>
+
+    <div class="filter-row">
+      <button class="chip active">All</button>
+      <button class="chip inactive">Transactions</button>
+      <button class="chip inactive">Security</button>
+      <button class="chip inactive">Updates</button>
+      <button class="chip inactive">Promotions</button>
+    </div>
+
+    <div class="scroll-body">
+      <div class="notif-section">Today</div>
+
+      <div class="notif-item unread">
+        <div class="notif-icon" style="background:color-mix(in srgb,var(--mav-success) 12%,transparent)">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 5v8M7 10l4-4 4 4" stroke="var(--bc-success)" stroke-width="2" stroke-linecap="round"/><rect x="3" y="16" width="16" height="3" rx="1.5" fill="var(--bc-success-soft)" stroke="var(--bc-success)" stroke-width="1.5"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-title"><div class="unread-dot"></div>Deposit Received</div>
+          <div class="notif-desc">$3,200.00 has been deposited to your account from Acme Corp Payroll.</div>
+          <div class="notif-time">2 min ago</div>
+          <div class="notif-actions">
+            <button class="notif-btn notif-btn-p">View Details</button>
+            <button class="notif-btn notif-btn-s">Dismiss</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="notif-item unread">
+        <div class="notif-icon" style="background:color-mix(in srgb,var(--mav-warning) 15%,transparent)">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 4a7 7 0 017 7v3l2 3H2l2-3V11a7 7 0 017-7z" stroke="var(--bc-warning)" stroke-width="1.8"/><path d="M9 18a2 2 0 004 0" stroke="var(--bc-warning)" stroke-width="1.8"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-title"><div class="unread-dot"></div>Security Alert</div>
+          <div class="notif-desc">New login detected from iPhone 15 Pro in San Francisco, CA.</div>
+          <div class="notif-time">14 min ago</div>
+          <div class="notif-actions">
+            <button class="notif-btn notif-btn-p">It's me</button>
+            <button class="notif-btn notif-btn-s">Not me</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="notif-item">
+        <div class="notif-icon" style="background:color-mix(in srgb,var(--mav-primary) 10%,transparent)">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="5" width="16" height="12" rx="3" stroke="var(--bc-primary-light)" stroke-width="1.8"/><path d="M3 9h16" stroke="var(--bc-primary-light)" stroke-width="1.8"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-title">Card Payment</div>
+          <div class="notif-desc">Your card ending in 4242 was charged $15.99 by Netflix.</div>
+          <div class="notif-time">1 hour ago</div>
+        </div>
+      </div>
+
+      <div class="notif-section">Yesterday</div>
+
+      <div class="notif-item">
+        <div class="notif-icon" style="background:rgba(124,58,237,.1)">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="var(--bc-yoyo-500)" stroke-width="1.8"/><path d="M8 11l2 2 4-4" stroke="var(--bc-yoyo-500)" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-title">KYC Verified</div>
+          <div class="notif-desc">Your identity verification is complete. You now have full account access.</div>
+          <div class="notif-time">Yesterday 3:24 PM</div>
+        </div>
+      </div>
+
+      <div class="notif-item">
+        <div class="notif-icon" style="background:rgba(202,138,4,.1)">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3l2.3 4.7 5.2.75-3.75 3.66.88 5.17L11 14.9l-4.66 2.38.88-5.17L3.47 8.42l5.2-.75L11 3z" stroke="var(--bc-manna-500)" stroke-width="1.8"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-title">Cashback Earned</div>
+          <div class="notif-desc">You earned $4.50 cashback on your last 3 transactions.</div>
+          <div class="notif-time">Yesterday 11:00 AM</div>
+        </div>
+      </div>
+
+      <div class="notif-item">
+        <div class="notif-icon" style="background:color-mix(in srgb,var(--mav-primary) 10%,transparent)">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="6.5" height="6.5" rx="2" stroke="var(--bc-primary-light)" stroke-width="1.8"/><rect x="12.5" y="3" width="6.5" height="6.5" rx="2" stroke="var(--bc-primary-light)" stroke-width="1.8"/><rect x="3" y="12.5" width="6.5" height="6.5" rx="2" stroke="var(--bc-primary-light)" stroke-width="1.8"/><rect x="12.5" y="12.5" width="6.5" height="6.5" rx="2" stroke="var(--bc-primary-light)" stroke-width="1.8" opacity=".3"/></svg>
+        </div>
+        <div class="notif-body">
+          <div class="notif-title">System Update</div>
+          <div class="notif-desc">MaV v1.0.1 is available. New features and bug fixes.</div>
+          <div class="notif-time">Yesterday 9:15 AM</div>
+          <div class="notif-actions">
+            <button class="notif-btn notif-btn-p">Update Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item" onclick="window.location.href='04-home.html'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 9L11 2l9 7v10H15v-6H7v6H2z" stroke="var(--bc-mono300-l)" stroke-width="1.8" fill="none"/></svg>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-item" onclick="window.location.href='09-explore.html'"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="10" cy="10" r="7" stroke="var(--bc-mono300-l)" stroke-width="1.8"/><path d="M16 16l3 3" stroke="var(--bc-mono300-l)" stroke-width="1.8" stroke-linecap="round"/></svg><span class="nav-label">Explore</span></button>
+      <button class="nav-item" onclick="window.location.href='10-payment.html'"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="5" width="18" height="13" rx="3" stroke="var(--bc-mono300-l)" stroke-width="1.8"/><path d="M2 9h18" stroke="var(--bc-mono300-l)" stroke-width="1.8"/></svg><span class="nav-label">Pay</span></button>
+      <button class="nav-item active">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="var(--bc-primary-light)"><path d="M11 2a7 7 0 017 7v4l2 3H2l2-3V9a7 7 0 017-7z"/><path d="M9 18a2 2 0 004 0" stroke="var(--bc-primary-light)" stroke-width="1.8" fill="none"/></svg>
+        <span class="nav-label">Alerts</span>
+        <div class="nav-dot"></div>
+      </button>
+      <button class="nav-item" onclick="window.location.href='05-profile.html'">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" stroke="var(--bc-mono300-l)" stroke-width="1.8"/><path d="M3 19c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="var(--bc-mono300-l)" stroke-width="1.8" fill="none"/></svg>
+        <span class="nav-label">Profile</span>
+      </button>
+    </div>
+    <div class="home"></div>
+  </div>
+</div>
+<div class="back-link">
+  <a href="06-settings.html">← Settings</a> &nbsp;·&nbsp;
+  <a href="08-dark-mode.html">Next: Dark Mode →</a>
+</div>
+</body>
+</html>

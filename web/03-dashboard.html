@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — Web — MaV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
+.browser{width:1080px;border-radius:12px;background:var(--bc-surface-soft);box-shadow:0 24px 64px rgba(0,0,0,.15);overflow:hidden}
+.browser-bar{background:var(--bc-surface);border-bottom:1px solid var(--bc-mono100-l);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.browser-dots{display:flex;gap:6px}
+.bd{width:12px;height:12px;border-radius:6px}
+.bd-r{background:#ff5f57}.bd-y{background:#febc2e}.bd-g{background:#28c840}
+.browser-url{flex:1;background:var(--bc-white);border:1px solid var(--bc-mono100-l);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--bc-mono500);font-family:'JetBrains Mono',monospace;max-width:400px;margin:0 auto}
+.back-link{margin-bottom:16px;font-size:12px;color:var(--bc-primary-light);text-decoration:none;display:block;text-align:left;width:1080px}
+/* App shell */
+.app{display:grid;grid-template-columns:220px 1fr;min-height:620px}
+/* Sidebar */
+.sidebar{background:var(--bc-white);border-right:1px solid var(--bc-grey);padding:0 0 24px;display:flex;flex-direction:column}
+.sb-head{padding:18px 16px 16px;border-bottom:1px solid var(--bc-grey);display:flex;align-items:center;gap:10px}
+.sb-icon{width:32px;height:32px;border-radius:8px;background:var(--bc-primary-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-title{font-size:14px;font-weight:800;color:var(--bc-black);letter-spacing:-.01em}
+.sb-nav{padding:12px 8px;flex:1}
+.sb-section{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--bc-mono300-l);padding:10px 8px 4px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;font-size:13px;font-weight:500;color:var(--bc-mono500);cursor:pointer;transition:all .12s;text-decoration:none}
+.sb-item:hover{background:var(--bc-surface);color:var(--bc-black)}
+.sb-item.active{background:rgba(53,46,255,.08);color:var(--bc-primary-light);font-weight:600}
+.sb-badge{margin-left:auto;background:var(--bc-primary-light);color:var(--bc-white);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px}
+.sb-user{margin:auto 0 0;padding:12px 12px 0;border-top:1px solid var(--bc-grey)}
+.sb-user-row{display:flex;align-items:center;gap:9px;padding:8px;border-radius:8px;cursor:pointer}
+.sb-user-row:hover{background:var(--bc-surface)}
+.sb-avatar{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--bc-primary-light),var(--bc-tertiary1));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--bc-white);flex-shrink:0}
+.sb-uname{font-size:12px;font-weight:600;color:var(--bc-black)}
+.sb-uemail{font-size:10px;color:var(--bc-mono300-l)}
+/* Main content */
+.main{overflow-y:auto;max-height:620px}
+.top-bar{display:flex;align-items:center;padding:16px 24px;background:var(--bc-white);border-bottom:1px solid var(--bc-grey);gap:16px}
+.tb-title{font-size:15px;font-weight:700;color:var(--bc-black);flex:1;letter-spacing:-.01em}
+.tb-actions{display:flex;align-items:center;gap:10px}
+.btn-sm{padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:inherit}
+.btn-sm-outline{background:none;border:1.5px solid var(--bc-mono100-l);color:var(--bc-mono700-l)}
+.btn-sm-primary{background:var(--bc-primary-light);color:var(--bc-white)}
+.content{padding:24px}
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat-card{background:var(--bc-white);border-radius:10px;padding:16px;border:1px solid var(--bc-grey)}
+.sc-label{font-size:11px;font-weight:600;color:var(--bc-mono300-l);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.sc-val{font-size:24px;font-weight:800;color:var(--bc-black);letter-spacing:-.02em;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.sc-delta{font-size:11px;font-weight:600}
+.sc-delta.up{color:var(--bc-success)}
+.sc-delta.down{color:var(--bc-danger)}
+/* Charts row */
+.charts-row{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:22px}
+.chart-card{background:var(--bc-white);border-radius:10px;padding:18px;border:1px solid var(--bc-grey)}
+.cc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cc-title{font-size:13px;font-weight:700;color:var(--bc-black)}
+.cc-sub{font-size:11px;color:var(--bc-mono300-l)}
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:100px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar-fill{border-radius:4px 4px 0 0;width:100%;transition:height .3s}
+.bar-label{font-size:9px;color:var(--bc-mono300-l);font-variant-numeric:tabular-nums}
+.donut-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;height:130px;gap:12px}
+.donut-legend{display:flex;flex-direction:column;gap:6px;width:100%}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--bc-mono700-l)}
+.legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.legend-pct{margin-left:auto;font-weight:700;color:var(--bc-black);font-variant-numeric:tabular-nums}
+/* Activity */
+.activity-card{background:var(--bc-white);border-radius:10px;padding:18px;border:1px solid var(--bc-grey)}
+.activity-list{display:flex;flex-direction:column;gap:12px}
+.activity-item{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--bc-surface)}
+.activity-item:last-child{border-bottom:none;padding-bottom:0}
+.ai-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.ai-body{flex:1}
+.ai-title{font-size:13px;font-weight:600;color:var(--bc-black);margin-bottom:2px}
+.ai-sub{font-size:11px;color:var(--bc-mono300-l)}
+.ai-time{font-size:10px;color:var(--bc-mono200-l);white-space:nowrap;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← Back to MaV Design System</a>
+<div class="browser">
+  <div class="browser-bar">
+    <div class="browser-dots"><div class="bd bd-r"></div><div class="bd bd-y"></div><div class="bd bd-g"></div></div>
+    <div class="browser-url">mav.app/dashboard</div>
+  </div>
+  <div class="app">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sb-head">
+        <div class="sb-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L3 7v6l7 5 7-5V7L10 2z" fill="var(--bc-primary-dark)"/></svg></div>
+        <div><div class="sb-title">MaV</div></div>
+      </div>
+      <div class="sb-nav">
+        <div class="sb-section">Main</div>
+        <a class="sb-item active" href="#">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a class="sb-item" href="04-explore.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Explore
+        </a>
+        <a class="sb-item" href="#">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Saved
+          <span class="sb-badge">3</span>
+        </a>
+        <div class="sb-section">System</div>
+        <a class="sb-item" href="07-notifications.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          Notifications
+          <span class="sb-badge">5</span>
+        </a>
+        <a class="sb-item" href="06-settings.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </a>
+      </div>
+      <div class="sb-user">
+        <div class="sb-user-row">
+          <div class="sb-avatar">AK</div>
+          <div><div class="sb-uname">Alex Kim</div><div class="sb-uemail">alex@mavdesign.io</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Main -->
+    <div class="main">
+      <div class="top-bar">
+        <span class="tb-title">Dashboard</span>
+        <div class="tb-actions">
+          <button class="btn-sm btn-sm-outline">Export</button>
+          <button class="btn-sm btn-sm-primary">+ New</button>
+        </div>
+      </div>
+      <div class="content">
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="sc-label">Total Views</div>
+            <div class="sc-val">24,391</div>
+            <div class="sc-delta up">↑ 12.4% this week</div>
+          </div>
+          <div class="stat-card">
+            <div class="sc-label">Components Used</div>
+            <div class="sc-val">1,842</div>
+            <div class="sc-delta up">↑ 8.1% this week</div>
+          </div>
+          <div class="stat-card">
+            <div class="sc-label">Active Tokens</div>
+            <div class="sc-val">237</div>
+            <div class="sc-delta up">↑ 3 new</div>
+          </div>
+          <div class="stat-card">
+            <div class="sc-label">Accessibility Score</div>
+            <div class="sc-val">96.4</div>
+            <div class="sc-delta down">↓ 0.2 from last</div>
+          </div>
+        </div>
+        <!-- Charts -->
+        <div class="charts-row">
+          <div class="chart-card">
+            <div class="cc-head">
+              <div><div class="cc-title">Component Usage</div><div class="cc-sub">Last 7 days</div></div>
+              <select>
+                <option>7 days</option><option>30 days</option>
+              </select>
+            </div>
+            <div class="chart-bars" id="bars"></div>
+          </div>
+          <div class="chart-card">
+            <div class="cc-head"><div><div class="cc-title">Token Distribution</div><div class="cc-sub">By layer</div></div></div>
+            <div class="donut-wrap">
+              <svg width="80" height="80" viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="30" fill="none" stroke="var(--bc-grey)" stroke-width="12"/>
+                <circle cx="40" cy="40" r="30" fill="none" stroke="var(--bc-primary-light)" stroke-width="12" stroke-dasharray="75 114" stroke-dashoffset="-28" stroke-linecap="round"/>
+                <circle cx="40" cy="40" r="30" fill="none" stroke="var(--bc-primary-dark)" stroke-width="12" stroke-dasharray="40 149" stroke-dashoffset="-103" stroke-linecap="round"/>
+                <circle cx="40" cy="40" r="30" fill="none" stroke="var(--bc-tertiary1)" stroke-width="12" stroke-dasharray="25 164" stroke-dashoffset="-143" stroke-linecap="round"/>
+              </svg>
+              <div class="donut-legend">
+                <div class="legend-item"><div class="legend-dot"></div>Primitive<span class="legend-pct">40%</span></div>
+                <div class="legend-item"><div class="legend-dot"></div>Semantic<span class="legend-pct">35%</span></div>
+                <div class="legend-item"><div class="legend-dot"></div>Component<span class="legend-pct">25%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Activity -->
+        <div class="activity-card">
+          <div class="cc-head"><div class="cc-title">Recent Activity</div><div class="cc-sub">Last 24 hours</div></div>
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="ai-icon">🎨</div>
+              <div class="ai-body"><div class="ai-title">Colors palette updated</div><div class="ai-sub">poliPurple ramp added — 8 new tokens</div></div>
+              <div class="ai-time">2m ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="ai-icon">✓</div>
+              <div class="ai-body"><div class="ai-title">OTP component passed accessibility audit</div><div class="ai-sub">WCAG AA — contrast ratio 7.1:1</div></div>
+              <div class="ai-time">1h ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="ai-icon">📦</div>
+              <div class="ai-body"><div class="ai-title">New component: Finance modules</div><div class="ai-sub">Balance card, transaction list, budget ring added</div></div>
+              <div class="ai-time">3h ago</div>
+            </div>
+            <div class="activity-item">
+              <div class="ai-icon">🚀</div>
+              <div class="ai-body"><div class="ai-title">iOS screens 01–10 shipped</div><div class="ai-sub">Onboarding → payment flow complete</div></div>
+              <div class="ai-time">5h ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const vals=[62,78,55,90,84,45,96];
+const bars=document.getElementById('bars');
+vals.forEach((v,i)=>{
+  const col=document.createElement('div');
+  col.className='bar-col';
+  col.innerHTML=`<div class="bar-fill"></div><span class="bar-label">${days[i]}</span>`;
+  bars.appendChild(col);
+});
+</script>
+</body>
+</html>

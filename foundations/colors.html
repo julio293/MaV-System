@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Color System — MaV Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+.doc-main{padding:48px 64px;max-width:1140px}
+@media(max-width:900px){.doc-layout{grid-template-columns:1fr}.doc-sidebar{display:none}.doc-main{padding:24px 20px}}
+.page-header{margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--mav-border)}
+.breadcrumb{font-size:12px;color:var(--mav-muted);margin-bottom:10px}
+.breadcrumb a{color:var(--mav-muted);text-decoration:none}.breadcrumb a:hover{color:var(--mav-fg)}
+.page-title{font-size:32px;font-weight:800;letter-spacing:-.03em;color:var(--mav-fg);margin-bottom:8px}
+.page-desc{font-size:15px;color:var(--mav-muted);line-height:1.6;max-width:560px}
+.badge-commit{font-family:'JetBrains Mono',monospace;font-size:11px;background:color-mix(in srgb,var(--mav-border) 60%,transparent);padding:2px 7px;border-radius:4px;color:var(--mav-fg)}
+.section{margin-bottom:52px}
+.section-title{font-size:18px;font-weight:700;color:var(--mav-fg);letter-spacing:-.02em;margin-bottom:4px}
+.section-desc{font-size:13px;color:var(--mav-muted);margin-bottom:20px;line-height:1.6}
+.ramp{display:grid;border-radius:12px;overflow:hidden}
+.ramp-9{grid-template-columns:repeat(9,1fr)}
+.ramp-8{grid-template-columns:repeat(8,1fr)}
+.ramp-5{grid-template-columns:repeat(5,1fr)}
+.sw{position:relative;aspect-ratio:1;display:flex;flex-direction:column;justify-content:flex-end;padding:5px 6px;transition:transform .1s;cursor:default}
+.sw:hover{transform:scale(1.05);z-index:2}
+.sw-label{font-size:8px;font-weight:600;font-family:'JetBrains Mono',monospace;opacity:.75;line-height:1.2;word-break:break-all}
+.sw-sub{font-size:7px;opacity:.5;margin-bottom:1px}
+.sw-h48{aspect-ratio:auto;height:48px}
+.sw-h56{aspect-ratio:auto;height:56px}
+.ramp-row{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.ramp-name{font-size:12px;font-weight:600;color:var(--mav-fg);width:132px;flex-shrink:0;font-family:'Plus Jakarta Sans',sans-serif}
+.theme-bar{display:flex;gap:8px;margin-top:20px}
+.t-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--mav-border);background:var(--mav-bg);color:var(--mav-muted);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .12s}
+.t-btn.active,.t-btn:hover{background:var(--mav-primary);color:var(--bc-white);border-color:var(--mav-primary)}
+[data-theme=dark] .t-btn.active,[data-theme=dark] .t-btn:hover{color:var(--bc-black)}
+.token-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:24px}
+.token-table th{text-align:left;padding:8px 12px;background:color-mix(in srgb,var(--mav-border) 50%,transparent);color:var(--mav-muted);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--mav-border)}
+.token-table td{padding:8px 12px;border-bottom:1px solid var(--mav-border);color:var(--mav-fg);vertical-align:middle}
+.token-table tr:last-child td{border-bottom:none}
+.token-table code{font-family:'JetBrains Mono',monospace;font-size:10px;background:color-mix(in srgb,var(--mav-border) 50%,transparent);padding:1px 5px;border-radius:3px}
+.sc{display:flex;align-items:center;gap:7px}
+.ms{width:18px;height:18px;border-radius:4px;border:1px solid var(--mav-border);flex-shrink:0}
+.live-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.live-card{padding:14px;border-radius:10px;background:var(--mav-bg);border:1px solid var(--mav-border)}
+.live-swatch{width:100%;height:28px;border-radius:6px;margin-bottom:8px;border:1px solid var(--mav-border)}
+.live-name{font-size:10px;font-weight:600;color:var(--mav-fg);font-family:'JetBrains Mono',monospace;margin-bottom:2px}
+.live-role{font-size:10px;color:var(--mav-muted)}
+.sys-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.sys-item{display:flex;flex-direction:column;gap:8px}
+.sys-swatch{width:100%;height:56px;border-radius:10px}
+.sys-info{display:flex;flex-direction:column;gap:2px}
+.sys-name{font-size:12px;font-weight:700;color:var(--mav-fg)}
+.sys-hex{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--mav-muted)}
+.sys-scale{display:flex;gap:4px}
+.sys-sw{flex:1;height:24px;border-radius:4px}
+.yn-swatch{width:100%;height:56px;border-radius:10px;background:#e3d506}
+.yn-note{font-size:12px;color:var(--mav-muted);margin-top:4px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+
+<nav class="doc-sidebar"></nav>
+
+<main class="doc-main">
+  <div class="page-header">
+    <div class="breadcrumb"><a href="../index.html">MaV</a> / Foundations / Color System</div>
+    <h1 class="page-title">Color System</h1>
+    <p class="page-desc">Three-layer token architecture: primitive hex → foundation semantic → component-scoped. Updated <span class="badge-commit">d096ab4</span> — 9 brand ramps, extended tint/shade scales, neon theme, new semantic tokens.</p>
+    <div class="theme-bar">
+      <button class="t-btn active" onclick="setTheme('',this)">Light</button>
+      <button class="t-btn" onclick="setTheme('dark',this)">Dark</button>
+      <button class="t-btn" onclick="setTheme('neon',this)">Neon</button>
+    </div>
+  </div>
+
+  <!-- Brand Core -->
+  <div class="section">
+    <div class="section-title">Brand Core</div>
+    <div class="section-desc">Primary, secondary, and theme anchors. Light: electric blue <code>#352eff</code>. Dark: lime <code>#a1ff5b</code>. Neon: deep navy + lime.</div>
+    <div class="ramp ramp-8">
+      <div class="sw" style="background:#352eff"><span class="sw-sub">Primary·L</span><span class="sw-label">#352eff</span></div>
+      <div class="sw" style="background:#030192"><span class="sw-sub">Tertiary 2</span><span class="sw-label">#030192</span></div>
+      <div class="sw" style="background:#7c9dff"><span class="sw-sub">Tertiary 1</span><span class="sw-label">#7c9dff</span></div>
+      <div class="sw" style="background:#0053ff"><span class="sw-sub">Secondary</span><span class="sw-label">#0053ff</span></div>
+      <div class="sw" style="background:#a1ff5b"><span class="sw-sub">Primary·D</span><span class="sw-label">#a1ff5b</span></div>
+      <div class="sw" style="background:#05005d"><span class="sw-sub">Neon Bg</span><span class="sw-label">#05005d</span></div>
+      <div class="sw" style="background:#4af482"><span class="sw-sub">Neon T1</span><span class="sw-label">#4af482</span></div>
+      <div class="sw" style="background:#00ffff"><span class="sw-sub">Neon T2</span><span class="sw-label">#00ffff</span></div>
+    </div>
+  </div>
+
+  <!-- New Brand Ramps -->
+  <div class="section">
+    <div class="section-title">Brand Ramps — New in d096ab4</div>
+    <div class="section-desc">Nine named brand families added in the latest commit. Each has an 800 → 100 dark-to-light ramp for illustrative elements, data viz, and feature differentiation.</div>
+
+    <div class="ramp-row"><span class="ramp-name">poliPurple</span>
+      <div class="ramp ramp-8" style="flex:1">
+        <div class="sw sw-h48" style="background:#20104d"><span class="sw-label">800</span></div>
+        <div class="sw sw-h48" style="background:#351a80"><span class="sw-label">700</span></div>
+        <div class="sw sw-h48" style="background:#4a25b3"><span class="sw-label">600</span></div>
+        <div class="sw sw-h48" style="background:#6a35ff"><span class="sw-label">500</span></div>
+        <div class="sw sw-h48" style="background:#9772ff"><span class="sw-label">400</span></div>
+        <div class="sw sw-h48" style="background:#b49aff"><span class="sw-label">300</span></div>
+        <div class="sw sw-h48" style="background:#d2c2ff"><span class="sw-label">200</span></div>
+        <div class="sw sw-h48" style="background:#e8dfff"><span class="sw-label">100</span></div>
+      </div>
+    </div>
+
+    <div class="ramp-row"><span class="ramp-name">orangeSunshine</span>
+      <div class="ramp ramp-8" style="flex:1">
+        <div class="sw sw-h48" style="background:#4d2914"><span class="sw-label">800</span></div>
+        <div class="sw sw-h48" style="background:#804322"><span class="sw-label">700</span></div>
+        <div class="sw sw-h48" style="background:#b35f30"><span class="sw-label">600</span></div>
+        <div class="sw sw-h48" style="background:#ff8744"><span class="sw-label">500</span></div>
+        <div class="sw sw-h48" style="background:#ffab7c"><span class="sw-label">400</span></div>
+        <div class="sw sw-h48" style="background:#ffc3a2"><span class="sw-label">300</span></div>
+        <div class="sw sw-h48" style="background:#ffdbc7"><span class="sw-label">200</span></div>
+        <div class="sw sw-h48" style="background:#ffefe6"><span class="sw-label">100</span></div>
+      </div>
+    </div>
+
+    <div class="ramp-row"><span class="ramp-name">pinkPong</span>
+      <div class="ramp ramp-8" style="flex:1">
+        <div class="sw sw-h48" style="background:#4d1421"><span class="sw-label">800</span></div>
+        <div class="sw sw-h48" style="background:#802138"><span class="sw-label">700</span></div>
+        <div class="sw sw-h48" style="background:#b32e4e"><span class="sw-label">600</span></div>
+        <div class="sw sw-h48" style="background:#ff426f"><span class="sw-label">500</span></div>
+        <div class="sw sw-h48" style="background:#ff7b9a"><span class="sw-label">400</span></div>
+        <div class="sw sw-h48" style="background:#ffa0b7"><span class="sw-label">300</span></div>
+        <div class="sw sw-h48" style="background:#ffc6d4"><span class="sw-label">200</span></div>
+        <div class="sw sw-h48" style="background:#ffe1e9"><span class="sw-label">100</span></div>
+      </div>
+    </div>
+
+    <div class="ramp-row"><span class="ramp-name">manna</span>
+      <div class="ramp ramp-8" style="flex:1">
+        <div class="sw sw-h48" style="background:#4d3d15"><span class="sw-label">800</span></div>
+        <div class="sw sw-h48" style="background:#806623"><span class="sw-label">700</span></div>
+        <div class="sw sw-h48" style="background:#b38e30"><span class="sw-label">600</span></div>
+        <div class="sw sw-h48" style="background:#ffcb45"><span class="sw-label">500</span></div>
+        <div class="sw sw-h48" style="background:#ffdb7d"><span class="sw-label">400</span></div>
+        <div class="sw sw-h48" style="background:#ffe5a2"><span class="sw-label">300</span></div>
+        <div class="sw sw-h48" style="background:#ffefc7"><span class="sw-label">200</span></div>
+        <div class="sw sw-h48" style="background:#ffefc7"><span class="sw-label">100</span></div>
+      </div>
+    </div>
+
+    <div class="ramp-row"><span class="ramp-name">neoPaccha</span>
+      <div class="ramp ramp-8" style="flex:1">
+        <div class="sw sw-h48" style="background:#454c13"><span class="sw-label">800</span></div>
+        <div class="sw sw-h48" style="background:#727f20"><span class="sw-label">700</span></div>
+        <div class="sw sw-h48" style="background:#a0b22d"><span class="sw-label">600</span></div>
+        <div class="sw sw-h48" style="background:#e5fe40"><span class="sw-label">500</span></div>
+        <div class="sw sw-h48" style="background:#edfe79"><span class="sw-label">400</span></div>
+        <div class="sw sw-h48" style="background:#f2ff9f"><span class="sw-label">300</span></div>
+        <div class="sw sw-h48" style="background:#f7ffc6"><span class="sw-label">200</span></div>
+        <div class="sw sw-h48" style="background:#fbffe6"><span class="sw-label">100</span></div>
+      </div>
+    </div>
+
+    <div class="ramp-row"><span class="ramp-name">yoyo</span>
+      <div class="ramp ramp-8" style="flex:1">
+        <div class="sw sw-h48" style="background:#33134d"><span class="sw-label">800</span></div>
+        <div class="sw sw-h48" style="background:#552080"><span class="sw-label">700</span></div>
+        <div class="sw sw-h48" style="background:#772cb3"><span class="sw-label">600</span></div>
+        <div class="sw sw-h48" style="background:#aa3fff"><span class="sw-label">500</span></div>
+        <div class="sw sw-h48" style="background:#c379ff"><span class="sw-label">400</span></div>
+        <div class="sw sw-h48" style="background:#d59fff"><span class="sw-label">300</span></div>
+        <div class="sw sw-h48" style="background:#e5c5ff"><span class="sw-label">200</span></div>
+        <div class="sw sw-h48" style="background:#f4e5ff"><span class="sw-label">100</span></div>
+      </div>
+    </div>
+
+    <div class="ramp-row"><span class="ramp-name">parkGreen</span>
+      <div class="ramp ramp-8" style="flex:1">
+        <div class="sw sw-h48" style="background:#124d34"><span class="sw-label">800</span></div>
+        <div class="sw sw-h48" style="background:#1e8057"><span class="sw-label">700</span></div>
+        <div class="sw sw-h48" style="background:#29b379"><span class="sw-label">600</span></div>
+        <div class="sw sw-h48" style="background:#3bffad"><span class="sw-label">500</span></div>
+        <div class="sw sw-h48" style="background:#76ffc6"><span class="sw-label">400</span></div>
+        <div class="sw sw-h48" style="background:#9dffd6"><span class="sw-label">300</span></div>
+        <div class="sw sw-h48" style="background:#c4ffe6"><span class="sw-label">200</span></div>
+        <div class="sw sw-h48" style="background:#ddfff1"><span class="sw-label">100</span></div>
+      </div>
+    </div>
+
+    <div class="ramp-row"><span class="ramp-name">yellowNeon</span>
+      <div style="flex:1">
+        <div class="yn-swatch"></div>
+        <div class="yn-note">Single-value accent — <code>#e3d506</code>. Use for data highlight only, not as primary action.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tint/Primary Scale -->
+  <div class="section">
+    <div class="section-title">Tint &amp; Shade Scales — Primary</div>
+    <div class="section-desc">Nine tint steps (T100 lightest → T900 near-primary) and nine shade steps (S100 slightly darker → S900 near-black). Light &amp; dark mode variants.</div>
+    <div style="font-size:11px;font-weight:600;color:var(--mav-muted);margin-bottom:4px">Tints</div>
+    <div class="ramp ramp-9">
+      <div class="sw sw-h56" style="background:#eaeaff"><span class="sw-label">T100</span></div>
+      <div class="sw sw-h56" style="background:#d6d5ff"><span class="sw-label">T200</span></div>
+      <div class="sw sw-h56" style="background:#c2c0ff"><span class="sw-label">T300</span></div>
+      <div class="sw sw-h56" style="background:#aeabff"><span class="sw-label">T400</span></div>
+      <div class="sw sw-h56" style="background:#9a96ff"><span class="sw-label">T500</span></div>
+      <div class="sw sw-h56" style="background:#8581ff"><span class="sw-label">T600</span></div>
+      <div class="sw sw-h56" style="background:#716cff"><span class="sw-label">T700</span></div>
+      <div class="sw sw-h56" style="background:#5d57ff"><span class="sw-label">T800</span></div>
+      <div class="sw sw-h56" style="background:#4942ff"><span class="sw-label">T900</span></div>
+    </div>
+    <div style="font-size:11px;font-weight:600;color:var(--mav-muted);margin:10px 0 4px">Shades</div>
+    <div class="ramp ramp-9">
+      <div class="sw sw-h56" style="background:#2f29e5"><span class="sw-label">S100</span></div>
+      <div class="sw sw-h56" style="background:#2a24cc"><span class="sw-label">S200</span></div>
+      <div class="sw sw-h56" style="background:#2520b2"><span class="sw-label">S300</span></div>
+      <div class="sw sw-h56" style="background:#1f1b99"><span class="sw-label">S400</span></div>
+      <div class="sw sw-h56" style="background:#1a177f"><span class="sw-label">S500</span></div>
+      <div class="sw sw-h56" style="background:#151266"><span class="sw-label">S600</span></div>
+      <div class="sw sw-h56" style="background:#0f0d4c"><span class="sw-label">S700</span></div>
+      <div class="sw sw-h56" style="background:#0a0933"><span class="sw-label">S800</span></div>
+      <div class="sw sw-h56" style="background:#050419"><span class="sw-label">S900</span></div>
+    </div>
+  </div>
+
+  <!-- Tint/Secondary Scale -->
+  <div class="section">
+    <div class="section-title">Tint &amp; Shade Scales — Secondary</div>
+    <div class="section-desc">Secondary blue (#0053ff) tints. Dark-mode tints resolve to the lime family (#f6fff1 → #a3ff68).</div>
+    <div class="ramp ramp-9">
+      <div class="sw sw-h56" style="background:#e6edff"><span class="sw-label">T100</span></div>
+      <div class="sw sw-h56" style="background:#ccddff"><span class="sw-label">T200</span></div>
+      <div class="sw sw-h56" style="background:#b2cbff"><span class="sw-label">T300</span></div>
+      <div class="sw sw-h56" style="background:#9abaff"><span class="sw-label">T400</span></div>
+      <div class="sw sw-h56" style="background:#6697ff"><span class="sw-label">T500</span></div>
+      <div class="sw sw-h56" style="background:#4c86ff"><span class="sw-label">T600</span></div>
+      <div class="sw sw-h56" style="background:#3276ff"><span class="sw-label">T700</span></div>
+      <div class="sw sw-h56" style="background:#1964ff"><span class="sw-label">T800</span></div>
+      <div class="sw sw-h56" style="background:#0053ff"><span class="sw-label">T900</span></div>
+    </div>
+  </div>
+
+  <!-- Mono Scale -->
+  <div class="section">
+    <div class="section-title">Mono Scale</div>
+    <div class="section-desc">9-step neutral from #e5e5e5 (100) to #191919 (900). Dark mode inverts: Mono/100 = #242424, Mono/900 = #e5e5e5.</div>
+    <div class="ramp ramp-9">
+      <div class="sw sw-h56" style="background:#e5e5e5"><span class="sw-sub">Mono</span><span class="sw-label">100</span></div>
+      <div class="sw sw-h56" style="background:#cccccc"><span class="sw-sub">Mono</span><span class="sw-label">200</span></div>
+      <div class="sw sw-h56" style="background:#b2b2b2"><span class="sw-sub">Mono</span><span class="sw-label">300</span></div>
+      <div class="sw sw-h56" style="background:#999999"><span class="sw-sub">Mono</span><span class="sw-label">400</span></div>
+      <div class="sw sw-h56" style="background:#7f7f7f"><span class="sw-sub">Mono</span><span class="sw-label">500</span></div>
+      <div class="sw sw-h56" style="background:#666666"><span class="sw-sub">Mono</span><span class="sw-label">600</span></div>
+      <div class="sw sw-h56" style="background:#4c4c4c"><span class="sw-sub">Mono</span><span class="sw-label">700</span></div>
+      <div class="sw sw-h56" style="background:#333333"><span class="sw-sub">Mono</span><span class="sw-label">800</span></div>
+      <div class="sw sw-h56" style="background:#191919"><span class="sw-sub">Mono</span><span class="sw-label">900</span></div>
+    </div>
+  </div>
+
+  <!-- System Colors -->
+  <div class="section">
+    <div class="section-title">System Colors</div>
+    <div class="section-desc">Status feedback. Each has a 500 base, a -soft (10% alpha) fill, and scale steps for illustration use.</div>
+    <div class="sys-grid">
+      <div class="sys-item">
+        <div class="sys-swatch" style="background:#ff0000"></div>
+        <div class="sys-info">
+          <div class="sys-name">Danger</div>
+          <div class="sys-hex">#ff0000</div>
+        </div>
+        <div class="sys-scale">
+          <div class="sys-sw" style="background:#fce2dd"></div>
+          <div class="sys-sw" style="background:#f6a69b"></div>
+          <div class="sys-sw" style="background:#f47564"></div>
+          <div class="sys-sw" style="background:#ff0000"></div>
+        </div>
+      </div>
+      <div class="sys-item">
+        <div class="sys-swatch" style="background:#629c28"></div>
+        <div class="sys-info">
+          <div class="sys-name">Success</div>
+          <div class="sys-hex">#629c28</div>
+        </div>
+        <div class="sys-scale">
+          <div class="sys-sw" style="background:#e6f9f1"></div>
+          <div class="sys-sw" style="background:#83e0b8"></div>
+          <div class="sys-sw" style="background:#4fe3a3"></div>
+          <div class="sys-sw" style="background:#629c28"></div>
+        </div>
+      </div>
+      <div class="sys-item">
+        <div class="sys-swatch" style="background:#ff8400"></div>
+        <div class="sys-info">
+          <div class="sys-name">Warning</div>
+          <div class="sys-hex">#ff8400</div>
+        </div>
+        <div class="sys-scale">
+          <div class="sys-sw" style="background:#fbddc2"></div>
+          <div class="sys-sw" style="background:#f8c699"></div>
+          <div class="sys-sw" style="background:#f5ac6a"></div>
+          <div class="sys-sw" style="background:#ff8400"></div>
+        </div>
+      </div>
+      <div class="sys-item">
+        <div class="sys-swatch" style="background:#144cc7"></div>
+        <div class="sys-info">
+          <div class="sys-name">Info</div>
+          <div class="sys-hex">#144cc7</div>
+        </div>
+        <div class="sys-scale">
+          <div class="sys-sw" style="background:#c2d0f2"></div>
+          <div class="sys-sw" style="background:#89a5e3"></div>
+          <div class="sys-sw" style="background:#3f6fd9"></div>
+          <div class="sys-sw" style="background:#144cc7"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Semantic Tokens -->
+  <div class="section">
+    <div class="section-title">New Semantic Tokens — d096ab4</div>
+    <div class="section-desc">Bubble, coachmark, gain/loss, menu, and extended badge tokens added in this commit.</div>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td><code>bubble/bg-incoming</code></td><td><div class="sc"><div class="ms" style="background:#efefef"></div>#efefef</div></td><td><div class="sc"><div class="ms" style="background:#ffffff"></div>#ffffff</div></td><td>Incoming chat bubble fill</td></tr>
+        <tr><td><code>bubble/bg-outcoming</code></td><td><div class="sc"><div class="ms" style="background:rgba(53,46,255,0.1)"></div>#352eff19</div></td><td><div class="sc"><div class="ms" style="background:#ffffff"></div>#ffffff</div></td><td>Outgoing chat bubble fill</td></tr>
+        <tr><td><code>bubble/name-incoming</code></td><td><div class="sc"><div class="ms" style="background:#352eff"></div>#352eff</div></td><td><div class="sc"><div class="ms" style="background:#ffffff"></div>#ffffff</div></td><td>Sender name in chat</td></tr>
+        <tr><td><code>gain&amp;loss/success/bg-box</code></td><td colspan="2"><div class="sc"><div class="ms" style="background:rgba(98,156,40,0.1)"></div>#629c281a</div></td><td>Positive delta pill bg</td></tr>
+        <tr><td><code>gain&amp;loss/danger/bg-box</code></td><td colspan="2"><div class="sc"><div class="ms" style="background:rgba(255,0,0,0.1)"></div>#ff00001a</div></td><td>Negative delta pill bg</td></tr>
+        <tr><td><code>coachmark/dots</code></td><td><div class="sc"><div class="ms" style="background:#352eff"></div>#352eff</div></td><td><div class="sc"><div class="ms" style="background:#ffffff"></div>#ffffff</div></td><td>Step indicator dots</td></tr>
+        <tr><td><code>badge &amp; chip/white/bg-box</code></td><td><div class="sc"><div class="ms" style="background:#e5e5e5"></div>#e5e5e5</div></td><td><div class="sc"><div class="ms" style="background:#242424"></div>#242424</div></td><td>Neutral badge (new variant)</td></tr>
+        <tr><td><code>badge &amp; chip/waring/bg-box</code></td><td colspan="2"><div class="sc"><div class="ms" style="background:rgba(255,132,0,0.1)"></div>#ff84001a (invariant)</div></td><td>Warning badge (sic: "waring")</td></tr>
+        <tr><td><code>nav bar/bg-card</code></td><td><div class="sc"><div class="ms" style="background:#efefef"></div>#efefef</div></td><td><div class="sc"><div class="ms" style="background:#ffffff"></div>#ffffff</div></td><td>Nav floating card bg (new)</td></tr>
+        <tr><td><code>toggle/disabled/bg-box-disabled 2</code></td><td colspan="2"><div class="sc"><div class="ms" style="background:#e4ebff"></div>#e4ebff (invariant)</div></td><td>Alt disabled toggle bg</td></tr>
+        <tr><td><code>btn/sliding/*</code></td><td colspan="3">Sliding button variant: default/hover/clicked/disabled states — maps to same primary scale as btn/primary.</td></tr>
+        <tr><td><code>btn/swipeup/*</code></td><td colspan="3">Swipe-up button variant: Bg-2 = <code>#e6edff</code> (light) / <code>#f6fff1</code> (dark).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Live preview — these use CSS variables so they update with theme toggle -->
+  <div class="section">
+    <div class="section-title">Live Token Preview</div>
+    <div class="section-desc">Switch themes at the top to see all CSS variable tokens update in real time.</div>
+    <div class="live-grid">
+      <div class="live-card"><div class="live-swatch" style="background:var(--mav-primary)"></div><div class="live-name">--mav-primary</div><div class="live-role">Brand action color</div></div>
+      <div class="live-card"><div class="live-swatch" style="background:var(--mav-bg-secondary)"></div><div class="live-name">--mav-bg-secondary</div><div class="live-role">Sidebar / tray</div></div>
+      <div class="live-card"><div class="live-swatch" style="background:var(--mav-tertiary-1)"></div><div class="live-name">--mav-tertiary-1</div><div class="live-role">Hover state</div></div>
+      <div class="live-card"><div class="live-swatch" style="background:var(--mav-tertiary-2)"></div><div class="live-name">--mav-tertiary-2</div><div class="live-role">Clicked / nav bg</div></div>
+      <div class="live-card"><div class="live-swatch" style="background:var(--mav-danger)"></div><div class="live-name">--mav-danger</div><div class="live-role">Error / loss</div></div>
+      <div class="live-card"><div class="live-swatch" style="background:var(--mav-success)"></div><div class="live-name">--mav-success</div><div class="live-role">Success / gain</div></div>
+      <div class="live-card"><div class="live-swatch" style="background:var(--mav-warning)"></div><div class="live-name">--mav-warning</div><div class="live-role">Warning state</div></div>
+      <div class="live-card"><div class="live-swatch" style="background:var(--mav-border)"></div><div class="live-name">--mav-border</div><div class="live-role">Divider lines</div></div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+function setTheme(t, btn) {
+  document.documentElement.setAttribute('data-theme', t || 'light');
+  localStorage.setItem('mav-theme', t || 'light');
+  document.querySelectorAll('.t-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+}
+(function() {
+  var saved = localStorage.getItem('mav-theme');
+  if (saved && saved !== 'light') {
+    document.documentElement.setAttribute('data-theme', saved);
+    var map = { dark: 1, neon: 2 };
+    var btns = document.querySelectorAll('.t-btn');
+    if (btns[0]) btns[0].classList.remove('active');
+    if (btns[map[saved]]) btns[map[saved]].classList.add('active');
+  }
+})();
+</script>
+<script src="../js/theme.js"></script>
+</body>
+</html>
