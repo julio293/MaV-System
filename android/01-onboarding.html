@@ -3,42 +3,81 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Onboarding — Android — MaV</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Onboarding — Android — Fyscal</title>
 <link rel="stylesheet" href="../css/tokens.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:32px 16px;-webkit-font-smoothing:antialiased}
 .device{width:393px;height:851px;border-radius:48px;background:var(--bc-black);position:relative;box-shadow:0 32px 80px rgba(0,0,0,.4),inset 0 0 0 1.5px var(--mav-border);overflow:hidden;flex-shrink:0}
-.device-screen{position:absolute;inset:0;border-radius:46px;overflow:hidden;background:var(--bc-surface);display:flex;flex-direction:column}
+.device-screen{position:absolute;inset:0;border-radius:46px;overflow:hidden;background:var(--bc-white);display:flex;flex-direction:column}
 /* Punch-hole */
-.ph{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:#000;border-radius:50%;z-index:100}
+.ph{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:#000;border-radius:50%;z-index:200}
 /* Status bar */
-.status{position:absolute;top:0;left:0;right:0;padding:14px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:99;height:48px}
-.status-time{font-size:13px;font-weight:600;color:var(--bc-black)}
+.status{position:absolute;top:0;left:0;right:0;padding:14px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:100;height:48px}
+.status-time{font-size:13px;font-weight:600;color:var(--bc-white)}
 .status-icons{display:flex;align-items:center;gap:5px}
 /* Nav gestures */
 .nav-gesture{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:4px;background:var(--bc-black);border-radius:2px;opacity:.15;z-index:99}
 /* Slides */
 .slides{flex:1;display:flex;overflow:hidden;position:relative}
 .slide{position:absolute;inset:0;display:flex;flex-direction:column;transition:transform .4s cubic-bezier(.4,0,.2,1)}
-.slide-0{transform:translateX(0)}
-.slide-1{transform:translateX(100%)}
-.slide-2{transform:translateX(200%)}
-/* Slide visuals */
-.slide-visual{height:420px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+
+/* ── Slide hero (top illustration area) ── */
+.slide-visual{height:420px;position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding-bottom:30px;flex-shrink:0}
+.hero-1{background:linear-gradient(160deg,var(--bc-tertiary2) 0%,var(--bc-primary-light) 60%,var(--bc-tertiary1) 100%)}
+.hero-2{background:linear-gradient(160deg,var(--bc-polipurple-800) 0%,var(--bc-primary-light) 55%,var(--bc-pink-500) 100%)}
+.hero-3{background:linear-gradient(160deg,var(--bc-secondary) 0%,var(--bc-primary-light) 50%,var(--bc-polipurple-400) 100%)}
+.blob{position:absolute;width:280px;height:280px;border-radius:50%;opacity:.15;background:var(--bc-white);top:54px;left:50%;transform:translateX(-50%)}
+
+/* balance card illustration */
+.ill-card{width:296px;background:rgba(255,255,255,.18);border-radius:20px;padding:20px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.3);box-shadow:0 8px 32px rgba(0,0,0,.18);position:relative}
+.ill-label{font-size:10px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.ill-balance{font-size:28px;font-weight:800;color:var(--bc-white);letter-spacing:-.02em;margin-bottom:16px;font-family:'JetBrains Mono',monospace}
+.ill-actions{display:flex;gap:8px}
+.ill-act{flex:1;background:rgba(255,255,255,.18);border-radius:10px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.ill-act-icon{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center}
+.ill-act-lbl{font-size:9px;color:rgba(255,255,255,.85);font-weight:600}
+
+/* chart illustration */
+.ill-chart-wrap{width:296px;background:rgba(255,255,255,.18);border-radius:20px;padding:20px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.3);box-shadow:0 8px 32px rgba(0,0,0,.18);position:relative}
+.ill-chart-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.ill-chart-title{font-size:11px;color:rgba(255,255,255,.7);font-weight:600}
+.ill-chart-val{font-size:20px;font-weight:800;color:var(--bc-white)}
+.ill-bars{display:flex;align-items:flex-end;gap:6px;height:56px}
+.ill-bar{border-radius:4px 4px 0 0;background:rgba(255,255,255,.25)}
+.ill-bar.hi{background:var(--bc-primary-dark)}
+.ill-txns{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.ill-txn{display:flex;align-items:center;gap:10px}
+.ill-txn-ico{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ill-txn-body{flex:1}
+.ill-txn-name{font-size:11px;color:var(--bc-white);font-weight:600}
+.ill-txn-date{font-size:9px;color:rgba(255,255,255,.6)}
+.ill-txn-amt{font-size:11px;font-weight:700}
+.ill-txn-amt.cr{color:var(--bc-primary-dark)}
+.ill-txn-amt.db{color:rgba(255,255,255,.85)}
+
+/* security illustration */
+.ill-shield-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;position:relative}
+.ill-shield{width:120px;height:120px;background:rgba(255,255,255,.18);border-radius:30px;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.ill-checks{display:flex;flex-direction:column;gap:8px;width:210px}
+.ill-check{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border-radius:10px;padding:8px 12px;border:1px solid rgba(255,255,255,.25)}
+.ill-check-dot{width:18px;height:18px;border-radius:50%;background:var(--bc-primary-dark);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ill-check-txt{font-size:11px;color:var(--bc-white);font-weight:600}
+
 /* Content */
 .slide-content{flex:1;padding:28px 28px 0;background:var(--bc-white)}
 .slide-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--bc-mono300-l);margin-bottom:10px}
 .slide-title{font-size:26px;font-weight:800;color:var(--bc-black);letter-spacing:-.03em;line-height:1.2;margin-bottom:10px}
+.slide-title span{color:var(--bc-primary-light)}
 .slide-body{font-size:14px;color:var(--bc-mono500);line-height:1.55}
 /* Dots + CTAs */
 .bottom-area{background:var(--bc-white);padding:20px 28px 36px}
 .dots{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
-.dot{width:6px;height:6px;border-radius:3px;background:var(--bc-mono100-l);transition:all .3s}
+.dot{width:6px;height:6px;border-radius:3px;background:var(--bc-mono200-l);transition:all .3s}
 .dot.active{width:20px;background:var(--bc-primary-light)}
-.btn-primary{width:100%;padding:16px;border-radius:14px;background:var(--bc-primary-light);color:var(--bc-white);font-size:16px;font-weight:700;border:none;cursor:pointer;font-family:inherit;margin-bottom:10px}
-.btn-ghost{width:100%;padding:12px;border-radius:14px;background:none;color:var(--bc-primary-light);font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:inherit}
+.btn-primary{width:100%;padding:16px;border-radius:14px;background:var(--bc-primary-light);color:var(--bc-white);font-size:16px;font-weight:700;border:none;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:transform .12s,background .12s}
+.btn-primary:active{transform:scale(.97);background:var(--bc-tertiary2)}
+.btn-ghost{width:100%;padding:12px;border-radius:14px;background:none;color:var(--bc-mono500);font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:inherit}
 .back-link{text-align:center;margin-top:24px;font-size:13px;color:var(--bc-mono500)}
 .back-link a{color:var(--bc-primary-light);text-decoration:none;font-weight:600}
 </style>
@@ -50,82 +89,96 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);d
     <div class="status">
       <span class="status-time">9:41</span>
       <div class="status-icons">
-        <svg width="16" height="12" viewBox="0 0 16 12" fill="var(--bc-black)"><rect x="0" y="4" width="2.5" height="8" rx="1"/><rect x="4" y="2.5" width="2.5" height="9.5" rx="1"/><rect x="8" y="1" width="2.5" height="11" rx="1"/><rect x="12" y="0" width="2.5" height="12" rx="1" opacity=".3"/></svg>
-        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M1 4.5C3.2 2.3 6.4 1 7.5 1S11.8 2.3 14 4.5" stroke="var(--bc-black)" stroke-width="1.5" stroke-linecap="round"/><path d="M3 7C4.5 5.5 6 4.8 7.5 4.8S10.5 5.5 12 7" stroke="var(--bc-black)" stroke-width="1.5" stroke-linecap="round"/><circle cx="7.5" cy="10" r="1.5" fill="var(--bc-black)"/></svg>
-        <svg width="24" height="12" viewBox="0 0 24 12"><rect x="0" y="1" width="20" height="10" rx="3" stroke="var(--bc-black)" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="13" height="6" rx="1.5" fill="var(--bc-black)"/><path d="M21.5 4.5v3a1.5 1.5 0 000-3z" fill="var(--bc-black)"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="var(--bc-white)"><rect x="0" y="4" width="2.5" height="8" rx="1"/><rect x="4" y="2.5" width="2.5" height="9.5" rx="1"/><rect x="8" y="1" width="2.5" height="11" rx="1"/><rect x="12" y="0" width="2.5" height="12" rx="1" opacity=".3"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M1 4.5C3.2 2.3 6.4 1 7.5 1S11.8 2.3 14 4.5" stroke="var(--bc-white)" stroke-width="1.5" stroke-linecap="round"/><path d="M3 7C4.5 5.5 6 4.8 7.5 4.8S10.5 5.5 12 7" stroke="var(--bc-white)" stroke-width="1.5" stroke-linecap="round"/><circle cx="7.5" cy="10" r="1.5" fill="var(--bc-white)"/></svg>
+        <svg width="24" height="12" viewBox="0 0 24 12"><rect x="0" y="1" width="20" height="10" rx="3" stroke="var(--bc-white)" stroke-width="1.5" fill="none"/><rect x="2" y="3" width="13" height="6" rx="1.5" fill="var(--bc-white)"/><path d="M21.5 4.5v3a1.5 1.5 0 000-3z" fill="var(--bc-white)"/></svg>
       </div>
     </div>
 
     <div class="slides" id="slides">
-      <!-- Slide 0 -->
-      <div class="slide slide-0">
-        <div class="slide-visual">
-          <div>
-            <div>
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="14" height="14" rx="4" fill="var(--bc-white)"/><rect x="22" y="4" width="14" height="14" rx="4" fill="rgba(255,255,255,.5)"/><rect x="4" y="22" width="14" height="14" rx="4" fill="rgba(255,255,255,.3)"/><rect x="22" y="22" width="14" height="14" rx="4" fill="rgba(255,255,255,.7)"/></svg>
+      <!-- Slide 0 — Send money -->
+      <div class="slide">
+        <div class="slide-visual hero-1">
+          <div class="blob"></div>
+          <div class="ill-card">
+            <div class="ill-label">Total Balance</div>
+            <div class="ill-balance">₹2,45,000</div>
+            <div class="ill-actions">
+              <div class="ill-act"><div class="ill-act-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8"><path d="M7 2v10M2 7l5-5 5 5"/></svg></div><span class="ill-act-lbl">Add</span></div>
+              <div class="ill-act"><div class="ill-act-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div><span class="ill-act-lbl">Send</span></div>
+              <div class="ill-act"><div class="ill-act-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8"><rect x="2" y="3" width="10" height="8" rx="1.5"/><path d="M2 6h10"/></svg></div><span class="ill-act-lbl">Pay</span></div>
+              <div class="ill-act"><div class="ill-act-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.8"><circle cx="7" cy="7" r="5"/><path d="M7 4v3l2 2"/></svg></div><span class="ill-act-lbl">History</span></div>
             </div>
-            <div>MaV</div>
-            <div>Design System</div>
           </div>
-          <div></div>
-          <div></div>
         </div>
         <div class="slide-content">
           <div class="slide-eyebrow">Welcome</div>
-          <div class="slide-title">Design Systems Made Visual</div>
-          <div class="slide-body">Explore the full MaV design system — tokens, components, and live previews across iOS, Android, and web.</div>
+          <div class="slide-title">Send money<br><span>in seconds</span></div>
+          <div class="slide-body">Transfer to anyone over UPI — no queues, no branches. Just tap and it's done, instantly.</div>
         </div>
       </div>
 
-      <!-- Slide 1 -->
-      <div class="slide slide-1">
-        <div class="slide-visual">
-          <div>
-            <div>
-              <div>Layer 0</div>
-              <div>Layer 1</div>
-              <div>Layer 2</div>
+      <!-- Slide 1 — Track spending -->
+      <div class="slide">
+        <div class="slide-visual hero-2">
+          <div class="blob"></div>
+          <div class="ill-chart-wrap">
+            <div class="ill-chart-header">
+              <div><div class="ill-chart-title">Monthly Spending</div><div class="ill-chart-val">₹84,050</div></div>
+              <div style="font-size:10px;background:rgba(161,255,91,.2);color:var(--bc-primary-dark);padding:3px 8px;border-radius:20px;font-weight:700">↓ 12%</div>
             </div>
-            <div>Primitives → Semantic → Component</div>
-            <div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
+            <div class="ill-bars">
+              <div class="ill-bar" style="width:24px;height:32px"></div>
+              <div class="ill-bar" style="width:24px;height:44px"></div>
+              <div class="ill-bar" style="width:24px;height:28px"></div>
+              <div class="ill-bar hi" style="width:24px;height:52px"></div>
+              <div class="ill-bar" style="width:24px;height:38px"></div>
+              <div class="ill-bar" style="width:24px;height:20px"></div>
+              <div class="ill-bar" style="width:24px;height:42px"></div>
+            </div>
+            <div class="ill-txns">
+              <div class="ill-txn">
+                <div class="ill-txn-ico"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><path d="M7 1a6 6 0 100 12A6 6 0 007 1zm0 2a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0 8a4 4 0 01-3.2-1.6C3.8 8.4 5.8 7.5 7 7.5c1.2 0 3.2.9 3.2 1.9A4 4 0 017 11z"/></svg></div>
+                <div class="ill-txn-body"><div class="ill-txn-name">Salary Credit</div><div class="ill-txn-date">Today · 09:00</div></div>
+                <div class="ill-txn-amt cr">+₹5.2L</div>
+              </div>
+              <div class="ill-txn">
+                <div class="ill-txn-ico"><svg width="14" height="14" viewBox="0 0 14 14" fill="white"><rect x="2" y="3" width="10" height="8" rx="1.5"/><path d="M2 6h10" stroke="white" stroke-width="1"/></svg></div>
+                <div class="ill-txn-body"><div class="ill-txn-name">Netflix</div><div class="ill-txn-date">Yesterday</div></div>
+                <div class="ill-txn-amt db">−₹649</div>
+              </div>
             </div>
           </div>
         </div>
         <div class="slide-content">
-          <div class="slide-eyebrow">Architecture</div>
-          <div class="slide-title">3-Layer Token System</div>
-          <div class="slide-body">Primitive hex values feed semantic roles, which power component tokens. Change once, update everywhere — light, dark, and neon themes.</div>
+          <div class="slide-eyebrow">Insights</div>
+          <div class="slide-title">Know where<br><span>your money goes</span></div>
+          <div class="slide-body">Real-time spending insights and smart summaries — so you're always in control of your finances.</div>
         </div>
       </div>
 
-      <!-- Slide 2 -->
-      <div class="slide slide-2">
-        <div class="slide-visual">
-          <div>
-            <div>
-              <div>iOS</div>
-              <div></div>
+      <!-- Slide 2 — Security -->
+      <div class="slide">
+        <div class="slide-visual hero-3">
+          <div class="blob"></div>
+          <div class="ill-shield-wrap">
+            <div class="ill-shield">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <path d="M28 6L8 14v14c0 12.7 8.6 24.6 20 27.4C40.4 52.6 49 40.7 49 28V14L28 6z" fill="rgba(255,255,255,.25)" stroke="rgba(255,255,255,.6)" stroke-width="2"/>
+                <path d="M20 28l6 6 10-12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
-            <div>
-              <div>Android</div>
-              <div></div>
-            </div>
-            <div>
-              <div>Web</div>
-              <div></div>
+            <div class="ill-checks">
+              <div class="ill-check"><div class="ill-check-dot"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 2.5" stroke="#030192" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="ill-check-txt">Bank-grade encryption</span></div>
+              <div class="ill-check"><div class="ill-check-dot"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 2.5" stroke="#030192" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="ill-check-txt">Biometric authentication</span></div>
+              <div class="ill-check"><div class="ill-check-dot"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 2.5" stroke="#030192" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="ill-check-txt">Instant fraud alerts</span></div>
             </div>
           </div>
         </div>
         <div class="slide-content">
-          <div class="slide-eyebrow">Cross-Platform</div>
-          <div class="slide-title">One System, Every Screen</div>
-          <div class="slide-body">iOS, Android, and responsive web — all rendered from the same MaV token foundation. Consistent design at scale.</div>
+          <div class="slide-eyebrow">Security</div>
+          <div class="slide-title">Your money,<br><span>always protected</span></div>
+          <div class="slide-body">Bank-grade security with biometric login and instant alerts. Your funds are safe — always.</div>
         </div>
       </div>
     </div>
@@ -136,8 +189,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);d
         <div class="dot" id="d1"></div>
         <div class="dot" id="d2"></div>
       </div>
-      <button class="btn-primary" id="mainBtn" onclick="next()">Get Started</button>
-      <button class="btn-ghost" onclick="window.location.href='02-login.html'">Already have an account? Sign in</button>
+      <button class="btn-primary" id="mainBtn">Next</button>
+      <button class="btn-ghost" onclick="window.location.href='02-login.html'">I already have an account</button>
     </div>
     <div class="nav-gesture"></div>
   </div>
@@ -147,18 +200,30 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);d
   <a href="02-login.html">Next: Login →</a>
 </div>
 <script>
-let cur=0;
-const total=3;
-function go(n){
-  const slides=document.querySelectorAll('.slide');
-  slides.forEach((s,i)=>{s.style.transform=`translateX(${(i-n)*100}%)`});
-  document.querySelectorAll('.dot').forEach((d,i)=>{d.classList.toggle('active',i===n)});
-  cur=n;
-  document.getElementById('mainBtn').textContent=n===total-1?'Get Started':'Next';
-  if(n===total-1)document.getElementById('mainBtn').onclick=()=>{window.location.href='02-login.html'};
-  else document.getElementById('mainBtn').onclick=next;
-}
-function next(){if(cur<total-1)go(cur+1);}
+(function(){
+  var cur=0, total=3;
+  var slides=document.querySelectorAll('.slide');
+  var dots=document.querySelectorAll('.dot');
+  var btn=document.getElementById('mainBtn');
+  function render(){
+    slides.forEach(function(s,i){ s.style.transform='translateX('+((i-cur)*100)+'%)'; });
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===cur); });
+    btn.textContent = cur===total-1 ? 'Get Started' : 'Next';
+  }
+  btn.addEventListener('click',function(){
+    if(cur<total-1){ cur++; render(); }
+    else { window.location.href='02-login.html'; }
+  });
+  // swipe support
+  var sx=0;
+  var track=document.getElementById('slides');
+  track.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; },{passive:true});
+  track.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>40){ if(dx<0&&cur<total-1)cur++; else if(dx>0&&cur>0)cur--; render(); }
+  },{passive:true});
+  render();
+}());
 </script>
 </body>
 </html>

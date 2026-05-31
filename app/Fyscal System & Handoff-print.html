@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fyscal — System & Handoff</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blue: #0053ff; --indigo: #352eff; --peri: #7c9dff; --ink: #0b1020; --ink2: #3a4255;
+    --line: #e7e9f2; --bg: #f6f7fb; --card: #fff; --ok: #1f9d57; --warn: #c77700; --danger: #e23b3b;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Plus Jakarta Sans', -apple-system, system-ui, sans-serif;
+  }
+  body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .top-bar { height: 8px; background: linear-gradient(90deg, var(--indigo), var(--blue) 60%, var(--peri)); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* hero */
+  header.hero { background: radial-gradient(130% 100% at 80% -10%, #4b45ff, #0a0a4f 70%); color: #fff; padding: 64px 0 56px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: rgba(255,255,255,.14); padding: 7px 14px; border-radius: 999px; }
+  header.hero h1 { font-size: 52px; font-weight: 800; letter-spacing: -.03em; line-height: 1.05; margin: 22px 0 14px; }
+  header.hero p { font-size: 18px; opacity: .85; max-width: 620px; }
+  .hero-stats { display: flex; gap: 36px; margin-top: 36px; flex-wrap: wrap; }
+  .hero-stats .s { }
+  .hero-stats .n { font-size: 34px; font-weight: 800; letter-spacing: -.02em; font-family: var(--mono); }
+  .hero-stats .l { font-size: 13px; opacity: .7; margin-top: 2px; }
+
+  /* nav toc */
+  nav.toc { position: sticky; top: 0; z-index: 10; background: rgba(246,247,251,.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  nav.toc .wrap { display: flex; gap: 4px; overflow-x: auto; padding: 12px 24px; }
+  nav.toc a { white-space: nowrap; font-size: 13px; font-weight: 600; color: var(--ink2); text-decoration: none; padding: 7px 13px; border-radius: 9px; transition: .15s; }
+  nav.toc a:hover { background: #fff; color: var(--blue); }
+
+  section { padding: 52px 0; border-bottom: 1px solid var(--line); }
+  .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); }
+  h2 { font-size: 32px; font-weight: 800; letter-spacing: -.02em; margin: 8px 0 8px; }
+  .lede { font-size: 16px; color: var(--ink2); max-width: 720px; margin-bottom: 28px; }
+  h3 { font-size: 17px; font-weight: 700; letter-spacing: -.01em; margin: 26px 0 12px; }
+
+  .grid { display: grid; gap: 16px; }
+  .g2 { grid-template-columns: repeat(2, 1fr); } .g3 { grid-template-columns: repeat(3, 1fr); } .g4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 760px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } header.hero h1 { font-size: 38px; } }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+  .card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .card p { font-size: 13.5px; color: var(--ink2); }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: #eef1ff; color: var(--indigo); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: #f0f2fa; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink2); }
+  tr:last-child td { border-bottom: none; }
+  code { font-family: var(--mono); font-size: 12.5px; background: #eef1ff; color: var(--indigo); padding: 2px 6px; border-radius: 5px; }
+  .mono { font-family: var(--mono); }
+
+  ul.checks { list-style: none; display: grid; gap: 9px; }
+  ul.checks li { display: flex; gap: 10px; font-size: 14px; color: var(--ink2); }
+  ul.checks li b { color: var(--ink); }
+  .ck { flex-shrink: 0; width: 20px; height: 20px; border-radius: 6px; background: #e6f5ec; color: var(--ok); display: grid; place-items: center; font-size: 12px; font-weight: 800; margin-top: 1px; }
+  .ck.warn { background: #fdf0db; color: var(--warn); }
+
+  .swatches { display: flex; gap: 12px; flex-wrap: wrap; }
+  .sw { border-radius: 12px; border: 1px solid var(--line); overflow: hidden; width: 130px; }
+  .sw .chip { height: 60px; } .sw .meta { padding: 8px 10px; font-size: 11px; } .sw .meta b { display: block; font-size: 12.5px; } .sw .meta .mono { color: var(--ink2); }
+
+  .flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; color: var(--ink2); }
+  .flow .node { background: #fff; border: 1px solid var(--line); border-radius: 9px; padding: 7px 12px; font-weight: 600; color: var(--ink); }
+  .flow .arr { color: var(--peri); font-weight: 800; }
+  footer { padding: 40px 0 64px; color: var(--ink2); font-size: 13px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { font-size: 12.5px; font-weight: 600; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; }
+
+  @media print {
+    @page { size: A4 portrait; margin: 1.2cm; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { background: #fff; }
+    .top-bar { display: none; }
+    nav.toc { display: none; }
+    header.hero { padding: 28px 0 26px; border-radius: 0; break-after: avoid; }
+    header.hero h1 { font-size: 38px; }
+    section { padding: 26px 0; break-inside: avoid; }
+    h2 { break-after: avoid; }
+    h3 { break-after: avoid; }
+    .card, table, .flow, .swatches, ul.checks { break-inside: avoid; }
+    .grid { gap: 12px; }
+    a { color: inherit; text-decoration: none; }
+    footer { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="hero-badge">Fyscal Technologies · UPI App</span>
+    <h1>System &amp; Handoff</h1>
+    <p>One production-grade fintech app — eleven modules, fifty-three screens, a single design language. This document is the architecture, consistency audit, and developer handoff for shipping it on iOS &amp; Android.</p>
+    <div class="hero-stats">
+      <div class="s"><div class="n">11</div><div class="l">Modules</div></div>
+      <div class="s"><div class="n">53</div><div class="l">Screens &amp; flows</div></div>
+      <div class="s"><div class="n">1</div><div class="l">Design system</div></div>
+      <div class="s"><div class="n">100</div><div class="l">Design tokens</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#arch">Architecture</a>
+    <a href="#nav">Navigation</a>
+    <a href="#audit">Consistency audit</a>
+    <a href="#map">Interaction map</a>
+    <a href="#lib">Component library</a>
+    <a href="#ux">Global UX</a>
+    <a href="#a11y">Accessibility</a>
+    <a href="#motion">Motion</a>
+    <a href="#responsive">Responsive</a>
+    <a href="#handoff">Dev handoff</a>
+    <a href="#polish">Polish</a>
+  </div>
+</nav>
+
+<!-- ARCHITECTURE -->
+<section id="arch"><div class="wrap">
+  <span class="eyebrow">01 · Final architecture</span>
+  <h2>One app, layered cleanly</h2>
+  <p class="lede">A single React app rendered into a fixed iPhone frame. No build step — Babel transpiles in-browser so the whole thing is portable. Every module is a screen factory registered in one router; all share the same tokens, primitives, icons, and mock-data layer.</p>
+
+  <div class="grid g3">
+    <div class="card"><h4><span class="tag">Foundation</span></h4><p><code>tokens.css</code> · <code>app.css</code> — the Fyscal palette, type scale, spacing, radii, shadows and every component class.</p></div>
+    <div class="card"><h4><span class="tag">Primitives</span></h4><p><code>ui.jsx</code> — StatusBar, AppBar, BottomNav, Sheet, Dialog, Toast, Keypad, PinDots, Avatar, StepBar, Switch, money + sound helpers.</p></div>
+    <div class="card"><h4><span class="tag">Icons</span></h4><p><code>icons.jsx</code> — one stroke-based set (~70 glyphs), <code>currentColor</code>, sized by prop. No emoji in UI chrome.</p></div>
+    <div class="card"><h4><span class="tag">Data</span></h4><p><code>data.jsx</code> — a single <code>window.DATA</code> store: user, banks, payees, transactions, billers, rewards, tickets, notifications.</p></div>
+    <div class="card"><h4><span class="tag">Shell + router</span></h4><p><code>app.jsx</code> — stack navigation, tab switching, status-bar tone, toast host, persistence.</p></div>
+    <div class="card"><h4><span class="tag">Modules</span></h4><p>11 <code>screens_*.jsx</code> files, each exporting a <code>window.*Screens</code> object of screen components.</p></div>
+  </div>
+
+  <h3>Module map</h3>
+  <table>
+    <tr><th>Module</th><th>File</th><th>Key screens</th></tr>
+    <tr><td><b>Onboarding &amp; Auth</b></td><td class="mono">screens_auth · screens_onboard</td><td>Splash, intro, login, OTP, SIM &amp; device verify, permissions, biometric, MPIN, email, referral, all-set</td></tr>
+    <tr><td><b>Bank linking</b></td><td class="mono">screens_linkbank</td><td>Search, SIM verify, fetch accounts, multi-account, debit-card, UPI PIN, success</td></tr>
+    <tr><td><b>KYC</b></td><td class="mono">screens_kyc</td><td>PAN, OCR review, Aadhaar OTP, address, liveness, processing, success/rejected</td></tr>
+    <tr><td><b>Home dashboard</b></td><td class="mono">screens_home</td><td>Balance carousel, quick actions, suggestions, spend, notification center</td></tr>
+    <tr><td><b>Send money</b></td><td class="mono">screens_send · screens_pay</td><td>Hub, verify payee, bank/self transfer, amount, confirm, PIN, receipt</td></tr>
+    <tr><td><b>Scan &amp; Pay</b></td><td class="mono">screens_scan</td><td>Camera scanner, QR detection, merchant pay</td></tr>
+    <tr><td><b>Bills &amp; Recharge</b></td><td class="mono">screens_bills</td><td>Reminders, saved billers, 8 categories, provider search, auto-fetch, AutoPay</td></tr>
+    <tr><td><b>History &amp; Passbook</b></td><td class="mono">screens_history</td><td>Activity, passbook ledger, detail, refund timeline, statements, dispute</td></tr>
+    <tr><td><b>Rewards</b></td><td class="mono">screens_rewards</td><td>Coins, streak, scratch reveal, cashback feed, referrals, offers</td></tr>
+    <tr><td><b>Support</b></td><td class="mono">screens_support</td><td>Hub, AI chat + human handoff, tickets, lifecycle, call scheduling</td></tr>
+    <tr><td><b>Profile &amp; Settings</b></td><td class="mono">screens_profile</td><td>Profile, UPI IDs, banks, security, devices, notifications, language, help, privacy</td></tr>
+  </table>
+</div></section>
+
+<!-- NAVIGATION -->
+<section id="nav"><div class="wrap">
+  <span class="eyebrow">02 · Navigation system</span>
+  <h2>One stack, five tabs</h2>
+  <p class="lede">A single navigation stack drives the whole app. Five persistent tabs form the spine; every other screen pushes on top and pops back. State persists to <code>localStorage</code> so a refresh restores the session.</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h4>The nav contract</h4>
+      <table style="border:none">
+        <tr><td><code>nav.go(screen, params)</code></td><td>Push a screen (tabs reset the stack)</td></tr>
+        <tr><td><code>nav.back()</code></td><td>Pop one level</td></tr>
+        <tr><td><code>nav.replace(...)</code></td><td>Swap the top (e.g. verify → amount)</td></tr>
+        <tr><td><code>nav.reset(screen)</code></td><td>Clear stack to one root (post-payment → home)</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h4>Tab spine</h4>
+      <div class="pill-row" style="margin-bottom:10px">
+        <span class="pill">🏠 Home</span><span class="pill">🕑 History</span><span class="pill">⧉ Scan (FAB)</span><span class="pill">🧾 Bills</span><span class="pill">👤 Profile</span>
+      </div>
+      <p>Center <b>Scan</b> is a raised FAB — the camera-first action. Switching tabs resets that tab's stack so users never get lost deep in a flow.</p>
+    </div>
+  </div>
+
+  <h3>Global behaviors wired into the shell</h3>
+  <ul class="checks">
+    <li><span class="ck">✓</span><span><b>Status-bar tone</b> auto-flips dark/light per screen (light over camera, splash, success gradients).</span></li>
+    <li><span class="ck">✓</span><span><b>Toast host</b> + <b>auth state</b> live at the shell and are passed to every screen as <code>app</code>.</span></li>
+    <li><span class="ck">✓</span><span><b>Cold start → splash</b>, which routes to Home (returning) or Onboarding (new) based on auth.</span></li>
+  </ul>
+</div></section>
+
+<!-- CONSISTENCY AUDIT -->
+<section id="audit"><div class="wrap">
+  <span class="eyebrow">03 · Design consistency audit</span>
+  <h2>Everything resolves to tokens</h2>
+  <p class="lede">No module hardcodes a stray colour, font, or radius. Spacing, type, cards, forms, buttons, sheets, modals and nav all draw from one scalable system.</p>
+
+  <h3>Colour</h3>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#352eff"></div><div class="meta"><b>Primary</b><span class="mono">#352EFF</span></div></div>
+    <div class="sw"><div class="chip" style="background:#0053ff"></div><div class="meta"><b>Secondary</b><span class="mono">#0053FF</span></div></div>
+    <div class="sw"><div class="chip" style="background:#7c9dff"></div><div class="meta"><b>Tertiary</b><span class="mono">#7C9DFF</span></div></div>
+    <div class="sw"><div class="chip" style="background:#1f9d57"></div><div class="meta"><b>Success</b><span class="mono">#1F9D57</span></div></div>
+    <div class="sw"><div class="chip" style="background:#c77700"></div><div class="meta"><b>Warning</b><span class="mono">#C77700</span></div></div>
+    <div class="sw"><div class="chip" style="background:#e23b3b"></div><div class="meta"><b>Danger</b><span class="mono">#E23B3B</span></div></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:24px">
+    <div class="card">
+      <h4>Standardised &amp; consistent</h4>
+      <ul class="checks">
+        <li><span class="ck">✓</span><span><b>Type</b> — Plus Jakarta Sans display + JetBrains Mono for all figures &amp; IDs.</span></li>
+        <li><span class="ck">✓</span><span><b>Radii</b> — 14px inputs, 16–18px cards/rows, 22px hero blocks, pill for chips.</span></li>
+        <li><span class="ck">✓</span><span><b>Cards &amp; rows</b> — one <code>.card</code>/<code>.list-card</code>/<code>.row</code> vocabulary everywhere.</span></li>
+        <li><span class="ck">✓</span><span><b>Tinted icon tiles</b> — <code>color-mix</code> of a semantic colour at 12% on white, used in every list.</span></li>
+        <li><span class="ck">✓</span><span><b>Money</b> — single <code>inr()</code>/<code>inrParts()</code> formatter (Indian grouping).</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Conventions to hold the line on</h4>
+      <ul class="checks">
+        <li><span class="ck warn">!</span><span>Destructive actions <b>always</b> go through a <code>Dialog</code> confirm (logout, remove bank/device, deactivate UPI, close account).</span></li>
+        <li><span class="ck warn">!</span><span>PIN entry <b>always</b> uses <code>PinDots</code> + <code>Keypad</code> in a bottom <code>Sheet</code>.</span></li>
+        <li><span class="ck warn">!</span><span>Every result state reuses the <code>check-ring</code> draw + (success) confetti + chime.</span></li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- INTERACTION MAP -->
+<section id="map"><div class="wrap">
+  <span class="eyebrow">04 · Cross-flow interaction map</span>
+  <h2>Modules interconnect</h2>
+  <p class="lede">Flows aren't silos — they hand off to one another through the shared router. A few of the spines:</p>
+
+  <h3>Pay spine (reused by 4 modules)</h3>
+  <div class="flow"><span class="node">Send / Scan / Bills / Request</span><span class="arr">→</span><span class="node">amount</span><span class="arr">→</span><span class="node">pay (confirm + PIN)</span><span class="arr">→</span><span class="node">success</span><span class="arr">→</span><span class="node">receipt</span></div>
+
+  <h3 style="margin-top:22px">Onboarding → first payment</h3>
+  <div class="flow"><span class="node">splash</span><span class="arr">→</span><span class="node">onboarding</span><span class="arr">→</span><span class="node">login → OTP</span><span class="arr">→</span><span class="node">MPIN</span><span class="arr">→</span><span class="node">all-set</span><span class="arr">→</span><span class="node">home</span><span class="arr">→</span><span class="node">link bank</span><span class="arr">→</span><span class="node">KYC</span></div>
+
+  <h3 style="margin-top:22px">Issue → resolution</h3>
+  <div class="flow"><span class="node">txn detail</span><span class="arr">→</span><span class="node">dispute / support</span><span class="arr">→</span><span class="node">AI chat</span><span class="arr">→</span><span class="node">human handoff</span><span class="arr">→</span><span class="node">ticket lifecycle</span><span class="arr">→</span><span class="node">call schedule</span></div>
+
+  <h3 style="margin-top:22px">Notification deep-links</h3>
+  <div class="flow"><span class="node">notification card</span><span class="arr">→</span><span class="node">txn detail · amount · autopay · devices · rewards</span></div>
+</div></section>
+
+<!-- COMPONENT LIBRARY -->
+<section id="lib"><div class="wrap">
+  <span class="eyebrow">05 · Unified component library</span>
+  <h2>Build once, reuse everywhere</h2>
+  <p class="lede">Every module composes the same primitives. Adding a screen means assembling these — never restyling from scratch.</p>
+  <div class="grid g4">
+    <div class="card"><h4>AppBar</h4><p>Back, title, sub, right slot. Flush &amp; over-camera variants.</p></div>
+    <div class="card"><h4>BottomNav</h4><p>5 tabs + raised Scan FAB, active fill states.</p></div>
+    <div class="card"><h4>Sheet</h4><p>Bottom sheet w/ scrim, grip, title — PIN, source picker, filters, T&amp;C.</p></div>
+    <div class="card"><h4>Dialog</h4><p>Centered modal, tonal icon, stacked actions — all confirms.</p></div>
+    <div class="card"><h4>Toast</h4><p>Host + <code>useToasts()</code>; success / info / danger tones.</p></div>
+    <div class="card"><h4>Keypad + PinDots</h4><p>Numeric entry for amounts &amp; secure PINs.</p></div>
+    <div class="card"><h4>Avatar</h4><p>Deterministic initials + colour from name.</p></div>
+    <div class="card"><h4>StepBar</h4><p>Multi-step progress for onboarding / KYC.</p></div>
+    <div class="card"><h4>Switch</h4><p>Settings toggles, one motion spec.</p></div>
+    <div class="card"><h4>Cards / Rows</h4><p><code>.card</code>, <code>.list-card</code>, <code>.row</code>, tinted icon tiles.</p></div>
+    <div class="card"><h4>Chips &amp; badges</h4><p>Filters, status pills, segmented controls.</p></div>
+    <div class="card"><h4>Result + timelines</h4><p>Check-ring, confetti, <code>.tl</code> step timelines.</p></div>
+  </div>
+</div></section>
+
+<!-- GLOBAL UX -->
+<section id="ux"><div class="wrap">
+  <span class="eyebrow">06 · Global UX behaviors</span>
+  <h2>Predictable everywhere</h2>
+  <div class="grid g2">
+    <div class="card"><h4>Loading</h4><p>Skeleton rows for lists, spinners for fetches, animated checklists for multi-step verification.</p></div>
+    <div class="card"><h4>Empty</h4><p>Every list has a real empty state with an icon, one line of guidance, and a primary action.</p></div>
+    <div class="card"><h4>Error &amp; recovery</h4><p>Failed payment, wrong UPI, no SIM, blocked device, timeout — each with a calm explanation + retry path.</p></div>
+    <div class="card"><h4>Trust signals</h4><p>Verified-merchant badges, "no money was deducted", "we never ask for your PIN", RBI/UIDAI/DPDP cues.</p></div>
+    <div class="card"><h4>Fraud prevention</h4><p>First-time-payee caution, large-amount warning, daily-limit guard, payee name-as-per-bank confirm.</p></div>
+    <div class="card"><h4>Feedback</h4><p>Haptic tap on keys, success chime + confetti, low buzz on failure (sound/vibration helpers).</p></div>
+  </div>
+</div></section>
+
+<!-- ACCESSIBILITY -->
+<section id="a11y"><div class="wrap">
+  <span class="eyebrow">07 · Accessibility audit</span>
+  <h2>Inclusive by default</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h4>In place</h4>
+      <ul class="checks">
+        <li><span class="ck">✓</span><span>Hit targets ≥ 44px (keys, nav, icon buttons).</span></li>
+        <li><span class="ck">✓</span><span>Body text ≥ 13px; primary content 14–16px.</span></li>
+        <li><span class="ck">✓</span><span><code>aria-label</code> on icon-only buttons; <code>role="switch"</code> + <code>aria-checked</code> on toggles.</span></li>
+        <li><span class="ck">✓</span><span>Status conveyed by icon + label + colour (never colour alone).</span></li>
+        <li><span class="ck">✓</span><span>10-language support scaffolded for localisation.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Before GA — to add in code</h4>
+      <ul class="checks">
+        <li><span class="ck warn">!</span><span>Verify AA contrast on muted text over tinted fills.</span></li>
+        <li><span class="ck warn">!</span><span>Wire real focus management &amp; screen-reader order (VoiceOver / TalkBack).</span></li>
+        <li><span class="ck warn">!</span><span><code>prefers-reduced-motion</code> to damp confetti / scratch / beam.</span></li>
+        <li><span class="ck warn">!</span><span>Dynamic Type / font-scaling pass at 130%.</span></li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- MOTION -->
+<section id="motion"><div class="wrap">
+  <span class="eyebrow">08 · Motion system rules</span>
+  <h2>Purposeful, never noisy</h2>
+  <p class="lede">Motion confirms actions and guides attention. Standard easing for UI, an emphasis curve for reveals.</p>
+  <table>
+    <tr><th>Token</th><th>Value</th><th>Used for</th></tr>
+    <tr><td>Fast</td><td class="mono">120ms</td><td>Taps, toggles, chip selection</td></tr>
+    <tr><td>Medium</td><td class="mono">220ms</td><td>Screen transitions, sheet slide</td></tr>
+    <tr><td>Slow</td><td class="mono">420ms</td><td>Reveals, success draws</td></tr>
+    <tr><td>Standard ease</td><td class="mono">cubic-bezier(.2,.8,.2,1)</td><td>Most UI movement</td></tr>
+    <tr><td>Emphasis ease</td><td class="mono">cubic-bezier(.16,1,.3,1)</td><td>Splash pop, reward reveal, success</td></tr>
+  </table>
+  <h3>Signature moments</h3>
+  <div class="pill-row">
+    <span class="pill">Splash mark spring-in</span><span class="pill">Slide-up PIN sheet</span><span class="pill">Check-ring draw</span><span class="pill">Success confetti + chime</span><span class="pill">Scratch-card erase + coin burst</span><span class="pill">Scan beam</span><span class="pill">Staggered dashboard rise</span>
+  </div>
+</div></section>
+
+<!-- RESPONSIVE -->
+<section id="responsive"><div class="wrap">
+  <span class="eyebrow">09 · Responsive guidelines</span>
+  <h2>Frame-true, device-safe</h2>
+  <div class="grid g2">
+    <div class="card"><h4>Layout model</h4><p>Designed at a 393×852 logical canvas (iPhone). Flex/grid with <code>gap</code> throughout — content reflows, never relies on fixed offsets.</p></div>
+    <div class="card"><h4>Safe areas</h4><p>Sticky docks &amp; sheets use <code>env(safe-area-inset-bottom)</code>; home indicator + dynamic island respected.</p></div>
+    <div class="card"><h4>Scroll regions</h4><p>One scroll container per screen (<code>.screen-scroll</code>); app bars &amp; docks pinned outside it.</p></div>
+    <div class="card"><h4>iOS ↔ Android</h4><p>Swap the frame chrome + status bar; nudge nav-bar height &amp; back affordance. Tokens, type, motion stay identical.</p></div>
+  </div>
+</div></section>
+
+<!-- HANDOFF -->
+<section id="handoff"><div class="wrap">
+  <span class="eyebrow">10 · Developer handoff framework</span>
+  <h2>From prototype to production</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h4>Keep</h4>
+      <ul class="checks">
+        <li><span class="ck">✓</span><span>Token layer &amp; component classes → map 1:1 to RN / Compose / SwiftUI themes.</span></li>
+        <li><span class="ck">✓</span><span>Screen inventory &amp; nav contract → route table.</span></li>
+        <li><span class="ck">✓</span><span>Copy, microcopy &amp; states → spec for engineering.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Replace</h4>
+      <ul class="checks">
+        <li><span class="ck warn">!</span><span><code>window.DATA</code> mocks → real API / state layer.</span></li>
+        <li><span class="ck warn">!</span><span>Simulated OTP/PIN/scan → NPCI UPI SDK, device camera, secure keystore.</span></li>
+        <li><span class="ck warn">!</span><span>In-browser Babel → native build (RN or platform-native).</span></li>
+        <li><span class="ck warn">!</span><span>Demo triggers (₹1 fail, ₹2 reversal) → real gateway responses.</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="lede" style="margin-top:20px">A "Handoff to Claude Code" package can export this structure as a developer-ready brief — ask and I'll generate it.</p>
+</div></section>
+
+<!-- POLISH -->
+<section id="polish" style="border-bottom:none"><div class="wrap">
+  <span class="eyebrow">11 · Final premium polish</span>
+  <h2>To feel truly production-ready</h2>
+  <div class="grid g3">
+    <div class="card"><h4>① Real assets</h4><p>Merchant logos, bank marks &amp; offer art in place of monograms/placeholders.</p></div>
+    <div class="card"><h4>② Dark mode</h4><p>The token layer already supports it — ship a dark variant for OLED.</p></div>
+    <div class="card"><h4>③ Reduced-motion</h4><p>Honour OS setting; offer a calm-mode for confetti &amp; beams.</p></div>
+    <div class="card"><h4>④ Skeleton parity</h4><p>Match every skeleton to its loaded layout exactly to kill layout shift.</p></div>
+    <div class="card"><h4>⑤ Haptic nuance</h4><p>Distinct patterns for success / warning / error per platform guidelines.</p></div>
+    <div class="card"><h4>⑥ Number transitions</h4><p>Animate balance &amp; coin count-ups for a premium feel.</p></div>
+    <div class="card"><h4>⑦ Empty-to-rich</h4><p>Personalise dashboard density as the user's history grows.</p></div>
+    <div class="card"><h4>⑧ Localisation QA</h4><p>Test long strings (Tamil, German) for truncation &amp; wrap.</p></div>
+    <div class="card"><h4>⑨ Performance</h4><p>Virtualise long lists; lazy-load module bundles natively.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  Fyscal Technologies — Empowering digital finance · System &amp; Handoff reference · Built on the Fyscal design system.
+</div></footer>
+
+<script>
+  (function () {
+    function go() { setTimeout(function () { window.print(); }, 500); }
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(go); }
+    else { window.addEventListener('load', go); }
+  })();
+</script>
+</body>
+</html>

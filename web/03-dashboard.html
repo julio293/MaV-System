@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dashboard — Web — MaV</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/tokens.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -221,10 +220,13 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bc-mono100-l);d
 const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const vals=[62,78,55,90,84,45,96];
 const bars=document.getElementById('bars');
+const max=Math.max.apply(null,vals);
 vals.forEach((v,i)=>{
   const col=document.createElement('div');
   col.className='bar-col';
-  col.innerHTML=`<div class="bar-fill"></div><span class="bar-label">${days[i]}</span>`;
+  const h=Math.round((v/max)*88)+6;
+  const hi=v===max;
+  col.innerHTML=`<div class="bar-fill" style="height:${h}px;background:var(${hi?'--bc-primary-light':'--bc-tertiary1'})"></div><span class="bar-label">${days[i]}</span>`;
   bars.appendChild(col);
 });
 </script>

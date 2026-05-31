@@ -1,0 +1,98 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   Icons — single stroke set, currentColor, sized via props.
+   ══════════════════════════════════════════════════════════════════════════ */
+const Ic = ({ d, s = 22, sw = 1.8, fill = 'none', children, vb = 24 }) => (
+  <svg width={s} height={s} viewBox={`0 0 ${vb} ${vb}`} fill={fill} stroke={fill === 'none' ? 'currentColor' : 'none'}
+       strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+    {d ? <path d={d} /> : children}
+  </svg>
+);
+
+const Icon = {
+  back:    (p) => <Ic {...p} sw={2.2} d="M15 5l-7 7 7 7" />,
+  close:   (p) => <Ic {...p} sw={2.2} d="M6 6l12 12M18 6L6 18" />,
+  chev:    (p) => <Ic {...p} d="M9 6l6 6-6 6" />,
+  chevDown:(p) => <Ic {...p} d="M6 9l6 6 6-6" />,
+  home:    (p) => <Ic {...p} d="M3 11l9-8 9 8M5 9.5V20h5v-6h4v6h5V9.5" />,
+  homeFill:(p) => <Ic {...p} fill="currentColor" sw={0}><path d="M3 11.2L12 3l9 8.2V21h-6v-6H9v6H3z"/></Ic>,
+  history: (p) => <Ic {...p}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></Ic>,
+  bills:   (p) => <Ic {...p}><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"/><path d="M9 8h6M9 12h6"/></Ic>,
+  user:    (p) => <Ic {...p}><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20c0-4.2 3.4-7 7.5-7s7.5 2.8 7.5 7"/></Ic>,
+  userFill:(p) => <Ic {...p} fill="currentColor" sw={0}><circle cx="12" cy="8" r="4.2"/><path d="M4 20.5c0-4.4 3.6-7.5 8-7.5s8 3.1 8 7.5z"/></Ic>,
+  scan:    (p) => <Ic {...p}><path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3"/><path d="M4 12h16"/></Ic>,
+  qr:      (p) => <Ic {...p} sw={1.6}><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v.01M21 21v-4M17 21h.01M14 21v.01" strokeWidth="1.8"/></Ic>,
+  send:    (p) => <Ic {...p} d="M4 12h13M12 5l7 7-7 7" />,
+  sendUp:  (p) => <Ic {...p} d="M12 19V6M6 11l6-6 6 6" />,
+  receive: (p) => <Ic {...p} d="M12 5v13M6 13l6 6 6-6" />,
+  add:     (p) => <Ic {...p} sw={2} d="M12 5v14M5 12h14" />,
+  bank:    (p) => <Ic {...p}><path d="M4 9l8-5 8 5M5 9v8M19 9v8M9 9v8M15 9v8M3 21h18"/></Ic>,
+  card:    (p) => <Ic {...p}><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/></Ic>,
+  phone:   (p) => <Ic {...p}><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></Ic>,
+  bolt:    (p) => <Ic {...p} fill="currentColor" sw={0}><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></Ic>,
+  drop:    (p) => <Ic {...p}><path d="M12 3c4 4.5 6 7.5 6 10.5A6 6 0 016 13.5C6 10.5 8 7.5 12 3z"/></Ic>,
+  tv:      (p) => <Ic {...p}><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M8 21h8M12 18v3"/></Ic>,
+  wifi:    (p) => <Ic {...p}><path d="M5 12.5a10 10 0 0114 0M8 15.5a6 6 0 018 0M12 19h.01"/></Ic>,
+  shield:  (p) => <Ic {...p}><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></Ic>,
+  shieldChk:(p) => <Ic {...p}><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></Ic>,
+  bell:    (p) => <Ic {...p}><path d="M6 9a6 6 0 0112 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 19a2 2 0 004 0"/></Ic>,
+  search:  (p) => <Ic {...p}><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></Ic>,
+  filter:  (p) => <Ic {...p} d="M3 5h18M6 12h12M10 19h4" />,
+  copy:    (p) => <Ic {...p}><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/></Ic>,
+  share:   (p) => <Ic {...p}><circle cx="6" cy="12" r="2.5"/><circle cx="17" cy="6" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M8.2 10.8l6.6-3.6M8.2 13.2l6.6 3.6"/></Ic>,
+  check:   (p) => <Ic {...p} sw={2.4} d="M4 12.5l5 5L20 6" />,
+  checkCircle:(p) => <Ic {...p}><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></Ic>,
+  alert:   (p) => <Ic {...p}><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16h.01"/></Ic>,
+  alertTri:(p) => <Ic {...p}><path d="M12 4l9 15.5H3z"/><path d="M12 10v4M12 17h.01"/></Ic>,
+  info:    (p) => <Ic {...p}><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></Ic>,
+  clock:   (p) => <Ic {...p}><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></Ic>,
+  logout:  (p) => <Ic {...p}><path d="M15 4h3a1 1 0 011 1v14a1 1 0 01-1 1h-3M10 12h10M16 8l4 4-4 4"/></Ic>,
+  cog:     (p) => <Ic {...p}><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></Ic>,
+  dots:    (p) => <Ic {...p} fill="currentColor" sw={0}><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></Ic>,
+  contacts:(p) => <Ic {...p}><circle cx="9" cy="9" r="3.5"/><path d="M3 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5M16 8h5M16 12h5M16 16h3"/></Ic>,
+  flash:   (p) => <Ic {...p}><path d="M5 7a2 2 0 012-2h6l6 6v6a2 2 0 01-2 2H7a2 2 0 01-2-2z"/><path d="M11 9l-2 4h3l-2 4"/></Ic>,
+  gift:    (p) => <Ic {...p}><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M4 13h16M12 9v11M12 9c-2-4-6-2-4 0M12 9c2-4 6-2 4 0"/></Ic>,
+  star:    (p) => <Ic {...p} fill="currentColor" sw={0}><path d="M12 3l2.6 5.5 6 .8-4.3 4.2 1 6L12 16.8 6.7 19.5l1-6L3.4 9.3l6-.8z"/></Ic>,
+  refresh: (p) => <Ic {...p}><path d="M20 8a8 8 0 10.5 6M20 4v4h-4"/></Ic>,
+  eye:     (p) => <Ic {...p}><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></Ic>,
+  eyeOff:  (p) => <Ic {...p}><path d="M3 3l18 18M10.5 10.6a3 3 0 004 4M6.5 6.6C3.8 8.2 2 12 2 12s3.5 7 10 7c2 0 3.7-.5 5.2-1.3M9.8 5.2A9.7 9.7 0 0112 5c6.5 0 10 7 10 7a18 18 0 01-2.3 3.2"/></Ic>,
+  download:(p) => <Ic {...p} d="M12 4v11m-5-5l5 5 5-5M5 20h14" />,
+  fingerprint:(p) => <Ic {...p}><path d="M12 5a7 7 0 017 7v2M5 12a7 7 0 0111-5.7M8.5 12a3.5 3.5 0 017 0v3M12 12v4M15.5 16.5V12a3.5 3.5 0 00-.3-1.4M8.5 16v-1"/></Ic>,
+  building:(p) => <Ic {...p}><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M9 15h.01M15 15h.01M10 21v-3h4v3"/></Ic>,
+  rupee:   (p) => <Ic {...p} sw={2}><path d="M7 5h10M7 9h10M16 5c0 4-3 5-7 5l6 7"/></Ic>,
+  splitBill:(p) => <Ic {...p}><circle cx="8" cy="8" r="3"/><circle cx="16" cy="16" r="3"/><path d="M5 19l14-14"/></Ic>,
+  insurance:(p) => <Ic {...p}><path d="M12 3l7 3v6c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="M12 8v5M9.5 10.5h5"/></Ic>,
+  mail:    (p) => <Ic {...p}><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></Ic>,
+  sms:     (p) => <Ic {...p}><path d="M4 5h16a1 1 0 011 1v9a1 1 0 01-1 1H9l-4 4v-4H4a1 1 0 01-1-1V6a1 1 0 011-1z"/><path d="M8 10h8M8 13h5"/></Ic>,
+  sim:     (p) => <Ic {...p}><path d="M6 3h8l4 4v14a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z"/><rect x="8" y="11" width="8" height="7" rx="1.5"/><path d="M12 11v7M8 14.5h8"/></Ic>,
+  lock:    (p) => <Ic {...p}><rect x="4.5" y="10" width="15" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 018 0v3"/><path d="M12 14.5v3"/></Ic>,
+  faceid:  (p) => <Ic {...p}><path d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2"/><path d="M9 9.5v1M15 9.5v1M12 9v3l-1 .8M9.2 15c.8.9 1.8 1.3 2.8 1.3s2-.4 2.8-1.3"/></Ic>,
+  sparkle: (p) => <Ic {...p} fill="currentColor" sw={0}><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8z"/><path d="M18.5 14l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z"/></Ic>,
+  globe:   (p) => <Ic {...p}><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/></Ic>,
+  headset: (p) => <Ic {...p}><path d="M4 13v-1a8 8 0 0116 0v1"/><rect x="3" y="13" width="4" height="7" rx="2"/><rect x="17" y="13" width="4" height="7" rx="2"/><path d="M19 20a4 4 0 01-4 3h-3"/></Ic>,
+  cup:     (p) => <Ic {...p}><path d="M5 8h11v6a4 4 0 01-4 4H9a4 4 0 01-4-4z"/><path d="M16 9h2.5a2.5 2.5 0 010 5H16"/><path d="M7 3v2M10 3v2M13 3v2"/></Ic>,
+  cart:    (p) => <Ic {...p}><path d="M3 4h2l2.2 11.2a1.5 1.5 0 001.5 1.3h8.1a1.5 1.5 0 001.5-1.2L21 7H6"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></Ic>,
+  car:     (p) => <Ic {...p}><path d="M5 11l1.5-4.5A2 2 0 018.4 5h7.2a2 2 0 011.9 1.5L19 11M4 11h16v5H4zM4 16v2M20 16v2"/><circle cx="7.5" cy="13.5" r="1"/><circle cx="16.5" cy="13.5" r="1"/></Ic>,
+  doc:     (p) => <Ic {...p}><path d="M6 3h8l4 4v14a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v4h4M8 13h8M8 17h5"/></Ic>,
+  pdf:     (p) => <Ic {...p}><path d="M6 3h8l4 4v14a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v4h4"/><path d="M8 16h1.2a1 1 0 000-2H8v4M13 14v4h1a1.5 1.5 0 001.5-1.5v-1A1.5 1.5 0 0014 14zM17.5 14H19m-1.5 0v4m0-2h1" strokeWidth="1.4"/></Ic>,
+  camera:  (p) => <Ic {...p}><path d="M3 8a2 2 0 012-2h2l1.5-2h7L17 6h2a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><circle cx="12" cy="12.5" r="3.5"/></Ic>,
+  idcard:  (p) => <Ic {...p}><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2"/><path d="M5.5 16c.4-1.6 1.6-2.4 3-2.4s2.6.8 3 2.4M14 9.5h4M14 13h4M14 16h2.5"/></Ic>,
+  location:(p) => <Ic {...p}><path d="M12 21c4-4 7-7.5 7-11a7 7 0 10-14 0c0 3.5 3 7 7 11z"/><circle cx="12" cy="10" r="2.5"/></Ic>,
+  rotate:  (p) => <Ic {...p}><path d="M3 12a9 9 0 019-9 9 9 0 016.5 2.8L21 8M21 3v5h-5"/><path d="M21 12a9 9 0 01-9 9 9 9 0 01-6.5-2.8L3 16M3 21v-5h5"/></Ic>,
+  cap:     (p) => <Ic {...p}><path d="M12 4l10 5-10 5L2 9z"/><path d="M6 11v5c0 1.4 2.7 3 6 3s6-1.6 6-3v-5M22 9v5"/></Ic>,
+  tag:     (p) => <Ic {...p}><path d="M3 12V5a2 2 0 012-2h7l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.4"/></Ic>,
+  calendar:(p) => <Ic {...p}><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></Ic>,
+  repeat:  (p) => <Ic {...p}><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></Ic>,
+  coin:    (p) => <Ic {...p}><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5h3.2a1.8 1.8 0 010 3.5H9.5h3.5M11 7.5v9" strokeWidth="1.6"/></Ic>,
+  flame:   (p) => <Ic {...p} fill="currentColor" sw={0}><path d="M12 2c1 3-1.5 4.5-1.5 7A1.5 1.5 0 019 8c-2 1.5-3 3.8-3 6a6 6 0 0012 0c0-2.5-1.2-4.3-2.5-6-1 1-2 .5-2-1.2C11.5 5 12 3.5 12 2z"/></Ic>,
+  trophy:  (p) => <Ic {...p}><path d="M7 4h10v4a5 5 0 01-10 0zM7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3M9 16h6M10 16v-2.5M14 16v-2.5M8 20h8"/></Ic>,
+  ticket:  (p) => <Ic {...p}><path d="M3 8a2 2 0 012-2h14a2 2 0 012 2 2 2 0 000 4 2 2 0 00-2 2v0a2 2 0 01-2 2H5a2 2 0 01-2-2 2 2 0 000-4 2 2 0 002-2z"/><path d="M14 6v12" strokeDasharray="2 2"/></Ic>,
+  nfc:     (p) => <Ic {...p}><path d="M6 8.5a8 8 0 010 7M9.5 6a13 13 0 010 12M13 4a18 18 0 010 16M16.5 8.5a8 8 0 000 7"/></Ic>,
+  snow:    (p) => <Ic {...p}><path d="M12 2v20M5 7l14 10M19 7L5 17M3 12h18"/></Ic>,
+  chip:    (p) => <Ic {...p}><rect x="4" y="6" width="16" height="12" rx="2.5"/><path d="M9 6v12M15 6v12M4 10h5M4 14h5M15 10h5M15 14h5"/></Ic>,
+};
+
+window.Icon = Icon;
+
+/* render an icon by string name — JSX can't use computed tag names directly */
+const IconBy = ({ name, ...p }) => { const I = Icon[name]; return I ? <I {...p} /> : null; };
+window.IconBy = IconBy;
