@@ -1,4 +1,4 @@
-{
+    {
   "mcpServers": {
     "design-token-bridge": {
       "command": "npx",

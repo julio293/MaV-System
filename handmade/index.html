@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handmade — Design the real thing</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f7f7f8; --canvas:#fbfbfc; --card:#ffffff;
+    --ink:#16171b; --muted:#76787f; --faint:#a6a8af;
+    --line:#e9eaee; --line-2:#dfe1e6;
+    --accent:#352eff; --accent-2:#0053ff;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --sh-sm:0 1px 2px rgba(20,22,40,.06);
+    --sh-md:0 4px 14px -4px rgba(20,22,40,.12);
+    --sh-lg:0 16px 40px -12px rgba(20,22,40,.2);
+  }
+  html,body{height:100%}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow:hidden}
+
+  /* ── Top bar ── */
+  .topbar{height:56px;display:flex;align-items:center;gap:16px;padding:0 18px;background:var(--card);border-bottom:1px solid var(--line);position:relative;z-index:40}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.02em;font-size:15px}
+  .brand .mk{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center}
+  .brand .mk::after{content:'';width:9px;height:9px;border-radius:2px;background:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.35)}
+  .tb-hint{font-size:12.5px;color:var(--muted);flex:1}
+  .tb-hint kbd{font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--line-2);border-bottom-width:2px;border-radius:5px;padding:2px 6px;color:var(--ink)}
+  .tb-actions{display:flex;align-items:center;gap:8px}
+  .btn{font-family:inherit;font-size:13px;font-weight:600;border-radius:9px;border:1px solid var(--line-2);background:var(--card);color:var(--ink);padding:8px 14px;cursor:pointer;transition:.14s}
+  .btn:hover{border-color:var(--faint)}
+  .btn.solid{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.solid.on{background:var(--accent);border-color:var(--accent)}
+  .btn.solid.on::before{content:'';width:7px;height:7px;border-radius:50%;background:#9affc0;display:inline-block;margin-right:7px;vertical-align:middle;box-shadow:0 0 8px #9affc0}
+
+  /* ── Shell ── */
+  .shell{display:flex;height:calc(100% - 56px)}
+  .canvas{flex:1;overflow:auto;padding:40px;scroll-behavior:smooth}
+  .canvas-inner{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:36px;padding-bottom:80px}
+
+  .hero{padding:8px 4px 0}
+  .hero h1{font-size:32px;font-weight:800;letter-spacing:-.035em;line-height:1.1}
+  .hero p{font-size:15px;color:var(--muted);margin-top:10px;max-width:520px;line-height:1.5}
+  .hero .code{margin-top:18px;font-family:var(--mono);font-size:13px;background:var(--ink);color:#e9eafc;border-radius:10px;padding:12px 16px;display:inline-flex;align-items:center;gap:10px}
+  .hero .code .dot{color:#7c7cff}
+
+  .group{display:flex;flex-direction:column;gap:14px}
+  .group-label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--faint);font-weight:600}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+
+  /* dashboard stats */
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .stat{background:var(--canvas);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .stat .k{font-size:12px;color:var(--muted);font-weight:500}
+  .stat .v{font-size:28px;font-weight:800;letter-spacing:-.03em;margin-top:6px}
+  .stat .d{font-size:12px;font-weight:600;color:#1f9d57;margin-top:4px}
+
+  /* buttons */
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap}
+  .b{font-family:inherit;font-size:14px;font-weight:600;border-radius:10px;padding:11px 20px;cursor:pointer;border:1px solid transparent}
+  .b.primary{background:var(--accent);color:#fff}
+  .b.secondary{background:var(--bg);color:var(--ink);border-color:var(--line-2)}
+  .b.ghost{background:transparent;color:var(--accent)}
+  .b.danger{background:#e23b3b;color:#fff}
+
+  /* typography */
+  .type-sample h3{font-size:24px;font-weight:700;letter-spacing:-.02em}
+  .type-sample p{font-size:14px;color:var(--muted);line-height:1.6;margin-top:8px;max-width:560px}
+  .type-cap{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:12px}
+
+  /* spacing tokens */
+  .sp-row{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+  .sp{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .sp .box{background:linear-gradient(135deg,var(--accent),var(--accent-2));border-radius:5px;opacity:.9}
+  .sp .n{font-family:var(--mono);font-size:10px;color:var(--muted)}
+
+  /* color tokens */
+  .swatch-row{display:flex;gap:12px;flex-wrap:wrap}
+  .sw{display:flex;flex-direction:column;gap:7px}
+  .sw .chip{width:64px;height:48px;border-radius:11px;border:1px solid var(--line-2)}
+  .sw .n{font-size:11px;color:var(--muted);font-weight:500}
+  .shadow-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:4px}
+  .shc{width:72px;height:56px;border-radius:12px;background:var(--card);display:grid;place-items:center;font-family:var(--mono);font-size:10px;color:var(--faint)}
+
+  /* profile / sizing */
+  .profile{display:flex;align-items:center;gap:14px}
+  .pf-av{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff;font-weight:800;font-size:18px}
+  .pf-name{font-size:16px;font-weight:700}
+  .pf-role{font-size:13px;color:var(--muted)}
+  .badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .bg-pill{font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--bg);color:var(--ink);border:1px solid var(--line-2)}
+  .bg-pill.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .size-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .size-dot{border-radius:50%;background:var(--accent);display:grid;place-items:center;color:#fff;font-family:var(--mono);font-weight:700}
+
+  /* ── Inspector ── */
+  .inspector{width:312px;flex-shrink:0;background:var(--card);border-left:1px solid var(--line);overflow-y:auto;display:flex;flex-direction:column}
+  .insp-head{padding:16px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card);z-index:2}
+  .insp-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .insp-tag{font-family:var(--mono);font-size:10px;background:var(--bg);border:1px solid var(--line-2);border-radius:5px;padding:2px 7px;color:var(--accent);text-transform:lowercase}
+  .insp-sub{font-size:12px;color:var(--muted);margin-top:4px}
+  .insp-body{padding:6px 18px 28px;display:flex;flex-direction:column}
+  .empty{padding:60px 24px;text-align:center;color:var(--faint)}
+  .empty .ic{width:46px;height:46px;border-radius:13px;background:var(--bg);display:grid;place-items:center;margin:0 auto 14px}
+  .empty p{font-size:13px;line-height:1.55}
+
+  .ctrl{padding:16px 0;border-bottom:1px solid var(--line)}
+  .ctrl:last-child{border-bottom:none}
+  .ctrl-lbl{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:11px}
+  .ctrl-val{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:500}
+  input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:3px;background:var(--line-2);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .ch{font-size:11.5px;font-weight:600;font-family:var(--mono);padding:6px 10px;border-radius:8px;border:1px solid var(--line-2);background:var(--card);cursor:pointer;color:var(--ink);transition:.12s}
+  .ch:hover{border-color:var(--faint)}
+  .ch.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .pal{display:grid;grid-template-columns:repeat(8,1fr);gap:7px}
+  .pal button{aspect-ratio:1;border-radius:7px;border:1px solid var(--line-2);cursor:pointer;position:relative;padding:0}
+  .pal button.on::after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--accent)}
+
+  /* ── Design-mode affordances ── */
+  body.dm [data-edit]{cursor:pointer}
+  body.dm [data-edit]:hover{outline:1.5px dashed var(--accent-2);outline-offset:2px}
+  .sel-overlay{position:fixed;pointer-events:none;z-index:30;border:2px solid var(--accent);border-radius:8px;display:none;box-shadow:0 0 0 4px rgba(53,46,255,.12)}
+  .sel-overlay .tag{position:absolute;top:-22px;left:-2px;background:var(--accent);color:#fff;font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;white-space:nowrap}
+  [contenteditable=true]{outline:2px solid var(--accent-2)!important;outline-offset:2px;border-radius:3px;cursor:text!important}
+
+  .status{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:9px;background:var(--ink);color:#fff;font-size:12.5px;font-weight:500;padding:9px 15px;border-radius:999px;box-shadow:var(--sh-lg);transition:.2s;opacity:0;pointer-events:none}
+  .status.show{opacity:1}
+  .status .pulse{width:7px;height:7px;border-radius:50%;background:#9affc0;box-shadow:0 0 8px #9affc0}
+  .status kbd{font-family:var(--mono);font-size:11px;background:rgba(255,255,255,.16);border-radius:4px;padding:1px 5px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="mk"></span>fyscalmade</div>
+  <div class="tb-hint">Press <kbd>.</kbd> to toggle design mode, then click any element to refine it. Double-click text to edit.</div>
+  <div class="tb-actions">
+    <button class="btn" id="resetBtn">Reset all</button>
+    <button class="btn solid" id="dmBtn">Design mode</button>
+  </div>
+</div>
+
+<div class="shell">
+  <!-- ── Playground canvas ── -->
+  <div class="canvas" id="canvas">
+    <div class="canvas-inner">
+
+      <div class="hero">
+        <h1 data-edit data-text>Where designers ship production-ready polish</h1>
+        <p data-edit data-text>Refine these components directly. Enter design mode, select anything, and adjust padding, radius, colors, type, and shadows — live.</p>
+        <div class="code" data-edit><span class="dot">›</span> npx made-refine@latest init</div>
+      </div>
+
+      <div class="group">
+        <div class="group-label">Layout & Dashboard</div>
+        <div class="panel" data-edit>
+          <div class="stat-row">
+            <div class="stat" data-edit><div class="k" data-edit data-text>Views</div><div class="v" data-edit data-text>2,847</div><div class="d" data-edit data-text>+12% this week</div></div>
+            <div class="stat" data-edit><div class="k" data-edit data-text>Active</div><div class="v" data-edit data-text>128</div><div class="d" data-edit data-text>+4 today</div></div>
+            <div class="stat" data-edit><div class="k" data-edit data-text>Growth</div><div class="v" data-edit data-text>+24%</div><div class="d" data-edit data-text>vs last month</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-label">Components</div>
+        <div class="panel" data-edit>
+          <div class="btn-row">
+            <button class="b primary" data-edit data-text>Primary</button>
+            <button class="b secondary" data-edit data-text>Secondary</button>
+            <button class="b ghost" data-edit data-text>Ghost</button>
+            <button class="b danger" data-edit data-text>Danger</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-label">Typography & Spacing</div>
+        <div class="panel type-sample" data-edit>
+          <h3 data-edit data-text>The quick brown fox</h3>
+          <p data-edit data-text>Adjust font size, weight, line-height, and letter-spacing from the inspector. Double-click any text to edit it directly.</p>
+          <div class="type-cap" data-edit data-text>Caption · Monospace · 11px</div>
+          <div class="sp-row" style="margin-top:22px">
+            <div class="sp"><div class="box" data-edit style="width:4px;height:32px"></div><span class="n">4</span></div>
+            <div class="sp"><div class="box" data-edit style="width:8px;height:32px"></div><span class="n">8</span></div>
+            <div class="sp"><div class="box" data-edit style="width:12px;height:32px"></div><span class="n">12</span></div>
+            <div class="sp"><div class="box" data-edit style="width:16px;height:32px"></div><span class="n">16</span></div>
+            <div class="sp"><div class="box" data-edit style="width:20px;height:32px"></div><span class="n">20</span></div>
+            <div class="sp"><div class="box" data-edit style="width:24px;height:32px"></div><span class="n">24</span></div>
+            <div class="sp"><div class="box" data-edit style="width:32px;height:32px"></div><span class="n">32</span></div>
+            <div class="sp"><div class="box" data-edit style="width:40px;height:32px"></div><span class="n">40</span></div>
+            <div class="sp"><div class="box" data-edit style="width:48px;height:32px"></div><span class="n">48</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-label">Colors & Shadows</div>
+        <div class="panel" data-edit>
+          <div class="swatch-row">
+            <div class="sw"><div class="chip" data-edit style="background:#f7f7f8"></div><span class="n">Background</span></div>
+            <div class="sw"><div class="chip" data-edit style="background:#ffffff"></div><span class="n">Card</span></div>
+            <div class="sw"><div class="chip" data-edit style="background:#e9eaee"></div><span class="n">Muted</span></div>
+            <div class="sw"><div class="chip" data-edit style="background:#352eff"></div><span class="n">Accent</span></div>
+            <div class="sw"><div class="chip" data-edit style="background:#16171b"></div><span class="n">Foreground</span></div>
+          </div>
+          <div class="shadow-row">
+            <div class="shc" data-edit style="box-shadow:none">none</div>
+            <div class="shc" data-edit style="box-shadow:var(--sh-sm)">sm</div>
+            <div class="shc" data-edit style="box-shadow:var(--sh-md)">md</div>
+            <div class="shc" data-edit style="box-shadow:var(--sh-lg)">lg</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-label">Components & Sizing</div>
+        <div class="panel" data-edit>
+          <div class="profile">
+            <div class="pf-av" data-edit data-text>JC</div>
+            <div>
+              <div class="pf-name" data-edit data-text>Jane Cooper</div>
+              <div class="pf-role" data-edit data-text>Designer</div>
+            </div>
+          </div>
+          <div class="badge-row" style="margin-top:18px">
+            <span class="bg-pill active" data-edit data-text>Active</span>
+            <span class="bg-pill" data-edit data-text>Pending</span>
+            <span class="bg-pill" data-edit data-text>Draft</span>
+          </div>
+          <div class="size-row" style="margin-top:20px">
+            <div class="size-dot" data-edit style="width:26px;height:26px;font-size:9px">xs</div>
+            <div class="size-dot" data-edit style="width:32px;height:32px;font-size:10px">sm</div>
+            <div class="size-dot" data-edit style="width:40px;height:40px;font-size:11px">md</div>
+            <div class="size-dot" data-edit style="width:50px;height:50px;font-size:13px">lg</div>
+            <div class="size-dot" data-edit style="width:62px;height:62px;font-size:15px">xl</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Inspector ── -->
+  <aside class="inspector" id="inspector">
+    <div class="insp-head">
+      <div class="insp-title">Inspector <span class="insp-tag" id="inspTag" style="display:none"></span></div>
+      <div class="insp-sub" id="inspSub">Nothing selected</div>
+    </div>
+    <div id="inspContent">
+      <div class="empty">
+        <div class="ic">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a6a8af" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <p>Turn on design mode and click any element to start refining its styles.</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div class="sel-overlay" id="overlay"><span class="tag" id="overlayTag"></span></div>
+<div class="status" id="status"><span class="pulse"></span> Design mode on — click an element · <kbd>esc</kbd> to exit</div>
+
+<script>
+(function(){
+  const body=document.body, canvas=document.getElementById('canvas');
+  const overlay=document.getElementById('overlay'), overlayTag=document.getElementById('overlayTag');
+  const inspContent=document.getElementById('inspContent'), inspTag=document.getElementById('inspTag'), inspSub=document.getElementById('inspSub');
+  const dmBtn=document.getElementById('dmBtn'), resetBtn=document.getElementById('resetBtn'), status=document.getElementById('status');
+
+  let designMode=false, selected=null;
+  const original=new WeakMap();      // remember initial inline style per element
+
+  const BG=['transparent','#ffffff','#f7f7f8','#e9eaee','#16171b','#352eff','#0053ff','#7c9dff','#1f9d57','#e23b3b','#ff8400','#fbe9e9','#e9eefb','#eafaf0','#fff6e6','#222'];
+  const FG=['#16171b','#ffffff','#76787f','#352eff','#0053ff','#1f9d57','#e23b3b','#ff8400'];
+  const SHADOWS={none:'none',sm:'0 1px 2px rgba(20,22,40,.06)',md:'0 4px 14px -4px rgba(20,22,40,.12)',lg:'0 16px 40px -12px rgba(20,22,40,.2)',xl:'0 28px 64px -16px rgba(20,22,40,.28)'};
+  const RADII={Sharp:0,Subtle:8,Rounded:16,Pill:26};
+
+  function setDesignMode(on){
+    designMode=on;
+    body.classList.toggle('dm',on);
+    dmBtn.classList.toggle('on',on);
+    dmBtn.textContent=on?'Design mode':'Design mode';
+    status.classList.toggle('show',on);
+    if(!on)deselect();
+  }
+
+  function remember(el){ if(!original.has(el)) original.set(el, el.getAttribute('style')||''); }
+
+  function selectEl(el){
+    selected=el; remember(el);
+    positionOverlay();
+    const tag=el.dataset.name||el.tagName.toLowerCase()+(el.className?('.'+String(el.className).split(' ')[0]):'');
+    overlayTag.textContent=tag; inspTag.textContent=tag; inspTag.style.display='';
+    inspSub.textContent='Editing styles · live';
+    buildInspector(el);
+  }
+  function deselect(){ selected=null; overlay.style.display='none'; inspTag.style.display='none'; inspSub.textContent='Nothing selected'; showEmpty(); }
+  function showEmpty(){ inspContent.innerHTML='<div class="empty"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a6a8af" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div><p>Turn on design mode and click any element to start refining its styles.</p></div>'; }
+
+  function positionOverlay(){
+    if(!selected){overlay.style.display='none';return;}
+    const r=selected.getBoundingClientRect();
+    overlay.style.display='block';
+    overlay.style.top=r.top+'px'; overlay.style.left=r.left+'px';
+    overlay.style.width=r.width+'px'; overlay.style.height=r.height+'px';
+    overlay.style.borderRadius=getComputedStyle(selected).borderRadius;
+  }
+
+  const px=v=>Math.round(parseFloat(v)||0);
+  function apply(prop,val){ if(!selected)return; selected.style[prop]=val; positionOverlay(); }
+
+  function buildInspector(el){
+    const cs=getComputedStyle(el);
+    const pad=px(cs.paddingTop), rad=px(cs.borderTopLeftRadius), fs=px(cs.fontSize),
+          lh=(parseFloat(cs.lineHeight)/ (parseFloat(cs.fontSize)||16))||1.4,
+          ls=parseFloat(cs.letterSpacing)||0, fw=cs.fontWeight;
+    const html=`
+      <div class="insp-body">
+        <div class="ctrl">
+          <div class="ctrl-lbl">Padding <span class="ctrl-val" id="vPad">${pad}px</span></div>
+          <input type="range" id="cPad" min="0" max="48" value="${pad}">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-lbl">Radius <span class="ctrl-val" id="vRad">${rad}px</span></div>
+          <input type="range" id="cRad" min="0" max="44" value="${rad}" style="margin-bottom:11px">
+          <div class="chips" id="radChips">${Object.entries(RADII).map(([k,v])=>`<button class="ch" data-r="${v}">${k}</button>`).join('')}</div>
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-lbl">Background</div>
+          <div class="pal" id="palBg">${BG.map(c=>`<button data-c="${c}" style="background:${c==='transparent'?'repeating-conic-gradient(#ddd 0% 25%,#fff 0% 50%) 50%/10px 10px':c}" title="${c}"></button>`).join('')}</div>
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-lbl">Text color</div>
+          <div class="pal" id="palFg">${FG.map(c=>`<button data-c="${c}" style="background:${c}" title="${c}"></button>`).join('')}</div>
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-lbl">Font size <span class="ctrl-val" id="vFs">${fs}px</span></div>
+          <input type="range" id="cFs" min="9" max="56" value="${fs}">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-lbl">Font weight</div>
+          <div class="chips" id="fwChips">${[400,500,600,700,800].map(w=>`<button class="ch ${String(fw)===String(w)?'on':''}" data-w="${w}">${w}</button>`).join('')}</div>
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-lbl">Line height <span class="ctrl-val" id="vLh">${lh.toFixed(2)}</span></div>
+          <input type="range" id="cLh" min="1" max="2.2" step="0.05" value="${lh.toFixed(2)}">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-lbl">Letter spacing <span class="ctrl-val" id="vLs">${ls.toFixed(1)}px</span></div>
+          <input type="range" id="cLs" min="-2" max="6" step="0.1" value="${ls}">
+        </div>
+        <div class="ctrl">
+          <div class="ctrl-lbl">Shadow</div>
+          <div class="chips" id="shChips">${Object.keys(SHADOWS).map(k=>`<button class="ch" data-s="${k}">${k}</button>`).join('')}</div>
+        </div>
+      </div>`;
+    inspContent.innerHTML=html;
+
+    const $=id=>document.getElementById(id);
+    $('cPad').oninput=e=>{apply('padding',e.target.value+'px');$('vPad').textContent=e.target.value+'px';};
+    $('cRad').oninput=e=>{apply('borderRadius',e.target.value+'px');$('vRad').textContent=e.target.value+'px';};
+    $('radChips').onclick=e=>{const b=e.target.closest('[data-r]');if(!b)return;apply('borderRadius',b.dataset.r+'px');$('cRad').value=b.dataset.r;$('vRad').textContent=b.dataset.r+'px';};
+    $('cFs').oninput=e=>{apply('fontSize',e.target.value+'px');$('vFs').textContent=e.target.value+'px';};
+    $('cLh').oninput=e=>{apply('lineHeight',e.target.value);$('vLh').textContent=parseFloat(e.target.value).toFixed(2);};
+    $('cLs').oninput=e=>{apply('letterSpacing',e.target.value+'px');$('vLs').textContent=parseFloat(e.target.value).toFixed(1)+'px';};
+    $('fwChips').onclick=e=>{const b=e.target.closest('[data-w]');if(!b)return;apply('fontWeight',b.dataset.w);[...e.currentTarget.children].forEach(c=>c.classList.toggle('on',c===b));};
+    $('shChips').onclick=e=>{const b=e.target.closest('[data-s]');if(!b)return;apply('boxShadow',SHADOWS[b.dataset.s]);[...e.currentTarget.children].forEach(c=>c.classList.toggle('on',c===b));};
+    $('palBg').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;apply('background',b.dataset.c);mark($('palBg'),b);};
+    $('palFg').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;apply('color',b.dataset.c);mark($('palFg'),b);};
+  }
+  function mark(group,btn){[...group.children].forEach(c=>c.classList.toggle('on',c===btn));}
+
+  // ── interactions ──
+  canvas.addEventListener('click',e=>{
+    if(!designMode)return;
+    const el=e.target.closest('[data-edit]');
+    if(el && el.getAttribute('contenteditable')!=='true'){ e.preventDefault(); e.stopPropagation(); selectEl(el); }
+    else if(!el){ deselect(); }
+  },true);
+
+  canvas.addEventListener('dblclick',e=>{
+    if(!designMode)return;
+    const el=e.target.closest('[data-text]');
+    if(!el)return;
+    e.preventDefault();
+    remember(el);
+    el.setAttribute('contenteditable','true'); el.focus();
+    const sel=window.getSelection(),range=document.createRange();
+    range.selectNodeContents(el); sel.removeAllRanges(); sel.addRange(range);
+    const stop=()=>{el.removeAttribute('contenteditable');el.removeEventListener('blur',stop);if(selected===el)positionOverlay();};
+    el.addEventListener('blur',stop);
+  });
+
+  canvas.addEventListener('scroll',positionOverlay,{passive:true});
+  window.addEventListener('resize',positionOverlay);
+
+  dmBtn.onclick=()=>setDesignMode(!designMode);
+  resetBtn.onclick=()=>{
+    document.querySelectorAll('[data-edit]').forEach(el=>{ if(original.has(el)){const s=original.get(el); if(s)el.setAttribute('style',s);else el.removeAttribute('style');}});
+    deselect();
+  };
+
+  document.addEventListener('keydown',e=>{
+    const editing=document.activeElement&&document.activeElement.getAttribute('contenteditable')==='true';
+    const typing=/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||'');
+    if(e.key==='.'&&!editing&&!typing){ e.preventDefault(); setDesignMode(!designMode); }
+    if(e.key==='Escape'){ if(editing){document.activeElement.blur();} else if(selected){deselect();} else if(designMode){setDesignMode(false);} }
+  });
+})();
+</script>
+</body>
+</html>
