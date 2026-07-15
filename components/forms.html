@@ -45,23 +45,23 @@
 .cbx-field.text-left{flex-direction:row-reverse}
 .cbx-field.is-disabled{cursor:not-allowed;color:var(--Checkbox\/disabled\/text-disabled,#cccccc)}
 
-/* Toggle */
-.mav-toggle{
-  position:relative;width:44px;height:24px;border-radius:9999px;
-  cursor:pointer;transition:background .2s;flex-shrink:0;
-}
-.toggle-off{background:var(--bc-mono100-l)}
-.toggle-on{background:var(--mav-primary)}
-.toggle-on-dk{background:var(--mav-primary-dark)}
-.toggle-handle{
-  position:absolute;top:3px;width:18px;height:18px;
-  border-radius:50%;background:var(--bc-white);transition:left .2s;
-  box-shadow:0 1px 3px rgba(0,0,0,0.15);
-}
-.toggle-handle-off{left:3px}
-.toggle-handle-on{left:23px}
-[data-theme=dark] .toggle-on{background:var(--mav-primary-dark)}
-[data-theme=dark] .toggle-handle{background:var(--mav-fg)}
+/* Toggle — Figma "• Toggle" (85:5795). 44×24 pill, --toggle/* tokens (On → lime in dark) */
+.tgl{position:relative;width:44px;height:24px;border-radius:9999px;flex-shrink:0;cursor:pointer;padding:0;border:0;
+  background:var(--toggle\/default\/bg-box,#e5e5e5);transition:background .2s,box-shadow .15s}
+.tgl::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;
+  background:#ffffff;box-shadow:var(--shadow-input);transition:left .2s}
+.tgl.on{background:var(--toggle\/active\/bg-box-active,#352eff)}
+.tgl.on::after{left:23px}
+.tgl.is-hover{filter:brightness(.95)}
+.tgl.is-focus{box-shadow:0 0 0 3px rgba(53,46,255,.3)}
+.tgl.is-disabled{cursor:not-allowed;background:var(--toggle\/disabled\/bg-box-disabled,#e5e5e5)}
+.tgl.is-disabled.on{background:var(--toggle\/disabled\/bg-box-disabled-2,#e4ebff)}
+.tgl.is-disabled::after{box-shadow:none;opacity:.92}
+.tgl-grid{display:flex;flex-direction:column;gap:16px}
+.tgl-hrow{display:flex;align-items:center;gap:32px}
+.tgl-h{min-width:64px;font-size:12px;color:var(--mav-muted);font-family:'Inter',sans-serif}
+.tgl-field{display:inline-flex;align-items:center;gap:12px;cursor:pointer;font-size:14px;color:var(--mav-fg);font-family:'Inter',sans-serif}
+.tgl-field.text-left{flex-direction:row-reverse}
 
 /* Search */
 .search-wrap{
@@ -215,31 +215,39 @@
   <!-- Toggle -->
   <div class="section">
     <h2 class="section-title">Toggle</h2>
+    <p class="section-desc">44×24px pill. States Default / Hover / Focus / Disabled, each On and Off. The Default row is clickable; On track re-themes to lime in dark.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="tgl-grid">
+          <div class="tgl-hrow"><span class="tgl-h"></span><span class="tgl-h" style="min-width:44px;text-align:center">On</span><span class="tgl-h" style="min-width:44px;text-align:center">Off</span></div>
+          <div class="tgl-hrow"><span class="tgl-h">Default</span><button class="tgl on" onclick="this.classList.toggle('on')"></button><button class="tgl" onclick="this.classList.toggle('on')"></button></div>
+          <div class="tgl-hrow"><span class="tgl-h">Hover</span><span class="tgl on is-hover"></span><span class="tgl is-hover"></span></div>
+          <div class="tgl-hrow"><span class="tgl-h">Focus</span><span class="tgl on is-focus"></span><span class="tgl is-focus"></span></div>
+          <div class="tgl-hrow"><span class="tgl-h">Disabled</span><span class="tgl on is-disabled"></span><span class="tgl is-disabled"></span></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Toggle — 44×24px · handle 18px · uses --toggle/* tokens</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Toggle with label -->
+  <div class="section">
+    <h2 class="section-title">Toggle with label</h2>
+    <p class="section-desc">Label to the right (default) or left. The whole row toggles.</p>
     <div class="preview-card">
       <div class="preview-canvas">
         <div class="ctrl-row">
-          <div class="mav-toggle toggle-off" id="t1" onclick="this.classList.toggle('toggle-off');this.classList.toggle('toggle-on');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-off');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-on')">
-            <div class="toggle-handle toggle-handle-off"></div>
-          </div>
-          <div class="ctrl-label">Off — Default<div class="ctrl-sub">toggle/default/bg-box: #e5e5e5</div></div>
-          <div class="ctrl-state">Click to toggle</div>
+          <label class="tgl-field" onclick="var t=this.querySelector('.tgl');t.classList.toggle('on')"><span class="tgl on"></span><span>Enable notifications</span></label>
+          <div class="ctrl-state">text right</div>
         </div>
         <div class="ctrl-row">
-          <div class="mav-toggle toggle-on" id="t2" onclick="this.classList.toggle('toggle-off');this.classList.toggle('toggle-on');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-off');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-on')">
-            <div class="toggle-handle toggle-handle-on"></div>
-          </div>
-          <div class="ctrl-label">On — Active<div class="ctrl-sub">toggle/active/bg-box-active: #352eff (dark: #a1ff5b)</div></div>
-          <div class="ctrl-state">Click to toggle</div>
-        </div>
-        <div class="ctrl-row">
-          <div class="mav-toggle toggle-off">
-            <div class="toggle-handle toggle-handle-off"></div>
-          </div>
-          <div class="ctrl-label">Disabled<div class="ctrl-sub">toggle/disabled/bg-box-disabled: #e5e5e5</div></div>
-          <div class="ctrl-state">disabled</div>
+          <label class="tgl-field text-left" onclick="var t=this.querySelector('.tgl');t.classList.toggle('on')"><span class="tgl"></span><span>Enable notifications</span></label>
+          <div class="ctrl-state">text left</div>
         </div>
       </div>
-      <div class="preview-meta"><span class="preview-label">Toggle — 44×24px · handle 18×18px</span></div>
+      <div class="preview-meta"><span class="preview-label">Toggle with label — 12px gap · text side right / left</span></div>
     </div>
   </div>
 
