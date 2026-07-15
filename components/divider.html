@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Divider — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Divider — Figma "• Divider" page (52:30219) ═════════════════════════════
+   A 1px rule that separates content. Types: Horizontal / Vertical.
+   Colour is the --devider/default token (Figma's intentional "devider" typo),
+   #efefef in light and #484848 in dark via the tokens.css theme override.
+   In the current Figma, the Light and Heavy styles resolve to the same token. */
+.dv{background:var(--devider\/default,#efefef);border:0;margin:0;flex-shrink:0}
+.dv-h{width:100%;height:1px}
+.dv-v{width:1px;align-self:stretch;min-height:48px}
+
+.dv-demo{display:flex;flex-direction:column;gap:14px;width:100%;max-width:420px}
+.dv-inline{display:flex;align-items:center;gap:16px;height:48px}
+.dv-inline span{font-size:14px;color:var(--mav-fg);font-family:'Inter',sans-serif}
+
+/* Menu/list usage sample */
+.dv-list{width:100%;max-width:340px;border:1px solid var(--mav-border);border-radius:12px;overflow:hidden}
+.dv-list .row{padding:14px 18px;font-size:14px;color:var(--mav-fg);font-family:'Inter',sans-serif}
+
+/* Section-header usage: label centred on a rule */
+.dv-labelled{display:flex;align-items:center;gap:16px;width:100%;max-width:420px}
+.dv-labelled .lbl{font-size:12px;color:var(--mav-muted);white-space:nowrap;text-transform:uppercase;letter-spacing:.06em}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link active">Divider</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Divider</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Divider</h1>
+    <p class="page-desc">A 1px rule that separates content or sections. Colour comes from the <code>--devider/default</code> token, which re-themes automatically in dark mode.</p>
+  </div>
+
+  <!-- Type -->
+  <div class="section">
+    <h2 class="section-title">Type</h2>
+    <p class="section-desc">Horizontal spans the available width; Vertical fills the height of its row. Both are 1px.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="dv-demo">
+          <span style="font-size:12px;color:var(--mav-muted)">Horizontal</span>
+          <hr class="dv dv-h" role="separator" aria-orientation="horizontal">
+        </div>
+        <div class="dv-demo" style="margin-top:28px">
+          <span style="font-size:12px;color:var(--mav-muted)">Vertical</span>
+          <div class="dv-inline">
+            <span>Label</span>
+            <div class="dv dv-v" role="separator" aria-orientation="vertical"></div>
+            <span>Label</span>
+            <div class="dv dv-v" role="separator" aria-orientation="vertical"></div>
+            <span>Label</span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Divider — 1px · --devider/default #efefef</span><span class="preview-sublabel">Horizontal (w-full · h-1px) · Vertical (w-1px · h-full)</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Style -->
+  <div class="section">
+    <h2 class="section-title">Style</h2>
+    <p class="section-desc">The Figma component defines Light and Heavy styles, but both currently resolve to the same <code>--devider/default</code> token — the distinction is reserved for future weighting.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="dv-demo">
+          <span style="font-size:12px;color:var(--mav-muted)">Light</span>
+          <hr class="dv dv-h" role="separator">
+        </div>
+        <div class="dv-demo" style="margin-top:24px">
+          <span style="font-size:12px;color:var(--mav-muted)">Heavy</span>
+          <hr class="dv dv-h" role="separator">
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Style — Light / Heavy (identical token in current Figma)</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Usage -->
+  <div class="section">
+    <h2 class="section-title">In context</h2>
+    <p class="section-desc">Dividers separating list rows, splitting inline items, and framing a labelled section header.</p>
+    <div class="preview-card">
+      <div class="preview-canvas" style="gap:40px">
+        <div class="dv-list">
+          <div class="row">Account settings</div>
+          <hr class="dv dv-h" role="separator">
+          <div class="row">Notifications</div>
+          <hr class="dv dv-h" role="separator">
+          <div class="row">Privacy &amp; security</div>
+        </div>
+
+        <div class="dv-labelled">
+          <hr class="dv dv-h" role="separator" style="flex:1">
+          <span class="lbl">or continue with</span>
+          <hr class="dv dv-h" role="separator" style="flex:1">
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">List rows · labelled separator</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <p class="section-desc">The <code>devider</code> spelling is an intentional carry-over from the Figma variable name.</p>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--devider/default</td><td><span class="token-swatch-sm" style="background:#efefef;border:1px solid #d0d0d0"></span><span class="token-value">#efefef</span></td><td class="token-value">Divider colour (light)</td></tr>
+        <tr><td class="token-name">--devider/default <span style="opacity:.6">(dark)</span></td><td><span class="token-swatch-sm" style="background:#484848"></span><span class="token-value">#484848</span></td><td class="token-value">Divider colour (dark theme)</td></tr>
+        <tr><td class="token-name">Thickness</td><td><span class="token-value">1px</span></td><td class="token-value">Horizontal height / vertical width</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="34" height="34" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="List icons V0.1">
+<rect x="-913.414" y="-314" width="1561" height="1415" rx="16" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Bank List">
+<rect x="-864.914" y="-265.5" width="1464" height="365" rx="4.5" stroke="#9747FF" style="stroke:#9747FF;stroke:color(display-p3 0.5922 0.2784 1.0000);stroke-opacity:1;" stroke-dasharray="10 5"/>
+<g id="Property 1=RURAL BANK OF SAN MEDJUGORJE">
+<mask id="mask0_51_62" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="34" height="34">
+<circle id="Ellipse 3059" cx="17" cy="17" r="17" fill="#D9D9D9" style="fill:#D9D9D9;fill:color(display-p3 0.8510 0.8510 0.8510);fill-opacity:1;"/>
+</mask>
+<g mask="url(#mask0_51_62)">
+<rect id="image" x="3.40039" y="3.40039" width="27.2" height="27.2" rx="13.6" fill="#352EFF" fill-opacity="0.1" style="fill:#352EFF;fill:color(display-p3 0.2078 0.1804 1.0000);fill-opacity:0.1;"/>
+<g id="SM">
+<path id="Vector" d="M16.3262 21V12.5449H18.3711L20.7734 18.6211H20.8086L23.2109 12.5449H25.2559V21H23.6797V15.2812H23.627L21.3477 21H20.2344L17.9492 15.2812H17.9023V21H16.3262Z" fill="black" style="fill:black;fill-opacity:1;"/>
+<path id="Vector_2" d="M11.832 21.1465C9.82227 21.1465 8.52734 20.2266 8.42773 18.668L8.42188 18.5742H10.0918L10.1035 18.6387C10.2148 19.2949 10.9121 19.7051 11.8789 19.7051C12.8574 19.7051 13.4727 19.2773 13.4727 18.6328V18.627C13.4727 18.0527 13.0566 17.7656 12.0078 17.5488L11.1172 17.373C9.44727 17.0391 8.60352 16.2422 8.60352 14.9707V14.9648C8.60352 13.418 9.95117 12.3984 11.8262 12.3984C13.7832 12.3984 14.9844 13.377 15.0664 14.8594L15.0723 14.9707H13.4023L13.3965 14.9004C13.3086 14.2383 12.6992 13.834 11.8262 13.834C10.918 13.8398 10.373 14.2559 10.373 14.8594V14.8652C10.373 15.3984 10.8066 15.709 11.7793 15.9023L12.6758 16.084C14.4453 16.4355 15.2422 17.1562 15.2422 18.4863V18.4922C15.2422 20.1152 13.9648 21.1465 11.832 21.1465Z" fill="black" style="fill:black;fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

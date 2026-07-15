@@ -24,9 +24,12 @@
     { href: 'components/forms.html',         label: 'Forms & Controls' },
     { href: 'components/feedback.html',      label: 'Alerts & Toasts' },
     { href: 'components/badges.html',        label: 'Badges & Chips' },
+    { href: 'components/avatars.html',       label: 'Avatars' },
+    { href: 'components/cards.html',         label: 'Payment Cards' },
     { href: 'components/navigation.html',    label: 'Navigation' },
     { href: 'components/chat.html',          label: 'Chat Bubbles' },
     { href: 'components/finance.html',       label: 'Finance Modules' },
+    { href: 'components/divider.html',       label: 'Divider' },
     { href: 'components/all.html',           label: 'Kitchen Sink' },
 
     { group: 'iOS Screens' },

@@ -1,0 +1,32 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-80 -685)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-80 -360)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="guatemala" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+<rect id="rectangle-6" x="16" width="6" height="16" fill="#3ECBF8" style="fill:#3ECBF8;fill:color(display-p3 0.2427 0.7961 0.9708);fill-opacity:1;"/>
+<rect id="rectangle-7" width="6" height="16" fill="#3ECBF8" style="fill:#3ECBF8;fill:color(display-p3 0.2427 0.7961 0.9708);fill-opacity:1;"/>
+<path id="vector" d="M11.5 9C11.7761 9 12 8.55228 12 8C12 7.44772 11.7761 7 11.5 7C11.2239 7 11 7.44772 11 8C11 8.55228 11.2239 9 11.5 9Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M14 8.5C14 7.12 12.88 6 11.5 6C10.12 6 9 7.12 9 8.5C9 9.88 10.12 11 11.5 11C12.88 11 14 9.88 14 8.5ZM11.5 10C12.328 10 13 9.105 13 8C13 6.895 12.328 6 11.5 6C10.672 6 10 6.895 10 8C10 9.105 10.672 10 11.5 10Z" fill="#249F58" style="fill:#249F58;fill:color(display-p3 0.1406 0.6250 0.3444);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

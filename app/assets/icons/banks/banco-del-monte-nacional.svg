@@ -1,0 +1,21 @@
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="34" height="34" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="List icons V0.1">
+<rect x="-313.827" y="-364" width="1561" height="1415" rx="16" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Bank List">
+<rect x="-265.327" y="-315.5" width="1464" height="365" rx="4.5" stroke="#9747FF" style="stroke:#9747FF;stroke:color(display-p3 0.5922 0.2784 1.0000);stroke-opacity:1;" stroke-dasharray="10 5"/>
+<g id="Property 1=BANCO DEL MONTE NACIONAL">
+<mask id="mask0_51_62" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="34" height="34">
+<circle id="Ellipse 3059" cx="17" cy="17" r="17" fill="#D9D9D9" style="fill:#D9D9D9;fill:color(display-p3 0.8510 0.8510 0.8510);fill-opacity:1;"/>
+</mask>
+<g mask="url(#mask0_51_62)">
+<rect id="image" x="3.40039" y="3.40039" width="27.2" height="27.2" rx="13.6" fill="#352EFF" fill-opacity="0.1" style="fill:#352EFF;fill:color(display-p3 0.2078 0.1804 1.0000);fill-opacity:0.1;"/>
+<g id="DM">
+<path id="Vector" d="M16.2363 21V12.5449H18.2812L20.6836 18.6211H20.7188L23.1211 12.5449H25.166V21H23.5898V15.2812H23.5371L21.2578 21H20.1445L17.8594 15.2812H17.8125V21H16.2363Z" fill="black" style="fill:black;fill-opacity:1;"/>
+<path id="Vector_2" d="M7.83398 21V12.5449H11.0625C13.5938 12.5449 15.0938 14.0508 15.0938 16.7285V16.7402C15.0938 19.4238 13.5996 21 11.0625 21H7.83398ZM9.60352 19.5352H10.8516C12.4336 19.5352 13.2891 18.5742 13.2891 16.7461V16.7344C13.2891 14.9707 12.4043 14.0039 10.8516 14.0039H9.60352V19.5352Z" fill="black" style="fill:black;fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

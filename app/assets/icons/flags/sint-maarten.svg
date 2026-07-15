@@ -1,0 +1,33 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-80 -1045)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-80 -720)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="sint-maarten" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="#1A47B8" style="fill:#1A47B8;fill:color(display-p3 0.1021 0.2767 0.7208);fill-opacity:1;"/>
+<path id="top" d="M22 0H0V8H22V0Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="left" fill-rule="evenodd" clip-rule="evenodd" d="M0 0L10.4762 8L0 16V0Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="symbol" fill-rule="evenodd" clip-rule="evenodd" d="M1.04785 5.33301H3.14309L4.19071 6.39967L5.23833 5.33301H7.33357L5.23833 6.39967H3.14309L1.04785 5.33301Z" fill="#AE6A3E" style="fill:#AE6A3E;fill:color(display-p3 0.6824 0.4157 0.2431);fill-opacity:1;"/>
+<path id="symbol_2" d="M4.19069 10.6671C4.76927 10.6671 5.2383 9.71193 5.2383 8.53372C5.2383 7.35552 4.76927 6.40039 4.19069 6.40039C3.6121 6.40039 3.14307 7.35552 3.14307 8.53372C3.14307 9.71193 3.6121 10.6671 4.19069 10.6671Z" fill="#3ECBF8" style="fill:#3ECBF8;fill:color(display-p3 0.2427 0.7961 0.9708);fill-opacity:1;"/>
+<path id="symbol_3" fill-rule="evenodd" clip-rule="evenodd" d="M3.14283 7.4668V9.60013H4.19045H5.23807V7.4668L6.28569 9.60013L5.23807 10.6668H3.14283L2.09521 9.60013L3.14283 7.4668Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

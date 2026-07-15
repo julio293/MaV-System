@@ -1,0 +1,32 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-402 -885)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-402 -560)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="new-zealand" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="#1A47B8" style="fill:#1A47B8;fill:color(display-p3 0.1021 0.2767 0.7208);fill-opacity:1;"/>
+<path id="vector" d="M19.9048 0H2.09524C0.93807 0 0 0.955126 0 2.13333V13.8667C0 15.0449 0.93807 16 2.09524 16H19.9048C21.0619 16 22 15.0449 22 13.8667V2.13333C22 0.955126 21.0619 0 19.9048 0Z" fill="#1A47B8" style="fill:#1A47B8;fill:color(display-p3 0.1021 0.2767 0.7208);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M15.7144 4.2666V5.33327H16.762V4.2666H15.7144ZM17.8096 6.39994V7.4666H18.8572V6.39994H17.8096ZM13.6191 7.4666V8.53327H14.6668V7.4666H13.6191ZM15.7144 11.7333V12.7999H16.762V11.7333H15.7144Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector_3" d="M9.4288 1.06641H2.09547C1.51689 1.06641 1.04785 1.54397 1.04785 2.13307V7.46641C1.04785 8.05551 1.51689 8.53307 2.09547 8.53307H9.4288C10.0074 8.53307 10.4764 8.05551 10.4764 7.46641V2.13307C10.4764 1.54397 10.0074 1.06641 9.4288 1.06641Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector_4" fill-rule="evenodd" clip-rule="evenodd" d="M5.23807 5.33379H2.09521V4.26712H5.23807V2.13379H6.28569V4.26712H9.42855V5.33379H6.28569V7.46712H5.23807V5.33379ZM7.85712 6.40046V7.46712H9.42855V6.40046H7.85712ZM7.85712 2.13379V3.20046H9.42855V2.13379H7.85712ZM2.09521 6.40046V7.46712H3.66664V6.40046H2.09521ZM2.09521 2.13379V3.20046H3.66664V2.13379H2.09521Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

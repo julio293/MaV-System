@@ -1,0 +1,32 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-356 -605)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-356 -280)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="eritrea" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="#3A99FF" style="fill:#3A99FF;fill:color(display-p3 0.2292 0.6010 1.0000);fill-opacity:1;"/>
+<path id="vector" d="M19.9048 0H2.09524C0.93807 0 0 0.955126 0 2.13333V13.8667C0 15.0449 0.93807 16 2.09524 16H19.9048C21.0619 16 22 15.0449 22 13.8667V2.13333C22 0.955126 21.0619 0 19.9048 0Z" fill="#3A99FF" style="fill:#3A99FF;fill:color(display-p3 0.2292 0.6010 1.0000);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H22V8H0V0Z" fill="#249F58" style="fill:#249F58;fill:color(display-p3 0.1406 0.6250 0.3444);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M0 0L22 8L0 16V0Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector_4" fill-rule="evenodd" clip-rule="evenodd" d="M9.42878 8.00043C9.42878 6.52843 8.25545 5.33376 6.80973 4.80043C5.36402 5.33376 4.19069 6.52843 4.19069 8.00043C4.19069 9.2911 5.09164 10.3663 6.28592 10.6138V6.93163C6.28592 6.6383 6.52897 6.40043 6.80973 6.40043C7.09888 6.40043 7.33354 6.62976 7.33354 6.93163V10.6138C8.52783 10.3663 9.42878 9.2911 9.42878 8.00043ZM10.4764 8.00043C10.4764 5.93856 8.83478 4.2671 6.80973 4.80043C4.78469 4.2671 3.14307 5.93856 3.14307 8.00043C3.14307 10.0623 4.78469 11.7338 6.80973 11.7338C8.83478 11.7338 10.4764 10.0623 10.4764 8.00043Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

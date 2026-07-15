@@ -1,0 +1,33 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-126 -1045)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-126 -720)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="slovakia" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="#1A47B8" style="fill:#1A47B8;fill:color(display-p3 0.1021 0.2767 0.7208);fill-opacity:1;"/>
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M0 10.667H22V16.0003H0V10.667Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H22V5.33333H0V0ZM10.4029 10.6667H10.4762V5.33333H3.14286V10.6667H3.21619C3.168 10.8395 3.14286 11.0187 3.14286 11.2C3.14286 12.672 6.80952 13.8667 6.80952 13.8667C6.80952 13.8667 10.4762 12.672 10.4762 11.2C10.4762 11.0187 10.451 10.8395 10.4029 10.6667Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M9.42852 10.6666V4.2666H4.19043V10.6666C4.19043 11.8453 6.80948 12.7999 6.80948 12.7999C6.80948 12.7999 9.42852 11.8453 9.42852 10.6666Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector_4" fill-rule="evenodd" clip-rule="evenodd" d="M6.28578 8.53301V7.46634H5.23817V6.39967H6.28578V5.33301H7.3334V6.39967H8.38102V7.46634H7.3334V8.53301H8.90483V9.59967H7.3334V10.6663H6.28578V9.59967H4.71436V8.53301H6.28578Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector_5" fill-rule="evenodd" clip-rule="evenodd" d="M6.80948 12.8001C6.80948 12.8001 9.42852 11.8454 9.42852 10.6667C9.42852 9.48808 8.38091 9.60008 6.80948 10.6667C5.23805 9.60008 4.19043 9.48808 4.19043 10.6667C4.19043 11.8454 6.80948 12.8001 6.80948 12.8001Z" fill="#1A47B8" style="fill:#1A47B8;fill:color(display-p3 0.1021 0.2767 0.7208);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

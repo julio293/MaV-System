@@ -1,0 +1,32 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-264 -925)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-264 -600)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="oman" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector" d="M19.9048 0H2.09524C0.93807 0 0 0.955126 0 2.13333V13.8667C0 15.0449 0.93807 16 2.09524 16H19.9048C21.0619 16 22 15.0449 22 13.8667V2.13333C22 0.955126 21.0619 0 19.9048 0Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M6 11H22V16H6V11Z" fill="#249F58" style="fill:#249F58;fill:color(display-p3 0.1406 0.6250 0.3444);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M6.00024 0H22.0002V5H6.00024V0ZM4.79415 4.1632C4.73653 4.25173 4.67053 4.33387 4.5951 4.41173C3.98015 5.0368 2.98491 5.0368 2.37205 4.41173C1.75814 3.78773 1.75814 2.7744 2.37205 2.1504C2.44748 2.07147 2.52919 2.00427 2.61614 1.9456C2.38043 2.3936 2.57424 3.1104 3.11272 3.6576C3.65119 4.20373 4.35415 4.40213 4.79519 4.16213L4.79415 4.1632Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector_4" fill-rule="evenodd" clip-rule="evenodd" d="M2.53962 4.16291C2.59724 4.25145 2.66324 4.33358 2.73867 4.41145C3.35362 5.03651 4.34886 5.03651 4.96172 4.41145C5.57562 3.78745 5.57562 2.77411 4.96172 2.15011C4.88629 2.07118 4.80457 2.00398 4.71762 1.94531C4.95334 2.39331 4.75953 3.11011 4.22105 3.65731C3.68257 4.20345 2.97962 4.40185 2.53857 4.16185L2.53962 4.16291Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,31 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-310 -885)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-310 -560)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="nepal" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M0 0L13.619 8.53333H6.28571L13.619 16H0V0Z" fill="#003495" style="fill:#003495;fill:color(display-p3 0.0000 0.2039 0.5843);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M1.04742 2.13379L9.42838 7.46712H3.14266L10.476 14.9338H1.04738C1.04736 14.4005 1.04742 14.4474 1.04742 13.865V2.13379Z" fill="#DF0A37" style="fill:#DF0A37;fill:color(display-p3 0.8745 0.0392 0.2157);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M5.14902 5.33301C5.20664 5.41621 5.23807 5.50581 5.23807 5.59967C5.23807 6.04127 4.53407 6.39967 3.66664 6.39967C2.79921 6.39967 2.09521 6.04127 2.09521 5.59967C2.09521 5.50581 2.12664 5.41621 2.18426 5.33301C2.40007 5.48874 2.98255 5.59967 3.66664 5.59967C4.35074 5.59967 4.93426 5.48874 5.14902 5.33301Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector_4" d="M3.66664 13.867C4.53452 13.867 5.23807 13.1506 5.23807 12.267C5.23807 11.3833 4.53452 10.667 3.66664 10.667C2.79877 10.667 2.09521 11.3833 2.09521 12.267C2.09521 13.1506 2.79877 13.867 3.66664 13.867Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

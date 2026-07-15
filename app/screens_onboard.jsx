@@ -15,29 +15,29 @@ const OnbBrand = ({ light }) => (
   </div>
 );
 
-/* ── Splash (boot) — super.money-style bold reveal ─────────────────────── */
-const Splash = ({ nav, app }) => {
+/* ── Splash — Figma "Opening" (845:25608), variants 1 | 2 | 3 ────────────
+   1: white bg + floating gradient panels    2: primary bg + white glow
+   3: secondary glow from top over white (Figma default)
+   Backgrounds and logo route through theme tokens so the customiser can reskin. */
+const OPENING_VARIANT = 3;
+const Splash = ({ nav, app, params }) => {
+  const v = (params && params.variant) || OPENING_VARIANT;
   useEffect(() => {
+    // dark status icons on white bg — deferred so it lands after the shell's TONE effect
+    if (v === 1 && app && app.setTone) setTimeout(() => app.setTone('dark'), 0);
     const id = setTimeout(() => nav.reset(app && app.authed ? 'home' : 'onboarding'), 2400);
     return () => clearTimeout(id);
   }, []);
   return (
-    <div className="boot" onClick={() => nav.reset(app && app.authed ? 'home' : 'onboarding')}>
-      <span className="boot-aurora" />
-      <div className="boot-stage">
-        <span className="boot-halo" />
-        <span className="boot-ring a" /><span className="boot-ring b" /><span className="boot-ring c" />
-        <div className="boot-logo">
-          <img src="assets/ft-mark-1080.png" alt="Fyscal" onError={(e) => { e.target.style.display = 'none'; e.target.parentNode.querySelector('.boot-ft').style.display = 'block'; }} />
-          <span className="boot-ft" style={{ display: 'none', color: 'var(--mav-primary)', fontWeight: 900, fontSize: 46, fontStyle: 'italic', letterSpacing: '-.04em' }}>FT</span>
-          <span className="boot-shine" />
-        </div>
-        <div className="boot-tag">Empowering digital finance</div>
-      </div>
-      <div className="boot-foot">
-        <div className="boot-bar"><i /></div>
-        <span className="boot-secure"><Icon.lock s={12} sw={2.2} /> Secured by 256-bit encryption</span>
-      </div>
+    <div className={`opening v${v}`} onClick={() => nav.reset(app && app.authed ? 'home' : 'onboarding')}>
+      {v === 1
+        ? <><span className="op-panel a" /><span className="op-panel b" /><span className="op-panel c" /></>
+        : <span className="op-glow" />}
+      <span className="op-logo" role="img" aria-label="Fyscal" />
+      <p className="op-legal">
+        2025 Fyscal Technologies PTE LTD&nbsp; All rights reserved<br />
+        and is regulated by the Financial Services Authority and is a member of the Deposit Insurance Corporation.
+      </p>
     </div>
   );
 };

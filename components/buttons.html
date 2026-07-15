@@ -7,75 +7,193 @@
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/shared.css">
 <style>
-.btn-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:20px 0;border-bottom:1px solid var(--mav-border)}
+.btn-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--mav-border)}
 .btn-row:last-child{border-bottom:none}
 .btn-state-label{font-size:11px;color:var(--mav-muted);font-weight:500;min-width:70px;flex-shrink:0}
+.btn-note{font-size:11px;color:var(--mav-muted)}
 
-/* MaV Buttons */
+/* ══ Core button — Figma component set 52:24315 ══════════════════════════
+   Axes: Size xs/sm/md/lg · Type Primary/Secondary/Clear/Swipe ·
+   State Default/Hover/Focus/Disabled · icon-left/right, dropdown, icon-only */
 .mav-btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:10px 16px;border-radius:4px;font-size:14px;font-weight:500;
-  font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;
-  border:none;transition:all .15s;white-space:nowrap;
+  padding:10px 16px;border-radius:var(--border\/border-radius\/sm,4px);
+  font-family:var(--font-active);font-size:var(--medium\/md,14px);font-weight:500;
+  line-height:normal;white-space:nowrap;cursor:pointer;border:none;
+  transition:background .15s,color .15s,box-shadow .15s,border-color .15s;
 }
-.mav-btn-primary{background:var(--mav-primary);color:var(--bc-white)}
-.mav-btn-primary:hover{background:var(--mav-tertiary-2)}
-.mav-btn-secondary{background:transparent;color:var(--mav-fg);border:1px solid var(--mav-border)}
-.mav-btn-secondary:hover{background:var(--mav-border)}
-.mav-btn-text{background:transparent;color:var(--mav-primary);border:none;padding:10px 8px}
-.mav-btn-text:hover{color:var(--mav-tertiary-2)}
-.mav-btn-disabled{background:var(--bc-mono100-l);color:var(--mav-placeholder);cursor:not-allowed}
-.mav-btn-loading{background:var(--mav-primary);color:var(--bc-white);position:relative;opacity:.8}
+.mav-btn svg{width:20px;height:20px;flex-shrink:0}
+/* sizes — icon stays 20px at every size */
+.mav-btn-xs{padding:2px 8px;font-size:var(--medium\/sm,12px);gap:4px}
+.mav-btn-sm{padding:6px 12px}
+.mav-btn-lg{padding:16px;font-size:var(--medium\/xl,18px)}
+/* icon-only */
+.mav-btn-icononly{padding:10px}
+.mav-btn-icononly.mav-btn-xs{padding:2px}
+.mav-btn-icononly.mav-btn-sm{padding:6px}
+.mav-btn-icononly.mav-btn-lg{padding:16px}
 
-/* Dark bg versions */
-.dark-preview{background:var(--mav-fg);padding:24px;border-radius:8px}
-.mav-btn-primary-dk{background:var(--mav-primary-dark);color:var(--mav-fg)}
-.mav-btn-text-dk{color:var(--mav-primary-dark)}
-.mav-btn-disabled-dk{background:var(--bc-mono100-d);color:var(--bc-mono200-d)}
+/* Primary */
+.mav-btn-primary{background:var(--btn\/primary\/default);color:var(--btn\/primary\/text-default)}
+.mav-btn-primary:hover{background:var(--btn\/primary\/hover)}
+.mav-btn-primary:focus-visible,.mav-btn-primary.is-focus{background:var(--btn\/primary\/default);box-shadow:var(--shadow-focus);outline:none}
+.mav-btn-primary:disabled,.mav-btn-primary.is-disabled{background:var(--btn\/primary\/disabled);color:var(--btn\/primary\/text-default);cursor:not-allowed}
 
-/* Sizing */
-.mav-btn-sm{padding:6px 12px;font-size:12px}
-.mav-btn-lg{padding:14px 20px;font-size:16px}
-.mav-btn-xl{padding:16px 24px;font-size:16px;width:100%;max-width:343px}
+/* Secondary (outline) */
+.mav-btn-secondary{background:var(--btn\/secondary\/default);color:var(--btn\/secondary\/text-default);border:1px solid var(--btn\/secondary\/default-outline)}
+.mav-btn-secondary:hover{background:var(--btn\/secondary\/hover);box-shadow:var(--shadow\/sm)}
+.mav-btn-secondary:focus-visible,.mav-btn-secondary.is-focus{background:var(--btn\/secondary\/clicked);color:var(--btn\/primary\/text-default);border-color:var(--icon\/inverted,#ffffff);box-shadow:var(--focus\/primary);outline:none}
+.mav-btn-secondary:disabled,.mav-btn-secondary.is-disabled{background:var(--btn\/secondary\/disabled);border-color:var(--btn\/secondary\/disabled-outline);color:var(--main-text\/disabled);cursor:not-allowed;box-shadow:none}
 
-/* Sliding button */
-.mav-btn-sliding{
-  position:relative;overflow:hidden;
-  background:var(--mav-primary);color:var(--bc-white);
-  padding:10px 20px 10px 48px;
+/* Clear (text-only) — zero padding at every size */
+.mav-btn-clear{background:transparent;color:var(--btn\/textonly\/default);padding:0}
+.mav-btn-clear.mav-btn-xs,.mav-btn-clear.mav-btn-lg{padding:0}
+.mav-btn-clear:hover{color:var(--btn\/textonly\/hover)}
+.mav-btn-clear:focus-visible,.mav-btn-clear.is-focus{color:var(--btn\/textonly\/clicked);outline:none}
+.mav-btn-clear:disabled,.mav-btn-clear.is-disabled{color:var(--btn\/textonly\/disabled);cursor:not-allowed}
+
+/* Swipe (bottom-sheet trigger) — top corners only */
+.mav-btn-swipe{background:var(--btn\/swipeup\/default);color:var(--btn\/primary\/text-default);
+  border-radius:var(--border\/border-radius\/md,8px) var(--border\/border-radius\/md,8px) 0 0}
+.mav-btn-swipe:hover{background:var(--btn\/primary\/hover)}
+.mav-btn-swipe:focus-visible,.mav-btn-swipe.is-focus{background:var(--btn\/primary\/clicked);box-shadow:var(--shadow-focus);outline:none}
+.mav-btn-swipe:disabled,.mav-btn-swipe.is-disabled{background:var(--btn\/swipeup\/disabled);cursor:not-allowed}
+.mav-btn-swipe.mav-btn-lg{padding:14px 20px}
+
+/* ══ Social buttons — Figma set 52:25190 ═════════════════════════════════ */
+.social-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--background\/bg-default);border:1px solid var(--border\/subtle);
+  border-radius:8px;box-shadow:var(--shadow\/sm);
+  font-family:var(--font-active);font-size:14px;font-weight:700;
+  color:var(--main-text\/default);white-space:nowrap;cursor:pointer;
+  padding:8px 16px;transition:background .15s,border-color .15s,box-shadow .15s;
 }
-.sliding-handle{
-  position:absolute;left:4px;top:50%;transform:translateY(-50%);
-  width:32px;height:32px;border-radius:3px;
-  background:var(--bc-white);display:flex;align-items:center;justify-content:center;
-}
-.sliding-handle svg{stroke:var(--mav-primary);fill:none;width:16px;height:16px}
+.social-btn img{width:24px;height:24px;display:block}
+.social-btn-sm{padding:6px 12px}
+.social-btn-sm img{width:20px;height:20px}
+.social-btn-lg{padding:12px 20px}
+.social-btn:hover{background:var(--bc-mono100-l,#ececec);border-color:var(--bc-mono200-l,#dbdbdb);color:var(--mav-fg)}
+.social-btn:focus-visible,.social-btn.is-focus{box-shadow:var(--focus\/primary);outline:none}
+.social-btn:disabled,.social-btn.is-disabled{background:var(--background\/bg-default);border-color:#dbdbdb;color:#a5a5a5;cursor:not-allowed}
+.social-btn:disabled img,.social-btn.is-disabled img{opacity:.4}
+.social-btn-icononly{padding:8px}
+.social-btn-icononly.social-btn-sm{padding:6px}
+.social-btn-icononly.social-btn-lg{padding:12px}
 
-/* Swipe-up button */
-.mav-btn-swipeup{
-  background:var(--mav-bg-tertiary);color:var(--mav-primary);
-  padding:10px 16px;display:flex;align-items:center;gap:8px;
-}
-.swipeup-arrow{font-size:16px}
+/* ══ Text links — Figma set 52:26430 (no underline in any state) ════════ */
+.tlink{display:inline-flex;align-items:center;gap:8px;padding:0;border:none;background:transparent;
+  border-radius:4px;font-family:var(--font-active);font-size:var(--medium\/md,14px);font-weight:500;
+  line-height:normal;white-space:nowrap;cursor:pointer;text-decoration:none;transition:color .15s,box-shadow .15s}
+.tlink svg{width:20px;height:20px;flex-shrink:0}
+.tlink-sm svg{width:16px;height:16px}
+.tlink-primary{color:var(--btn\/textonly\/default)}
+.tlink-primary:hover{color:#06111b}
+.tlink-primary:focus-visible,.tlink-primary.is-focus{color:var(--input-field\/focus\/text-placeholder,#191919);box-shadow:var(--focus\/primary);outline:none}
+.tlink-secondary{color:var(--icon\/default)}
+.tlink-secondary:hover{color:#383838}
+.tlink-secondary:focus-visible,.tlink-secondary.is-focus{box-shadow:var(--focus\/primary);outline:none}
+.tlink-tertiary{color:var(--btn\/textonly\/default)}
+.tlink-tertiary:hover{color:var(--icon\/default)}
+.tlink-tertiary:focus-visible,.tlink-tertiary.is-focus{box-shadow:var(--focus\/primary);outline:none}
+.tlink:disabled,.tlink.is-disabled{color:var(--btn\/textonly\/disabled);cursor:not-allowed}
 
-/* Loader spinner */
-.spinner{
-  width:16px;height:16px;border:2px solid rgba(255,255,255,.3);
-  border-top-color:var(--bc-white);border-radius:50%;
-  animation:spin .6s linear infinite;display:inline-block;flex-shrink:0;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
+/* ══ Button group — segmented control, Figma 52:26652 ═══════════════════ */
+.btn-group{display:inline-flex;align-items:stretch;background:var(--mav-bg);
+  border:1px solid var(--bc-mono200-l,#dbdbdb);border-radius:8px;overflow:hidden;box-shadow:var(--shadow\/sm)}
+.bg-item{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px 16px;background:transparent;border:none;border-radius:0;cursor:pointer;
+  font-family:var(--font-active);font-size:14px;font-weight:500;line-height:normal;
+  color:var(--main-text\/default);white-space:nowrap;transition:background .15s}
+.bg-item+.bg-item{border-left:1px solid var(--bc-mono200-l,#dbdbdb)}
+.bg-item svg{width:20px;height:20px;flex-shrink:0}
+.bg-item:hover{background:var(--bc-mono100-l,#ececec)}
+.bg-item:disabled,.bg-item.is-disabled{color:var(--main-text\/description,#7f7f7f);cursor:not-allowed;background:transparent}
+.btn-group-sm .bg-item{padding:6px 12px}
+.btn-group-lg .bg-item{padding:14px 20px;font-size:18px}
+.bg-item-icononly{padding:10px}
+.bg-check{width:16px;height:16px;border-radius:4px;background:var(--Checkbox\/default\/bg-box);
+  border:1px solid var(--Checkbox\/default\/outline-box);box-shadow:var(--shadow\/sm);flex-shrink:0}
+.bg-item:hover .bg-check{box-shadow:0 0 0 3px rgba(53,46,255,.2)}
+.bg-item:disabled .bg-check{background:var(--Checkbox\/disabled\/bg-box-disabled);border-color:var(--Checkbox\/disabled\/outline-box-disabled);box-shadow:none}
 
-.state-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
-.state-card{
-  border:1px solid var(--mav-border);border-radius:8px;padding:16px;
-  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
-  background:var(--mav-bg);
-}
+/* ══ Menu (circular) buttons — Figma 171:5378 / 171:5670 ════════════════ */
+.menu-btn-wrap{display:inline-flex;flex-direction:column;align-items:center;gap:8px}
+.menu-btn-wrap span{font-size:12px;font-weight:500;color:var(--main-text\/default);font-family:var(--font-active)}
+.menu-btn{width:50px;height:50px;border-radius:50%;border:none;display:inline-flex;
+  align-items:center;justify-content:center;cursor:pointer;transition:filter .15s;background:transparent}
+.menu-btn:hover{filter:brightness(.95)}
+.menu-btn svg{width:24px;height:24px}
+.menu-btn-sm{width:40px;height:40px}
+.menu-btn-sm svg{width:19px;height:19px}
+.menu-btn-primary{background:var(--menu\/bg-primary);color:#fff}
+.menu-btn-secondary{background:var(--menu\/bg-secondary);color:var(--icon\/default)}
+.menu-btn-tertiary{background:var(--menu\/bg-tertiary,transparent);border:1px solid var(--border\/subtle);color:var(--icon\/default)}
+
+/* ══ Slider / swipe-to-confirm — Figma Swipe Set 110:14854 ══════════════ */
+.swipe{position:relative;display:flex;align-items:center;width:362px;max-width:100%;
+  padding:4px 5px;border-radius:var(--border\/border-radius\/md,8px);gap:20px;user-select:none;overflow:hidden}
+.swipe-thumb{display:flex;align-items:center;justify-content:center;padding:13px;flex-shrink:0;
+  background:var(--btn\/sliding\/Bg,#fff);border-radius:8px;cursor:grab;touch-action:none;position:relative;z-index:2}
+.swipe-thumb:active{cursor:grabbing}
+.swipe-thumb svg{width:20px;height:20px;color:var(--btn\/sliding\/default)}
+.swipe-label{flex:1;font-family:var(--font-active);font-size:var(--medium\/xl2,20px);font-weight:500;
+  line-height:normal;white-space:nowrap;color:var(--btn\/sliding\/text-default);opacity:.5}
+.swipe-hint{margin-left:auto;flex-shrink:0;width:24px;height:24px;color:rgba(255,255,255,.7)}
+.swipe-v1{background:linear-gradient(to right,var(--btn\/sliding\/default),var(--btn\/sliding\/hover) 100%)}
+.swipe-v2{background:linear-gradient(to right,var(--btn\/primary\/default),#ffdfd3)}
+.swipe-pill,.swipe-pill .swipe-thumb{border-radius:50px}
+.swipe-done{background:var(--btn\/sliding\/default)}
+.swipe-done .swipe-label{opacity:1}
+/* neumorphic (V3) */
+.swipe-v3{background:linear-gradient(to bottom,#f1f4ff,#fcfdff);
+  filter:drop-shadow(0 0 20px rgba(0,51,218,.1));
+  box-shadow:inset 0 2px 1px 0 #fff,inset 0 -2px 1px 0 rgba(159,178,242,.25)}
+.swipe-v3 .swipe-thumb{background:var(--btn\/sliding\/default);
+  box-shadow:0 2px 1px 0 rgba(159,178,242,.5),0 -2px 1px 0 #fff,inset 0 2px 6px 0 #cfd8f9,inset 0 -2px 6px 0 #002285}
+.swipe-v3 .swipe-thumb svg{color:#fff}
+.swipe-v3 .swipe-label{color:var(--btn\/sliding\/hover);opacity:1}
+.swipe-v3 .swipe-hint{color:var(--btn\/sliding\/hover)}
+/* white card (V4) */
+.swipe-v4{background:var(--background\/bg-default);border-radius:20px;filter:drop-shadow(0 0 20px rgba(0,51,218,.1))}
+.swipe-v4 .swipe-thumb{background:var(--btn\/sliding\/default)}
+.swipe-v4 .swipe-thumb svg{color:#fff}
+.swipe-v4 .swipe-label{color:var(--btn\/sliding\/hover);opacity:1}
+.swipe-v4 .swipe-hint{color:var(--btn\/sliding\/hover)}
+/* toggle pills (V9/V10) */
+.swipe-toggle{width:200px;padding:5px;border-radius:50px;display:flex;align-items:center;justify-content:space-between;background:var(--background\/bg-tertiary,#e6edff)}
+.swipe-toggle .swipe-thumb{border-radius:50px;padding:13px}
+.swipe-toggle .swipe-thumb svg{width:24px;height:24px}
+.swipe-toggle-target{display:flex;align-items:center;justify-content:center;padding:11px;border:2px solid var(--btn\/sliding\/default);border-radius:50%;color:var(--btn\/sliding\/default)}
+.swipe-toggle-target svg{width:24px;height:24px}
+.swipe-toggle-open{background:#0033da}
+.swipe-toggle-open .swipe-toggle-target{border:1px solid #9fb2f2;color:#fff}
+
+.state-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:12px}
+.state-card{border:1px solid var(--mav-border);border-radius:8px;padding:16px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;background:var(--mav-bg)}
 .state-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mav-muted)}
+.dark-preview{background:var(--mav-fg);padding:24px;border-radius:8px}
+
+/* Extensions (not in Figma) */
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:var(--bc-white);
+  border-radius:50%;animation:spin .6s linear infinite;display:inline-block;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.mav-btn-xl{padding:16px 24px;font-size:16px;width:100%;max-width:343px}
 </style>
 </head>
 <body>
+<!-- shared 20px stroke icons (plus / chevron-down / chevrons-right / check / x) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ic-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="ic-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="ic-chevrons-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5M13 17l5-5-5-5"/></symbol>
+    <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  </defs>
+</svg>
+
 <div class="doc-layout">
 <nav class="doc-sidebar">
   <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
@@ -86,9 +204,12 @@
   <a href="forms.html" class="sidebar-link">Forms & Controls</a>
   <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
   <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
   <a href="navigation.html" class="sidebar-link">Navigation</a>
   <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
   <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
   <a href="all.html" class="sidebar-link">Kitchen Sink</a>
   <div class="sidebar-section-label">Foundations</div>
   <a href="../foundations/colors.html" class="sidebar-link">Colors</a>
@@ -106,220 +227,352 @@
   <div class="page-header">
     <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
     <h1 class="page-title">Buttons</h1>
-    <p class="page-desc">Five button types: Primary, Secondary, Text-only, Sliding, and Swipe-up. All driven by <code>btn/*</code> tokens. Border-radius: 4px. Font: Medium 14px.</p>
+    <p class="page-desc">Exported from Figma (page "• Button"). Core buttons (Primary / Secondary / Clear / Swipe) in four sizes with icon, dropdown and icon-only variations — plus Social buttons, Text links, Button groups, circular Menu buttons, and the Swipe-to-confirm slider set. All driven by <code>btn/*</code> tokens: radius 4px, Medium 500, 20px icons.</p>
   </div>
 
-  <!-- Primary -->
+  <!-- ══ Core buttons ══ -->
   <div class="section">
     <h2 class="section-title">Primary Button</h2>
-    <p class="section-desc">Full background. <code>btn/primary/default</code> background, white text.</p>
+    <p class="section-desc"><code>btn/primary/default</code> fill, white label. Hover goes near-black (<code>btn/primary/hover</code> #171717); focus keeps the fill and adds a 3px brand ring. No loading state exists in Figma.</p>
     <div class="preview-card">
       <div class="preview-canvas">
-        <div>
-          <div class="btn-row">
-            <span class="btn-state-label">Default</span>
-            <button class="mav-btn mav-btn-primary">Primary Button</button>
-          </div>
-          <div class="btn-row">
-            <span class="btn-state-label">Hover</span>
-            <button class="mav-btn">Hover State</button>
-          </div>
-          <div class="btn-row">
-            <span class="btn-state-label">Clicked</span>
-            <button class="mav-btn">Clicked State</button>
-          </div>
-          <div class="btn-row">
-            <span class="btn-state-label">Loading</span>
-            <button class="mav-btn mav-btn-loading">
-              <span class="spinner"></span>Loading...
-            </button>
-          </div>
-          <div class="btn-row">
-            <span class="btn-state-label">Disabled</span>
-            <button class="mav-btn mav-btn-disabled" disabled>Disabled</button>
-          </div>
+        <div style="width:100%">
+          <div class="btn-row"><span class="btn-state-label">Default</span><button class="mav-btn mav-btn-primary">Button</button></div>
+          <div class="btn-row"><span class="btn-state-label">Hover</span><button class="mav-btn mav-btn-primary" style="background:var(--btn\/primary\/hover)">Button</button><span class="btn-note">live on :hover too</span></div>
+          <div class="btn-row"><span class="btn-state-label">Focus</span><button class="mav-btn mav-btn-primary is-focus">Button</button></div>
+          <div class="btn-row"><span class="btn-state-label">Disabled</span><button class="mav-btn mav-btn-primary" disabled>Button</button></div>
         </div>
       </div>
       <div class="preview-meta">
-        <span class="preview-label">Primary — Light Mode</span>
-        <span class="preview-sublabel">border-radius: 4px · font-weight: 500 · 14px</span>
+        <span class="preview-label">Primary — states</span>
+        <span class="preview-sublabel">focus ring: 0 0 0 3px rgba(53,46,255,.4)</span>
       </div>
     </div>
-
-    <!-- Dark mode preview -->
+    <h2 class="section-title" style="margin-top:28px">Variations</h2>
+    <p class="section-desc">Text · Icon left · Icon right · Dropdown · Icon-only. Icons are always 20px, at every size.</p>
     <div class="preview-card">
-      <div class="preview-canvas dark-bg">
-        <div>
-          <div class="btn-row">
-            <span class="btn-state-label">Default</span>
-            <button class="mav-btn mav-btn-primary-dk">Primary Button</button>
-          </div>
-          <div class="btn-row">
-            <span class="btn-state-label">Disabled</span>
-            <button class="mav-btn mav-btn-disabled-dk" disabled>Disabled</button>
-          </div>
+      <div class="preview-canvas">
+        <div class="btn-row" style="border:none">
+          <button class="mav-btn mav-btn-primary">Button</button>
+          <button class="mav-btn mav-btn-primary"><svg><use href="#ic-plus"/></svg>Icon left</button>
+          <button class="mav-btn mav-btn-primary">Icon right<svg><use href="#ic-plus"/></svg></button>
+          <button class="mav-btn mav-btn-primary">Dropdown<svg><use href="#ic-chevron-down"/></svg></button>
+          <button class="mav-btn mav-btn-primary mav-btn-icononly" aria-label="Add"><svg><use href="#ic-plus"/></svg></button>
         </div>
       </div>
-      <div class="preview-meta">
-        <span class="preview-label">Primary — Dark Mode</span>
-        <span class="preview-sublabel">#a1ff5b background · #171717 text</span>
-      </div>
+      <div class="preview-meta"><span class="preview-label">Variations — same five for Secondary; Clear has no icon-only</span></div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- Secondary -->
   <div class="section">
     <h2 class="section-title">Secondary Button</h2>
-    <p class="section-desc">Transparent background with border. Becomes primary on clicked state.</p>
+    <p class="section-desc">Transparent with <code>#efefef</code> outline. Hover fills grey and lifts with <code>shadow/sm</code>; focus fills brand blue (<code>btn/secondary/clicked</code>) with white text and a light-blue ring.</p>
     <div class="preview-card">
       <div class="preview-canvas">
-        <div>
-          <div class="btn-row">
-            <span class="btn-state-label">Default</span>
-            <button class="mav-btn mav-btn-secondary">Secondary</button>
-          </div>
-          <div class="btn-row">
-            <span class="btn-state-label">Hover</span>
-            <button class="mav-btn">Hover</button>
-          </div>
-          <div class="btn-row">
-            <span class="btn-state-label">Clicked</span>
-            <button class="mav-btn">Clicked → Primary</button>
-          </div>
-          <div class="btn-row">
-            <span class="btn-state-label">Disabled</span>
-            <button class="mav-btn" disabled>Disabled</button>
-          </div>
+        <div style="width:100%">
+          <div class="btn-row"><span class="btn-state-label">Default</span><button class="mav-btn mav-btn-secondary">Button</button></div>
+          <div class="btn-row"><span class="btn-state-label">Hover</span><button class="mav-btn mav-btn-secondary" style="background:var(--btn\/secondary\/hover);box-shadow:var(--shadow\/sm)">Button</button></div>
+          <div class="btn-row"><span class="btn-state-label">Focus</span><button class="mav-btn mav-btn-secondary is-focus">Button</button></div>
+          <div class="btn-row"><span class="btn-state-label">Disabled</span><button class="mav-btn mav-btn-secondary" disabled>Button</button></div>
         </div>
       </div>
       <div class="preview-meta">
-        <span class="preview-label">Secondary</span>
-        <span class="preview-sublabel">btn/secondary/default: transparent · outline: #efefef</span>
+        <span class="preview-label">Secondary — states</span>
+        <span class="preview-sublabel">focus: bg btn/secondary/clicked · ring rgba(89,156,219,.4)</span>
       </div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- Text-only -->
   <div class="section">
-    <h2 class="section-title">Text-only Button</h2>
-    <p class="section-desc">No background or border. Used for secondary actions like "Resend Code".</p>
+    <h2 class="section-title">Clear (Text-only) Button</h2>
+    <p class="section-desc">No container, zero padding — pure label + optional icons. Color communicates state: default #352eff → hover #7c9dff → focus/pressed #030192. Sizes lg / md / xs only (no sm, no icon-only).</p>
     <div class="preview-card">
       <div class="preview-canvas">
-        <div class="btn-row">
-          <span class="btn-state-label">Default</span>
-          <button class="mav-btn mav-btn-text">Text Action</button>
-          <button class="mav-btn mav-btn-text">Resend Code</button>
-        </div>
-        <div class="btn-row">
-          <span class="btn-state-label">Hover</span>
-          <button class="mav-btn">Hover State</button>
-        </div>
-        <div class="btn-row">
-          <span class="btn-state-label">Disabled</span>
-          <button class="mav-btn" disabled>Disabled</button>
+        <div style="width:100%">
+          <div class="btn-row"><span class="btn-state-label">Default</span><button class="mav-btn mav-btn-clear">Clear action</button><button class="mav-btn mav-btn-clear">Dropdown<svg><use href="#ic-chevron-down"/></svg></button></div>
+          <div class="btn-row"><span class="btn-state-label">Hover</span><button class="mav-btn mav-btn-clear" style="color:var(--btn\/textonly\/hover)">Clear action</button></div>
+          <div class="btn-row"><span class="btn-state-label">Focus</span><button class="mav-btn mav-btn-clear" style="color:var(--btn\/textonly\/clicked)">Clear action</button></div>
+          <div class="btn-row"><span class="btn-state-label">Disabled</span><button class="mav-btn mav-btn-clear" disabled>Clear action</button></div>
         </div>
       </div>
-      <div class="preview-meta">
-        <span class="preview-label">Text-only — Medium 12px</span>
-        <span class="preview-sublabel">btn/textonly/default: #352eff · no background</span>
-      </div>
+      <div class="preview-meta"><span class="preview-label">Clear — btn/textonly/*</span></div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- Sliding -->
   <div class="section">
-    <h2 class="section-title">Sliding Button</h2>
-    <p class="section-desc">Primary background with a draggable handle on the left. Used for high-stakes actions (confirm, send).</p>
+    <h2 class="section-title">Swipe Button</h2>
+    <p class="section-desc">Bottom-sheet trigger: solid <code>btn/swipeup/default</code>, top corners rounded 8px, bottom square (sits flush on a screen edge). Sizes md / lg only. Focus fills the dark pressed blue.</p>
     <div class="preview-card">
-      <div class="preview-canvas">
-        <button class="mav-btn mav-btn-sliding">
-          <span class="sliding-handle">
-            <svg viewBox="0 0 16 16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 8 12 8"/><polyline points="8 4 12 8 8 12"/></svg>
-          </span>
-          Slide to Confirm
-        </button>
-        <button class="mav-btn mav-btn-sliding">
-          <span class="sliding-handle">
-            <svg viewBox="0 0 16 16" stroke-width="2" stroke="var(--bc-mono200-l)" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 8 12 8"/><polyline points="8 4 12 8 8 12"/></svg>
-          </span>
-          Disabled
-        </button>
+      <div class="preview-canvas" style="align-items:flex-end">
+        <button class="mav-btn mav-btn-swipe">Swipe up</button>
+        <button class="mav-btn mav-btn-swipe mav-btn-lg"><svg><use href="#ic-plus"/></svg>Swipe up<svg><use href="#ic-plus"/></svg></button>
+        <button class="mav-btn mav-btn-swipe is-focus">Focus</button>
+        <button class="mav-btn mav-btn-swipe" disabled>Disabled</button>
       </div>
-      <div class="preview-meta">
-        <span class="preview-label">Sliding — btn/sliding/*</span>
-        <span class="preview-sublabel">handle: white surface · bg: primary</span>
-      </div>
+      <div class="preview-meta"><span class="preview-label">Swipe — btn/swipeup/*</span><span class="preview-sublabel">radius: 8px 8px 0 0</span></div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- Swipe-up -->
-  <div class="section">
-    <h2 class="section-title">Swipe-up Button</h2>
-    <p class="section-desc">Tinted background (Tint/Secondary/100). Used in sheet footers and action prompts.</p>
-    <div class="preview-card">
-      <div class="preview-canvas">
-        <button class="mav-btn mav-btn-swipeup">
-          <span class="swipeup-arrow">↑</span>
-          Swipe up to proceed
-        </button>
-      </div>
-      <div class="preview-meta">
-        <span class="preview-label">Swipe-up — btn/swipeup/Bg 2: #e6edff</span>
-        <span class="preview-sublabel">color: Main/Primary · no border</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- Sizes -->
   <div class="section">
     <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">xs 24px · sm 32px · md 40px · lg ~52px. Fonts: 12 / 14 / 14 / 18px — icons stay 20px throughout.</p>
     <div class="preview-card">
       <div class="preview-canvas">
-        <div>
+        <div class="btn-row" style="border:none">
+          <button class="mav-btn mav-btn-primary mav-btn-xs">Extra small</button>
           <button class="mav-btn mav-btn-primary mav-btn-sm">Small</button>
-          <span>padding: 6px 12px · font: 12px</span>
-        </div>
-        <div>
-          <button class="mav-btn mav-btn-primary">Default</button>
-          <span>padding: 10px 16px · font: 14px</span>
-        </div>
-        <div>
+          <button class="mav-btn mav-btn-primary">Medium</button>
           <button class="mav-btn mav-btn-primary mav-btn-lg">Large</button>
-          <span>padding: 14px 20px · font: 16px</span>
         </div>
-        <button class="mav-btn mav-btn-primary mav-btn-xl">Full Width (max 343px) — Verify</button>
+        <div class="btn-row" style="border:none">
+          <button class="mav-btn mav-btn-primary mav-btn-icononly mav-btn-xs" aria-label="Add"><svg><use href="#ic-plus"/></svg></button>
+          <button class="mav-btn mav-btn-primary mav-btn-icononly mav-btn-sm" aria-label="Add"><svg><use href="#ic-plus"/></svg></button>
+          <button class="mav-btn mav-btn-primary mav-btn-icononly" aria-label="Add"><svg><use href="#ic-plus"/></svg></button>
+          <button class="mav-btn mav-btn-primary mav-btn-icononly mav-btn-lg" aria-label="Add"><svg><use href="#ic-plus"/></svg></button>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Sizes — paddings 8/2 · 12/6 · 16/10 · 16/16</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ Social buttons ══ -->
+  <div class="section">
+    <h2 class="section-title">Social Buttons</h2>
+    <p class="section-desc">One neutral surface for every provider — brand color lives only in the icon. White bg, <code>border/subtle</code> outline, radius 8px, <code>shadow/sm</code>, label Bold 14px at every size.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="btn-row" style="border:none">
+          <button class="social-btn"><img src="../app/assets/icons/brands/google.svg" alt="">Sign In with Google</button>
+          <button class="social-btn"><img src="../app/assets/icons/brands/apple.svg" alt="">Sign In with Apple</button>
+          <button class="social-btn"><img src="../app/assets/icons/brands/facebook.svg" alt="">Sign In with Facebook</button>
+        </div>
+        <div class="btn-row" style="border:none">
+          <button class="social-btn"><img src="../app/assets/icons/brands/linkedin.svg" alt="">Sign In with LinkedIn</button>
+          <button class="social-btn"><img src="../app/assets/icons/brands/metamask.svg" alt="">Connect Metamask</button>
+          <button class="social-btn"><img src="../app/assets/icons/brands/twitter.svg" alt="">Sign In with Twitter</button>
+        </div>
+        <div class="btn-row" style="border:none">
+          <span class="btn-state-label">Icon-only</span>
+          <button class="social-btn social-btn-icononly social-btn-sm" aria-label="Google"><img src="../app/assets/icons/brands/google.svg" alt=""></button>
+          <button class="social-btn social-btn-icononly" aria-label="Apple"><img src="../app/assets/icons/brands/apple.svg" alt=""></button>
+          <button class="social-btn social-btn-icononly social-btn-lg" aria-label="Facebook"><img src="../app/assets/icons/brands/facebook.svg" alt=""></button>
+        </div>
+        <div class="btn-row" style="border:none">
+          <span class="btn-state-label">States</span>
+          <button class="social-btn is-focus"><img src="../app/assets/icons/brands/google.svg" alt="">Focus</button>
+          <button class="social-btn" disabled><img src="../app/assets/icons/brands/google.svg" alt="">Disabled</button>
+        </div>
       </div>
       <div class="preview-meta">
-        <span class="preview-label">Button Sizes</span>
-        <span class="preview-sublabel">border-radius always 4px</span>
+        <span class="preview-label">Social — sm 32px / md 40px / lg 48px</span>
+        <span class="preview-sublabel">hover: #ececec bg, #dbdbdb border · disabled: 40% icon, #a5a5a5 label</span>
       </div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- Token reference -->
+  <!-- ══ Text links ══ -->
+  <div class="section">
+    <h2 class="section-title">Text Links</h2>
+    <p class="section-desc">Color-only feedback — <strong>never underlined</strong>. Types Primary / Secondary / Tertiary, sizes md (20px icons) and sm (16px icons), same 14px label. Focus adds the light-blue ring.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div style="width:100%">
+          <div class="btn-row"><span class="btn-state-label">Primary</span>
+            <a class="tlink tlink-primary" href="#">Text link</a>
+            <a class="tlink tlink-primary" href="#"><svg><use href="#ic-plus"/></svg>Icon left</a>
+            <a class="tlink tlink-primary" href="#">Dropdown<svg><use href="#ic-chevron-down"/></svg></a>
+            <a class="tlink tlink-primary" href="#" style="color:#06111b">Hover</a>
+            <a class="tlink tlink-primary is-focus" href="#">Focus</a>
+            <span class="tlink is-disabled">Disabled</span>
+          </div>
+          <div class="btn-row"><span class="btn-state-label">Secondary</span>
+            <a class="tlink tlink-secondary" href="#">Text link</a>
+            <a class="tlink tlink-secondary" href="#" style="color:#383838">Hover</a>
+            <span class="tlink is-disabled">Disabled</span>
+          </div>
+          <div class="btn-row"><span class="btn-state-label">Tertiary</span>
+            <a class="tlink tlink-tertiary" href="#">Text link</a>
+            <a class="tlink tlink-tertiary" href="#" style="color:var(--icon\/default)">Hover</a>
+            <span class="tlink is-disabled">Disabled</span>
+          </div>
+          <div class="btn-row"><span class="btn-state-label">Small</span>
+            <a class="tlink tlink-sm tlink-primary" href="#"><svg><use href="#ic-plus"/></svg>Small link<svg><use href="#ic-plus"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Text links — btn/textonly/* + hard-coded hover shades</span>
+        <span class="preview-sublabel">Primary hover #06111b · Secondary hover #383838 · Tertiary hover #171717</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ Button group ══ -->
+  <div class="section">
+    <h2 class="section-title">Button Group</h2>
+    <p class="section-desc">Segmented control: one white pill (radius 8px, <code>shadow/sm</code>, <code>#dbdbdb</code> border) holding 2–6 square items split by 1px dividers. Hover fills <code>#ececec</code>; there is no selected state in Figma — hover is the only filled state.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="btn-row" style="border:none">
+          <div class="btn-group">
+            <button class="bg-item">Day</button>
+            <button class="bg-item">Week</button>
+            <button class="bg-item">Month</button>
+            <button class="bg-item">Year</button>
+          </div>
+        </div>
+        <div class="btn-row" style="border:none">
+          <div class="btn-group">
+            <button class="bg-item"><svg><use href="#ic-plus"/></svg>Icon left</button>
+            <button class="bg-item">Dropdown<svg><use href="#ic-chevron-down"/></svg></button>
+            <button class="bg-item bg-item-icononly" aria-label="Add"><svg><use href="#ic-plus"/></svg></button>
+            <button class="bg-item" disabled>Disabled</button>
+          </div>
+        </div>
+        <div class="btn-row" style="border:none">
+          <div class="btn-group">
+            <button class="bg-item"><span class="bg-check"></span>Checkbox</button>
+            <button class="bg-item"><span class="bg-check"></span>Checkbox</button>
+            <button class="bg-item" disabled><span class="bg-check"></span>Disabled</button>
+          </div>
+        </div>
+        <div class="btn-row" style="border:none">
+          <div class="btn-group btn-group-sm"><button class="bg-item">Small</button><button class="bg-item">Group</button></div>
+          <div class="btn-group btn-group-lg"><button class="bg-item">Large</button><button class="bg-item">Group</button></div>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Button group — sm/md/lg</span>
+        <span class="preview-sublabel">items have no radius; the group clips them · checkbox 16px shows a blue ring on item hover</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ Menu buttons ══ -->
+  <div class="section">
+    <h2 class="section-title">Menu Buttons</h2>
+    <p class="section-desc">Circular quick-action buttons (the Menu component's item primitive). Primary <code>menu/bg-primary</code> #030192 · Secondary <code>menu/bg-secondary</code> #efefef · Tertiary thin <code>border/subtle</code> outline. lg 50px / sm 40px, optional 12px label.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="btn-row" style="border:none;gap:20px">
+          <div class="menu-btn-wrap"><button class="menu-btn menu-btn-primary" aria-label="Top up"><svg><use href="#ic-plus"/></svg></button><span>Top Up</span></div>
+          <div class="menu-btn-wrap"><button class="menu-btn menu-btn-secondary" aria-label="Send"><svg><use href="#ic-plus"/></svg></button><span>Send</span></div>
+          <div class="menu-btn-wrap"><button class="menu-btn menu-btn-tertiary" aria-label="More"><svg><use href="#ic-plus"/></svg></button><span>More</span></div>
+          <button class="menu-btn menu-btn-sm menu-btn-primary" aria-label="Top up"><svg><use href="#ic-plus"/></svg></button>
+          <button class="menu-btn menu-btn-sm menu-btn-secondary" aria-label="Send"><svg><use href="#ic-plus"/></svg></button>
+          <button class="menu-btn menu-btn-sm menu-btn-tertiary" aria-label="More"><svg><use href="#ic-plus"/></svg></button>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Menu — menu/bg-* tokens</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ Swipe / slider set ══ -->
+  <div class="section">
+    <h2 class="section-title">Swipe to Confirm (Slider)</h2>
+    <p class="section-desc">The Figma Swipe Set ships 12 track designs in two shapes (rounded-8 and pill-50) across four families: brand gradient, blue→peach gradient, neumorphic, and white card — plus two-handle toggle pills. The first slider below is live: drag the handle.</p>
+    <div class="preview-card">
+      <div class="preview-canvas" style="flex-direction:column;align-items:flex-start;gap:16px">
+        <div class="swipe swipe-v1" id="live-swipe">
+          <button class="swipe-thumb" aria-label="Swipe to start"><svg><use href="#ic-chevrons-right"/></svg></button>
+          <span class="swipe-label">Swipe to start</span>
+          <svg class="swipe-hint"><use href="#ic-chevrons-right"/></svg>
+        </div>
+        <div class="swipe swipe-v1 swipe-done">
+          <span style="display:flex;align-items:center;gap:5px;flex:1">
+            <svg width="24" height="24" style="color:#fff"><use href="#ic-check"/></svg>
+            <span class="swipe-label" style="flex:none">Confirmed</span>
+          </span>
+          <button class="swipe-thumb" aria-label="Done"><svg><use href="#ic-chevrons-right"/></svg></button>
+        </div>
+        <div class="swipe swipe-v2 swipe-pill">
+          <button class="swipe-thumb" aria-label="Swipe to start"><svg><use href="#ic-chevrons-right"/></svg></button>
+          <span class="swipe-label">Swipe to start</span>
+          <svg class="swipe-hint"><use href="#ic-chevrons-right"/></svg>
+        </div>
+        <div class="swipe swipe-v3">
+          <button class="swipe-thumb" aria-label="Swipe to start"><svg><use href="#ic-chevrons-right"/></svg></button>
+          <span class="swipe-label">Swipe to start</span>
+          <svg class="swipe-hint"><use href="#ic-chevrons-right"/></svg>
+        </div>
+        <div class="swipe swipe-v4">
+          <button class="swipe-thumb" aria-label="Swipe to start"><svg><use href="#ic-chevrons-right"/></svg></button>
+          <span class="swipe-label">Swipe to start</span>
+          <svg class="swipe-hint"><use href="#ic-chevrons-right"/></svg>
+        </div>
+        <div class="btn-row" style="border:none;gap:20px">
+          <div class="swipe-toggle">
+            <button class="swipe-thumb" style="background:#fff" aria-label="Open"><svg style="color:var(--btn\/sliding\/default)"><use href="#ic-check"/></svg></button>
+            <span class="swipe-toggle-target"><svg><use href="#ic-check"/></svg></span>
+          </div>
+          <div class="swipe-toggle swipe-toggle-open">
+            <span class="swipe-toggle-target"><svg><use href="#ic-check"/></svg></span>
+            <button class="swipe-thumb" style="background:#fff" aria-label="Close"><svg style="color:#0033da"><use href="#ic-check"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta">
+        <span class="preview-label">Swipe set — V1 (live) · V1 %100 · V6 pill · V3 neumorphic · V4 card · V9 toggles</span>
+        <span class="preview-sublabel">track 362px · thumb 46px (13px pad + 20px chevrons) · label Medium 20px at 50% opacity</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ Extensions ══ -->
+  <div class="section">
+    <h2 class="section-title">MaV Extensions <span class="btn-note">(not in Figma)</span></h2>
+    <p class="section-desc">Kept from the working system: loading state with spinner, and the full-width mobile CTA. The Figma component set defines neither.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <button class="mav-btn mav-btn-primary" style="opacity:.8"><span class="spinner"></span>Loading…</button>
+        <button class="mav-btn mav-btn-primary mav-btn-xl">Full Width (max 343px)</button>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Extensions</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ Token reference ══ -->
   <div class="section">
     <h2 class="section-title">Token Reference</h2>
     <table class="token-table">
-      <thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>Usage</th></tr></thead>
+      <thead><tr><th>Token</th><th>Light</th><th>Usage</th></tr></thead>
       <tbody>
-        <tr><td class="token-name">--btn\/primary\/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td><td class="token-value">Primary bg</td></tr>
-        <tr><td class="token-name">--btn\/primary\/hover</td><td><span class="token-swatch-sm" style="background:#7c9dff"></span><span class="token-value">#7c9dff</span></td><td><span class="token-swatch-sm" style="background:#7c9dff"></span><span class="token-value">#7c9dff</span></td><td class="token-value">Hover state</td></tr>
-        <tr><td class="token-name">--btn\/primary\/clicked</td><td><span class="token-swatch-sm" style="background:#030192"></span><span class="token-value">#030192</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td><td class="token-value">Pressed</td></tr>
-        <tr><td class="token-name">--btn\/primary\/disabled</td><td><span class="token-swatch-sm" style="background:#e5e5e5"></span><span class="token-value">#e5e5e5</span></td><td><span class="token-swatch-sm" style="background:#242424"></span><span class="token-value">#242424</span></td><td class="token-value">Disabled bg</td></tr>
-        <tr><td class="token-name">--btn\/primary\/text-default</td><td><span class="token-swatch-sm" style="background:#fff;border:1px solid #e0e0e0"></span><span class="token-value">#ffffff</span></td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">#171717</span></td><td class="token-value">Button text</td></tr>
-        <tr><td class="token-name">--btn\/textonly\/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td><td class="token-value">Text-only color</td></tr>
+        <tr><td class="token-name">--btn\/primary\/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Primary / Swipe fill</td></tr>
+        <tr><td class="token-name">--btn\/primary\/hover</td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">#171717</span></td><td class="token-value">Primary / Swipe hover</td></tr>
+        <tr><td class="token-name">--btn\/primary\/clicked</td><td><span class="token-swatch-sm" style="background:#030192"></span><span class="token-value">#030192</span></td><td class="token-value">Pressed / Swipe focus fill</td></tr>
+        <tr><td class="token-name">--btn\/primary\/disabled</td><td><span class="token-swatch-sm" style="background:#e5e5e5"></span><span class="token-value">#e5e5e5</span></td><td class="token-value">Disabled fill</td></tr>
+        <tr><td class="token-name">--btn\/secondary\/default-outline</td><td><span class="token-swatch-sm" style="background:#efefef"></span><span class="token-value">#efefef</span></td><td class="token-value">Secondary border</td></tr>
+        <tr><td class="token-name">--btn\/secondary\/clicked</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Secondary focus fill</td></tr>
+        <tr><td class="token-name">--btn\/textonly\/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Clear / Text link color</td></tr>
+        <tr><td class="token-name">--btn\/textonly\/hover</td><td><span class="token-swatch-sm" style="background:#7c9dff"></span><span class="token-value">#7c9dff</span></td><td class="token-value">Clear hover</td></tr>
+        <tr><td class="token-name">--btn\/sliding\/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Slider thumb / done track</td></tr>
+        <tr><td class="token-name">--btn\/swipeup\/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Swipe button fill</td></tr>
+        <tr><td class="token-name">--menu\/bg-primary</td><td><span class="token-swatch-sm" style="background:#030192"></span><span class="token-value">#030192</span></td><td class="token-value">Menu circle, primary</td></tr>
+        <tr><td class="token-name">--focus\/primary</td><td><span class="token-swatch-sm" style="background:rgba(89,156,219,.4)"></span><span class="token-value">rgba(89,156,219,.4)</span></td><td class="token-value">3px focus ring (Secondary/Social/Text link)</td></tr>
+        <tr><td class="token-name">--shadow-focus</td><td><span class="token-swatch-sm" style="background:rgba(53,46,255,.4)"></span><span class="token-value">rgba(53,46,255,.4)</span></td><td class="token-value">3px focus ring (Primary/Swipe)</td></tr>
+        <tr><td class="token-name">--shadow\/sm</td><td><span class="token-value">4× rgba(0,0,0,.05)</span></td><td class="token-value">Resting elevation (Secondary hover, Social, Group)</td></tr>
       </tbody>
     </table>
   </div>
@@ -327,5 +580,37 @@
 </main>
 </div>
 <script src="../js/theme.js"></script>
+<script>
+/* live slider — V1: drag the thumb to the end to confirm */
+(function(){
+  const track = document.getElementById('live-swipe');
+  const thumb = track.querySelector('.swipe-thumb');
+  const label = track.querySelector('.swipe-label');
+  let startX = null, max = 0;
+  thumb.addEventListener('pointerdown', e => {
+    startX = e.clientX; max = track.clientWidth - thumb.offsetWidth - 10;
+    thumb.setPointerCapture(e.pointerId);
+  });
+  thumb.addEventListener('pointermove', e => {
+    if (startX === null) return;
+    const dx = Math.min(Math.max(e.clientX - startX, 0), max);
+    thumb.style.transform = `translateX(${dx}px)`;
+    label.style.opacity = .5 * (1 - dx / max);
+    if (dx >= max) done();
+  });
+  thumb.addEventListener('pointerup', reset);
+  thumb.addEventListener('pointercancel', reset);
+  function reset(){ if (startX === null) return; startX = null;
+    thumb.style.transition = 'transform .25s'; thumb.style.transform = 'translateX(0)';
+    label.style.opacity = .5; setTimeout(() => thumb.style.transition = '', 260); }
+  function done(){
+    startX = null;
+    track.classList.add('swipe-done');
+    label.textContent = 'Confirmed'; label.style.opacity = 1;
+    setTimeout(() => { track.classList.remove('swipe-done');
+      thumb.style.transform = 'translateX(0)'; label.textContent = 'Swipe to start'; label.style.opacity = .5; }, 1600);
+  }
+})();
+</script>
 </body>
 </html>

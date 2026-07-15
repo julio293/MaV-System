@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="logos:facebook" clip-path="url(#clip0_0_159)">
+<path id="Vector" d="M24 12C24 5.37263 18.6274 0 12 0C5.37262 0 0 5.37253 0 12C0 17.9895 4.38825 22.954 10.125 23.8542V15.4688H7.07812V12H10.125V9.35625C10.125 6.34875 11.9166 4.6875 14.6575 4.6875C15.9705 4.6875 17.3438 4.92188 17.3438 4.92188V7.875H15.8306C14.3398 7.875 13.875 8.80003 13.875 9.74906V12H17.2031L16.6711 15.4688H13.875V23.8542C19.6118 22.954 24 17.9896 24 12Z" fill="var(--fill-0, #0866FF)" style="fill:#0866FF;fill:color(display-p3 0.0314 0.4000 1.0000);fill-opacity:1;"/>
+<path id="Vector_2" d="M16.6711 15.4685L17.2031 11.9998H13.875V9.74886C13.875 8.79973 14.3399 7.87479 15.8306 7.87479H17.3437V4.92167C17.3437 4.92167 15.9705 4.68729 14.6575 4.68729C11.9165 4.68729 10.125 6.34854 10.125 9.35604V11.9998H7.07811V15.4685H10.125V23.854C10.7452 23.9512 11.3721 24 12 23.9998C12.6278 24 13.2547 23.9512 13.875 23.854V15.4685H16.6711Z" fill="var(--fill-0, white)" style="fill:white;fill-opacity:1;"/>
+</g>
+<defs>
+<clipPath id="clip0_0_159">
+<rect width="24" height="24" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

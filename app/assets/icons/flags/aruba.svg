@@ -1,0 +1,32 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-494 -405)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-494 -80)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="aruba" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="#3ECBF8" style="fill:#3ECBF8;fill:color(display-p3 0.2427 0.7961 0.9708);fill-opacity:1;"/>
+<path id="vector" d="M19.9048 0H2.09524C0.93807 0 0 0.955126 0 2.13333V13.8667C0 15.0449 0.93807 16 2.09524 16H19.9048C21.0619 16 22 15.0449 22 13.8667V2.13333C22 0.955126 21.0619 0 19.9048 0Z" fill="#3ECBF8" style="fill:#3ECBF8;fill:color(display-p3 0.2427 0.7961 0.9708);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M4.69855 4.78446C5.60998 4.72579 6.28569 4.51779 6.28569 4.26712C6.28569 4.01752 5.60998 3.80846 4.69855 3.74979C4.64093 2.82179 4.43664 2.13379 4.19045 2.13379C3.94531 2.13379 3.73998 2.82179 3.68236 3.74979C2.77093 3.80846 2.09521 4.01646 2.09521 4.26712C2.09521 4.51672 2.77093 4.72579 3.68236 4.78446C3.73998 5.71246 3.94426 6.40046 4.19045 6.40046C4.4356 6.40046 4.64093 5.71246 4.69855 4.78446Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M4.69843 4.78361C5.60986 4.72494 6.28557 4.51694 6.28557 4.26628C6.28557 4.01668 5.60986 3.80761 4.69843 3.74894C4.64081 2.82094 4.43653 2.13294 4.19034 2.13294C3.94519 2.13294 3.73986 2.82094 3.68224 3.74894C2.77081 3.80761 2.0951 4.01561 2.0951 4.26628C2.0951 4.51588 2.77081 4.72494 3.68224 4.78361C3.73986 5.71161 3.94415 6.39961 4.19034 6.39961C4.43548 6.39961 4.64081 5.71161 4.69843 4.78361ZM4.72986 5.31694L5.22224 4.81561C5.14367 6.09348 4.88177 6.93294 4.19034 6.93294C3.49891 6.93294 3.237 6.09241 3.15948 4.81668L3.64977 5.31588C2.39681 5.23694 1.57129 4.97028 1.57129 4.26628C1.57129 3.56228 2.39681 3.29561 3.64977 3.21668L3.15948 3.71588C3.237 2.44014 3.49891 1.59961 4.19034 1.59961C4.88177 1.59961 5.14367 2.44014 5.22119 3.71588L4.73091 3.21668C5.98386 3.29561 6.80938 3.56228 6.80938 4.26628C6.80938 4.97028 5.98386 5.23694 4.73091 5.31588L4.72986 5.31694Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector_4" fill-rule="evenodd" clip-rule="evenodd" d="M0 10H22V11H0V10ZM0 12H22V13H0V12Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

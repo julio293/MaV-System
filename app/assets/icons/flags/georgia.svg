@@ -1,0 +1,30 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-310 -645)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-310 -320)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="georgia" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M9.42857 9.6H0V6.4H9.42857V0H12.5714V6.4H22V9.6H12.5714V16H9.42857V9.6Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M15.7142 11.7338H14.6666V12.8005H15.7142V13.8671H16.7619V12.8005H17.8095V11.7338H16.7619V10.6671H15.7142V11.7338ZM15.7142 3.20046H14.6666V4.26712H15.7142V5.33379H16.7619V4.26712H17.8095V3.20046H16.7619V2.13379H15.7142V3.20046ZM5.23805 3.20046H4.19043V4.26712H5.23805V5.33379H6.28567V4.26712H7.33329V3.20046H6.28567V2.13379H5.23805V3.20046ZM5.23805 11.7338H4.19043V12.8005H5.23805V13.8671H6.28567V12.8005H7.33329V11.7338H6.28567V10.6671H5.23805V11.7338Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>
