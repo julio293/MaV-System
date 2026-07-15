@@ -27,6 +27,7 @@
     { href: 'components/badges.html',        label: 'Badges & Chips' },
     { href: 'components/avatars.html',       label: 'Avatars' },
     { href: 'components/cards.html',         label: 'Payment Cards' },
+    { href: 'components/list.html',          label: 'List' },
     { href: 'components/navigation.html',    label: 'Navigation' },
     { href: 'components/chat.html',          label: 'Chat Bubbles' },
     { href: 'components/finance.html',       label: 'Finance Modules' },
