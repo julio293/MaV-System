@@ -23,6 +23,7 @@
     { href: 'components/otp.html',           label: 'OTP Input' },
     { href: 'components/forms.html',         label: 'Forms & Controls' },
     { href: 'components/feedback.html',      label: 'Alerts & Toasts' },
+    { href: 'components/toast.html',         label: 'Toast' },
     { href: 'components/badges.html',        label: 'Badges & Chips' },
     { href: 'components/avatars.html',       label: 'Avatars' },
     { href: 'components/cards.html',         label: 'Payment Cards' },

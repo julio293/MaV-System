@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toast — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Toast — Figma "• Toast" page (85:5234) ══════════════════════════════════
+   560px card, radius 8px, shadow/xl. Coloured icon chip (soft System/* fill),
+   title (PJS Bold 14) + description (PJS Medium 14 #7f7f7f), optional text
+   button + close. Colours: Primary / Red / Orange / Green. Plus a Notification
+   toast (title + desc, right-side button rail). */
+.toast{display:flex;align-items:center;gap:16px;width:100%;max-width:560px;box-sizing:border-box;
+  background:var(--toast\/bg-default,#ffffff);border:1px solid var(--toast\/outline,#efefef);
+  border-radius:8px;padding:16px;font-family:'Plus Jakarta Sans',sans-serif;
+  box-shadow:0 6px 12px -6px rgba(0,0,0,.10),0 12px 24px -12px rgba(0,0,0,.08)}
+.toast-lead{display:flex;align-items:flex-start;gap:16px;flex:1;min-width:0}
+.toast-ic{display:flex;padding:6px;border-radius:8px;flex-shrink:0}
+.toast-ic svg{width:20px;height:20px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.toast-body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.toast-title{font-weight:700;font-size:14px;line-height:1.3;color:var(--toast\/text-title,#171717)}
+.toast-desc{font-weight:500;font-size:14px;line-height:1.3;color:var(--toast\/text-desc,#7f7f7f)}
+.toast-1line .toast-title{font-weight:500}
+.toast-btn{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:14px;
+  color:var(--btn\/textonly\/default,#352eff);background:none;border:0;cursor:pointer;flex-shrink:0;white-space:nowrap}
+.toast-x{width:24px;height:24px;flex-shrink:0;stroke:var(--icon\/default,#171717);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;cursor:pointer}
+
+.toast-primary .toast-ic{background:var(--System\/Primary-soft,#352eff1a)} .toast-primary .toast-ic svg{stroke:var(--icon\/active,#352eff)}
+.toast-red    .toast-ic{background:var(--System\/Danger-soft,#ff00001a)}  .toast-red    .toast-ic svg{stroke:#ff0000}
+.toast-orange .toast-ic{background:var(--System\/Warning-soft,#ff84001a)} .toast-orange .toast-ic svg{stroke:#ff8400}
+.toast-green  .toast-ic{background:var(--System\/Success-soft,#629c281a)} .toast-green  .toast-ic svg{stroke:#629c28}
+
+/* Notification toast */
+.ntoast{display:flex;align-items:stretch;width:100%;max-width:480px;box-sizing:border-box;
+  background:var(--toast\/bg-default,#ffffff);border:1px solid var(--toast\/outline,#efefef);
+  border-radius:8px;overflow:hidden;font-family:'Plus Jakarta Sans',sans-serif;
+  box-shadow:0 6px 12px -6px rgba(0,0,0,.10),0 12px 24px -12px rgba(0,0,0,.08)}
+.ntoast-body{flex:1;min-width:0;padding:16px;display:flex;flex-direction:column;gap:4px}
+.ntoast-title{font-weight:500;font-size:14px;color:#121212}
+.ntoast-desc{font-weight:700;font-size:14px;color:#4f4f4f}
+.ntoast-actions{display:flex;flex-direction:column;border-left:1px solid #ececec}
+.ntoast-btn{flex:1;display:flex;align-items:center;justify-content:center;padding:0 24px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:14px;
+  color:var(--btn\/textonly\/default,#352eff);background:none;border:0;cursor:pointer;white-space:nowrap}
+.ntoast-actions .ntoast-btn+.ntoast-btn{border-top:1px solid #ececec}
+[data-theme=dark] .ntoast-title{color:var(--mav-fg)}
+
+.toast-stack{display:flex;flex-direction:column;gap:16px;width:100%;max-width:560px}
+.spec-tag{font-size:12px;color:var(--mav-muted);font-family:'Inter',sans-serif;min-width:120px}
+.spec-line{display:flex;align-items:center;gap:24px}
+.canvas-dark{background:var(--bc-mono900-l,#171717);border-radius:12px;padding:24px}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="toast.html" class="sidebar-link active">Toast</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
+  <a href="progress.html" class="sidebar-link">Progress Bar</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Toast</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Toast</h1>
+    <p class="page-desc">Transient notification card — coloured icon chip, title + description, optional action and close. 560px, radius 8px, <code>shadow/xl</code>.</p>
+  </div>
+
+  <!-- Color -->
+  <div class="section">
+    <h2 class="section-title">Color</h2>
+    <p class="section-desc">Primary, Red, Orange, Green — the icon chip fill uses the matching <code>System/*-soft</code> token.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="toast-stack">
+          <div class="toast toast-primary"><div class="toast-lead"><span class="toast-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></span><div class="toast-body"><span class="toast-title">Title</span><span class="toast-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</span></div></div><button class="toast-btn">Button</button><svg class="toast-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+          <div class="toast toast-red"><div class="toast-lead"><span class="toast-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg></span><div class="toast-body"><span class="toast-title">Title</span><span class="toast-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</span></div></div><button class="toast-btn">Button</button><svg class="toast-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+          <div class="toast toast-orange"><div class="toast-lead"><span class="toast-ic"><svg viewBox="0 0 24 24"><path d="M12 3L2 20h20z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg></span><div class="toast-body"><span class="toast-title">Title</span><span class="toast-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</span></div></div><button class="toast-btn">Button</button><svg class="toast-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+          <div class="toast toast-green"><div class="toast-lead"><span class="toast-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg></span><div class="toast-body"><span class="toast-title">Title</span><span class="toast-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</span></div></div><button class="toast-btn">Button</button><svg class="toast-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Toast — 560px · radius 8px · icon chip radius 8 · shadow/xl</span><span class="preview-sublabel">Uses --toast/* + System/*-soft tokens</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Dark -->
+  <div class="section">
+    <h2 class="section-title">On dark surface</h2>
+    <p class="section-desc">Toasts re-theme automatically via the <code>--toast/*</code> tokens.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="canvas-dark" data-theme="dark">
+          <div class="toast-stack">
+            <div class="toast toast-primary"><div class="toast-lead"><span class="toast-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></span><div class="toast-body"><span class="toast-title">Title</span><span class="toast-desc">Lorem ipsum dolor sit amet, consectetur.</span></div></div><svg class="toast-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+            <div class="toast toast-green"><div class="toast-lead"><span class="toast-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg></span><div class="toast-body"><span class="toast-title">Title</span><span class="toast-desc">Lorem ipsum dolor sit amet, consectetur.</span></div></div><svg class="toast-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Dark surface preview</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Description / Button variations -->
+  <div class="section">
+    <h2 class="section-title">Variations</h2>
+    <p class="section-desc">With / without description, with / without action button, and text-only (no icon).</p>
+    <div class="preview-card">
+      <div class="preview-canvas" style="gap:20px">
+        <div class="spec-line"><span class="spec-tag">With description</span>
+          <div class="toast toast-primary" style="max-width:520px"><div class="toast-lead"><span class="toast-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></span><div class="toast-body"><span class="toast-title">Title</span><span class="toast-desc">Lorem ipsum dolor sit amet, consectetur.</span></div></div><svg class="toast-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+        </div>
+        <div class="spec-line"><span class="spec-tag">Without description</span>
+          <div class="toast toast-primary toast-1line" style="max-width:520px"><div class="toast-lead"><span class="toast-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></span><div class="toast-body"><span class="toast-title">Title</span></div></div><svg class="toast-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+        </div>
+        <div class="spec-line"><span class="spec-tag">With button</span>
+          <div class="toast toast-red toast-1line" style="max-width:520px"><div class="toast-lead"><span class="toast-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg></span><div class="toast-body"><span class="toast-title">Something went wrong</span></div></div><button class="toast-btn">Retry</button><svg class="toast-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+        </div>
+        <div class="spec-line"><span class="spec-tag">Text only</span>
+          <div class="toast toast-green toast-1line" style="max-width:520px"><div class="toast-lead"><div class="toast-body"><span class="toast-title">Saved successfully</span></div></div><svg class="toast-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Variations — description · button · text-only</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Notification toast -->
+  <div class="section">
+    <h2 class="section-title">Notification toast</h2>
+    <p class="section-desc">Title + description with a right-side action rail — one or two stacked buttons split by a divider.</p>
+    <div class="preview-card">
+      <div class="preview-canvas" style="gap:20px">
+        <div class="ntoast">
+          <div class="ntoast-body"><span class="ntoast-title">Title</span><span class="ntoast-desc">Lorem ipsum dolor sit amet, consectetur.</span></div>
+          <div class="ntoast-actions"><button class="ntoast-btn">Button</button></div>
+        </div>
+        <div class="ntoast">
+          <div class="ntoast-body"><span class="ntoast-title">Title</span><span class="ntoast-desc">Lorem ipsum dolor sit amet, consectetur.</span></div>
+          <div class="ntoast-actions"><button class="ntoast-btn">Accept</button><button class="ntoast-btn" style="color:var(--mav-muted)">Dismiss</button></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Notification toast — 480px · button rail (1–2)</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--toast/bg-default</td><td><span class="token-swatch-sm" style="background:#ffffff;border:1px solid #d0d0d0"></span><span class="token-value">#ffffff</span></td><td class="token-value">Card fill</td></tr>
+        <tr><td class="token-name">--toast/outline</td><td><span class="token-swatch-sm" style="background:#efefef;border:1px solid #d0d0d0"></span><span class="token-value">#efefef</span></td><td class="token-value">Card border</td></tr>
+        <tr><td class="token-name">--toast/text-title</td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">#171717</span></td><td class="token-value">Title (PJS Bold 14)</td></tr>
+        <tr><td class="token-name">--toast/text-desc</td><td><span class="token-swatch-sm" style="background:#7f7f7f"></span><span class="token-value">#7f7f7f</span></td><td class="token-value">Description (PJS Medium 14)</td></tr>
+        <tr><td class="token-name">--System/Primary-soft</td><td><span class="token-swatch-sm" style="background:#352eff1a;border:1px solid #d0d0d0"></span><span class="token-value">#352eff1a</span></td><td class="token-value">Icon chip fill (per colour)</td></tr>
+        <tr><td class="token-name">--btn/textonly/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Action button text</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>
