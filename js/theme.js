@@ -30,6 +30,7 @@
     { href: 'components/list.html',          label: 'List' },
     { href: 'components/navigation.html',    label: 'Navigation' },
     { href: 'components/chat.html',          label: 'Chat Bubbles' },
+    { href: 'components/message-chat.html',  label: 'Message Chat' },
     { href: 'components/finance.html',       label: 'Finance Modules' },
     { href: 'components/divider.html',       label: 'Divider' },
     { href: 'components/progress.html',      label: 'Progress Bar' },

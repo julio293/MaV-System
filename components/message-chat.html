@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Message Chat — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Message Chat — Figma "‣ Message Chat" page (229:15404) ═══════════════════
+   Centred empty / status state ("Headline") for a search / contacts panel.
+   Optional media (illustration · icon · loader) + title (Inter Bold 24) +
+   subtitle (Inter Regular 14 #7f7f7f). gap 12px, centred, max 327px text. */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  padding:24px 25px;text-align:center;width:100%;max-width:400px;box-sizing:border-box}
+.empty-title{font-family:'Inter',sans-serif;font-weight:700;font-size:24px;line-height:1.2;color:var(--main-text\/default,#171717)}
+.empty-sub{font-family:'Inter',sans-serif;font-weight:400;font-size:14px;line-height:1.4;color:var(--main-text\/description,#7f7f7f);max-width:327px}
+.empty-icon{width:54px;height:54px;border-radius:50%;background:var(--mav-primary,#352eff);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.empty-icon svg{width:28px;height:28px;stroke:#fff;stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+[data-theme=dark] .empty-icon{background:var(--mav-primary-dark)}
+[data-theme=dark] .empty-icon svg{stroke:#171717}
+.empty-loader{width:48px;height:48px;border-radius:50%;border:4px solid var(--mav-border,#ececec);border-top-color:var(--mav-primary,#352eff);animation:espin .8s linear infinite}
+@keyframes espin{to{transform:rotate(360deg)}}
+[data-theme=dark] .empty-loader{border-top-color:var(--mav-primary-dark)}
+.empty-illus{width:150px;height:120px;flex-shrink:0}
+
+.panel{width:100%;max-width:380px;border:1px solid var(--mav-border);border-radius:16px;overflow:hidden;background:var(--mav-bg,#fff)}
+.panel-search{margin:16px;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--input-field\/default\/outline-box,#cccccc);border-radius:4px}
+.panel-search svg{width:20px;height:20px;stroke:var(--icon\/subtle,#b2b2b2);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.panel-search span{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:var(--input-field\/default\/text-placeholder,#b2b2b2)}
+.canvas-dark{background:var(--bc-mono900-l,#171717);border-radius:16px;padding:8px}
+.empty-cols{display:flex;flex-wrap:wrap;gap:24px}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="toast.html" class="sidebar-link">Toast</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
+  <a href="list.html" class="sidebar-link">List</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="message-chat.html" class="sidebar-link active">Message Chat</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
+  <a href="progress.html" class="sidebar-link">Progress Bar</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Message Chat</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Message Chat</h1>
+    <p class="page-desc">Centred empty / status states for a search or contacts panel — an optional illustration, icon, or loader above a title (Inter Bold 24px) and subtitle (Inter Regular 14px).</p>
+  </div>
+
+  <!-- Types -->
+  <div class="section">
+    <h2 class="section-title">Types</h2>
+    <p class="section-desc">Text only, with illustration, with a status icon, or with a loader.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="empty-cols">
+          <div class="empty">
+            <span class="empty-title">No items were found</span>
+            <span class="empty-sub">Please try adjusting your search.</span>
+          </div>
+          <div class="empty">
+            <svg class="empty-illus" viewBox="0 0 150 120" fill="none">
+              <ellipse cx="75" cy="104" rx="52" ry="9" fill="#352eff" opacity=".08"/>
+              <path d="M40 58l35-20 35 20-35 20z" fill="#c7d0ff"/>
+              <path d="M40 58v26l35 20V78z" fill="#8ea2ff"/>
+              <path d="M110 58v26l-35 20V78z" fill="#5b74f0"/>
+              <rect x="60" y="60" width="8" height="8" rx="1" fill="#fff" opacity=".8"/>
+              <rect x="82" y="60" width="8" height="8" rx="1" fill="#fff" opacity=".55"/>
+              <path d="M63 30h24v10H63z" fill="#352eff"/>
+            </svg>
+            <span class="empty-title">No items were found</span>
+            <span class="empty-sub">Please try adjusting your search.</span>
+          </div>
+          <div class="empty">
+            <span class="empty-icon"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+            <span class="empty-title">Feels so empty here</span>
+            <span class="empty-sub">All saved transactions will show up here.</span>
+          </div>
+          <div class="empty">
+            <span class="empty-loader"></span>
+            <span class="empty-title">Please wait…</span>
+            <span class="empty-sub">We are loading your list of contacts.</span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Message chat — media (illustration / icon / loader) + title + subtitle</span><span class="preview-sublabel">Title Inter Bold 24 · subtitle Inter Regular 14 #7f7f7f</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- In a panel -->
+  <div class="section">
+    <h2 class="section-title">In a panel</h2>
+    <p class="section-desc">The empty state sits below the search field when a contacts list has no results.</p>
+    <div class="preview-card">
+      <div class="preview-canvas" style="gap:32px">
+        <div class="panel">
+          <div class="panel-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search…</span></div>
+          <div class="empty" style="padding-bottom:40px">
+            <svg class="empty-illus" viewBox="0 0 150 120" fill="none">
+              <ellipse cx="75" cy="104" rx="52" ry="9" fill="#352eff" opacity=".08"/>
+              <path d="M40 58l35-20 35 20-35 20z" fill="#c7d0ff"/>
+              <path d="M40 58v26l35 20V78z" fill="#8ea2ff"/>
+              <path d="M110 58v26l-35 20V78z" fill="#5b74f0"/>
+              <rect x="60" y="60" width="8" height="8" rx="1" fill="#fff" opacity=".8"/>
+              <rect x="82" y="60" width="8" height="8" rx="1" fill="#fff" opacity=".55"/>
+              <path d="M63 30h24v10H63z" fill="#352eff"/>
+            </svg>
+            <span class="empty-title" style="font-size:18px">No items were found</span>
+            <span class="empty-sub">Please try adjusting your search.</span>
+          </div>
+        </div>
+        <div class="canvas-dark" data-theme="dark">
+          <div class="panel" style="border:0">
+            <div class="panel-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search…</span></div>
+            <div class="empty" style="padding-bottom:40px">
+              <span class="empty-loader"></span>
+              <span class="empty-title" style="font-size:18px">Please wait…</span>
+              <span class="empty-sub">Loading your contacts.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Panel — search + empty state (light & dark)</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--main-text/default</td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">#171717</span></td><td class="token-value">Title (Inter Bold 24)</td></tr>
+        <tr><td class="token-name">--main-text/description</td><td><span class="token-swatch-sm" style="background:#7f7f7f"></span><span class="token-value">#7f7f7f</span></td><td class="token-value">Subtitle (Inter Regular 14)</td></tr>
+        <tr><td class="token-name">--mav-primary</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Status icon / loader (→ lime in dark)</td></tr>
+        <tr><td class="token-name">Icon · Loader</td><td><span class="token-value">54px · 48px</span></td><td class="token-value">Media sizes · gap 12px</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>
