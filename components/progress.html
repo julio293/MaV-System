@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Progress Bar — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Progress Bar — Figma "• Progress" page (145:939) ════════════════════════
+   400×6px track, radius 8px. Fill = --shade/primary/900 (#0d00fa), track =
+   --brand/primary/200 (#99c2e9), disabled track = --grey/200 (#ececec).
+   Percentage / labels use Inter 14px --grey/600. */
+.pbar{position:relative;width:100%;max-width:400px;height:6px;border-radius:8px;
+  background:var(--brand\/primary\/200,#99c2e9);overflow:hidden}
+.pbar-fill{height:6px;border-radius:8px;background:var(--shade\/primary\/900,#0d00fa);transition:width .35s ease}
+.pbar.is-disabled{background:var(--grey\/200,#ececec)}
+
+/* Row with a caption / label */
+.pbar-row{display:flex;align-items:center;gap:16px;width:100%;max-width:504px}
+.pbar-row .pbar{flex:1}
+.pbar-label{font-family:'Inter',sans-serif;font-weight:400;font-size:14px;line-height:20px;
+  color:var(--grey\/600,#5e5e5e);min-width:44px}
+.pbar-label.right{text-align:right}
+
+.pbar-stack{display:flex;flex-direction:column;gap:14px;width:100%;max-width:504px}
+
+/* Interactive demo */
+.demo-ctl{display:flex;align-items:center;gap:14px;margin-top:8px;max-width:504px}
+.demo-ctl input[type=range]{flex:1}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
+  <a href="progress.html" class="sidebar-link active">Progress Bar</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Progress Bar</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Progress Bar</h1>
+    <p class="page-desc">A 6px determinate progress track. Deep-blue fill (<code>--shade/primary/900</code>) over a light-blue track (<code>--brand/primary/200</code>), 8px radius.</p>
+  </div>
+
+  <!-- State -->
+  <div class="section">
+    <h2 class="section-title">State</h2>
+    <p class="section-desc">Fill from 0% to 100%, plus a Disabled track (<code>--grey/200</code>, no fill).</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="pbar-stack">
+          <div class="pbar-row"><span class="pbar-label">0%</span><div class="pbar"><div class="pbar-fill" style="width:0%"></div></div></div>
+          <div class="pbar-row"><span class="pbar-label">20%</span><div class="pbar"><div class="pbar-fill" style="width:20%"></div></div></div>
+          <div class="pbar-row"><span class="pbar-label">40%</span><div class="pbar"><div class="pbar-fill" style="width:40%"></div></div></div>
+          <div class="pbar-row"><span class="pbar-label">50%</span><div class="pbar"><div class="pbar-fill" style="width:50%"></div></div></div>
+          <div class="pbar-row"><span class="pbar-label">60%</span><div class="pbar"><div class="pbar-fill" style="width:60%"></div></div></div>
+          <div class="pbar-row"><span class="pbar-label">80%</span><div class="pbar"><div class="pbar-fill" style="width:80%"></div></div></div>
+          <div class="pbar-row"><span class="pbar-label">100%</span><div class="pbar"><div class="pbar-fill" style="width:100%"></div></div></div>
+          <div class="pbar-row"><span class="pbar-label">Disabled</span><div class="pbar is-disabled"></div></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Progress bar — 6px · radius 8px · fill #0d00fa on #99c2e9 track</span><span class="preview-sublabel">Uses --shade/primary/900 · --brand/primary/200 · --grey/200</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Variation -->
+  <div class="section">
+    <h2 class="section-title">Variation</h2>
+    <p class="section-desc">Bar only, or with a label to the left / right of the track. Label is Inter 14px <code>--grey/600</code>.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="pbar-stack">
+          <div class="pbar-row"><span class="pbar-label">Progress</span><div class="pbar"><div class="pbar-fill" style="width:50%"></div></div></div>
+          <div class="pbar-row"><span class="pbar-label">Label left</span><span class="pbar-label" style="min-width:40px">50%</span><div class="pbar"><div class="pbar-fill" style="width:50%"></div></div></div>
+          <div class="pbar-row"><span class="pbar-label">Label right</span><div class="pbar"><div class="pbar-fill" style="width:50%"></div></div><span class="pbar-label right" style="min-width:40px">50%</span></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Variation — Progress · Label left · Label right</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Interactive -->
+  <div class="section">
+    <h2 class="section-title">Interactive</h2>
+    <p class="section-desc">Drag to update the fill and the trailing label.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="pbar-row" style="max-width:504px">
+          <div class="pbar"><div class="pbar-fill" id="live-fill" style="width:35%"></div></div>
+          <span class="pbar-label right" id="live-label" style="min-width:40px">35%</span>
+        </div>
+        <div class="demo-ctl">
+          <input type="range" min="0" max="100" value="35" oninput="setProgress(this.value)">
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Determinate progress — width driven by value</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--shade/primary/900</td><td><span class="token-swatch-sm" style="background:#0d00fa"></span><span class="token-value">#0d00fa</span></td><td class="token-value">Fill</td></tr>
+        <tr><td class="token-name">--brand/primary/200</td><td><span class="token-swatch-sm" style="background:#99c2e9"></span><span class="token-value">#99c2e9</span></td><td class="token-value">Track</td></tr>
+        <tr><td class="token-name">--grey/200</td><td><span class="token-swatch-sm" style="background:#ececec;border:1px solid #d0d0d0"></span><span class="token-value">#ececec</span></td><td class="token-value">Disabled track</td></tr>
+        <tr><td class="token-name">--grey/600</td><td><span class="token-swatch-sm" style="background:#5e5e5e"></span><span class="token-value">#5e5e5e</span></td><td class="token-value">Label text (Inter 14px)</td></tr>
+        <tr><td class="token-name">Height · Radius</td><td><span class="token-value">6px · 8px</span></td><td class="token-value">Track dimensions</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script>
+function setProgress(v){
+  document.getElementById('live-fill').style.width = v + '%';
+  document.getElementById('live-label').textContent = v + '%';
+}
+</script>
+<script src="../js/theme.js"></script>
+</body>
+</html>

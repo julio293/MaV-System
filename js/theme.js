@@ -30,6 +30,7 @@
     { href: 'components/chat.html',          label: 'Chat Bubbles' },
     { href: 'components/finance.html',       label: 'Finance Modules' },
     { href: 'components/divider.html',       label: 'Divider' },
+    { href: 'components/progress.html',      label: 'Progress Bar' },
     { href: 'components/all.html',           label: 'Kitchen Sink' },
 
     { group: 'iOS Screens' },

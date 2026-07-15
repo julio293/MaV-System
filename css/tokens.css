@@ -621,6 +621,12 @@
   --input-field\/disabled\/outline-box-disabled: #cccccc;
   --input-field\/disabled\/text-disabled:        #b2b2b2;
 
+  /* Progress bar (Figma variable names — fill is shade/primary/900) */
+  --shade\/primary\/900: #0d00fa;
+  --brand\/primary\/200: #99c2e9;
+  --grey\/200:           #ececec;
+  --grey\/600:           #5e5e5e;
+
   /* OTP */
   --OTP\/default\/bg-box:           #ffffff;
   --OTP\/default\/outline-box:      #cccccc;
@@ -935,6 +941,7 @@
   --OTP\/default\/outline-box:       #484848;
   --OTP\/focus\/bg-box:              #171717;
   --OTP\/focus\/outline-box:         #a1ff5b;
+  --OTP\/focus\/text-placeholder:    #e5e5e5;
   --OTP\/active\/bg-box-active:       #171717;
   --OTP\/active\/outline-box-active:  #e5e5e5;
   --OTP\/active\/text-active:         #e5e5e5;
