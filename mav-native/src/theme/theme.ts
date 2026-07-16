@@ -35,6 +35,8 @@ const palette = {
 
   subtle: '#efefef',
   toggleDisabledOn: '#e4ebff',
+  progressFill: '#0d00fa',
+  progressTrack: '#99c2e9',
 };
 
 const lightColors = {
@@ -66,6 +68,13 @@ const lightColors = {
   toggleTrackActive: palette.primary,
   toggleDisabledOn: palette.toggleDisabledOn,
   handle: palette.white,
+
+  // Progress bar keeps its own blue palette (does not lime-swap in dark)
+  progressFill: palette.progressFill,
+  progressTrack: palette.progressTrack,
+  progressDisabled: palette.subtle,
+
+  grey: '#f5f5f5',
 };
 
 const darkColors: typeof lightColors = {
@@ -87,6 +96,9 @@ const darkColors: typeof lightColors = {
 
   toggleTrack: palette.mono100d,
   toggleTrackActive: palette.primaryLime,
+
+  progressDisabled: palette.mono100d,
+  grey: palette.mono100d,
 };
 
 export const lightTheme = createTheme({

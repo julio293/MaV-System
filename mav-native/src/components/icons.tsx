@@ -39,3 +39,34 @@ export const AlertIcon = ({ size = 20, color = '#ff0000', strokeWidth = 1.8 }: I
     <Path d="M12 7.5v5.5M12 16.5h.01" />
   </Svg>
 );
+
+export const MinusIcon = ({ size = 20, color = '#fff', strokeWidth = 2.4 }: IconProps) => (
+  <Svg {...base(size, strokeWidth)} stroke={color}>
+    <Path d="M5 12h14" />
+  </Svg>
+);
+
+export const ChevronDownIcon = ({ size = 24, color = '#171717', strokeWidth = 1.8 }: IconProps) => (
+  <Svg {...base(size, strokeWidth)} stroke={color}>
+    <Path d="M6 9l6 6 6-6" />
+  </Svg>
+);
+
+export const SearchIcon = ({ size = 20, color = '#b2b2b2', strokeWidth = 1.8 }: IconProps) => (
+  <Svg {...base(size, strokeWidth)} stroke={color}>
+    <Circle cx={11} cy={11} r={7} />
+    <Path d="M21 21l-4.3-4.3" />
+  </Svg>
+);
+
+export const PlusIcon = ({ size = 20, color = '#171717', strokeWidth = 1.8 }: IconProps) => (
+  <Svg {...base(size, strokeWidth)} stroke={color}>
+    <Path d="M12 5v14M5 12h14" />
+  </Svg>
+);
+
+export const CheckCircleIcon = ({ size = 28, color = '#fff', strokeWidth = 2.4 }: IconProps) => (
+  <Svg {...base(size, strokeWidth)} stroke={color}>
+    <Path d="M5 12.5l4.5 4.5L19 7" />
+  </Svg>
+);
