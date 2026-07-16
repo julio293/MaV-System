@@ -1,1 +1,6 @@
 .DS_Store
+
+# RN build artifacts (belt-and-suspenders; mav-native/.gitignore also covers these)
+mav-native/node_modules/
+mav-native/.expo/
+mav-native/dist/
