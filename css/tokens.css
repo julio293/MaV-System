@@ -668,6 +668,10 @@
   /* Loader */
   --loader\/spin: #352eff;
 
+  /* Tabs */
+  --Tabs\/Tab-Default: #e4ebff;
+  --Tabs\/Tab-Active:  #352eff;
+
   /* Alert (note: "waring" is intentional Figma typo) */
   --alert\/primary\/bg-box:      #352eff1a;
   --alert\/primary\/text-brand:  #352eff;
@@ -952,6 +956,7 @@
   --OTP\/active\/text-active:         #e5e5e5;
 
   --loader\/spin: #a1ff5b;
+  --Tabs\/Tab-Active: #a1ff5b;
   --toggle\/default\/bg-box:       #242424;
   --toggle\/active\/bg-box-active: #a1ff5b;
 

@@ -29,6 +29,7 @@
     { href: 'components/cards.html',         label: 'Payment Cards' },
     { href: 'components/list.html',          label: 'List' },
     { href: 'components/navigation.html',    label: 'Navigation' },
+    { href: 'components/tabs.html',          label: 'Tabs' },
     { href: 'components/chat.html',          label: 'Chat Bubbles' },
     { href: 'components/message-chat.html',  label: 'Message Chat' },
     { href: 'components/finance.html',       label: 'Finance Modules' },

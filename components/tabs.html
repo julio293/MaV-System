@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabs — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Tabs — Figma "‣ Tabs" page (901:22860) ══════════════════════════════════
+   48px tab bar. Full-width rail (--Tabs/Tab-Default #e4ebff) with a per-tab
+   active indicator (--Tabs/Tab-Active #352eff → lime in dark). Label PJS Bold
+   16px, selected #171717 / unselected #b2b2b2. Variants: 2/3/4 tabs, scrollable,
+   skeleton; TabItem adds disabled, notify dot, and leading icon. */
+.tabs{position:relative;display:flex;width:100%;max-width:375px}
+.tabs::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:999px;background:var(--Tabs\/Tab-Default,#e4ebff)}
+.tab{flex:1;min-width:0;height:48px;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;background:none;border:0}
+.tab-label{display:flex;align-items:center;gap:8px;padding:12px 16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px;color:var(--main-text\/placeholder,#b2b2b2)}
+.tab.selected .tab-label{color:var(--main-text\/default,#171717)}
+.tab.selected::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:999px;background:var(--Tabs\/Tab-Active,#352eff);z-index:1}
+.tab.disabled{opacity:.4;cursor:not-allowed}
+.tab-ic{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tab-label .tab-ic{color:inherit}
+.tab-dot{width:8px;height:8px;border-radius:50%;background:var(--mav-danger,#ff0000);border:1.5px solid var(--mav-bg,#fff);flex-shrink:0}
+
+/* scrollable: tabs keep intrinsic width and scroll horizontally */
+.tabs-scroll{overflow-x:auto;max-width:375px}
+.tabs-scroll .tab{flex:0 0 auto}
+
+/* skeleton */
+.tab-skel{width:70px;height:16px;border-radius:999px;background:var(--mav-border,#e5e5e5);margin:12px 16px}
+
+.tabs-wrap{width:100%;max-width:375px}
+.tabs-tag{font-size:11px;color:var(--mav-muted);font-family:'Inter',sans-serif;margin-bottom:8px}
+.tab-panel{padding:20px 4px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--mav-muted)}
+.canvas-dark{background:var(--bc-mono900-l,#171717);border-radius:16px;padding:20px}
+.tabs-col{display:flex;flex-direction:column;gap:28px}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="toast.html" class="sidebar-link">Toast</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
+  <a href="list.html" class="sidebar-link">List</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="tabs.html" class="sidebar-link active">Tabs</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="message-chat.html" class="sidebar-link">Message Chat</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
+  <a href="progress.html" class="sidebar-link">Progress Bar</a>
+  <a href="coachmark.html" class="sidebar-link">Coachmark</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Tabs</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Tabs</h1>
+    <p class="page-desc">A 48px tab bar. The selected tab shows a <code>--Tabs/Tab-Active</code> indicator over a full-width <code>--Tabs/Tab-Default</code> rail; labels are Plus Jakarta Sans Bold 16px. 2–4 tabs, scrollable, and a skeleton loading state.</p>
+  </div>
+
+  <!-- Count + interactive -->
+  <div class="section">
+    <h2 class="section-title">Tabs — 2 / 3 / 4</h2>
+    <p class="section-desc">Equal-width tabs. Click to switch; the active indicator moves and the panel updates.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="tabs-col">
+          <div class="tabs-wrap">
+            <span class="tabs-tag">2 tabs</span>
+            <div class="tabs" onclick="pick(event)"><button class="tab selected"><span class="tab-label">Overview</span></button><button class="tab"><span class="tab-label">Activity</span></button></div>
+          </div>
+          <div class="tabs-wrap">
+            <span class="tabs-tag">3 tabs · interactive</span>
+            <div class="tabs" id="demo" onclick="pick(event)"><button class="tab selected"><span class="tab-label">Summary</span></button><button class="tab"><span class="tab-label">Transactions</span></button><button class="tab"><span class="tab-label">Reports</span></button></div>
+            <div class="tab-panel" id="demo-panel">Showing <b>Summary</b>.</div>
+          </div>
+          <div class="tabs-wrap">
+            <span class="tabs-tag">4 tabs</span>
+            <div class="tabs" onclick="pick(event)"><button class="tab"><span class="tab-label">Day</span></button><button class="tab selected"><span class="tab-label">Week</span></button><button class="tab"><span class="tab-label">Month</span></button><button class="tab"><span class="tab-label">Year</span></button></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Tabs — 48px · rail #e4ebff · active indicator #352eff (→ lime in dark)</span><span class="preview-sublabel">Uses --Tabs/* + --main-text/* tokens</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Scrollable -->
+  <div class="section">
+    <h2 class="section-title">Scrollable</h2>
+    <p class="section-desc">When tabs exceed the width they keep their intrinsic size and scroll horizontally instead of shrinking.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="tabs tabs-scroll" onclick="pick(event)">
+          <button class="tab selected"><span class="tab-label">All accounts</span></button>
+          <button class="tab"><span class="tab-label">Savings</span></button>
+          <button class="tab"><span class="tab-label">Credit cards</span></button>
+          <button class="tab"><span class="tab-label">Investments</span></button>
+          <button class="tab"><span class="tab-label">Loans</span></button>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Scrollable — tabs sized to content, overflow-x scroll</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- TabItem states -->
+  <div class="section">
+    <h2 class="section-title">Tab item — states</h2>
+    <p class="section-desc">Selected, default, disabled, with a notification dot, and with a leading icon.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="tabs" style="max-width:520px">
+          <button class="tab selected"><span class="tab-label">Selected</span></button>
+          <button class="tab"><span class="tab-label">Default</span></button>
+          <button class="tab disabled"><span class="tab-label">Disabled</span></button>
+          <button class="tab"><span class="tab-label">Inbox <span class="tab-dot"></span></span></button>
+          <button class="tab"><span class="tab-label"><svg class="tab-ic" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>Home</span></button>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Tab item — selected · default · disabled · notify · icon</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Skeleton + dark -->
+  <div class="section">
+    <h2 class="section-title">Skeleton & dark</h2>
+    <p class="section-desc">Loading placeholder, and the bar on a dark surface (active indicator re-themes to lime).</p>
+    <div class="preview-card">
+      <div class="preview-canvas" style="gap:28px">
+        <div class="tabs" style="max-width:375px"><div class="tab"><div class="tab-skel"></div></div><div class="tab"><div class="tab-skel"></div></div><div class="tab"><div class="tab-skel"></div></div></div>
+        <div class="canvas-dark" data-theme="dark">
+          <div class="tabs" onclick="pick(event)"><button class="tab selected"><span class="tab-label">Overview</span></button><button class="tab"><span class="tab-label">Activity</span></button><button class="tab"><span class="tab-label">Settings</span></button></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Skeleton · dark surface</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--Tabs/Tab-Default</td><td><span class="token-swatch-sm" style="background:#e4ebff;border:1px solid #d0d0d0"></span><span class="token-value">#e4ebff</span></td><td class="token-value">Full-width rail</td></tr>
+        <tr><td class="token-name">--Tabs/Tab-Active</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Active indicator (→ lime in dark)</td></tr>
+        <tr><td class="token-name">--main-text/default</td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">#171717</span></td><td class="token-value">Selected label</td></tr>
+        <tr><td class="token-name">--main-text/placeholder</td><td><span class="token-swatch-sm" style="background:#b2b2b2"></span><span class="token-value">#b2b2b2</span></td><td class="token-value">Unselected label</td></tr>
+        <tr><td class="token-name">Height · Label</td><td><span class="token-value">48px · PJS Bold 16</span></td><td class="token-value">Bar height · label type</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script>
+function pick(e){
+  var tab = e.target.closest('.tab');
+  if(!tab || tab.classList.contains('disabled')) return;
+  var bar = tab.parentElement;
+  bar.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('selected'); });
+  tab.classList.add('selected');
+  if(bar.id === 'demo'){
+    var label = tab.querySelector('.tab-label').textContent.trim();
+    document.getElementById('demo-panel').innerHTML = 'Showing <b>' + label + '</b>.';
+  }
+}
+</script>
+<script src="../js/theme.js"></script>
+</body>
+</html>
