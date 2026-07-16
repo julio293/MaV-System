@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loader — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Loader — Figma "• Loader" page (85:2727) ════════════════════════════════
+   Comet spinner: a rounded head + fading tail, colour --loader/spin (#352eff,
+   → lime in dark). CSS-only ring built from a conic-gradient tail + a radial
+   head dot, masked to a ring and rotated. Sizes lg 48 / md 32 / sm 24 / xs 16. */
+.loader{
+  aspect-ratio:1;border-radius:50%;
+  background:
+    radial-gradient(farthest-side, var(--loader\/spin,#352eff) 94%, #0000) top center/var(--lw) var(--lw) no-repeat,
+    conic-gradient(#0000 25%, var(--loader\/spin,#352eff));
+  -webkit-mask:radial-gradient(farthest-side, #0000 calc(100% - var(--lw)), #000 calc(100% - var(--lw)));
+          mask:radial-gradient(farthest-side, #0000 calc(100% - var(--lw)), #000 calc(100% - var(--lw)));
+  animation:loader-spin .8s infinite linear;
+}
+@keyframes loader-spin{to{transform:rotate(1turn)}}
+@media (prefers-reduced-motion: reduce){ .loader{animation-duration:2.4s} }
+
+.loader-lg{width:48px;height:48px;--lw:5px}
+.loader-md{width:32px;height:32px;--lw:4px}
+.loader-sm{width:24px;height:24px;--lw:3px}
+.loader-xs{width:16px;height:16px;--lw:2.5px}
+
+.loader-grid{display:flex;align-items:flex-end;gap:56px}
+.loader-cell{display:flex;flex-direction:column;align-items:center;gap:16px}
+.loader-tag{font-size:11px;color:var(--mav-muted);font-family:'Inter',sans-serif}
+.canvas-dark{background:var(--bc-mono900-l,#171717);border-radius:16px;padding:32px 24px}
+
+/* usage samples */
+.usage-row{display:flex;gap:40px;flex-wrap:wrap;align-items:center}
+.usage-btn{display:inline-flex;align-items:center;gap:10px;background:var(--mav-primary,#352eff);color:#fff;
+  border:0;border-radius:8px;padding:12px 20px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px}
+[data-theme=dark] .usage-btn{background:var(--mav-primary-dark);color:#171717}
+.usage-btn .loader{--loader\/spin:#fff}
+[data-theme=dark] .usage-btn .loader{--loader\/spin:#171717}
+.usage-card{width:100%;max-width:320px;border:1px solid var(--mav-border);border-radius:16px;padding:40px;
+  display:flex;flex-direction:column;align-items:center;gap:14px}
+.usage-card span{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--mav-muted)}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="toast.html" class="sidebar-link">Toast</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
+  <a href="list.html" class="sidebar-link">List</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="message-chat.html" class="sidebar-link">Message Chat</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
+  <a href="progress.html" class="sidebar-link">Progress Bar</a>
+  <a href="loader.html" class="sidebar-link active">Loader</a>
+  <a href="coachmark.html" class="sidebar-link">Coachmark</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Loader</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Loader</h1>
+    <p class="page-desc">An indeterminate spinner shown while a task is underway — a rounded head with a fading comet tail in <code>--loader/spin</code>, spinning continuously. Sizes lg / md / sm / xs.</p>
+  </div>
+
+  <!-- Sizes -->
+  <div class="section">
+    <h2 class="section-title">Size</h2>
+    <p class="section-desc">Four sizes: lg 48px, md 32px, sm 24px, xs 16px. Stroke scales with the diameter. All animate at ~0.8s per rotation.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="loader-grid">
+          <div class="loader-cell"><span class="loader-tag">lg</span><span class="loader loader-lg"></span></div>
+          <div class="loader-cell"><span class="loader-tag">md</span><span class="loader loader-md"></span></div>
+          <div class="loader-cell"><span class="loader-tag">sm</span><span class="loader loader-sm"></span></div>
+          <div class="loader-cell"><span class="loader-tag">xs</span><span class="loader loader-xs"></span></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Loader — 48 / 32 / 24 / 16px · comet spinner · 0.8s linear infinite</span><span class="preview-sublabel">Uses --loader/spin (→ lime in dark) · respects prefers-reduced-motion</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Dark -->
+  <div class="section">
+    <h2 class="section-title">On dark surface</h2>
+    <p class="section-desc">The spinner colour re-themes to lime <code>#a1ff5b</code> in dark mode.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="canvas-dark" data-theme="dark">
+          <div class="loader-grid">
+            <div class="loader-cell"><span class="loader-tag" style="color:#8a8a8a">lg</span><span class="loader loader-lg"></span></div>
+            <div class="loader-cell"><span class="loader-tag" style="color:#8a8a8a">md</span><span class="loader loader-md"></span></div>
+            <div class="loader-cell"><span class="loader-tag" style="color:#8a8a8a">sm</span><span class="loader loader-sm"></span></div>
+            <div class="loader-cell"><span class="loader-tag" style="color:#8a8a8a">xs</span><span class="loader loader-xs"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Dark surface — --loader/spin → #a1ff5b</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- In context -->
+  <div class="section">
+    <h2 class="section-title">In context</h2>
+    <p class="section-desc">Inline in a loading button (inherits white), and centred in a full-panel loading state.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="usage-row">
+          <button class="usage-btn"><span class="loader loader-sm"></span> Processing…</button>
+          <div class="usage-card"><span class="loader loader-lg"></span><span>Loading your dashboard…</span></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">In context — button spinner · panel loading state</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--loader/spin</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Spinner colour (light)</td></tr>
+        <tr><td class="token-name">--loader/spin <span style="opacity:.6">(dark)</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td><td class="token-value">Spinner colour (dark)</td></tr>
+        <tr><td class="token-name">Sizes</td><td><span class="token-value">48 / 32 / 24 / 16px</span></td><td class="token-value">lg / md / sm / xs</td></tr>
+        <tr><td class="token-name">Animation</td><td><span class="token-value">0.8s linear ∞</span></td><td class="token-value">Rotation (slows under reduced-motion)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>
