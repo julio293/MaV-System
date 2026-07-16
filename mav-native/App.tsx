@@ -22,6 +22,9 @@ import { ListRow, AvatarInitial } from './src/components/ListRow';
 import { EmptyState } from './src/components/EmptyState';
 import { MessageInput } from './src/components/MessageInput';
 import { Coachmark } from './src/components/Coachmark';
+import { Tabs } from './src/components/Tabs';
+import { Loader } from './src/components/Loader';
+import { ChatBubble } from './src/components/ChatBubble';
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   const theme = useTheme<Theme>();
@@ -45,6 +48,7 @@ function Showcase() {
   const [on, setOn] = useState(true);
   const [otp, setOtp] = useState('12');
   const [chips, setChips] = useState(['Primary', 'Red', 'Green', 'Orange']);
+  const [tab, setTab] = useState('summary');
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.bg }}>
@@ -140,6 +144,31 @@ function Showcase() {
 
         <Section title="Coachmark">
           <Coachmark appearance="top" title="Find anything fast" description="Search all your transactions here." step="( 1 / 4 )" />
+        </Section>
+
+        <Section title="Tabs">
+          <Tabs
+            value={tab}
+            onChange={setTab}
+            tabs={[{ key: 'summary', label: 'Summary' }, { key: 'activity', label: 'Activity' }, { key: 'reports', label: 'Reports' }]}
+          />
+          <Text style={{ color: theme.colors.muted, marginTop: 12 }}>Showing: {tab}</Text>
+        </Section>
+
+        <Section title="Loader">
+          <Row>
+            <Loader size="lg" />
+            <Loader size="md" />
+            <Loader size="sm" />
+            <Loader size="xs" />
+          </Row>
+        </Section>
+
+        <Section title="Chat bubbles">
+          <View style={{ gap: 10 }}>
+            <ChatBubble avatar="A" sender="Allison Allan" text="Hey! Can you review the design?" time="09:24" />
+            <ChatBubble outgoing text="On my way — sending files now 🚗" time="09:25" />
+          </View>
         </Section>
       </ScrollView>
     </View>

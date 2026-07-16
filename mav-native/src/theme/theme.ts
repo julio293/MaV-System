@@ -75,6 +75,10 @@ const lightColors = {
   progressDisabled: palette.subtle,
 
   grey: '#f5f5f5',
+
+  tabsRail: '#e4ebff',
+  bubbleIn: '#efefef',
+  bubbleOut: '#352eff19',
 };
 
 const darkColors: typeof lightColors = {
@@ -99,6 +103,10 @@ const darkColors: typeof lightColors = {
 
   progressDisabled: palette.mono100d,
   grey: palette.mono100d,
+
+  tabsRail: palette.mono100d,
+  bubbleIn: palette.mono100d,
+  bubbleOut: '#2a2740',
 };
 
 export const lightTheme = createTheme({
