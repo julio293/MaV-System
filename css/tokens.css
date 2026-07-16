@@ -665,6 +665,10 @@
   --toggle\/disabled\/text-disabled:     #cccccc;
   --toggle\/disabled\/bg-box-disabled-2: #e4ebff;
 
+  /* Tabs */
+  --Tabs\/Tab-Default: #e4ebff;
+  --Tabs\/Tab-Active:  #352eff;
+
   /* Alert (note: "waring" is intentional Figma typo) */
   --alert\/primary\/bg-box:      #352eff1a;
   --alert\/primary\/text-brand:  #352eff;
@@ -946,6 +950,7 @@
   --OTP\/active\/outline-box-active:  #e5e5e5;
   --OTP\/active\/text-active:         #e5e5e5;
 
+  --Tabs\/Tab-Active: #a1ff5b;
   --toggle\/default\/bg-box:       #242424;
   --toggle\/active\/bg-box-active: #a1ff5b;
 
