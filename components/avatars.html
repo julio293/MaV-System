@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avatars — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Avatar — Figma component set 206:7252 ══════════════════════════════
+   Axes: Size 3xl/2xl/xl/lg/md/sm/xs · Type Image/Text · Shape Rounded/Squared ·
+   Status On/Off · (Text) Color Grey/Primary/Red.
+   Driven by a single --sz custom property: initials = 50% of size, dot = 21%. */
+.avatar{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  width:var(--sz);height:var(--sz);flex-shrink:0;
+  font-family:var(--font-active);font-weight:700;line-height:1;
+  font-size:calc(var(--sz) * .5);
+  overflow:visible;
+}
+.avatar img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;border-radius:inherit;display:block;pointer-events:none;
+}
+.avatar-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:inherit;overflow:hidden}
+/* shape */
+.avatar.rounded{border-radius:50%}
+.avatar.squared{border-radius:var(--border\/border-radius\/sm,4px)}
+.avatar.rounded .avatar-inner{border-radius:50%}
+.avatar.squared .avatar-inner{border-radius:var(--border\/border-radius\/sm,4px)}
+/* text colors */
+.avatar-grey   .avatar-inner{background:var(--avatar\/grey\/bg)}
+.avatar-grey   {color:var(--avatar\/grey\/text)}
+.avatar-primary .avatar-inner{background:var(--avatar\/primary\/bg)}
+.avatar-primary{color:var(--avatar\/primary\/text)}
+.avatar-red    .avatar-inner{background:var(--avatar\/red\/bg)}
+.avatar-red    {color:var(--avatar\/red\/text)}
+/* status dot — green fill + white ring, bottom-right */
+.avatar-status{
+  position:absolute;bottom:0;right:0;
+  width:calc(var(--sz) * .21);height:calc(var(--sz) * .21);
+  border-radius:50%;background:var(--avatar\/status-online);
+  box-shadow:0 0 0 2px var(--avatar\/status-ring);
+}
+.avatar.squared .avatar-status{bottom:-2px;right:-2px}
+
+/* Profile chip — avatar + name label below (Figma "Profile" 231:117159) */
+.profile{display:inline-flex;flex-direction:column;align-items:center;gap:8px}
+.profile .name{font-family:'Inter',sans-serif;font-size:14px;color:var(--main-text\/default,#171717)}
+
+/* Stacked group (common usage — overlapping avatars) */
+.avatar-stack{display:inline-flex;align-items:center}
+.avatar-stack .avatar{box-shadow:0 0 0 2px var(--mav-bg)}
+.avatar-stack .avatar+.avatar{margin-left:calc(var(--sz) * -.35)}
+.avatar-more{display:inline-flex;align-items:center;justify-content:center;
+  width:var(--sz);height:var(--sz);border-radius:50%;background:var(--avatar\/grey\/bg);
+  color:var(--avatar\/grey\/text);font-family:var(--font-active);font-weight:700;
+  font-size:calc(var(--sz)*.36);box-shadow:0 0 0 2px var(--mav-bg);margin-left:calc(var(--sz) * -.35)}
+
+.size-row{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.size-col{display:flex;flex-direction:column;align-items:center;gap:8px}
+.size-col .lbl{font-size:11px;color:var(--mav-muted);font-weight:500}
+.row{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link active">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Avatars</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Avatars</h1>
+    <p class="page-desc">Exported from Figma (page "• Avatar"). Seven sizes × Image / Text initials × Rounded / Squared × online status, with three initial-color themes. One <code>--sz</code> custom property drives each size; initials scale to 50%, the status dot to 21%.</p>
+  </div>
+
+  <!-- Sizes -->
+  <div class="section">
+    <h2 class="section-title">Sizes</h2>
+    <p class="section-desc">3xl 96 · 2xl 80 · xl 64 · lg 48 · md 40 · sm 32 · xs 24 px. Initials render at 50% of the avatar diameter (Plus Jakarta Bold).</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="size-row">
+          <div class="size-col"><span class="avatar rounded" style="--sz:96px"><img src="../app/assets/avatars/amara.jpg" alt=""></span><span class="lbl">3xl</span></div>
+          <div class="size-col"><span class="avatar rounded" style="--sz:80px"><img src="../app/assets/avatars/amara.jpg" alt=""></span><span class="lbl">2xl</span></div>
+          <div class="size-col"><span class="avatar rounded" style="--sz:64px"><img src="../app/assets/avatars/amara.jpg" alt=""></span><span class="lbl">xl</span></div>
+          <div class="size-col"><span class="avatar rounded" style="--sz:48px"><img src="../app/assets/avatars/amara.jpg" alt=""></span><span class="lbl">lg</span></div>
+          <div class="size-col"><span class="avatar rounded" style="--sz:40px"><img src="../app/assets/avatars/amara.jpg" alt=""></span><span class="lbl">md</span></div>
+          <div class="size-col"><span class="avatar rounded" style="--sz:32px"><img src="../app/assets/avatars/amara.jpg" alt=""></span><span class="lbl">sm</span></div>
+          <div class="size-col"><span class="avatar rounded" style="--sz:24px"><img src="../app/assets/avatars/amara.jpg" alt=""></span><span class="lbl">xs</span></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Sizes — Image, Rounded</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Type -->
+  <div class="section">
+    <h2 class="section-title">Type — Image / Text</h2>
+    <p class="section-desc">Image uses <code>object-fit: cover</code>. Text falls back to initials on a tinted fill — the fully themeable path (no asset needed).</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="row">
+          <span class="avatar rounded" style="--sz:96px"><img src="../app/assets/avatars/mega.jpg" alt=""></span>
+          <span class="avatar rounded avatar-grey" style="--sz:96px"><span class="avatar-inner">Y</span></span>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Image · Text</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Text colors -->
+  <div class="section">
+    <h2 class="section-title">Initial Colors</h2>
+    <p class="section-desc">Grey (<code>Main/Grey</code> + <code>main-text/default</code>), Primary (<code>background/bg-tertiary</code> + <code>main-text/brand</code>), Red (<code>System/Danger-soft</code> + <code>System/Danger</code>).</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="row">
+          <span class="avatar rounded avatar-grey" style="--sz:96px"><span class="avatar-inner">Y</span></span>
+          <span class="avatar rounded avatar-primary" style="--sz:96px"><span class="avatar-inner">Y</span></span>
+          <span class="avatar rounded avatar-red" style="--sz:96px"><span class="avatar-inner">Y</span></span>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Grey · Primary · Red</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Shape -->
+  <div class="section">
+    <h2 class="section-title">Shape — Rounded / Squared</h2>
+    <p class="section-desc">Rounded is a full circle; Squared uses <code>border/border-radius/sm</code> (4px).</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="row">
+          <span class="avatar rounded" style="--sz:96px"><img src="../app/assets/avatars/inara.jpg" alt=""></span>
+          <span class="avatar squared" style="--sz:96px"><img src="../app/assets/avatars/inara.jpg" alt=""></span>
+          <span class="avatar squared avatar-primary" style="--sz:96px"><span class="avatar-inner">Y</span></span>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Rounded · Squared</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Status -->
+  <div class="section">
+    <h2 class="section-title">Status — Online</h2>
+    <p class="section-desc">Online indicator: green dot (<code>avatar/status-online</code> #7cc731) with a 2px surface-colored ring, anchored bottom-right. Scales to 21% of the avatar.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="size-row">
+          <span class="avatar rounded" style="--sz:96px"><img src="../app/assets/avatars/memoji-1.jpg" alt=""><span class="avatar-status"></span></span>
+          <span class="avatar rounded avatar-primary" style="--sz:64px"><span class="avatar-inner">Y</span><span class="avatar-status"></span></span>
+          <span class="avatar squared" style="--sz:64px"><img src="../app/assets/avatars/sample-1.jpg" alt=""><span class="avatar-status"></span></span>
+          <span class="avatar rounded" style="--sz:40px"><img src="../app/assets/avatars/mega.jpg" alt=""><span class="avatar-status"></span></span>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Status=On — Rounded &amp; Squared</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Profile chips -->
+  <div class="section">
+    <h2 class="section-title">Profile</h2>
+    <p class="section-desc">Avatar + name label stacked (Figma "Profile"). Mixes image and initial avatars.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="row">
+          <span class="profile"><span class="avatar rounded" style="--sz:48px"><img src="../app/assets/avatars/amara.jpg" alt=""></span><span class="name">Amara</span></span>
+          <span class="profile"><span class="avatar rounded" style="--sz:48px"><img src="../app/assets/avatars/memoji-1.jpg" alt=""></span><span class="name">Ridho</span></span>
+          <span class="profile"><span class="avatar rounded avatar-grey" style="--sz:48px"><span class="avatar-inner">S</span></span><span class="name">Safira</span></span>
+          <span class="profile"><span class="avatar rounded" style="--sz:48px"><img src="../app/assets/avatars/inara.jpg" alt=""></span><span class="name">Inara</span></span>
+          <span class="profile"><span class="avatar rounded" style="--sz:48px"><img src="../app/assets/avatars/mega.jpg" alt=""></span><span class="name">Mega</span></span>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Profile — 48px avatar + Inter 14px name</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Stacked group -->
+  <div class="section">
+    <h2 class="section-title">Stacked Group <span style="font-size:11px;color:var(--mav-muted)">(common usage)</span></h2>
+    <p class="section-desc">Overlapping avatars with a surface-colored ring and a “+N” overflow chip. A composition pattern, not a Figma variant.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="avatar-stack" style="--sz:48px">
+          <span class="avatar rounded"><img src="../app/assets/avatars/amara.jpg" alt=""></span>
+          <span class="avatar rounded"><img src="../app/assets/avatars/inara.jpg" alt=""></span>
+          <span class="avatar rounded"><img src="../app/assets/avatars/mega.jpg" alt=""></span>
+          <span class="avatar rounded avatar-primary"><span class="avatar-inner">S</span></span>
+          <span class="avatar-more">+3</span>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Stacked — -35% overlap · 2px surface ring</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Light</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--avatar\/grey\/bg</td><td><span class="token-swatch-sm" style="background:#efefef;border:1px solid #ddd"></span><span class="token-value">Main/Grey #efefef</span></td><td class="token-value">Grey initials background</td></tr>
+        <tr><td class="token-name">--avatar\/grey\/text</td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">main-text/default #171717</span></td><td class="token-value">Grey initials text</td></tr>
+        <tr><td class="token-name">--avatar\/primary\/bg</td><td><span class="token-swatch-sm" style="background:#e6edff;border:1px solid #ddd"></span><span class="token-value">bg-tertiary #e6edff</span></td><td class="token-value">Primary initials background</td></tr>
+        <tr><td class="token-name">--avatar\/primary\/text</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">main-text/brand #352eff</span></td><td class="token-value">Primary initials text</td></tr>
+        <tr><td class="token-name">--avatar\/red\/bg</td><td><span class="token-swatch-sm" style="background:#ff00001a;border:1px solid #ddd"></span><span class="token-value">Danger-soft #ff00001a</span></td><td class="token-value">Red initials background</td></tr>
+        <tr><td class="token-name">--avatar\/red\/text</td><td><span class="token-swatch-sm" style="background:#ff0000"></span><span class="token-value">System/Danger #ff0000</span></td><td class="token-value">Red initials text</td></tr>
+        <tr><td class="token-name">--avatar\/status-online</td><td><span class="token-swatch-sm" style="background:#7cc731"></span><span class="token-value">#7cc731 (green/500)</span></td><td class="token-value">Online status dot</td></tr>
+        <tr><td class="token-name">--avatar\/status-ring</td><td><span class="token-swatch-sm" style="background:#fff;border:1px solid #ddd"></span><span class="token-value">#ffffff</span></td><td class="token-value">Status dot ring</td></tr>
+        <tr><td class="token-name">--border\/border-radius\/sm</td><td><span class="token-value">4px</span></td><td class="token-value">Squared corner radius</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

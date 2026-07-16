@@ -1,0 +1,21 @@
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="34" height="34" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="List icons V0.1">
+<rect x="-663.586" y="-364" width="1561" height="1415" rx="16" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Bank List">
+<rect x="-615.086" y="-315.5" width="1464" height="365" rx="4.5" stroke="#9747FF" style="stroke:#9747FF;stroke:color(display-p3 0.5922 0.2784 1.0000);stroke-opacity:1;" stroke-dasharray="10 5"/>
+<g id="Property 1=EASYPAY">
+<mask id="mask0_51_62" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="34" height="34">
+<circle id="Ellipse 3059" cx="17" cy="17" r="17" fill="#D9D9D9" style="fill:#D9D9D9;fill:color(display-p3 0.8510 0.8510 0.8510);fill-opacity:1;"/>
+</mask>
+<g mask="url(#mask0_51_62)">
+<rect id="image" x="3.40039" y="3.40039" width="27.2" height="27.2" rx="13.6" fill="#352EFF" fill-opacity="0.1" style="fill:#352EFF;fill:color(display-p3 0.2078 0.1804 1.0000);fill-opacity:0.1;"/>
+<g id="DM">
+<path id="Vector" d="M17.1162 21.2275V12.7725H20.5146C22.2959 12.7725 23.4854 13.9209 23.4854 15.6611V15.6729C23.4854 17.4131 22.2959 18.5615 20.5146 18.5615H18.8857V21.2275H17.1162ZM20.0811 14.1729H18.8857V17.1787H20.0811C21.0947 17.1787 21.6924 16.6396 21.6924 15.6787V15.667C21.6924 14.7061 21.0947 14.1729 20.0811 14.1729Z" fill="black" style="fill:black;fill-opacity:1;"/>
+<path id="Vector_2" d="M10.5146 21.2275V12.7725H16.1162V14.2314H12.2842V16.2588H15.8994V17.6416H12.2842V19.7686H16.1162V21.2275H10.5146Z" fill="black" style="fill:black;fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

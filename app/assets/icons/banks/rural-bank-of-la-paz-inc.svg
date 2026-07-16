@@ -1,0 +1,21 @@
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="34" height="34" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="List icons V0.1">
+<rect x="-813.482" y="-314" width="1561" height="1415" rx="16" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Bank List">
+<rect x="-764.982" y="-265.5" width="1464" height="365" rx="4.5" stroke="#9747FF" style="stroke:#9747FF;stroke:color(display-p3 0.5922 0.2784 1.0000);stroke-opacity:1;" stroke-dasharray="10 5"/>
+<g id="Property 1=RURAL BANK OF LA PAZ INC.">
+<mask id="mask0_51_62" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="34" height="34">
+<circle id="Ellipse 3059" cx="17" cy="17" r="17" fill="#D9D9D9" style="fill:#D9D9D9;fill:color(display-p3 0.8510 0.8510 0.8510);fill-opacity:1;"/>
+</mask>
+<g mask="url(#mask0_51_62)">
+<rect id="image" x="3.40039" y="3.40039" width="27.2" height="27.2" rx="13.6" fill="#352EFF" fill-opacity="0.1" style="fill:#352EFF;fill:color(display-p3 0.2078 0.1804 1.0000);fill-opacity:0.1;"/>
+<g id="LP">
+<path id="Vector" d="M17.252 21V12.5449H20.6504C22.4316 12.5449 23.6211 13.6934 23.6211 15.4336V15.4453C23.6211 17.1855 22.4316 18.334 20.6504 18.334H19.0215V21H17.252ZM20.2168 13.9453H19.0215V16.9512H20.2168C21.2305 16.9512 21.8281 16.4121 21.8281 15.4512V15.4395C21.8281 14.4785 21.2305 13.9453 20.2168 13.9453Z" fill="black" style="fill:black;fill-opacity:1;"/>
+<path id="Vector_2" d="M10.7363 21V12.5449H12.5059V19.541H16.2031V21H10.7363Z" fill="black" style="fill:black;fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

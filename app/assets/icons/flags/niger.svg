@@ -1,0 +1,31 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-494 -885)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-494 -560)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="niger" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M0 11H22V16H0V11Z" fill="#00B731" style="fill:#00B731;fill:color(display-p3 0.0000 0.7176 0.1922);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H22V5H0V0Z" fill="#FF6C2D" style="fill:#FF6C2D;fill:color(display-p3 1.0000 0.4241 0.1750);fill-opacity:1;"/>
+<path id="vector_3" d="M11.0001 9.60039C11.868 9.60039 12.5716 8.88405 12.5716 8.00039C12.5716 7.11673 11.868 6.40039 11.0001 6.40039C10.1323 6.40039 9.42871 7.11673 9.42871 8.00039C9.42871 8.88405 10.1323 9.60039 11.0001 9.60039Z" fill="#FF6C2D" style="fill:#FF6C2D;fill:color(display-p3 1.0000 0.4241 0.1750);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

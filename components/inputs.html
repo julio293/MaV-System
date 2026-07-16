@@ -7,44 +7,106 @@
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/shared.css">
 <style>
-.input-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:16px}
-.input-demo{display:flex;flex-direction:column;gap:6px}
-.input-label{font-size:12px;font-weight:600;color:var(--mav-fg)}
-.input-wrap{position:relative}
-.mav-input{
-  width:100%;padding:12px 16px;
-  font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;
-  border-radius:4px;border:1px solid;
-  outline:none;transition:all .15s;
-  box-shadow:0px 1px 0px -1px rgba(0,0,0,0.05),0px 1px 2px -1px rgba(0,0,0,0.05),0px 2px 4px -2px rgba(0,0,0,0.05),0px 3px 6px -3px rgba(0,0,0,0.05);
-}
-.mav-input::placeholder{color:var(--input-field\/default\/text-placeholder,var(--mav-placeholder))}
-.inp-default{border-color:var(--bc-mono200-l);background:var(--bc-white);color:var(--bc-mono900-l)}
-.inp-active{border-color:var(--bc-mono900-l);background:var(--bc-white);color:var(--bc-mono900-l)}
-.inp-focus{border-color:var(--mav-primary);background:var(--bc-white);color:var(--bc-mono900-l);box-shadow:0px 1px 0px -1px rgba(0,0,0,0.05),0px 1px 2px -1px rgba(0,0,0,0.05),0px 2px 4px -2px rgba(0,0,0,0.05),0px 3px 6px -3px rgba(0,0,0,0.05),0 0 0 3px var(--mav-focus-ring)}
-.inp-error{border-color:var(--mav-danger);background:color-mix(in srgb,var(--mav-danger) 10%,transparent);color:var(--bc-mono900-l);box-shadow:none}
-.inp-disabled{border-color:var(--bc-mono200-l);background:var(--mav-border);color:var(--mav-placeholder);cursor:not-allowed}
+/* ══ Input & dropdown family — Figma "• Input & dropdown" (52:30298) ═════════
+   Input · Input dropdown · Input with label · Input with Search · Textarea ·
+   Message input. All consume the --input-field/* token namespace (states re-theme
+   in dark mode). Text is Plus Jakarta Sans Bold 14px; labels/descriptions Inter.
+   Base padding 10/16 · radius 4px (textarea & message 8px) · shadow/sm. */
 
-.state-chip{
-  font-size:10px;font-weight:600;
-  padding:2px 7px;border-radius:9999px;
-  display:inline-block;margin-bottom:6px;
-}
-.chip-default{background:var(--mav-border);color:var(--bc-mono600-l)}
-.chip-active{background:var(--bc-mono900-l);color:var(--bc-white)}
-.chip-focus{background:var(--mav-primary);color:var(--bc-white)}
-.chip-error{background:var(--mav-danger);color:var(--bc-white)}
-.chip-disabled{background:var(--bc-mono100-l);color:var(--mav-placeholder)}
+.field-wrap{display:flex;flex-direction:column;gap:8px;width:100%;max-width:380px}
+.field-grid{display:flex;flex-direction:column;gap:18px}
+.field-tag{font-size:12px;color:var(--mav-muted);font-family:'Inter',sans-serif}
 
-.error-msg{
-  font-size:12px;color:var(--mav-danger);display:flex;align-items:center;gap:4px;margin-top:4px;
+/* Base field */
+.field{
+  display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;
+  padding:10px 16px;
+  border:1px solid var(--input-field\/default\/outline-box,#cccccc);
+  background:var(--input-field\/default\/bg-box,#ffffff);
+  border-radius:var(--border\/border-radius\/sm,4px);
+  box-shadow:var(--shadow-input);
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;line-height:20px;
+  color:var(--input-field\/active\/text-active,#191919);
+  transition:border-color .15s,background .15s;
 }
-.err-icon{width:14px;height:14px;background:var(--mav-danger);color:var(--bc-white);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0}
+.field input{flex:1;min-width:0;border:none;outline:none;background:transparent;font:inherit;color:inherit;padding:0}
+.field input::placeholder{color:var(--input-field\/default\/text-placeholder,#b2b2b2);font-weight:700}
+.fi{width:20px;height:20px;flex-shrink:0;stroke:var(--icon\/subtle,#b2b2b2);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fi-24{width:24px;height:24px}
 
-/* Dark input states */
-.inp-default-dk{border-color:var(--bc-mono200-d);background:var(--mav-fg);color:var(--bc-mono100-l)}
-.inp-focus-dk{border-color:var(--mav-primary-dark);background:var(--mav-fg);color:var(--bc-mono100-l);box-shadow:0 0 0 3px var(--mav-focus-ring)}
-.inp-error-dk{border-color:var(--mav-danger);background:color-mix(in srgb,var(--mav-danger) 10%,transparent);color:var(--bc-mono900-l);box-shadow:none}
+/* Sizes */
+.field-sm{padding:8px 14px}
+.field-lg{padding:14px 16px}
+
+/* States */
+.field.is-filled{border-color:var(--input-field\/active\/outline-box-active,#191919)}
+.field.is-focus{border-color:var(--input-field\/focus\/outline-box,#352eff)}
+.field.is-error{background:var(--input-field\/error\/bg-box,#ff00001a);border-color:var(--input-field\/error\/outline-box,#ff0000)}
+.field.is-disabled{background:var(--input-field\/disabled\/bg-box-disabled,#efefef);border-color:var(--input-field\/disabled\/outline-box-disabled,#cccccc);cursor:not-allowed;box-shadow:none}
+.field.is-disabled input{color:var(--input-field\/disabled\/text-disabled,#b2b2b2);cursor:not-allowed}
+.field.is-disabled input::placeholder{color:var(--input-field\/disabled\/text-disabled,#b2b2b2)}
+/* live focus for interactive inputs */
+.field:focus-within:not(.is-error):not(.is-disabled){border-color:var(--input-field\/focus\/outline-box,#352eff)}
+
+/* Error helper row */
+.field-err{display:flex;align-items:center;gap:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:var(--input-field\/error\/label-error,#ff0000)}
+.field-err .fi{stroke:var(--input-field\/error\/icon-error,#ff0000);width:20px;height:20px}
+
+/* Leading text / prefix chunk (e.g. https://) */
+.field-prefix{color:var(--mav-muted);font-weight:700;white-space:nowrap}
+.field-vline{width:1px;align-self:stretch;background:var(--devider\/default,#efefef);margin:-2px 2px}
+
+/* Label block */
+.lbl-block{display:flex;flex-direction:column;gap:4px;width:100%}
+.lbl-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.lbl-text{font-family:'Inter',sans-serif;font-weight:700;font-size:14px;color:var(--main-text\/default,#171717)}
+.lbl-btn{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:14px;color:var(--btn\/textonly\/default,#352eff);background:none;border:0;cursor:pointer;padding:0}
+.lbl-desc{font-family:'Inter',sans-serif;font-weight:700;font-size:14px;color:var(--main-text\/description,#7f7f7f)}
+
+/* Textarea */
+.ta{
+  display:block;width:100%;box-sizing:border-box;min-height:160px;resize:vertical;
+  padding:12px 16px;
+  border:1px solid var(--input-field\/default\/outline-box,#cccccc);
+  background:var(--input-field\/default\/bg-box,#ffffff);
+  border-radius:var(--border\/border-radius\/md,8px);
+  box-shadow:var(--shadow-input);
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;line-height:20px;
+  color:var(--input-field\/active\/text-active,#191919);outline:none;transition:border-color .15s,background .15s;
+}
+.ta::placeholder{color:var(--input-field\/default\/text-placeholder,#b2b2b2)}
+.ta:focus-within,.ta.is-focus{border-color:var(--input-field\/focus\/outline-box,#352eff)}
+.ta.is-error{background:var(--input-field\/error\/bg-box,#ff00001a);border-color:var(--input-field\/error\/outline-box,#ff0000)}
+.ta.is-disabled{background:var(--input-field\/disabled\/bg-box-disabled,#efefef);border-color:var(--input-field\/disabled\/outline-box-disabled,#cccccc);color:var(--input-field\/disabled\/text-disabled,#b2b2b2);cursor:not-allowed;resize:none}
+
+/* Message input */
+.msg{
+  display:flex;flex-direction:column;justify-content:space-between;gap:16px;
+  width:100%;box-sizing:border-box;min-height:152px;
+  padding:12px 16px;
+  border:1px solid var(--input-field\/default\/outline-box,#cccccc);
+  background:var(--input-field\/default\/bg-box,#ffffff);
+  border-radius:var(--border\/border-radius\/md,8px);
+  transition:border-color .15s,background .15s;
+}
+.msg.is-focus{border-color:var(--input-field\/focus\/outline-box,#352eff)}
+.msg.is-error{background:var(--input-field\/error\/bg-box,#ff00001a);border-color:var(--input-field\/error\/outline-box,#ff0000)}
+.msg.is-disabled{background:var(--input-field\/disabled\/bg-box-disabled,#efefef);border-color:var(--input-field\/disabled\/outline-box-disabled,#cccccc)}
+.msg-text{flex:1;border:none;outline:none;background:transparent;resize:none;width:100%;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;line-height:20px;color:var(--input-field\/active\/text-active,#191919)}
+.msg-text::placeholder{color:var(--input-field\/default\/text-placeholder,#b2b2b2)}
+.msg-bar{display:flex;align-items:center;justify-content:space-between}
+.msg-tools{display:flex;align-items:center;gap:8px}
+.msg-icon{display:flex;align-items:center;justify-content:center;padding:6px;border-radius:8px;background:none;border:0;cursor:pointer}
+.msg-icon .fi{stroke:var(--icon\/default,#171717)}
+.msg-icon:hover{background:var(--mav-border)}
+.msg-vline{width:1px;align-self:stretch;background:var(--devider\/default,#efefef)}
+.msg-send{display:flex;align-items:center;justify-content:center;padding:6px;border-radius:var(--border\/border-radius\/sm,4px);
+  background:var(--btn\/primary\/disabled,#e5e5e5);border:0;cursor:pointer;transition:background .15s}
+.msg-send .fi{stroke:#ffffff}
+.msg-send.on{background:var(--mav-primary,#352eff)}
+[data-theme=dark] .msg-send.on{background:var(--mav-primary-dark)}
+[data-theme=dark] .msg-send.on .fi{stroke:#171717}
 </style>
 </head>
 <body>
@@ -58,9 +120,12 @@
   <a href="forms.html" class="sidebar-link">Forms & Controls</a>
   <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
   <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
   <a href="navigation.html" class="sidebar-link">Navigation</a>
   <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
   <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
   <a href="all.html" class="sidebar-link">Kitchen Sink</a>
 </nav>
 <main class="doc-main">
@@ -75,138 +140,262 @@
   <div class="page-header">
     <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
     <h1 class="page-title">Input Fields</h1>
-    <p class="page-desc">Five states: Default, Active (filled), Focus, Error, Disabled. 48px height. 16px padding horizontal. 12px padding vertical. Border-radius 4px. Medium 14px font.</p>
+    <p class="page-desc">The full input family from Figma: Input, Input dropdown, Input with label, Input with Search, Textarea, and Message input. All share the <code>--input-field/*</code> token namespace, so every state re-themes in dark mode.</p>
   </div>
 
+  <!-- ═══ INPUT ═══════════════════════════════════════════════════════════ -->
   <div class="section">
-    <h2 class="section-title">All States — Light Mode</h2>
-    <div class="input-grid">
-      <div class="input-demo">
-        <span class="state-chip chip-default">Default</span>
-        <div class="input-label">Email address</div>
-        <input class="mav-input inp-default" placeholder="Enter email..." readonly>
-      </div>
-      <div class="input-demo">
-        <span class="state-chip chip-active">Active / Filled</span>
-        <div class="input-label">Email address</div>
-        <input class="mav-input inp-active" value="user@example.com" readonly>
-      </div>
-      <div class="input-demo">
-        <span class="state-chip chip-focus">Focus</span>
-        <div class="input-label">Email address</div>
-        <input class="mav-input inp-focus" value="user@exam..." readonly>
-      </div>
-      <div class="input-demo">
-        <span class="state-chip chip-error">Error</span>
-        <div class="input-label">Email address</div>
-        <div class="input-wrap">
-          <input class="mav-input inp-error" value="bad-email" readonly>
-          <span>⊗</span>
-        </div>
-        <div class="error-msg"><span class="err-icon">!</span>Invalid email address</div>
-      </div>
-      <div class="input-demo">
-        <span class="state-chip chip-disabled">Disabled</span>
-        <div class="input-label">Email address</div>
-        <input class="mav-input inp-disabled" placeholder="Not available" disabled readonly>
-      </div>
-      <div class="input-demo">
-        <span class="state-chip chip-focus">Focus w/ Label</span>
-        <div class="input-label">Password</div>
-        <input class="mav-input inp-focus" type="password" value="secret" readonly>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <!-- Dark mode -->
-  <div class="section">
-    <h2 class="section-title">Dark Mode States</h2>
+    <h2 class="section-title">Input — Size</h2>
+    <p class="section-desc">Three heights: sm 36px, md 40px, lg 48px. Radius 4px, Plus Jakarta Sans Bold 14px.</p>
     <div class="preview-card">
-      <div class="preview-canvas dark-bg">
-        <div class="input-grid">
-          <div class="input-demo">
-            <span class="state-chip chip-default">Default</span>
-            <div class="input-label">Email</div>
-            <input class="mav-input inp-default-dk" placeholder="Enter email..." readonly>
-          </div>
-          <div class="input-demo">
-            <span class="state-chip chip-active">Active</span>
-            <div class="input-label">Email</div>
-            <input class="mav-input" value="user@example.com" readonly>
-          </div>
-          <div class="input-demo">
-            <span class="state-chip chip-focus">Focus</span>
-            <div class="input-label">Email</div>
-            <input class="mav-input inp-focus-dk" value="user@exam..." readonly>
-          </div>
-          <div class="input-demo">
-            <span class="state-chip chip-error">Error</span>
-            <div class="input-label">Email</div>
-            <input class="mav-input inp-error-dk" value="bad-email" readonly>
-            <div class="error-msg">Invalid email address</div>
-          </div>
+      <div class="preview-canvas">
+        <div class="field-grid">
+          <div class="field-wrap"><span class="field-tag">sm</span><div class="field field-sm"><input placeholder="Placeholder"></div></div>
+          <div class="field-wrap"><span class="field-tag">md</span><div class="field"><input placeholder="Placeholder"></div></div>
+          <div class="field-wrap"><span class="field-tag">lg</span><div class="field field-lg"><input placeholder="Placeholder"></div></div>
         </div>
       </div>
-      <div class="preview-meta">
-        <span class="preview-label">Dark Mode</span>
-        <span class="preview-sublabel">background: #171717 · outline-box dark: #484848 · focus: #a1ff5b</span>
-      </div>
+      <div class="preview-meta"><span class="preview-label">Input — radius 4px · padding 10/16 (md) · shadow/sm</span><span class="preview-sublabel">Uses --input-field/* tokens</span></div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- Input anatomy -->
   <div class="section">
-    <h2 class="section-title">Anatomy</h2>
-    <div>
-      <div>
-        <div>
-          <input class="mav-input inp-focus" placeholder="Label text" readonly>
-          <!-- annotations -->
-          <div>border-radius: 4px</div>
-          <div>height: 48px · padding: 12px 16px</div>
-          <div>focus ring: rgba(53,46,255,0.4)</div>
+    <h2 class="section-title">Input — State</h2>
+    <p class="section-desc">Empty, Filled, Focus (blue outline), Error (red tint + message), Disabled. These are the first interactive field below.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="field-grid">
+          <div class="field-wrap"><span class="field-tag">Empty · type to focus</span><div class="field"><input placeholder="Placeholder"></div></div>
+          <div class="field-wrap"><span class="field-tag">Filled</span><div class="field is-filled"><input value="user@example.com" readonly></div></div>
+          <div class="field-wrap"><span class="field-tag">Focus</span><div class="field is-focus"><input value="user@example.com" readonly></div></div>
+          <div class="field-wrap"><span class="field-tag">Error</span>
+            <div class="field is-error"><input value="bad-email" readonly></div>
+            <div class="field-err"><svg class="fi" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/></svg>Error message</div>
+          </div>
+          <div class="field-wrap"><span class="field-tag">Disabled</span><div class="field is-disabled"><input placeholder="Placeholder" disabled></div></div>
         </div>
       </div>
-      <div>
-        <table class="token-table">
-          <thead><tr><th>Property</th><th>Value</th><th>Token</th></tr></thead>
-          <tbody>
-            <tr><td>Height</td><td class="token-value">48px (12px v-pad × 2 + 24px line)</td><td class="token-name">otpSlot.height</td></tr>
-            <tr><td>H-Padding</td><td class="token-value">16px</td><td class="token-name">--Spacing/16</td></tr>
-            <tr><td>V-Padding</td><td class="token-value">12px</td><td class="token-name">space.12</td></tr>
-            <tr><td>Border radius</td><td class="token-value">4px</td><td class="token-name">--border/border-radius/sm</td></tr>
-            <tr><td>Font size</td><td class="token-value">14px Medium</td><td class="token-name">--medium/md</td></tr>
-            <tr><td>Focus ring</td><td class="token-value">0 0 0 3px rgba(53,46,255,0.4)</td><td class="token-name">shadow.focusRing</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <div class="preview-meta"><span class="preview-label">State — Empty · Filled #191919 · Focus #352eff · Error #ff0000 · Disabled #efefef</span></div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
+  <div class="section">
+    <h2 class="section-title">Input — Variations</h2>
+    <p class="section-desc">Leading / trailing icon, leading prefix text, and a credit-card field. Icons are 20px, gap 8px.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="field-grid">
+          <div class="field-wrap"><span class="field-tag">Leading icon</span>
+            <div class="field"><svg class="fi" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 8l8 5 8-5"/></svg><input placeholder="Email address"></div>
+          </div>
+          <div class="field-wrap"><span class="field-tag">Trailing help icon</span>
+            <div class="field"><input placeholder="Password"><svg class="fi fi-24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></div>
+          </div>
+          <div class="field-wrap"><span class="field-tag">Leading text</span>
+            <div class="field"><span class="field-prefix">https://</span><span class="field-vline"></span><input placeholder="yoursite.com"></div>
+          </div>
+          <div class="field-wrap"><span class="field-tag">Credit card</span>
+            <div class="field"><svg class="fi" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg><input placeholder="0000 0000 0000 0000"></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Variations — leading/trailing icon · prefix · credit card</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ INPUT DROPDOWN ══════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Input dropdown</h2>
+    <p class="section-desc">Input base with a trailing 24px chevron. Types add a leading element (icon, flag, avatar). Same five states.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="field-grid">
+          <div class="field-wrap"><span class="field-tag">Default</span>
+            <div class="field"><input placeholder="Select an option" readonly style="cursor:pointer"><svg class="fi fi-24" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="field-wrap"><span class="field-tag">Icon</span>
+            <div class="field"><svg class="fi" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><input placeholder="Category" readonly style="cursor:pointer"><svg class="fi fi-24" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="field-wrap"><span class="field-tag">Flag</span>
+            <div class="field"><span style="width:20px;height:20px;border-radius:50%;background:linear-gradient(180deg,#c8102e 33%,#fff 33% 66%,#c8102e 66%);flex-shrink:0;border:1px solid var(--mav-border)"></span><input value="Indonesia" readonly style="cursor:pointer"><svg class="fi fi-24" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="field-wrap"><span class="field-tag">Avatar</span>
+            <div class="field"><span style="width:20px;height:20px;border-radius:50%;background:var(--mav-primary,#352eff);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0">J</span><input value="Julio" readonly style="cursor:pointer"><svg class="fi fi-24" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="field-wrap"><span class="field-tag">Focus</span>
+            <div class="field is-focus"><input value="Selected option" readonly style="cursor:pointer"><svg class="fi fi-24" viewBox="0 0 24 24" style="stroke:var(--input-field\/focus\/outline-box,#352eff)"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="field-wrap"><span class="field-tag">Error</span>
+            <div class="field is-error"><input placeholder="Select an option" readonly style="cursor:pointer"><svg class="fi fi-24" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="field-err"><svg class="fi" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/></svg>Please select an option</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Dropdown — trailing chevron 24px · Default / Icon / Flag / Avatar</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ INPUT WITH LABEL ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Input with label</h2>
+    <p class="section-desc">Label (Inter Bold 14px) above the field, with an optional trailing button, top description, or bottom description.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="field-grid">
+          <div class="field-wrap">
+            <span class="field-tag">Label only</span>
+            <div class="lbl-block"><div class="lbl-row"><span class="lbl-text">Label</span></div></div>
+            <div class="field"><input placeholder="Placeholder"></div>
+          </div>
+          <div class="field-wrap">
+            <span class="field-tag">Label + button</span>
+            <div class="lbl-block"><div class="lbl-row"><span class="lbl-text">Password</span><button class="lbl-btn">Forgot?</button></div></div>
+            <div class="field"><input type="password" placeholder="••••••••"></div>
+          </div>
+          <div class="field-wrap">
+            <span class="field-tag">Top description</span>
+            <div class="lbl-block"><div class="lbl-row"><span class="lbl-text">Label</span></div><span class="lbl-desc">Nulla in urna elementum, sagittis diam sed.</span></div>
+            <div class="field"><input placeholder="Placeholder"></div>
+          </div>
+          <div class="field-wrap">
+            <span class="field-tag">Bottom description</span>
+            <div class="lbl-block"><div class="lbl-row"><span class="lbl-text">Label</span></div></div>
+            <div class="field"><input placeholder="Placeholder"></div>
+            <span class="lbl-desc">Nulla in urna elementum, sagittis diam sed.</span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Input with label — label · button · top / bottom description</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ INPUT WITH SEARCH ═══════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Input with Search</h2>
+    <p class="section-desc">Leading magnifying-glass (20px) and an optional trailing info icon. Supports the same label / description slots.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="field-grid">
+          <div class="field-wrap"><span class="field-tag">Default</span>
+            <div class="field"><svg class="fi" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input placeholder="Search…"><svg class="fi fi-24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg></div>
+          </div>
+          <div class="field-wrap"><span class="field-tag">Focus</span>
+            <div class="field is-focus"><svg class="fi" viewBox="0 0 24 24" style="stroke:var(--icon\/default,#171717)"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input value="Invoices" readonly></div>
+          </div>
+          <div class="field-wrap">
+            <span class="field-tag">With label</span>
+            <div class="lbl-block"><div class="lbl-row"><span class="lbl-text">Search customers</span></div></div>
+            <div class="field"><svg class="fi" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input placeholder="Name or email"></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Search — leading magnifier · trailing info · label slot</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ TEXTAREA ════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Textarea</h2>
+    <p class="section-desc">Multi-line input, radius 8px, min-height 160px, vertical resize handle. Five states.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="field-grid" style="max-width:520px;width:100%">
+          <div class="field-wrap" style="max-width:none"><span class="field-tag">Empty · editable</span><textarea class="ta" placeholder="Your message…"></textarea></div>
+          <div class="field-wrap" style="max-width:none"><span class="field-tag">Focus</span><textarea class="ta is-focus" readonly>Meeting notes from today's sync…</textarea></div>
+          <div class="field-wrap" style="max-width:none"><span class="field-tag">Error</span>
+            <textarea class="ta is-error" readonly>Too short</textarea>
+            <div class="field-err"><svg class="fi" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/></svg>Please enter at least 20 characters</div>
+          </div>
+          <div class="field-wrap" style="max-width:none"><span class="field-tag">Disabled</span><textarea class="ta is-disabled" placeholder="Your message…" disabled></textarea></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Textarea — radius 8px · min-height 160px · resize vertical</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ MESSAGE INPUT ═══════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Message input</h2>
+    <p class="section-desc">Composer with a placeholder area and a toolbar: attach / emoji / mention on the left, send on the right. Radius 8px, min-height 152px.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="field-grid" style="max-width:520px;width:100%">
+          <div class="field-wrap" style="max-width:none"><span class="field-tag">Empty · editable</span>
+            <div class="msg" id="msg-live">
+              <textarea class="msg-text" rows="2" placeholder="Your message…" oninput="msgLive(this)"></textarea>
+              <div class="msg-bar">
+                <div class="msg-tools">
+                  <button class="msg-icon" title="Attach"><svg class="fi" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                  <span class="msg-vline"></span>
+                  <button class="msg-icon" title="Emoji"><svg class="fi" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14.5s1.5 2 4 2 4-2 4-2"/><path d="M9 9.5h.01M15 9.5h.01"/></svg></button>
+                  <button class="msg-icon" title="Mention"><svg class="fi" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M16 12v1.5a2.5 2.5 0 0 0 5 0V12a9 9 0 1 0-3.5 7.1"/></svg></button>
+                </div>
+                <button class="msg-send" id="msg-send" title="Send"><svg class="fi" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <div class="field-wrap" style="max-width:none"><span class="field-tag">Focus · with text</span>
+            <div class="msg is-focus">
+              <textarea class="msg-text" rows="2" readonly>Thanks — sending the files over now.</textarea>
+              <div class="msg-bar">
+                <div class="msg-tools">
+                  <button class="msg-icon" title="Attach"><svg class="fi" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                  <span class="msg-vline"></span>
+                  <button class="msg-icon" title="Emoji"><svg class="fi" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14.5s1.5 2 4 2 4-2 4-2"/><path d="M9 9.5h.01M15 9.5h.01"/></svg></button>
+                  <button class="msg-icon" title="Mention"><svg class="fi" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M16 12v1.5a2.5 2.5 0 0 0 5 0V12a9 9 0 1 0-3.5 7.1"/></svg></button>
+                </div>
+                <button class="msg-send on" title="Send"><svg class="fi" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Message input — toolbar · send enables when text is present</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
   <div class="section">
     <h2 class="section-title">Token Reference</h2>
     <table class="token-table">
-      <thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>State</th></tr></thead>
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
       <tbody>
-        <tr><td class="token-name">--input-field\/default\/outline-box</td><td><span class="token-swatch-sm" style="background:#cccccc"></span><span class="token-value">#cccccc</span></td><td><span class="token-swatch-sm" style="background:#484848"></span><span class="token-value">#484848</span></td><td class="token-value">Default border</td></tr>
-        <tr><td class="token-name">--input-field\/active\/outline-box-active</td><td><span class="token-swatch-sm" style="background:#191919"></span><span class="token-value">#191919</span></td><td><span class="token-swatch-sm" style="background:#e5e5e5"></span><span class="token-value">#e5e5e5</span></td><td class="token-value">Filled border</td></tr>
-        <tr><td class="token-name">--input-field\/focus\/outline-box</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td><td class="token-value">Focus border</td></tr>
-        <tr><td class="token-name">--input-field\/error\/outline-box</td><td><span class="token-swatch-sm" style="background:#ff0000"></span><span class="token-value">#ff0000</span></td><td><span class="token-swatch-sm" style="background:#ff0000"></span><span class="token-value">#ff0000</span></td><td class="token-value">Error border</td></tr>
-        <tr><td class="token-name">--input-field\/error\/bg-box</td><td><span class="token-swatch-sm" style="background:rgba(255,0,0,.1);border:1px solid #e0e0e0"></span><span class="token-value">rgba(255,0,0,.10)</span></td><td><span class="token-swatch-sm" style="background:rgba(255,0,0,.1);border:1px solid #e0e0e0"></span><span class="token-value">rgba(255,0,0,.10)</span></td><td class="token-value">Error bg (same both)</td></tr>
-        <tr><td class="token-name">--input-field\/disabled\/bg-box-disabled</td><td><span class="token-swatch-sm" style="background:#efefef"></span><span class="token-value">#efefef</span></td><td><span class="token-swatch-sm" style="background:#efefef"></span><span class="token-value">#efefef</span></td><td class="token-value">Disabled bg (same both)</td></tr>
-        <tr><td class="token-name">--input-field\/default\/text-placeholder</td><td><span class="token-swatch-sm" style="background:#b2b2b2"></span><span class="token-value">#b2b2b2</span></td><td><span class="token-swatch-sm" style="background:#6a6a6a"></span><span class="token-value">#6a6a6a</span></td><td class="token-value">Placeholder text</td></tr>
+        <tr><td class="token-name">--input-field/default/outline-box</td><td><span class="token-swatch-sm" style="background:#cccccc"></span><span class="token-value">#cccccc</span></td><td class="token-value">Default border</td></tr>
+        <tr><td class="token-name">--input-field/active/outline-box-active</td><td><span class="token-swatch-sm" style="background:#191919"></span><span class="token-value">#191919</span></td><td class="token-value">Filled border + text</td></tr>
+        <tr><td class="token-name">--input-field/focus/outline-box</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Focus border</td></tr>
+        <tr><td class="token-name">--input-field/error/outline-box</td><td><span class="token-swatch-sm" style="background:#ff0000"></span><span class="token-value">#ff0000</span></td><td class="token-value">Error border / message / icon</td></tr>
+        <tr><td class="token-name">--input-field/error/bg-box</td><td><span class="token-swatch-sm" style="background:rgba(255,0,0,.1);border:1px solid #d0d0d0"></span><span class="token-value">#ff00001a</span></td><td class="token-value">Error fill (10%)</td></tr>
+        <tr><td class="token-name">--input-field/disabled/bg-box-disabled</td><td><span class="token-swatch-sm" style="background:#efefef;border:1px solid #d0d0d0"></span><span class="token-value">#efefef</span></td><td class="token-value">Disabled fill</td></tr>
+        <tr><td class="token-name">--input-field/default/text-placeholder</td><td><span class="token-swatch-sm" style="background:#b2b2b2"></span><span class="token-value">#b2b2b2</span></td><td class="token-value">Placeholder text</td></tr>
+        <tr><td class="token-name">--border/border-radius/sm · md</td><td><span class="token-value">4px · 8px</span></td><td class="token-value">Input/dropdown · textarea/message</td></tr>
       </tbody>
     </table>
   </div>
 
 </main>
 </div>
+<script>
+function msgLive(t){
+  var send=document.getElementById('msg-send');
+  send.classList.toggle('on', t.value.trim().length>0);
+}
+</script>
 <script src="../js/theme.js"></script>
 </body>
 </html>

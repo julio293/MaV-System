@@ -1,0 +1,25 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-310 -765)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-310 -440)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="kyrgyzstan" clip-path="url(#clip0_51_62)">
+<g id="design">
+<rect width="22" height="16" rx="2" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M10.6919 10.117C10.7935 10.1277 10.8962 10.133 10.9999 10.133C11.1047 10.133 11.2063 10.1277 11.3079 10.117L10.9999 9.33301L10.6919 10.117ZM9.27134 9.53567C8.72343 9.09407 8.38086 8.44981 8.38086 7.73301C8.38086 6.88714 8.85857 6.14367 9.57934 5.71701L10.4761 7.99967L9.27134 9.53567ZM12.4205 5.71701C13.1412 6.14367 13.619 6.88714 13.619 7.73301C13.619 8.45087 13.2753 9.09514 12.7285 9.53567L11.5237 7.99967L12.4205 5.71701ZM12.3157 5.65727C11.9281 5.45034 11.4797 5.33301 10.9999 5.33301C10.5201 5.33301 10.0707 5.45034 9.6841 5.65727L10.9999 7.33194L12.3157 5.65727Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M10.9999 12.8002C13.6033 12.8002 15.7142 10.6509 15.7142 8.0002C15.7142 5.34953 13.6033 3.2002 10.9999 3.2002C8.3966 3.2002 6.28564 5.34953 6.28564 8.0002C6.28564 10.6509 8.3966 12.8002 10.9999 12.8002ZM10.9999 11.7335C13.025 11.7335 14.6666 10.0621 14.6666 8.0002C14.6666 5.93833 13.025 4.26686 10.9999 4.26686C8.97488 4.26686 7.33326 5.93833 7.33326 8.0002C7.33326 10.0621 8.97488 11.7335 10.9999 11.7335Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

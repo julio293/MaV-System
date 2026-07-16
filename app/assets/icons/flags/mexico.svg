@@ -1,0 +1,36 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-264 -845)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-264 -520)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="mexico" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+<rect id="rectangle-6" x="16" width="6" height="16" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<rect id="rectangle-7" width="6" height="16" fill="#249F58" style="fill:#249F58;fill:color(display-p3 0.1406 0.6250 0.3444);fill-opacity:1;"/>
+<g id="group-2">
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M13.9767 8.00059C13.992 8.10962 14 8.22102 14 8.3336C14 9.80604 12.6567 11 11 11C9.34333 11 8 9.80604 8 8.3336C8 8.22102 8.008 8.10962 8.02333 8C8.208 9.0239 9.47 9.81493 11 9.81493C12.53 9.81493 13.792 9.02331 13.9767 8V8.00059Z" fill="#249F58" style="fill:#249F58;fill:color(display-p3 0.1406 0.6250 0.3444);fill-opacity:1;"/>
+<g id="group-1">
+<ellipse id="ellipse-1" cx="11.0001" cy="6.93301" rx="1.57143" ry="1.6" fill="#AE6A3E" style="fill:#AE6A3E;fill:color(display-p3 0.6824 0.4157 0.2431);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

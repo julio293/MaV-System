@@ -1,0 +1,31 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-80 -485)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-80 -160)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="bhutan" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="#FF6C2D" style="fill:#FF6C2D;fill:color(display-p3 1.0000 0.4241 0.1750);fill-opacity:1;"/>
+<path id="vector" d="M19.9048 0H2.09524C0.93807 0 0 0.955126 0 2.13333V13.8667C0 15.0449 0.93807 16 2.09524 16H19.9048C21.0619 16 22 15.0449 22 13.8667V2.13333C22 0.955126 21.0619 0 19.9048 0Z" fill="#FF6C2D" style="fill:#FF6C2D;fill:color(display-p3 1.0000 0.4241 0.1750);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M0 16L22 0H0V16Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M3.14307 10.6669L3.66688 12.2669L5.76211 12.8002L6.28592 11.7335L10.4764 12.2669L9.42878 9.6002H11.524L14.6669 10.6669L15.7145 9.6002L12.5716 8.53353L13.6193 7.46686H16.7621L17.2859 6.4002H14.6669V5.33353H16.7621L17.8097 4.26686L13.6193 3.2002L11.524 5.33353L10.4764 6.4002L11.524 7.46686L8.38116 6.93353L6.28592 10.6669L5.2383 11.7335L3.14307 10.6669Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

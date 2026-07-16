@@ -1,0 +1,35 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-356 -1005)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-356 -680)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="serbia" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="#1A47B8" style="fill:#1A47B8;fill:color(display-p3 0.1021 0.2767 0.7208);fill-opacity:1;"/>
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M0 11H22V16H0V11Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H22V5.41667H0V0ZM8.38095 10.8333V5.41667H4.19048V10.8333C4.19048 12.0304 5.1281 13 6.28571 13C7.44333 13 8.38095 12.0304 8.38095 10.8333Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M5.23805 5.33353L4.19043 4.26686C4.19043 4.26686 5.23805 3.2002 6.28567 3.2002C7.33329 3.2002 8.38091 4.26686 8.38091 4.26686L7.33329 5.33353H5.23805Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+<path id="vector_4" fill-rule="evenodd" clip-rule="evenodd" d="M5.23805 6.40039L4.19043 7.46706L6.28567 8.53372L5.23805 10.6671L6.28567 12.8004L7.33329 10.6671L6.28567 8.53372L8.38091 7.46706L7.33329 6.40039L6.28567 7.46706L5.23805 6.40039Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector_5" fill-rule="evenodd" clip-rule="evenodd" d="M5.23805 6.40039H4.19043V7.46706L5.23805 6.40039ZM7.33329 6.40039H8.38091V7.46706L7.33329 6.40039Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+<path id="vector_6" fill-rule="evenodd" clip-rule="evenodd" d="M6.2859 3.2002L5.23828 4.26686L6.2859 5.33353L7.33352 4.26686L6.2859 3.2002Z" fill="#A75835" style="fill:#A75835;fill:color(display-p3 0.6549 0.3451 0.2078);fill-opacity:1;"/>
+<path id="vector_7" fill-rule="evenodd" clip-rule="evenodd" d="M6.28567 8.5332L4.19043 9.59987H8.38091L6.28567 8.5332Z" fill="#88605F" style="fill:#88605F;fill:color(display-p3 0.5333 0.3765 0.3725);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

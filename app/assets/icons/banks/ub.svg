@@ -1,0 +1,18 @@
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="34" height="34" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="List icons V0.1">
+<rect x="-213.896" y="-64" width="1561" height="1415" rx="16" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Bank List">
+<rect x="-165.396" y="-15.5" width="1464" height="365" rx="4.5" stroke="#9747FF" style="stroke:#9747FF;stroke:color(display-p3 0.5922 0.2784 1.0000);stroke-opacity:1;" stroke-dasharray="10 5"/>
+<g id="Property 1=UB">
+<mask id="mask0_51_62" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="34" height="34">
+<circle id="Ellipse 3059" cx="17" cy="17" r="17" fill="#D9D9D9" style="fill:#D9D9D9;fill:color(display-p3 0.8510 0.8510 0.8510);fill-opacity:1;"/>
+</mask>
+<g mask="url(#mask0_51_62)">
+<circle id="Ellipse 3107" cx="16.7588" cy="17" r="13.5" fill="#E6EDFF" style="fill:#E6EDFF;fill:color(display-p3 0.9020 0.9294 1.0000);fill-opacity:1;"/>
+<path id="Fill-14" fill-rule="evenodd" clip-rule="evenodd" d="M20.5099 17.4697C19.7624 17.3727 19.4367 17.3336 19.4367 17.3336V14.672C19.6214 14.7177 20.8372 15.0133 20.8372 15.0133C21.582 15.1606 21.9611 15.7022 21.9611 16.3513C21.9611 17.0006 21.3831 17.583 20.5099 17.4697ZM23.5098 18.5701C23.5098 18.5701 24.3726 17.7122 24.3726 16.0964C24.3726 14.7477 23.4637 13.2531 21.8623 12.6904L16.5981 10.8229L16.5812 19.9564C16.5812 19.9564 16.5828 21.2791 15.1073 21.5587C14.1195 21.746 13.1567 20.8517 13.1567 19.7404C13.158 19.7406 13.162 12.5422 13.158 9.59212L9 8.11035V20.1344C9 24.4296 12.8967 26.2464 15.2905 25.8321C18.1481 25.3376 19.4367 23.1299 19.4367 20.7404V19.8921L21.4528 19.961C22.1196 19.961 22.6153 20.5425 22.6153 21.152C22.6153 21.6925 22.2379 22.2744 21.4611 22.3416L20.3532 22.4262C20.1756 23.1555 19.7908 24.1621 18.9266 25.168L22.1727 24.594C23.4799 24.3575 25 23.2226 25 21.3477C25 20.5489 24.73 19.3797 23.5098 18.5701Z" fill="#FF8000" style="fill:#FF8000;fill:color(display-p3 1.0000 0.5020 0.0000);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</svg>

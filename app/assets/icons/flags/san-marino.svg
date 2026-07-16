@@ -1,0 +1,27 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-172 -1005)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-172 -680)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="san-marino" clip-path="url(#clip0_51_62)">
+<g id="design">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M0 8H22V16H0V8Z" fill="#3A99FF" style="fill:#3A99FF;fill:color(display-p3 0.2292 0.6010 1.0000);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M8.38086 4.2666H13.619V5.33327L10.9999 6.39994L8.38086 5.33327V4.2666Z" fill="#D4AF2C" style="fill:#D4AF2C;fill:color(display-p3 0.8314 0.6863 0.1725);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M13.619 9.06706C13.619 7.59506 12.4456 6.40039 10.9999 6.40039C9.55419 6.40039 8.38086 7.59506 8.38086 9.06706C8.38086 10.5391 9.55419 11.7337 10.9999 11.7337C12.4456 11.7337 13.619 10.5391 13.619 9.06706ZM10.9999 10.6671C11.8673 10.6671 12.5713 9.71239 12.5713 8.53372C12.5713 7.35506 11.8673 6.40039 10.9999 6.40039C10.1325 6.40039 9.42848 7.35506 9.42848 8.53372C9.42848 9.71239 10.1325 10.6671 10.9999 10.6671Z" fill="#249F58" style="fill:#249F58;fill:color(display-p3 0.1406 0.6250 0.3444);fill-opacity:1;"/>
+<path id="vector_4" d="M10.9999 9.60013C11.2892 9.60013 11.5237 9.12257 11.5237 8.53346C11.5237 7.94436 11.2892 7.4668 10.9999 7.4668C10.7106 7.4668 10.4761 7.94436 10.4761 8.53346C10.4761 9.12257 10.7106 9.60013 10.9999 9.60013Z" fill="#D4AF2C" style="fill:#D4AF2C;fill:color(display-p3 0.8314 0.6863 0.1725);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

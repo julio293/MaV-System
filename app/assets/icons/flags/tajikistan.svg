@@ -1,0 +1,31 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-310 -1085)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-310 -760)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="tajikistan" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M0 11H22V16H0V11Z" fill="#249F58" style="fill:#249F58;fill:color(display-p3 0.1406 0.6250 0.3444);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M12.5401 7.68039C12.5611 7.78386 12.5716 7.89052 12.5716 8.00039C12.5716 8.88359 11.8676 9.60039 11.0001 9.60039C10.1327 9.60039 9.42871 8.88359 9.42871 8.00039C9.42871 7.89052 9.43919 7.78386 9.46014 7.68039C9.60681 8.16679 10.2396 8.53372 11.0001 8.53372C11.7607 8.53372 12.3935 8.16679 12.5401 7.68039ZM11.0001 7.46706C11.2893 7.46706 11.5239 7.22812 11.5239 6.93372C11.5239 6.63932 11.2893 6.40039 11.0001 6.40039C10.711 6.40039 10.4763 6.63932 10.4763 6.93372C10.4763 7.22812 10.711 7.46706 11.0001 7.46706Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H22V5H0V0Z" fill="#AF010D" style="fill:#AF010D;fill:color(display-p3 0.6875 0.0029 0.0513);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

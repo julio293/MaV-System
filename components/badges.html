@@ -7,49 +7,85 @@
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/shared.css">
 <style>
-/* Status badges */
-.badge-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+/* ══ Badge & Chip — Figma "• Badge & Chip" page (52:28800) ═══════════════════
+   Exported from the badge & chip component sets. Badges are 4px-radius
+   (border/border-radius/sm), chips are 8px. Both consume the customiser-wired
+   --badge & chip/* token namespace, so re-theming flows through automatically.
+   Inter Medium 14/12/11px. "waring" spelling mirrors the Figma token typo. */
 
-.b{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:9999px;font-size:12px;font-weight:600;letter-spacing:.01em}
-.b-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.badge-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.spec-grid{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-end}
+.spec{display:flex;flex-direction:column;gap:12px;align-items:center}
+.spec-lbl{font-size:11px;color:var(--mav-muted);letter-spacing:.02em}
 
-/* Semantic fills */
-.b-primary  {background:var(--mav-primary);color:var(--bc-white)}
-[data-theme=dark] .b-primary{color:var(--mav-fg)}
-.b-success  {background:color-mix(in srgb,var(--mav-success) 12%,transparent);color:var(--mav-success)}
-.b-warning  {background:color-mix(in srgb,var(--mav-warning) 12%,transparent);color:var(--mav-warning)}
-.b-danger   {background:rgba(255,0,0,0.10);color:var(--mav-danger)}
-.b-neutral  {background:var(--mav-border);color:var(--mav-muted)}
-.b-info     {background:rgba(20,76,199,0.10);color:var(--mav-info)}
-.b-dark     {background:var(--bc-mono900-l);color:var(--bc-white)}
-.b-outline  {background:transparent;border:1px solid var(--mav-border);color:var(--mav-fg)}
+/* ── Badge ─────────────────────────────────────────────────────────────── */
+.b{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:14px;line-height:1;
+  padding:6px 8px;border:1px solid transparent;
+  border-radius:var(--border\/border-radius\/sm,4px);
+  white-space:nowrap;overflow:hidden;
+}
+.b-sm{font-size:12px;padding:4px 8px;gap:6px}
+.b-xs{font-size:11px;padding:3px 6px;gap:5px}
 
-/* Sizes */
-.b-sm{padding:1px 7px;font-size:10px}
-.b-lg{padding:5px 14px;font-size:13px}
+/* Filled (default type): bg-box fill + text token */
+.b-primary{background:var(--badge\ \&\ chip\/primary\/bg-box,#352eff);color:var(--badge\ \&\ chip\/primary\/text,#fff)}
+.b-red    {background:var(--badge\ \&\ chip\/danger\/bg-box,#ff00001a);color:var(--badge\ \&\ chip\/danger\/text,#ff0000)}
+.b-green  {background:var(--badge\ \&\ chip\/success\/bg-box,#629c281a);color:var(--badge\ \&\ chip\/success\/text,#629c28)}
+.b-orange {background:var(--badge\ \&\ chip\/waring\/bg-box,#ff84001a);color:var(--badge\ \&\ chip\/waring\/text,#ff8400)}
 
-/* Chips (interactive) */
-.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:9999px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid;transition:all .15s}
-.chip-default{background:var(--mav-bg);border-color:var(--mav-border);color:var(--mav-muted)}
-.chip-default:hover{border-color:var(--mav-fg);color:var(--mav-fg)}
-.chip-selected{background:var(--mav-primary);border-color:var(--mav-primary);color:var(--bc-white)}
-[data-theme=dark] .chip-selected{color:var(--mav-fg)}
-.chip-close{font-size:15px;opacity:.7;line-height:1}
+/* Outline: transparent fill, coloured 1px border, vivid text */
+.b-outline{background:transparent}
+.b-outline.b-primary{border-color:var(--badge\ \&\ chip\/primary\/outline,#7c9dff);color:var(--badge\ \&\ chip\/primary\/bg-box,#352eff)}
+.b-outline.b-red    {border-color:var(--badge\ \&\ chip\/danger\/outline,#ff0000);color:var(--badge\ \&\ chip\/danger\/text,#ff0000)}
+.b-outline.b-green  {border-color:var(--badge\ \&\ chip\/success\/outline,#629c28);color:var(--badge\ \&\ chip\/success\/text,#629c28)}
+.b-outline.b-orange {border-color:var(--badge\ \&\ chip\/waring\/outline,#ff8400);color:var(--badge\ \&\ chip\/waring\/text,#ff8400)}
 
-/* Notification dot */
-.notif-wrap{position:relative;display:inline-flex}
-.notif-dot{position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;background:var(--mav-danger);border:2px solid var(--mav-bg)}
-.notif-count{position:absolute;top:-6px;right:-8px;background:var(--mav-danger);color:var(--bc-white);font-size:9px;font-weight:700;padding:1px 4px;border-radius:9999px;min-width:16px;text-align:center;border:2px solid var(--mav-bg)}
+/* Clear: no fill, no border, vivid text only */
+.b-clear{background:transparent;border-color:transparent}
+.b-clear.b-primary{color:var(--badge\ \&\ chip\/primary\/bg-box,#352eff)}
+.b-clear.b-red    {color:var(--badge\ \&\ chip\/danger\/text,#ff0000)}
+.b-clear.b-green  {color:var(--badge\ \&\ chip\/success\/text,#629c28)}
+.b-clear.b-orange {color:var(--badge\ \&\ chip\/waring\/text,#ff8400)}
 
-/* Tag group */
-.tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
-.tag-blue  {background:var(--mav-primary);color:var(--bc-white)}
-.tag-lime  {background:var(--mav-primary-dark);color:var(--mav-fg)}
-.tag-gray  {background:var(--bc-mono100-l);color:var(--bc-mono600-l)}
-.tag-dark  {background:var(--bc-mono900-l);color:var(--bc-white)}
+/* Variation add-ons */
+.b-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.b .ic{width:1em;height:1em;flex-shrink:0;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;transform:scale(1.25)}
 
-/* Count badge on icon */
-.icon-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:9999px;background:var(--mav-border);cursor:pointer}
+/* ── Chip ──────────────────────────────────────────────────────────────── */
+.chip{
+  display:inline-flex;align-items:center;justify-content:center;gap:4px;
+  font-family:'Inter',sans-serif;font-weight:500;font-size:14px;line-height:1;
+  padding:6px 12px;border:1px solid transparent;
+  border-radius:var(--border\/border-radius\/md,8px);
+  white-space:nowrap;overflow:hidden;cursor:pointer;transition:filter .15s}
+.chip:hover{filter:brightness(.97)}
+.chip-sm{font-size:12px;padding:4px 10px}
+.chip-xs{font-size:11px;padding:3px 8px}
+
+.chip-close{width:1em;height:1em;flex-shrink:0;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.9;transform:scale(1.15)}
+
+/* Chip filled */
+.chip-primary{background:var(--badge\ \&\ chip\/primary\/bg-box,#352eff);color:var(--badge\ \&\ chip\/primary\/text,#fff)}
+.chip-red    {background:var(--badge\ \&\ chip\/danger\/bg-box,#ff00001a);color:var(--badge\ \&\ chip\/danger\/text,#ff0000)}
+.chip-green  {background:var(--badge\ \&\ chip\/success\/bg-box,#629c281a);color:var(--badge\ \&\ chip\/success\/text,#629c28)}
+.chip-orange {background:var(--badge\ \&\ chip\/waring\/bg-box,#ff84001a);color:var(--badge\ \&\ chip\/waring\/text,#ff8400)}
+.chip-grey   {background:#f5f5f5;color:#171717}
+.chip-white  {background:#fff;color:var(--badge\ \&\ chip\/white\/text,#171717);border-color:var(--badge\ \&\ chip\/white\/outline,#efefef)}
+[data-theme=dark] .chip-grey{background:var(--mav-border);color:var(--mav-fg)}
+[data-theme=dark] .chip-white{background:transparent}
+
+/* Chip outline */
+.chip-outline{background:transparent}
+.chip-outline.chip-primary{border-color:var(--badge\ \&\ chip\/primary\/outline,#7c9dff);color:var(--badge\ \&\ chip\/primary\/bg-box,#352eff)}
+.chip-outline.chip-red    {border-color:var(--badge\ \&\ chip\/danger\/outline,#ff0000);color:var(--badge\ \&\ chip\/danger\/text,#ff0000)}
+.chip-outline.chip-green  {border-color:var(--badge\ \&\ chip\/success\/outline,#629c28);color:var(--badge\ \&\ chip\/success\/text,#629c28)}
+.chip-outline.chip-orange {border-color:var(--badge\ \&\ chip\/waring\/outline,#ff8400);color:var(--badge\ \&\ chip\/waring\/text,#ff8400)}
+
+/* Dark colour demo canvas */
+.canvas-dark{background:var(--bc-mono900-l,#171717);border-radius:12px}
+.canvas-dark .spec-lbl{color:#8a8a8a}
 </style>
 </head>
 <body>
@@ -63,9 +99,12 @@
   <a href="forms.html" class="sidebar-link">Forms & Controls</a>
   <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
   <a href="badges.html" class="sidebar-link active">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
   <a href="navigation.html" class="sidebar-link">Navigation</a>
   <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
   <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
   <a href="all.html" class="sidebar-link">Kitchen Sink</a>
 </nav>
 <main class="doc-main">
@@ -80,169 +119,136 @@
   <div class="page-header">
     <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
     <h1 class="page-title">Badges & Chips</h1>
-    <p class="page-desc">Status badges, interactive chips, notification dots, and category tags.</p>
+    <p class="page-desc">Badges label and categorise information; chips are compact, dismissible tags. Both consume the <code>--badge &amp; chip/*</code> token namespace, so the live customiser re-themes them automatically.</p>
   </div>
 
-  <!-- Status badges -->
+  <!-- ═══ BADGE ═══════════════════════════════════════════════════════════ -->
   <div class="section">
-    <h2 class="section-title">Status Badges</h2>
-    <p class="section-desc">Semantic pill labels. Border-radius 9999px. 12px medium weight.</p>
+    <h2 class="section-title">Badge — Size</h2>
+    <p class="section-desc">Three sizes. Inter Medium 14 / 12 / 11px. Radius 4px (<code>border/border-radius/sm</code>).</p>
     <div class="preview-card">
       <div class="preview-canvas">
-        <div>
-          <div>Filled</div>
-          <div class="badge-row">
-            <span class="b b-primary">Primary</span>
-            <span class="b b-success"><span class="b-dot"></span>Success</span>
-            <span class="b b-warning"><span class="b-dot"></span>Warning</span>
-            <span class="b b-danger"><span class="b-dot"></span>Failed</span>
-            <span class="b b-info">Info</span>
-            <span class="b b-neutral">Neutral</span>
-            <span class="b b-dark">Dark</span>
-          </div>
-        </div>
-        <div>
-          <div>Outline</div>
-          <div class="badge-row">
-            <span class="b b-outline">Default</span>
-            <span class="b">Active</span>
-            <span class="b">Pending</span>
-            <span class="b">Rejected</span>
-          </div>
-        </div>
-        <div>
-          <div>Sizes</div>
-          <div class="badge-row">
-            <span class="b b-sm b-primary">Small</span>
-            <span class="b b-primary">Default</span>
-            <span class="b b-lg b-primary">Large</span>
-          </div>
-        </div>
-        <div>
-          <div>With icon</div>
-          <div class="badge-row">
-            <span class="b b-success">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="var(--mav-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Verified
-            </span>
-            <span class="b b-warning">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2v3M5 7.5v.5" stroke="var(--mav-warning)" stroke-width="1.5" stroke-linecap="round"/></svg>
-              Review
-            </span>
-            <span class="b b-primary">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" opacity=".8"><circle cx="5" cy="5" r="4"/></svg>
-              Live
-            </span>
-          </div>
+        <div class="spec-grid">
+          <div class="spec"><span class="spec-lbl">md</span><span class="b b-primary">Badge</span></div>
+          <div class="spec"><span class="spec-lbl">sm</span><span class="b b-sm b-primary">Badge</span></div>
+          <div class="spec"><span class="spec-lbl">xs</span><span class="b b-xs b-primary">Badge</span></div>
         </div>
       </div>
-      <div class="preview-meta"><span class="preview-label">Badge — border-radius 9999px · padding 3px 10px</span><span class="preview-sublabel">Uses badge/* token namespace</span></div>
+      <div class="preview-meta"><span class="preview-label">Badge — radius 4px · md padding 6/8 · gap 8</span><span class="preview-sublabel">Uses badge &amp; chip/* token namespace</span></div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- Chips -->
   <div class="section">
-    <h2 class="section-title">Filter Chips</h2>
-    <p class="section-desc">Interactive. Toggle selected state on click. Used for filters and tag pickers.</p>
+    <h2 class="section-title">Badge — Type</h2>
+    <p class="section-desc">Filled uses the <code>bg-box</code> fill; Outline draws a 1px <code>outline</code> border on transparent; Clear is text only.</p>
     <div class="preview-card">
       <div class="preview-canvas">
-        <div>
-          <div>States</div>
-          <div class="badge-row">
-            <div class="chip chip-default">Default</div>
-            <div class="chip chip-selected">Selected</div>
-            <div class="chip chip-default">Disabled</div>
-          </div>
-        </div>
-        <div>
-          <div>With dismiss</div>
-          <div class="badge-row">
-            <div class="chip chip-selected">Transfer <span class="chip-close">×</span></div>
-            <div class="chip chip-selected">Savings <span class="chip-close">×</span></div>
-            <div class="chip chip-default">Payments</div>
-            <div class="chip chip-default">Cards</div>
-          </div>
-        </div>
-        <div>
-          <div>Filter row example</div>
-          <div class="badge-row" id="chip-group">
-            <div class="chip chip-selected" onclick="selectChip(this)">All</div>
-            <div class="chip chip-default" onclick="selectChip(this)">Sent</div>
-            <div class="chip chip-default" onclick="selectChip(this)">Received</div>
-            <div class="chip chip-default" onclick="selectChip(this)">Pending</div>
-            <div class="chip chip-default" onclick="selectChip(this)">Failed</div>
-          </div>
+        <div class="spec-grid">
+          <div class="spec"><span class="spec-lbl">Filled</span><span class="b b-primary">Badge</span></div>
+          <div class="spec"><span class="spec-lbl">Outline</span><span class="b b-outline b-primary">Badge</span></div>
+          <div class="spec"><span class="spec-lbl">Clear</span><span class="b b-clear b-primary">Badge</span></div>
         </div>
       </div>
-      <div class="preview-meta"><span class="preview-label">Chip — border-radius 9999px · padding 6px 14px · border 1px</span></div>
+      <div class="preview-meta"><span class="preview-label">Type — Filled · Outline · Clear</span></div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- Notification dots -->
   <div class="section">
-    <h2 class="section-title">Notification Badges</h2>
-    <p class="section-desc">Count and dot indicators overlaid on icons and avatar elements.</p>
+    <h2 class="section-title">Badge — Color</h2>
+    <p class="section-desc">Primary is a solid fill; Red / Green / Orange use a 10%-opacity tinted <code>bg-box</code> with vivid text.</p>
     <div class="preview-card">
       <div class="preview-canvas">
         <div>
-          <div class="notif-wrap">
-            <div class="icon-btn">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2a6 6 0 016 6v3l1.5 3h-15L4 11V8a6 6 0 016-6zM8 17a2 2 0 004 0"/></svg>
-            </div>
-            <span class="notif-count">3</span>
+          <div class="spec-grid" style="margin-bottom:24px">
+            <div class="spec"><span class="spec-lbl">Primary</span><span class="b b-primary">Badge</span></div>
+            <div class="spec"><span class="spec-lbl">Red</span><span class="b b-red">Badge</span></div>
+            <div class="spec"><span class="spec-lbl">Green</span><span class="b b-green">Badge</span></div>
+            <div class="spec"><span class="spec-lbl">Orange</span><span class="b b-orange">Badge</span></div>
           </div>
-          <span>Count</span>
-        </div>
-        <div>
-          <div class="notif-wrap">
-            <div class="icon-btn">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h12v10H4zm4 10v2m4-2v2"/></svg>
-            </div>
-            <span class="notif-dot"></span>
+          <div class="spec-grid">
+            <div class="spec"><span class="spec-lbl">Primary</span><span class="b b-outline b-primary">Badge</span></div>
+            <div class="spec"><span class="spec-lbl">Red</span><span class="b b-outline b-red">Badge</span></div>
+            <div class="spec"><span class="spec-lbl">Green</span><span class="b b-outline b-green">Badge</span></div>
+            <div class="spec"><span class="spec-lbl">Orange</span><span class="b b-outline b-orange">Badge</span></div>
           </div>
-          <span>Dot</span>
-        </div>
-        <div>
-          <div class="notif-wrap">
-            <div>J</div>
-            <span class="notif-dot"></span>
-          </div>
-          <span>Online</span>
-        </div>
-        <div>
-          <div class="notif-wrap">
-            <div>A</div>
-            <span class="notif-count">12</span>
-          </div>
-          <span>Avatar</span>
         </div>
       </div>
-      <div class="preview-meta"><span class="preview-label">Notification dot — 10px · count pill 16px min-width · border 2px bg</span></div>
+      <div class="preview-meta"><span class="preview-label">Color — Primary #352eff · Red #ff0000 · Green #629c28 · Orange #ff8400</span></div>
     </div>
   </div>
 
   <div class="section-divider"></div>
 
-  <!-- Category tags -->
   <div class="section">
-    <h2 class="section-title">Category Tags</h2>
-    <p class="section-desc">Uppercase label tags. Border-radius 4px. Used on screen headers and list items.</p>
+    <h2 class="section-title">Badge — Variation</h2>
+    <p class="section-desc">Optional leading dot or leading icon. The dot and icon inherit the badge text colour via <code>currentColor</code>.</p>
     <div class="preview-card">
       <div class="preview-canvas">
-        <span class="tag tag-blue">Component</span>
-        <span class="tag tag-lime">Foundation</span>
-        <span class="tag tag-gray">iOS</span>
-        <span class="tag tag-dark">Android</span>
-        <span class="tag">Web</span>
-        <span class="tag">Dev</span>
-        <span class="tag">New</span>
-        <span class="tag">Stable</span>
+        <div class="spec-grid">
+          <div class="spec"><span class="spec-lbl">Text</span><span class="b b-primary">Badge</span></div>
+          <div class="spec"><span class="spec-lbl">Dot left</span><span class="b b-primary"><span class="b-dot"></span>Badge</span></div>
+          <div class="spec"><span class="spec-lbl">Icon left</span><span class="b b-primary"><svg class="ic" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>Badge</span></div>
+        </div>
       </div>
-      <div class="preview-meta"><span class="preview-label">Tag — border-radius 4px · uppercase · 11px · letter-spacing .06em</span></div>
+      <div class="preview-meta"><span class="preview-label">Variation — Text · Dot left · Icon left (trending-up)</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ CHIP ════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Chip — Size</h2>
+    <p class="section-desc">Compact, dismissible tags. Radius 8px, gap 4px, trailing 16px close icon. md / sm / xs.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="spec-grid">
+          <div class="spec"><span class="spec-lbl">md</span><span class="chip chip-primary">Tag <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span></div>
+          <div class="spec"><span class="spec-lbl">sm</span><span class="chip chip-sm chip-primary">Tag <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span></div>
+          <div class="spec"><span class="spec-lbl">xs</span><span class="chip chip-xs chip-primary">Tag <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Chip — radius 8px · md padding 6/12 · gap 4 · close 16px</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <h2 class="section-title">Chip — Type</h2>
+    <p class="section-desc">Filled and Outline, same as badges. Outline draws a coloured border on a transparent fill.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="spec-grid">
+          <div class="spec"><span class="spec-lbl">Filled</span><span class="chip chip-primary">Tag <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span></div>
+          <div class="spec"><span class="spec-lbl">Outline</span><span class="chip chip-outline chip-primary">Tag <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Type — Filled · Outline</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <h2 class="section-title">Chip — Color</h2>
+    <p class="section-desc">Six colours: Primary, Red, Green, Orange, Grey, White. Click a chip below to dismiss it.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="badge-row" id="chip-demo">
+          <span class="chip chip-primary" onclick="dismissChip(this)">Primary <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+          <span class="chip chip-red" onclick="dismissChip(this)">Red <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+          <span class="chip chip-green" onclick="dismissChip(this)">Green <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+          <span class="chip chip-orange" onclick="dismissChip(this)">Orange <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+          <span class="chip chip-grey" onclick="dismissChip(this)">Grey <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+          <span class="chip chip-white" onclick="dismissChip(this)">White <svg class="chip-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Color — Primary · Red · Green · Orange · Grey · White</span></div>
     </div>
   </div>
 
@@ -251,14 +257,18 @@
   <!-- Token reference -->
   <div class="section">
     <h2 class="section-title">Token Reference</h2>
+    <p class="section-desc">The <code>waring</code> spelling is an intentional carry-over from the Figma variable name.</p>
     <table class="token-table">
       <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
       <tbody>
-        <tr><td class="token-name">--badge\/primary\/bg</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Primary badge fill</td></tr>
-        <tr><td class="token-name">--badge\/success\/bg</td><td><span class="token-swatch-sm" style="background:rgba(98,156,40,0.12);border:1px solid #d0d0d0"></span><span class="token-value">rgba(98,156,40,0.12)</span></td><td class="token-value">Success badge fill</td></tr>
-        <tr><td class="token-name">--badge\/waring\/bg</td><td><span class="token-swatch-sm" style="background:rgba(255,132,0,0.12);border:1px solid #d0d0d0"></span><span class="token-value">rgba(255,132,0,0.12)</span></td><td class="token-value">Warning badge fill</td></tr>
-        <tr><td class="token-name">--badge\/danger\/bg</td><td><span class="token-swatch-sm" style="background:rgba(255,0,0,0.10);border:1px solid #d0d0d0"></span><span class="token-value">rgba(255,0,0,0.10)</span></td><td class="token-value">Danger badge fill</td></tr>
-        <tr><td class="token-name">--badge\/neutral\/bg</td><td><span class="token-swatch-sm" style="background:#efefef;border:1px solid #d0d0d0"></span><span class="token-value">#efefef</span></td><td class="token-value">Neutral badge fill</td></tr>
+        <tr><td class="token-name">--badge &amp; chip/primary/bg-box</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Primary fill (solid)</td></tr>
+        <tr><td class="token-name">--badge &amp; chip/primary/outline</td><td><span class="token-swatch-sm" style="background:#7c9dff"></span><span class="token-value">#7c9dff</span></td><td class="token-value">Primary outline border</td></tr>
+        <tr><td class="token-name">--badge &amp; chip/danger/bg-box</td><td><span class="token-swatch-sm" style="background:rgba(255,0,0,.10);border:1px solid #d0d0d0"></span><span class="token-value">#ff00001a</span></td><td class="token-value">Red tinted fill (10%)</td></tr>
+        <tr><td class="token-name">--badge &amp; chip/success/bg-box</td><td><span class="token-swatch-sm" style="background:rgba(98,156,40,.10);border:1px solid #d0d0d0"></span><span class="token-value">#629c281a</span></td><td class="token-value">Green tinted fill (10%)</td></tr>
+        <tr><td class="token-name">--badge &amp; chip/waring/bg-box</td><td><span class="token-swatch-sm" style="background:rgba(255,132,0,.10);border:1px solid #d0d0d0"></span><span class="token-value">#ff84001a</span></td><td class="token-value">Orange tinted fill (10%)</td></tr>
+        <tr><td class="token-name">--badge &amp; chip/white/bg-box</td><td><span class="token-swatch-sm" style="background:#e5e5e5;border:1px solid #d0d0d0"></span><span class="token-value">#e5e5e5</span></td><td class="token-value">Neutral chip fill</td></tr>
+        <tr><td class="token-name">--border/border-radius/sm</td><td><span class="token-value">4px</span></td><td class="token-value">Badge corner radius</td></tr>
+        <tr><td class="token-name">--border/border-radius/md</td><td><span class="token-value">8px</span></td><td class="token-value">Chip corner radius</td></tr>
       </tbody>
     </table>
   </div>
@@ -266,11 +276,10 @@
 </main>
 </div>
 <script>
-function selectChip(el){
-  document.querySelectorAll('#chip-group .chip').forEach(c=>{
-    c.className='chip chip-default';
-  });
-  el.className='chip chip-selected';
+function dismissChip(el){
+  el.style.transition='opacity .15s, transform .15s';
+  el.style.opacity='0';el.style.transform='scale(.85)';
+  setTimeout(()=>el.remove(),150);
 }
 </script>
 <script src="../js/theme.js"></script>

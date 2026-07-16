@@ -1,0 +1,32 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-126 -445)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-126 -120)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="azerbaijan" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<path id="vector" d="M19.9048 0H2.09524C0.93807 0 0 0.955126 0 2.13333V13.8667C0 15.0449 0.93807 16 2.09524 16H19.9048C21.0619 16 22 15.0449 22 13.8667V2.13333C22 0.955126 21.0619 0 19.9048 0Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M0 11H22V16H0V11Z" fill="#249F58" style="fill:#249F58;fill:color(display-p3 0.1406 0.6250 0.3444);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H22V5H0V0Z" fill="#3ECBF8" style="fill:#3ECBF8;fill:color(display-p3 0.2427 0.7961 0.9708);fill-opacity:1;"/>
+<path id="vector_4" fill-rule="evenodd" clip-rule="evenodd" d="M12.5713 7.4668H13.6189V8.53346H12.5713V7.4668Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector_5" fill-rule="evenodd" clip-rule="evenodd" d="M13.0951 9.59967C12.6174 10.2471 11.8569 10.6663 10.9999 10.6663C9.55419 10.6663 8.38086 9.47167 8.38086 7.99967C8.38086 6.52767 9.55419 5.33301 10.9999 5.33301C11.8569 5.33301 12.6174 5.75221 13.0951 6.39967H11.5237C10.6563 6.39967 9.95229 7.11647 9.95229 7.99967C9.95229 8.88287 10.6563 9.59967 11.5237 9.59967H13.0951Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

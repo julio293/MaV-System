@@ -404,67 +404,56 @@ body {
 .splash-tag { font-size: 14px; font-weight: 500; margin-top: 2px; letter-spacing: .01em; }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   BOOT SPLASH — super.money-style: bold full-bleed, springy mark, slim loader
+   SPLASH — Figma "Opening" (node 845:25608), variants .v1 / .v2 / .v3
+   Geometry from the 393×852 frame, converted to %, colors via theme tokens.
    ══════════════════════════════════════════════════════════════════════════ */
-.boot {
+.opening {
   position: absolute; inset: 0; border-radius: 52px; overflow: hidden;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: linear-gradient(160deg, #4b45ff 0%, #2a23d6 40%, #14114f 100%);
-  color: #fff;
+  background: var(--mav-bg);
 }
-.boot::before { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
-  background: radial-gradient(55% 38% at 50% 40%, rgba(255,255,255,.16), transparent 70%); }
-.boot::after { content: ''; position: absolute; inset: -40%; pointer-events: none; opacity: .55; z-index: 1;
-  background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(124,157,255,.22) 55deg, transparent 120deg);
-  animation: bootSweep 7s linear infinite; }
-@keyframes bootSweep { to { transform: rotate(360deg); } }
-/* drifting aurora blobs for a cinematic, alive backdrop */
-.boot-aurora { position: absolute; inset: -30%; z-index: 0; pointer-events: none; opacity: .9;
-  background:
-    radial-gradient(28% 26% at 28% 30%, rgba(124,157,255,.5), transparent 60%),
-    radial-gradient(26% 24% at 74% 26%, rgba(26,255,205,.22), transparent 60%),
-    radial-gradient(34% 30% at 66% 78%, rgba(124,90,255,.42), transparent 62%);
-  filter: blur(18px); animation: aurora 12s ease-in-out infinite alternate; }
-@keyframes aurora { 0% { transform: translate3d(-4%,-2%,0) rotate(0deg) scale(1.05); } 100% { transform: translate3d(5%,3%,0) rotate(8deg) scale(1.18); } }
+.opening.v2 { background: var(--mav-primary); }
 
-.boot-stage { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
-/* soft glow halo breathing behind the mark */
-.boot-halo { position: absolute; top: 50%; left: 50%; width: 260px; height: 260px; margin: -130px 0 0 -130px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(160,185,255,.55), rgba(124,157,255,.12) 45%, transparent 68%);
-  animation: bootHalo 2.8s ease-in-out infinite; }
-@keyframes bootHalo { 0%,100% { transform: scale(.85); opacity: .6; } 50% { transform: scale(1.08); opacity: 1; } }
-.boot-ring { position: absolute; top: 50%; left: 50%; width: 124px; height: 124px; margin: -62px 0 0 -62px;
-  border: 1.5px solid rgba(255,255,255,.5); border-radius: 36px; opacity: 0; }
-.boot-ring.a { animation: bootRing 2.8s cubic-bezier(.2,.7,.3,1) .3s infinite; }
-.boot-ring.b { animation: bootRing 2.8s cubic-bezier(.2,.7,.3,1) 1.0s infinite; }
-.boot-ring.c { animation: bootRing 2.8s cubic-bezier(.2,.7,.3,1) 1.7s infinite; }
-@keyframes bootRing { 0% { transform: scale(.92); opacity: .55; } 70% { opacity: 0; } 100% { transform: scale(2.1); opacity: 0; } }
+/* variant 1 — floating gradient panels (Figma 845:25596/25597/25604) */
+.op-panel { position: absolute; border-radius: 20px; pointer-events: none;
+  animation: opFade 1s cubic-bezier(.16,1,.3,1) both; }
+.op-panel.a { width: 353px; height: 353px; left: 42.4%; top: 9.2%;
+  background: linear-gradient(222deg, color-mix(in srgb, var(--mav-primary) 40%, transparent) 20%, transparent 100%);
+  box-shadow: inset 0 4px 40px 26px rgba(255,255,255,.2); }
+.op-panel.b { width: 353px; height: 353px; left: -25.4%; top: 34.5%; opacity: .3;
+  background: linear-gradient(225deg, transparent 5%, color-mix(in srgb, var(--mav-primary) 40%, transparent) 95%);
+  box-shadow: inset -18px 13px 30.5px 0 var(--Tint\/Primary\/100, #eaeaff);
+  animation: opFadeDim 1s cubic-bezier(.16,1,.3,1) both; }
+.op-panel.c { width: 221px; height: 210px; left: 58.5%; top: 59%;
+  background: linear-gradient(-34deg, color-mix(in srgb, var(--mav-secondary) 40%, transparent) 8%, transparent 97%);
+  box-shadow: inset -18px 13px 30.5px 0 var(--Tint\/Primary\/100, #eaeaff); }
+@keyframes opFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes opFadeDim { from { opacity: 0; } to { opacity: .3; } }
 
-.boot-logo { width: 124px; height: 124px; border-radius: 36px; background: #fff; display: grid; place-items: center; position: relative; z-index: 3; overflow: hidden;
-  box-shadow: 0 40px 90px -24px rgba(0,0,0,.65), 0 0 60px -10px rgba(150,180,255,.5), inset 0 1px 0 rgba(255,255,255,.8);
-  animation: bootPop .9s cubic-bezier(.16,1.4,.3,1) both; }
-.boot-logo img { width: 70%; height: 70%; object-fit: contain; position: relative; z-index: 2; }
-.boot-logo .boot-shine { position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(125deg, transparent 38%, rgba(255,255,255,.7) 50%, transparent 62%); background-size: 250% 100%; animation: bootShine 3s 1s ease-in-out infinite; }
-@keyframes bootPop { 0% { transform: scale(.3) rotate(-12deg); opacity: 0; } 55% { opacity: 1; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+/* variants 2 & 3 — soft glow (Figma raster blur, rebuilt as CSS gradient) */
+.op-glow { position: absolute; left: 50%; transform: translateX(-50%); pointer-events: none;
+  animation: opFade 1.2s ease-out both; }
+.opening.v2 .op-glow { bottom: 0; width: 130%; height: 76%;
+  background: radial-gradient(72% 70% at 50% 100%, #fff 0%, rgba(255,255,255,.85) 42%, transparent 78%);
+  filter: blur(24px); }
+.opening.v3 .op-glow { top: -12%; width: 140%; height: 84%;
+  background: radial-gradient(68% 80% at 50% 0%,
+    var(--mav-secondary) 0%,
+    color-mix(in srgb, var(--mav-secondary) 62%, transparent) 45%, transparent 80%);
+  filter: blur(26px); }
 
-.boot-word { margin-top: 26px; font-size: 38px; font-weight: 800; letter-spacing: -.035em; line-height: 1;
-  background: linear-gradient(110deg, #fff 35%, #cfe0ff 50%, #fff 65%); background-size: 250% 100%;
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: bootRise .6s .42s both, bootShine 2.4s 1s ease-in-out infinite; }
-@keyframes bootRise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-@keyframes bootShine { 0%,100% { background-position: 130% 0; } 50% { background-position: -30% 0; } }
+/* centered logomark — masked so it inherits the theme fg (Figma: Main/Black) */
+.op-logo { position: absolute; left: 50%; top: 50%; width: 81px; height: 60px;
+  transform: translate(-50%, -50%); background: var(--mav-fg); z-index: 2;
+  -webkit-mask: url('assets/logo/logomark-current.svg') center / contain no-repeat;
+  mask: url('assets/logo/logomark-current.svg') center / contain no-repeat;
+  animation: opLogo .8s cubic-bezier(.16,1,.3,1) both; }
+@keyframes opLogo { from { opacity: 0; transform: translate(-50%, -50%) scale(.86); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 
-.boot-tag { margin-top: 30px; font-size: 13.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.82);
-  opacity: 0; animation: bootRise .6s .62s both; }
-
-.boot-foot { position: absolute; bottom: 46px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; z-index: 2;
-  opacity: 0; animation: bootRise .6s .8s both; }
-.boot-bar { width: 132px; height: 4px; border-radius: 4px; background: rgba(255,255,255,.22); overflow: hidden; }
-.boot-bar > i { display: block; height: 100%; width: 40%; border-radius: 4px; background: #fff;
-  animation: bootLoad 1.9s cubic-bezier(.5,0,.2,1) infinite; }
-@keyframes bootLoad { 0% { transform: translateX(-120%); } 100% { transform: translateX(360%); } }
-.boot-secure { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: .04em; color: rgba(255,255,255,.7); }
+/* regulatory footer (Figma Text Box, Body/Medium/xs) */
+.op-legal { position: absolute; left: 50%; bottom: 7.8%; transform: translateX(-50%);
+  width: 90%; max-width: 353px; margin: 0; z-index: 2;
+  font-size: 10px; font-weight: 500; line-height: normal; text-align: center;
+  color: var(--mav-fg); opacity: 0; animation: opFade .8s .35s ease-out both; }
 
 /* ── Step progress bar ─────────────────────────────────────────────────── */
 .stepbar { display: flex; gap: 5px; padding: 4px 24px 0; }

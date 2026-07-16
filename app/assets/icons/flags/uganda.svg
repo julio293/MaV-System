@@ -1,0 +1,34 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-356 -1125)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-356 -800)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="uganda" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H22V2.13333H0V0Z" fill="#151515" style="fill:#151515;fill:color(display-p3 0.0833 0.0833 0.0833);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M0 4.2666H22V7.4666H0V4.2666Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M0 7.4668H22V10.6668H0V7.4668Z" fill="#151515" style="fill:#151515;fill:color(display-p3 0.0833 0.0833 0.0833);fill-opacity:1;"/>
+<path id="vector_4" d="M10.4764 10.6666C12.2121 10.6666 13.6192 9.23391 13.6192 7.4666C13.6192 5.69929 12.2121 4.2666 10.4764 4.2666C8.7406 4.2666 7.3335 5.69929 7.3335 7.4666C7.3335 9.23391 8.7406 10.6666 10.4764 10.6666Z" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector_5" fill-rule="evenodd" clip-rule="evenodd" d="M10.4763 4.2666L9.42871 7.4666L10.4763 9.59993L11.5239 7.4666V10.6666L12.5716 7.4666L11.5239 6.39993L10.4763 7.4666V4.2666Z" fill="#151515" style="fill:#151515;fill:color(display-p3 0.0833 0.0833 0.0833);fill-opacity:1;"/>
+<rect id="rectangle-23" y="12.7998" width="22" height="3.2" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

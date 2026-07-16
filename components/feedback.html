@@ -7,27 +7,35 @@
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/shared.css">
 <style>
-/* Alert base */
+/* ══ Alert — Figma component set 52:28340 ═══════════════════════════════
+   padding 16px · radius 8px · no border · 10% tinted bg · text in variant color
+   icon (bell-ringing) 19.43px · gap 16px icon↔content · gap 12px content↔actions */
 .mav-alert{
-  display:flex;align-items:flex-start;gap:12px;
-  padding:16px;border-radius:8px;border:1px solid;
-  font-size:14px;line-height:1.5;
+  display:flex;align-items:center;gap:16px;
+  padding:16px;border-radius:8px;
+  font-family:var(--font-active);
 }
-.alert-icon{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:1px}
-.alert-body{flex:1}
-.alert-title{font-weight:600;margin-bottom:2px}
-.alert-desc{font-size:13px;opacity:.8}
-.alert-close{flex-shrink:0;opacity:.5;cursor:pointer;font-size:18px;line-height:1}
+.mav-alert.is-multiline{align-items:flex-start}
+.alert-icon{flex-shrink:0;width:19.43px;height:19.43px}
+.alert-icon svg{width:100%;height:100%;display:block}
+.alert-main{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.mav-alert.is-multiline .alert-main{align-items:flex-start}
+.alert-body{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+.alert-title{font-weight:700;font-size:14px;line-height:normal}
+.alert-desc{font-weight:500;font-size:var(--medium\/md,14px);line-height:normal}
+.alert-single{font-weight:500;font-size:var(--medium\/md,14px);line-height:normal;flex:1;min-width:0}
+.alert-emoji{flex-shrink:0;width:20px;height:20px;font-size:18px;line-height:20px;text-align:center}
+/* action buttons — always btn/textonly colors, 12px Medium, regardless of variant */
+.alert-actions{display:flex;gap:16px;flex-shrink:0}
+.alert-btn{background:none;border:none;cursor:pointer;padding:0;font-family:var(--font-active);
+  font-weight:500;font-size:var(--medium\/sm,12px);line-height:normal;white-space:nowrap;color:var(--btn\/textonly\/default)}
+.alert-btn+.alert-btn{color:var(--btn\/textonly\/hover)}
 
-/* Alert variants */
-.alert-info   {background:rgba(20,76,199,0.08);border-color:rgba(20,76,199,0.25);color:var(--mav-info)}
-.alert-info   .alert-icon{background:var(--mav-info);color:var(--bc-white)}
-.alert-success{background:rgba(98,156,40,0.08);border-color:rgba(98,156,40,0.25);color:var(--mav-success)}
-.alert-success .alert-icon{background:var(--mav-success);color:var(--bc-white)}
-.alert-warning{background:rgba(255,132,0,0.08);border-color:rgba(255,132,0,0.25);color:var(--mav-warning)}
-.alert-warning .alert-icon{background:var(--mav-warning);color:var(--bc-white)}
-.alert-danger {background:rgba(255,0,0,0.08);border-color:rgba(255,0,0,0.25);color:var(--mav-danger)}
-.alert-danger  .alert-icon{background:var(--mav-danger);color:var(--bc-white)}
+/* Variant tints (bg-box = 10% alpha) + text/icon color */
+.alert-primary{background:var(--alert\/primary\/bg-box);color:var(--alert\/primary\/text-brand)}
+.alert-danger {background:var(--alert\/danger\/bg-box); color:var(--alert\/danger\/text-danger)}
+.alert-success{background:var(--alert\/success\/bg-box);color:var(--alert\/success\/text-success)}
+.alert-warning{background:var(--alert\/waring\/bg-box); color:var(--alert\/waring\/text-warning)}
 
 /* Toast */
 .mav-toast{
@@ -63,6 +71,14 @@
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="ic-bell-ringing" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"/>
+    <path d="M9 17v1a3 3 0 0 0 6 0v-1"/>
+    <path d="M21 6.727a11.05 11.05 0 0 0 -2.794 -3.727"/>
+    <path d="M3 6.727a11.05 11.05 0 0 1 2.792 -3.727"/>
+  </symbol>
+</defs></svg>
 <div class="doc-layout">
 <nav class="doc-sidebar">
   <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
@@ -73,9 +89,12 @@
   <a href="forms.html" class="sidebar-link">Forms & Controls</a>
   <a href="feedback.html" class="sidebar-link active">Alerts & Toasts</a>
   <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
   <a href="navigation.html" class="sidebar-link">Navigation</a>
   <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
   <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
   <a href="all.html" class="sidebar-link">Kitchen Sink</a>
 </nav>
 <main class="doc-main">
@@ -90,49 +109,146 @@
   <div class="page-header">
     <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
     <h1 class="page-title">Alerts & Toasts</h1>
-    <p class="page-desc">Inline alerts (four semantic variants) plus floating toast notifications with actions.</p>
+    <p class="page-desc">Exported from Figma (page "• Alert"). Alert: four colors × Title on/off, with icon, actions, emoji, and a compact single-line state. Plus floating toasts and inline field feedback (MaV extensions).</p>
   </div>
 
-  <!-- Alerts -->
+  <!-- Alert — colors -->
   <div class="section">
-    <h2 class="section-title">Inline Alerts</h2>
-    <p class="section-desc">Persistent contextual messages. Four states map to system color tokens.</p>
+    <h2 class="section-title">Alert</h2>
+    <p class="section-desc">Four colors (Primary / Red / Green / Orange) map to the <code>alert/*</code> tokens. Tinted 10% background, no border; title and body take the variant color. Icon is <code>bell-ringing</code> at 19.43px; action buttons stay <code>btn/textonly</code> blue regardless of variant.</p>
     <div class="preview-card">
       <div class="preview-canvas">
-        <div class="mav-alert alert-info">
-          <div class="alert-icon">i</div>
-          <div class="alert-body">
-            <div class="alert-title">Information</div>
-            <div class="alert-desc">Your session will expire in 10 minutes. Save any unsaved changes.</div>
+        <div class="mav-alert alert-primary is-multiline">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main">
+            <div class="alert-body"><div class="alert-title">Title</div><div class="alert-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</div></div>
+            <div class="alert-actions"><button class="alert-btn">Button</button><button class="alert-btn">Button</button></div>
           </div>
-          <span class="alert-close">×</span>
         </div>
-        <div class="mav-alert alert-success">
-          <div class="alert-icon">✓</div>
-          <div class="alert-body">
-            <div class="alert-title">Success</div>
-            <div class="alert-desc">Your account details have been updated successfully.</div>
+        <div class="mav-alert alert-danger is-multiline">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main">
+            <div class="alert-body"><div class="alert-title">Title</div><div class="alert-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</div></div>
+            <div class="alert-actions"><button class="alert-btn">Button</button><button class="alert-btn">Button</button></div>
           </div>
-          <span class="alert-close">×</span>
         </div>
-        <div class="mav-alert alert-warning">
-          <div class="alert-icon">!</div>
-          <div class="alert-body">
-            <div class="alert-title">Warning</div>
-            <div class="alert-desc">Your balance is low. Add funds to avoid service interruption.</div>
+        <div class="mav-alert alert-success is-multiline">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main">
+            <div class="alert-body"><div class="alert-title">Title</div><div class="alert-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</div></div>
+            <div class="alert-actions"><button class="alert-btn">Button</button><button class="alert-btn">Button</button></div>
           </div>
-          <span class="alert-close">×</span>
         </div>
-        <div class="mav-alert alert-danger">
-          <div class="alert-icon">!</div>
-          <div class="alert-body">
-            <div class="alert-title">Error</div>
-            <div class="alert-desc">Payment failed. Please check your card details and try again.</div>
+        <div class="mav-alert alert-warning is-multiline">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main">
+            <div class="alert-body"><div class="alert-title">Title</div><div class="alert-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</div></div>
+            <div class="alert-actions"><button class="alert-btn">Button</button><button class="alert-btn">Button</button></div>
           </div>
-          <span class="alert-close">×</span>
         </div>
       </div>
-      <div class="preview-meta"><span class="preview-label">Alert — padding 16px · border-radius 8px · border 1px</span><span class="preview-sublabel">Uses alert/* token namespace</span></div>
+      <div class="preview-meta"><span class="preview-label">Alert — Title=On, 2 buttons</span><span class="preview-sublabel">bg-box 10% · text/icon in variant color · padding 16 · radius 8</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Alert — Title off -->
+  <div class="section">
+    <h2 class="section-title">Title — On / Off</h2>
+    <p class="section-desc"><strong>On</strong>: bold title + medium description stacked. <strong>Off</strong>: a single medium line, vertically centered with the icon.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="mav-alert alert-primary is-multiline">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main">
+            <div class="alert-body"><div class="alert-title">Title</div><div class="alert-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</div></div>
+            <div class="alert-actions"><button class="alert-btn">Button</button><button class="alert-btn">Button</button></div>
+          </div>
+        </div>
+        <div class="mav-alert alert-primary">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main">
+            <p class="alert-single">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+            <div class="alert-actions"><button class="alert-btn">Button</button><button class="alert-btn">Button</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Title=On vs Title=Off</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Alert — buttons -->
+  <div class="section">
+    <h2 class="section-title">Actions — 0 / 1 / 2 buttons</h2>
+    <p class="section-desc">Trailing text buttons, gap 16px. First is <code>btn/textonly/default</code> #352eff, second is <code>btn/textonly/hover</code> #7c9dff.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="mav-alert alert-primary is-multiline">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main"><div class="alert-body"><div class="alert-title">Title</div><div class="alert-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</div></div></div>
+        </div>
+        <div class="mav-alert alert-primary is-multiline">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main">
+            <div class="alert-body"><div class="alert-title">Title</div><div class="alert-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</div></div>
+            <div class="alert-actions"><button class="alert-btn">Button</button></div>
+          </div>
+        </div>
+        <div class="mav-alert alert-primary is-multiline">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main">
+            <div class="alert-body"><div class="alert-title">Title</div><div class="alert-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</div></div>
+            <div class="alert-actions"><button class="alert-btn">Button</button><button class="alert-btn">Button</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">0 · 1 · 2 buttons</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Alert — icon / emoji / text -->
+  <div class="section">
+    <h2 class="section-title">Leading — Icon / Emoji</h2>
+    <p class="section-desc">Icon-only (default), or the bell icon plus a 20px emoji glyph before the content.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="mav-alert alert-primary is-multiline">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main"><div class="alert-body"><div class="alert-title">Title</div><div class="alert-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</div></div></div>
+        </div>
+        <div class="mav-alert alert-primary is-multiline">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <span class="alert-emoji">💡</span>
+          <div class="alert-main"><div class="alert-body"><div class="alert-title">Title</div><div class="alert-desc">Lorem ipsum dolor sit amet, consectetur adipiscing.</div></div></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Icon · Emoji</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Alert State — compact single-line -->
+  <div class="section">
+    <h2 class="section-title">Alert State (compact)</h2>
+    <p class="section-desc">Single-line Success / Error state for inline validation. No title, no buttons — icon + one medium line. Success carries a subtle border matching its tint.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="mav-alert alert-success" style="border:1px solid var(--alert\/success\/bg-box)">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main"><p class="alert-single">This is a Success message</p></div>
+        </div>
+        <div class="mav-alert alert-danger">
+          <span class="alert-icon"><svg><use href="#ic-bell-ringing"/></svg></span>
+          <div class="alert-main"><p class="alert-single">This is an Error message</p></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Alert State — Success / Error</span></div>
     </div>
   </div>
 
@@ -250,12 +366,16 @@
     <table class="token-table">
       <thead><tr><th>Token</th><th>Light</th><th>Usage</th></tr></thead>
       <tbody>
-        <tr><td class="token-name">--alert\/info\/bg</td><td><span class="token-swatch-sm" style="background:rgba(20,76,199,0.08);border:1px solid #c0c0c0"></span><span class="token-value">rgba(20,76,199,0.08)</span></td><td class="token-value">Info alert background</td></tr>
-        <tr><td class="token-name">--alert\/success\/bg</td><td><span class="token-swatch-sm" style="background:rgba(98,156,40,0.08);border:1px solid #c0c0c0"></span><span class="token-value">rgba(98,156,40,0.08)</span></td><td class="token-value">Success alert background</td></tr>
-        <tr><td class="token-name">--alert\/waring\/bg</td><td><span class="token-swatch-sm" style="background:rgba(255,132,0,0.08);border:1px solid #c0c0c0"></span><span class="token-value">rgba(255,132,0,0.08)</span></td><td class="token-value">Warning alert background</td></tr>
-        <tr><td class="token-name">--alert\/danger\/bg</td><td><span class="token-swatch-sm" style="background:rgba(255,0,0,0.08);border:1px solid #c0c0c0"></span><span class="token-value">rgba(255,0,0,0.08)</span></td><td class="token-value">Error alert background</td></tr>
-        <tr><td class="token-name">toast/default/bg</td><td><span class="token-swatch-sm" style="background:#191919"></span><span class="token-value">#191919</span></td><td class="token-value">Dark toast background</td></tr>
-        <tr><td class="token-name">toast/action/color</td><td><span class="token-swatch-sm" style="background:#a1ff5b"></span><span class="token-value">#a1ff5b</span></td><td class="token-value">Toast CTA text</td></tr>
+        <tr><td class="token-name">--alert\/primary\/bg-box</td><td><span class="token-swatch-sm" style="background:#352eff1a;border:1px solid #c0c0c0"></span><span class="token-value">#352eff1a</span></td><td class="token-value">Primary tint (10%)</td></tr>
+        <tr><td class="token-name">--alert\/primary\/text-brand</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Primary title/body/icon</td></tr>
+        <tr><td class="token-name">--alert\/danger\/bg-box</td><td><span class="token-swatch-sm" style="background:#ff00001a;border:1px solid #c0c0c0"></span><span class="token-value">#ff00001a</span></td><td class="token-value">Red tint (10%)</td></tr>
+        <tr><td class="token-name">--alert\/danger\/text-danger</td><td><span class="token-swatch-sm" style="background:#ff0000"></span><span class="token-value">#ff0000</span></td><td class="token-value">Red title/body/icon</td></tr>
+        <tr><td class="token-name">--alert\/success\/bg-box</td><td><span class="token-swatch-sm" style="background:#629c281a;border:1px solid #c0c0c0"></span><span class="token-value">#629c281a</span></td><td class="token-value">Green tint (10%)</td></tr>
+        <tr><td class="token-name">--alert\/success\/text-success</td><td><span class="token-swatch-sm" style="background:#629c28"></span><span class="token-value">#629c28</span></td><td class="token-value">Green title/body/icon</td></tr>
+        <tr><td class="token-name">--alert\/waring\/bg-box</td><td><span class="token-swatch-sm" style="background:#ff84001a;border:1px solid #c0c0c0"></span><span class="token-value">#ff84001a</span></td><td class="token-value">Orange tint (10%) — Figma typo "waring"</td></tr>
+        <tr><td class="token-name">--alert\/waring\/text-warning</td><td><span class="token-swatch-sm" style="background:#ff8400"></span><span class="token-value">#ff8400</span></td><td class="token-value">Orange title/body/icon</td></tr>
+        <tr><td class="token-name">--btn\/textonly\/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Alert action button 1</td></tr>
+        <tr><td class="token-name">--btn\/textonly\/hover</td><td><span class="token-swatch-sm" style="background:#7c9dff"></span><span class="token-value">#7c9dff</span></td><td class="token-value">Alert action button 2</td></tr>
       </tbody>
     </table>
   </div>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payment Cards — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Payment card — Figma "Card" page (243:11558) ═══════════════════════
+   Template + swappable pattern. 311×200 @ radius 18px, network mark top-left,
+   card number (Inter Medium 20px), "Exp MM/YY". Ratio 1.586:1 (ISO/IEC 7810). */
+.pcard{
+  position:relative;width:311px;max-width:100%;aspect-ratio:311/200;
+  border-radius:18px;overflow:hidden;color:#fff;
+  font-family:'Inter',sans-serif;flex-shrink:0;
+  box-shadow:var(--shadow\/md,0 8px 24px rgba(0,0,0,.16));
+}
+.pcard-inner{position:absolute;inset:0;padding:24px;display:flex;flex-direction:column;justify-content:space-between;z-index:2}
+/* swappable skin layer */
+.pcard-skin{position:absolute;inset:0;z-index:0}
+.pcard-skin img{width:100%;height:100%;object-fit:cover;display:block}
+.pcard-top{display:flex;align-items:flex-start;justify-content:space-between}
+.pcard-chip{width:34px;height:26px;border-radius:5px;
+  background:linear-gradient(135deg,#e6c86e,#c9a227);position:relative;opacity:.95}
+.pcard-chip::after{content:"";position:absolute;inset:5px 6px;border:1px solid rgba(0,0,0,.15);border-radius:3px}
+.pcard-network{height:30px;display:flex;align-items:center}
+.pcard-number{font-weight:500;font-size:20px;letter-spacing:.04em;line-height:1.15}
+.pcard-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.pcard-holder{font-size:12px;text-transform:uppercase;letter-spacing:.04em;opacity:.92}
+.pcard-exp{font-size:12px;display:flex;gap:4px;align-items:center}
+.pcard-exp .lbl{opacity:.8}
+.pcard-label{font-size:10px;opacity:.7;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+
+/* Themeable treatments (no asset — the customiser path) */
+.pcard-brand{background:linear-gradient(135deg,var(--Main\/Primary,#352eff),var(--Main\/Secondary,#0053ff))}
+.pcard-dark{background:var(--Main\/Black,#171717)}
+.pcard-tertiary{background:linear-gradient(135deg,var(--Main\/Tertiary-2,#030192),var(--Main\/Primary,#352eff))}
+
+/* Mastercard / Visa marks */
+.mc{width:44px;height:28px;position:relative}
+.mc i{position:absolute;top:0;width:28px;height:28px;border-radius:50%}
+.mc i:first-child{left:0;background:#eb001b}
+.mc i:last-child{right:0;background:#f79e1b;mix-blend-mode:screen}
+.visa{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:700;font-size:22px;letter-spacing:.02em;color:#fff}
+
+/* skin gallery */
+.card-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.card-gallery .pcard{width:100%}
+.card-gallery figure{margin:0;display:flex;flex-direction:column;gap:8px}
+.card-gallery figcaption{font-size:11px;color:var(--mav-muted)}
+.small-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.small-card{border-radius:12px;overflow:hidden;box-shadow:var(--shadow\/sm,0 1px 4px rgba(0,0,0,.08))}
+.small-card img{width:100%;display:block}
+.row{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link active">Payment Cards</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Payment Cards</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Payment Cards</h1>
+    <p class="page-desc">Exported from Figma (page "• Card"). The card is a <strong>template + swappable skin</strong> (Figma labels the slot “✏️ Paste your Pattern here”): a themeable anatomy layer — chip, network mark, number, holder, expiry — over any background. 311×200 at 18px radius (ISO card ratio). Below: the live CSS component, then the 16 large + 10 small skin library.</p>
+  </div>
+
+  <!-- Live component -->
+  <div class="section">
+    <h2 class="section-title">Card Component</h2>
+    <p class="section-desc">Anatomy overlay driven by tokens — swap <code>--main/*</code> or drop in a skin image, the data layer stays put. Number is Inter Medium 20px, expiry “Exp MM/YY”.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="row">
+          <!-- Brand gradient (themeable default) -->
+          <div class="pcard pcard-brand">
+            <div class="pcard-inner">
+              <div class="pcard-top">
+                <div class="pcard-chip"></div>
+                <div class="pcard-network"><div class="mc"><i></i><i></i></div></div>
+              </div>
+              <div class="pcard-number">6037&nbsp;9975&nbsp;9598&nbsp;3090</div>
+              <div class="pcard-bottom">
+                <div><div class="pcard-label">Card holder</div><div class="pcard-holder">Julio Santos</div></div>
+                <div class="pcard-exp"><span class="lbl">Exp</span><span>09/24</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Dark -->
+          <div class="pcard pcard-dark">
+            <div class="pcard-inner">
+              <div class="pcard-top">
+                <div class="pcard-chip"></div>
+                <div class="pcard-network"><span class="visa">VISA</span></div>
+              </div>
+              <div class="pcard-number">6037&nbsp;9975&nbsp;9598&nbsp;3090</div>
+              <div class="pcard-bottom">
+                <div><div class="pcard-label">Card holder</div><div class="pcard-holder">Julio Santos</div></div>
+                <div class="pcard-exp"><span class="lbl">Exp</span><span>09/24</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Tertiary gradient -->
+          <div class="pcard pcard-tertiary">
+            <div class="pcard-inner">
+              <div class="pcard-top">
+                <div class="pcard-chip"></div>
+                <div class="pcard-network"><div class="mc"><i></i><i></i></div></div>
+              </div>
+              <div class="pcard-number">6037&nbsp;9975&nbsp;9598&nbsp;3090</div>
+              <div class="pcard-bottom">
+                <div><div class="pcard-label">Card holder</div><div class="pcard-holder">Julio Santos</div></div>
+                <div class="pcard-exp"><span class="lbl">Exp</span><span>09/24</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Live card — three themeable treatments</span><span class="preview-sublabel">radius 18px · chip · Mastercard/Visa mark · Inter 20/12 · bg via --Main/* tokens</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Large skin library -->
+  <div class="section">
+    <h2 class="section-title">Skin Library — Large (16)</h2>
+    <p class="section-desc">Ready-made card faces exported at 3× from Figma. Drop any into the card's skin slot. Placeholder number/expiry are baked into the source art.</p>
+    <div class="preview-card">
+      <div class="preview-canvas" style="display:block">
+        <div class="card-gallery" id="large-lib"></div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">16 large skins — app/assets/cards/large-*.png</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Small skin library -->
+  <div class="section">
+    <h2 class="section-title">Skin Library — Small (10)</h2>
+    <p class="section-desc">Compact card rows for wallet lists and pickers.</p>
+    <div class="preview-card">
+      <div class="preview-canvas" style="display:block">
+        <div class="small-gallery" id="small-lib"></div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">10 small skins — app/assets/cards/small-*.png</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Spec -->
+  <div class="section">
+    <h2 class="section-title">Specification</h2>
+    <table class="token-table">
+      <thead><tr><th>Property</th><th>Value</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">Size</td><td class="token-value">311 × 200 px</td><td class="token-value">ISO/IEC 7810 ratio 1.586:1 — use aspect-ratio to scale</td></tr>
+        <tr><td class="token-name">Radius</td><td class="token-value">18px</td><td class="token-value">card corner</td></tr>
+        <tr><td class="token-name">Padding</td><td class="token-value">24px</td><td class="token-value">content inset</td></tr>
+        <tr><td class="token-name">Number</td><td class="token-value">Inter Medium 20px</td><td class="token-value">--main-text/inverterd (white)</td></tr>
+        <tr><td class="token-name">Expiry</td><td class="token-value">Inter Regular 12px</td><td class="token-value">“Exp” at 80% opacity + MM/YY</td></tr>
+        <tr><td class="token-name">Network mark</td><td class="token-value">~51 × 31 px top-left</td><td class="token-value">Mastercard dual-circle / Visa wordmark</td></tr>
+        <tr><td class="token-name">Skins</td><td class="token-value">16 large + 10 small</td><td class="token-value">swappable pattern layer (Figma "Paste your Pattern here")</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+<script>
+/* build skin galleries */
+const large = document.getElementById('large-lib');
+for (let i = 1; i <= 16; i++) {
+  const n = String(i).padStart(2, '0');
+  large.insertAdjacentHTML('beforeend',
+    `<figure><div class="pcard"><div class="pcard-skin"><img src="../app/assets/cards/large-${n}.png" alt="Card skin ${i}"></div></div><figcaption>large-${n}</figcaption></figure>`);
+}
+const small = document.getElementById('small-lib');
+for (let i = 1; i <= 10; i++) {
+  const n = String(i).padStart(2, '0');
+  small.insertAdjacentHTML('beforeend',
+    `<div class="small-card"><img src="../app/assets/cards/small-${n}.png" alt="Small card ${i}"></div>`);
+}
+</script>
+</body>
+</html>

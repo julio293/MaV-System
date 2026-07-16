@@ -13,34 +13,55 @@
 .ctrl-sub{font-size:11px;color:var(--mav-muted);margin-top:2px}
 .ctrl-state{font-size:11px;color:var(--mav-muted);min-width:70px;text-align:right}
 
-/* Checkbox */
-.mav-checkbox{
-  width:20px;height:20px;border-radius:4px;border:1px solid;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;cursor:pointer;transition:all .15s;
+/* Checkbox — Figma "• Checkbox" (52:29969). 16px · radius 4px · --Checkbox/* tokens.
+   States: Default · Focus · Selected · Indeterminate · Disabled. Dark theme re-themes
+   the active fill to lime via the tokens.css [data-theme=dark] override. */
+.cbx{
+  width:16px;height:16px;border-radius:4px;box-sizing:border-box;
+  border:1px solid var(--Checkbox\/default\/outline-box,#cccccc);
+  background:var(--Checkbox\/default\/bg-box,#ffffff);
+  display:inline-flex;align-items:center;justify-content:center;
+  flex-shrink:0;cursor:pointer;transition:box-shadow .15s,background .15s,border-color .15s;
+  box-shadow:0 1px 2px -1px rgba(0,0,0,.05),0 2px 4px -2px rgba(0,0,0,.05),0 3px 6px -3px rgba(0,0,0,.05);
 }
-.cb-default{border-color:var(--bc-mono200-l);background:var(--bc-white)}
-.cb-active{border-color:var(--bc-mono900-l);background:var(--mav-primary);border:none}
-.cb-disabled{border-color:var(--mav-placeholder);background:var(--bc-mono100-l)}
-.checkmark{color:var(--bc-white);font-size:13px;font-weight:700;line-height:1}
+.cbx svg{width:12px;height:12px;stroke:var(--icon\/inverted,#ffffff);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:none}
+.cbx.is-focus{box-shadow:0 0 0 3px rgba(53,46,255,.2)}
+.cbx.is-selected,.cbx.is-indeterminate{
+  background:var(--Checkbox\/active\/bg-box-active,#352eff);
+  border-color:var(--Checkbox\/active\/bg-box-active,#352eff);
+}
+.cbx.is-selected .cb-check{display:block}
+.cbx.is-indeterminate .cb-minus{display:block}
+.cbx.is-disabled{
+  background:var(--Checkbox\/disabled\/bg-box-disabled,#e5e5e5);
+  border-color:var(--Checkbox\/disabled\/outline-box-disabled,#b2b2b2);
+  box-shadow:none;cursor:not-allowed;
+}
+/* Dark theme: active fill is lime, so the check/minus glyph flips to dark for contrast */
+[data-theme=dark] .cbx.is-selected svg,[data-theme=dark] .cbx.is-indeterminate svg{stroke:#171717}
 
-/* Toggle */
-.mav-toggle{
-  position:relative;width:44px;height:24px;border-radius:9999px;
-  cursor:pointer;transition:background .2s;flex-shrink:0;
-}
-.toggle-off{background:var(--bc-mono100-l)}
-.toggle-on{background:var(--mav-primary)}
-.toggle-on-dk{background:var(--mav-primary-dark)}
-.toggle-handle{
-  position:absolute;top:3px;width:18px;height:18px;
-  border-radius:50%;background:var(--bc-white);transition:left .2s;
-  box-shadow:0 1px 3px rgba(0,0,0,0.15);
-}
-.toggle-handle-off{left:3px}
-.toggle-handle-on{left:23px}
-[data-theme=dark] .toggle-on{background:var(--mav-primary-dark)}
-[data-theme=dark] .toggle-handle{background:var(--mav-fg)}
+/* Checkbox with label */
+.cbx-field{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:var(--mav-fg);font-family:'Inter',sans-serif}
+.cbx-field.text-left{flex-direction:row-reverse}
+.cbx-field.is-disabled{cursor:not-allowed;color:var(--Checkbox\/disabled\/text-disabled,#cccccc)}
+
+/* Toggle — Figma "• Toggle" (85:5795). 44×24 pill, --toggle/* tokens (On → lime in dark) */
+.tgl{position:relative;width:44px;height:24px;border-radius:9999px;flex-shrink:0;cursor:pointer;padding:0;border:0;
+  background:var(--toggle\/default\/bg-box,#e5e5e5);transition:background .2s,box-shadow .15s}
+.tgl::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;
+  background:#ffffff;box-shadow:var(--shadow-input);transition:left .2s}
+.tgl.on{background:var(--toggle\/active\/bg-box-active,#352eff)}
+.tgl.on::after{left:23px}
+.tgl.is-hover{filter:brightness(.95)}
+.tgl.is-focus{box-shadow:0 0 0 3px rgba(53,46,255,.3)}
+.tgl.is-disabled{cursor:not-allowed;background:var(--toggle\/disabled\/bg-box-disabled,#e5e5e5)}
+.tgl.is-disabled.on{background:var(--toggle\/disabled\/bg-box-disabled-2,#e4ebff)}
+.tgl.is-disabled::after{box-shadow:none;opacity:.92}
+.tgl-grid{display:flex;flex-direction:column;gap:16px}
+.tgl-hrow{display:flex;align-items:center;gap:32px}
+.tgl-h{min-width:64px;font-size:12px;color:var(--mav-muted);font-family:'Inter',sans-serif}
+.tgl-field{display:inline-flex;align-items:center;gap:12px;cursor:pointer;font-size:14px;color:var(--mav-fg);font-family:'Inter',sans-serif}
+.tgl-field.text-left{flex-direction:row-reverse}
 
 /* Search */
 .search-wrap{
@@ -63,17 +84,25 @@
 .search-error{border-color:var(--bc-error-500)}
 .search-error .search-input{color:var(--bc-mono900-l)}
 
-/* Radio group */
-.radio-group{display:flex;flex-direction:column;gap:10px}
-.radio-row{display:flex;align-items:center;gap:10px;cursor:pointer}
-.radio-outer{
-  width:20px;height:20px;border-radius:50%;border:1.5px solid;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+/* Radio — Figma "❖ Radio Button" (774:6410). 16px item · 2px border · 3 states.
+   Active dot uses --icon/active, so dark theme flips it to lime like the checkbox. */
+.rdo{
+  width:16px;height:16px;border-radius:50%;box-sizing:border-box;
+  border:2px solid var(--Account\/outline-account-primary,#efefef);
+  background:transparent;display:inline-flex;align-items:center;justify-content:center;
+  flex-shrink:0;cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s;
 }
-.radio-empty{border-color:var(--bc-mono200-l);background:var(--bc-white)}
-.radio-selected{border-color:var(--mav-primary);background:var(--bc-white)}
-.radio-dot{width:10px;height:10px;border-radius:50%;background:var(--mav-primary)}
-.radio-label{font-size:14px;color:var(--mav-fg)}
+.rdo.is-active{border-color:var(--icon\/active,#352eff)}
+.rdo.is-active::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--icon\/active,#352eff)}
+.rdo.is-focus{box-shadow:0 0 0 3px rgba(53,46,255,.2)}
+.rdo.is-disabled{
+  border-color:var(--Radio\/Radio-Button-Secondary,#cccccc);
+  background:var(--Radio\/Radio-Button-Secondary,#cccccc);cursor:not-allowed;
+}
+/* Radio with label */
+.radio-group{display:flex;flex-direction:column;gap:14px}
+.rdo-field{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:var(--mav-fg);font-family:'Inter',sans-serif}
+.rdo-field.is-disabled{cursor:not-allowed;color:var(--Radio\/Radio-Button-Secondary,#cccccc)}
 </style>
 </head>
 <body>
@@ -87,7 +116,10 @@
   <a href="forms.html" class="sidebar-link active">Forms & Controls</a>
   <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
   <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
   <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
   <a href="all.html" class="sidebar-link">Kitchen Sink</a>
 </nav>
 <main class="doc-main">
@@ -108,36 +140,73 @@
   <!-- Checkbox -->
   <div class="section">
     <h2 class="section-title">Checkbox</h2>
+    <p class="section-desc">16×16px, radius 4px. Five states from the Figma component set. Click the Default row to toggle it.</p>
     <div class="preview-card">
       <div class="preview-canvas">
         <div class="ctrl-row">
-          <div class="mav-checkbox cb-default" onclick="this.className='mav-checkbox cb-default'">
+          <div class="cbx" onclick="this.classList.toggle('is-selected')">
+            <svg class="cb-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            <svg class="cb-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
           </div>
-          <div class="ctrl-label">Unchecked — Default<div class="ctrl-sub">Checkbox/default/outline-box: #cccccc</div></div>
+          <div class="ctrl-label">Default<div class="ctrl-sub">Checkbox/default/bg-box #fff · outline-box #cccccc</div></div>
           <div class="ctrl-state">default</div>
         </div>
         <div class="ctrl-row">
-          <div class="mav-checkbox cb-active" onclick="">
-            <span class="checkmark">✓</span>
-          </div>
-          <div class="ctrl-label">Checked — Active<div class="ctrl-sub">Checkbox/active/bg-box-active: #352eff · checkmark white</div></div>
-          <div class="ctrl-state">active</div>
+          <div class="cbx is-focus"></div>
+          <div class="ctrl-label">Focus<div class="ctrl-sub">3px focus ring · rgba(53,46,255,.2)</div></div>
+          <div class="ctrl-state">focus</div>
         </div>
         <div class="ctrl-row">
-          <div class="mav-checkbox cb-disabled">
-          </div>
-          <div class="ctrl-label">Disabled<div class="ctrl-sub">Checkbox/disabled/bg-box-disabled: #e5e5e5</div></div>
+          <div class="cbx is-selected"><svg class="cb-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <div class="ctrl-label">Selected<div class="ctrl-sub">Checkbox/active/bg-box-active #352eff · check icon</div></div>
+          <div class="ctrl-state">selected</div>
+        </div>
+        <div class="ctrl-row">
+          <div class="cbx is-indeterminate"><svg class="cb-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></div>
+          <div class="ctrl-label">Indeterminate<div class="ctrl-sub">Active fill · minus icon</div></div>
+          <div class="ctrl-state">indeterminate</div>
+        </div>
+        <div class="ctrl-row">
+          <div class="cbx is-disabled"></div>
+          <div class="ctrl-label">Disabled<div class="ctrl-sub">Checkbox/disabled/bg-box-disabled #e5e5e5 · outline #b2b2b2</div></div>
           <div class="ctrl-state">disabled</div>
         </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Checkbox — 16×16px · radius 4px · uses --Checkbox/* tokens</span><span class="preview-sublabel">Dark theme re-themes the active fill to lime automatically</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Checkbox with label -->
+  <div class="section">
+    <h2 class="section-title">Checkbox with label</h2>
+    <p class="section-desc">The label sits to the right by default, or to the left. Clicking the whole row toggles the box.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
         <div class="ctrl-row">
-          <div class="mav-checkbox">
-            <span class="checkmark">✓</span>
-          </div>
-          <div class="ctrl-label">Checked + Disabled</div>
-          <div class="ctrl-state">checked + disabled</div>
+          <label class="cbx-field" onclick="toggleField(event,this)">
+            <span class="cbx"><svg class="cb-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <span>Text on the right</span>
+          </label>
+          <div class="ctrl-state">text right</div>
+        </div>
+        <div class="ctrl-row">
+          <label class="cbx-field text-left" onclick="toggleField(event,this)">
+            <span class="cbx is-selected"><svg class="cb-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <span>Text on the left</span>
+          </label>
+          <div class="ctrl-state">text left</div>
+        </div>
+        <div class="ctrl-row">
+          <label class="cbx-field is-disabled">
+            <span class="cbx is-disabled"></span>
+            <span>Disabled with label</span>
+          </label>
+          <div class="ctrl-state">disabled</div>
         </div>
       </div>
-      <div class="preview-meta"><span class="preview-label">Checkbox — 20×20px · border-radius 4px</span></div>
+      <div class="preview-meta"><span class="preview-label">Checkbox with label — text side Right / Left · 8px gap</span></div>
     </div>
   </div>
 
@@ -146,31 +215,39 @@
   <!-- Toggle -->
   <div class="section">
     <h2 class="section-title">Toggle</h2>
+    <p class="section-desc">44×24px pill. States Default / Hover / Focus / Disabled, each On and Off. The Default row is clickable; On track re-themes to lime in dark.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="tgl-grid">
+          <div class="tgl-hrow"><span class="tgl-h"></span><span class="tgl-h" style="min-width:44px;text-align:center">On</span><span class="tgl-h" style="min-width:44px;text-align:center">Off</span></div>
+          <div class="tgl-hrow"><span class="tgl-h">Default</span><button class="tgl on" onclick="this.classList.toggle('on')"></button><button class="tgl" onclick="this.classList.toggle('on')"></button></div>
+          <div class="tgl-hrow"><span class="tgl-h">Hover</span><span class="tgl on is-hover"></span><span class="tgl is-hover"></span></div>
+          <div class="tgl-hrow"><span class="tgl-h">Focus</span><span class="tgl on is-focus"></span><span class="tgl is-focus"></span></div>
+          <div class="tgl-hrow"><span class="tgl-h">Disabled</span><span class="tgl on is-disabled"></span><span class="tgl is-disabled"></span></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Toggle — 44×24px · handle 18px · uses --toggle/* tokens</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Toggle with label -->
+  <div class="section">
+    <h2 class="section-title">Toggle with label</h2>
+    <p class="section-desc">Label to the right (default) or left. The whole row toggles.</p>
     <div class="preview-card">
       <div class="preview-canvas">
         <div class="ctrl-row">
-          <div class="mav-toggle toggle-off" id="t1" onclick="this.classList.toggle('toggle-off');this.classList.toggle('toggle-on');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-off');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-on')">
-            <div class="toggle-handle toggle-handle-off"></div>
-          </div>
-          <div class="ctrl-label">Off — Default<div class="ctrl-sub">toggle/default/bg-box: #e5e5e5</div></div>
-          <div class="ctrl-state">Click to toggle</div>
+          <label class="tgl-field" onclick="var t=this.querySelector('.tgl');t.classList.toggle('on')"><span class="tgl on"></span><span>Enable notifications</span></label>
+          <div class="ctrl-state">text right</div>
         </div>
         <div class="ctrl-row">
-          <div class="mav-toggle toggle-on" id="t2" onclick="this.classList.toggle('toggle-off');this.classList.toggle('toggle-on');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-off');this.querySelector('.toggle-handle').classList.toggle('toggle-handle-on')">
-            <div class="toggle-handle toggle-handle-on"></div>
-          </div>
-          <div class="ctrl-label">On — Active<div class="ctrl-sub">toggle/active/bg-box-active: #352eff (dark: #a1ff5b)</div></div>
-          <div class="ctrl-state">Click to toggle</div>
-        </div>
-        <div class="ctrl-row">
-          <div class="mav-toggle toggle-off">
-            <div class="toggle-handle toggle-handle-off"></div>
-          </div>
-          <div class="ctrl-label">Disabled<div class="ctrl-sub">toggle/disabled/bg-box-disabled: #e5e5e5</div></div>
-          <div class="ctrl-state">disabled</div>
+          <label class="tgl-field text-left" onclick="var t=this.querySelector('.tgl');t.classList.toggle('on')"><span class="tgl"></span><span>Enable notifications</span></label>
+          <div class="ctrl-state">text left</div>
         </div>
       </div>
-      <div class="preview-meta"><span class="preview-label">Toggle — 44×24px · handle 18×18px</span></div>
+      <div class="preview-meta"><span class="preview-label">Toggle with label — 12px gap · text side right / left</span></div>
     </div>
   </div>
 
@@ -221,33 +298,62 @@
   <!-- Radio -->
   <div class="section">
     <h2 class="section-title">Radio Buttons</h2>
+    <p class="section-desc">16×16px, 2px border. Three states from the Figma component: Default, Active, Disabled.</p>
     <div class="preview-card">
       <div class="preview-canvas">
-        <div class="radio-group">
-          <label class="radio-row">
-            <div class="radio-outer radio-selected"><div class="radio-dot"></div></div>
-            <span class="radio-label">Option A — Selected</span>
-          </label>
-          <label class="radio-row">
-            <div class="radio-outer radio-empty"></div>
-            <span class="radio-label">Option B</span>
-          </label>
-          <label class="radio-row">
-            <div class="radio-outer radio-empty"></div>
-            <span class="radio-label">Option C</span>
-          </label>
-          <label class="radio-row">
-            <div class="radio-outer"></div>
-            <span class="radio-label">Disabled option</span>
-          </label>
+        <div class="ctrl-row">
+          <div class="rdo"></div>
+          <div class="ctrl-label">Default<div class="ctrl-sub">Account/outline-account-primary #efefef · 2px</div></div>
+          <div class="ctrl-state">default</div>
+        </div>
+        <div class="ctrl-row">
+          <div class="rdo is-active"></div>
+          <div class="ctrl-label">Active<div class="ctrl-sub">icon/active #352eff ring + dot</div></div>
+          <div class="ctrl-state">active</div>
+        </div>
+        <div class="ctrl-row">
+          <div class="rdo is-disabled"></div>
+          <div class="ctrl-label">Disabled<div class="ctrl-sub">Radio/Radio-Button-Secondary #cccccc fill</div></div>
+          <div class="ctrl-state">disabled</div>
         </div>
       </div>
-      <div class="preview-meta"><span class="preview-label">Radio — uses Checkbox token family</span></div>
+      <div class="preview-meta"><span class="preview-label">Radio — 16×16px · 2px border · Default / Active / Disabled</span><span class="preview-sublabel">Active dot re-themes to lime in dark mode</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Radio group with labels -->
+  <div class="section">
+    <h2 class="section-title">Radio group</h2>
+    <p class="section-desc">Single-select group. Click an option to move the selection.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="radio-group" id="radio-demo">
+          <label class="rdo-field" onclick="selectRadio(this)"><span class="rdo is-active"></span><span>Option A</span></label>
+          <label class="rdo-field" onclick="selectRadio(this)"><span class="rdo"></span><span>Option B</span></label>
+          <label class="rdo-field" onclick="selectRadio(this)"><span class="rdo"></span><span>Option C</span></label>
+          <label class="rdo-field is-disabled"><span class="rdo is-disabled"></span><span>Disabled option</span></label>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Radio group — 8px gap label · single selection</span></div>
     </div>
   </div>
 
 </main>
 </div>
+<script>
+function toggleField(e, el){
+  if(el.classList.contains('is-disabled')) return;
+  el.querySelector('.cbx').classList.toggle('is-selected');
+}
+function selectRadio(el){
+  if(el.classList.contains('is-disabled')) return;
+  el.closest('#radio-demo').querySelectorAll('.rdo-field:not(.is-disabled) .rdo')
+    .forEach(r=>r.classList.remove('is-active'));
+  el.querySelector('.rdo').classList.add('is-active');
+}
+</script>
 <script src="../js/theme.js"></script>
 </body>
 </html>

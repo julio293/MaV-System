@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>List — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ List — Figma "‣ List" page (125:4920) ═══════════════════════════════════
+   A flexible row: optional leading (flag / icon / soft-icon chip / avatar /
+   store logo), name (+ optional subtitle), optional trailing (check / button /
+   tag). Rows divide with a 1px --border/subtle rule, 16px gap. */
+.list{display:flex;flex-direction:column;width:100%;max-width:400px}
+.li{display:flex;align-items:center;gap:16px;padding:8px 0 16px;border-bottom:1px solid var(--border\/subtle,#efefef)}
+.li:last-child{border-bottom:0}
+.li-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.li-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:14px;line-height:20px;color:var(--main-text\/default,#171717)}
+.li-sub{font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;font-size:12px;line-height:16px;color:var(--main-text\/description,#7f7f7f)}
+.li-ic{width:24px;height:24px;flex-shrink:0;stroke:var(--icon\/default,#171717);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.li-softic{display:flex;padding:8px;border-radius:8px;background:var(--System\/Primary-soft,#352eff1a);flex-shrink:0}
+.li-softic svg{width:24px;height:24px;stroke:var(--icon\/active,#352eff);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.li-avatar{width:40px;height:40px;border-radius:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:15px}
+.li-flag{width:22px;height:16px;border-radius:2px;flex-shrink:0;
+  background:linear-gradient(#a51931 0 16.6%,#f4f5f8 16.6% 33.3%,#2d2a4a 33.3% 66.6%,#f4f5f8 66.6% 83.3%,#a51931 83.3%)}
+.li-check{width:24px;height:24px;flex-shrink:0;stroke:var(--main-text\/default,#171717);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.li-btn{padding:6px 12px;border:1px solid var(--btn\/secondary\/default-outline,#efefef);border-radius:4px;background:transparent;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:14px;color:var(--main-text\/default,#171717);cursor:pointer;flex-shrink:0}
+.li-store{width:34px;height:34px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:10px;color:#fff}
+.li-tag{padding:2px 6px;border-radius:6px;background:var(--badge\ \&\ chip\/white\/bg-box,#e5e5e5);border:1px solid var(--badge\ \&\ chip\/white\/outline,#efefef);
+  color:var(--badge\ \&\ chip\/white\/icon,#171717);font-family:'Inter',sans-serif;font-weight:500;font-size:12px;flex-shrink:0}
+.list-card{background:var(--mav-bg,#fff);border-radius:16px;padding:24px 20px;width:100%;max-width:440px;border:1px solid var(--mav-border)}
+.canvas-dark{background:var(--bc-mono900-l,#171717);border-radius:16px;padding:24px 20px;width:100%;max-width:440px}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="toast.html" class="sidebar-link">Toast</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
+  <a href="list.html" class="sidebar-link active">List</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
+  <a href="progress.html" class="sidebar-link">Progress Bar</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">List</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">List</h1>
+    <p class="page-desc">A flexible list row: optional leading media (flag, icon, soft-icon chip, avatar, store logo), a name with optional subtitle, and an optional trailing action (check, button, tag). Rows divide with a 1px <code>--border/subtle</code> rule.</p>
+  </div>
+
+  <!-- Row types -->
+  <div class="section">
+    <h2 class="section-title">Row types</h2>
+    <p class="section-desc">A single list mixing every leading/trailing composition.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="list-card">
+          <div class="list">
+            <div class="li"><span class="li-flag"></span><div class="li-body"><span class="li-name">Thailand</span></div></div>
+            <div class="li"><span class="li-flag"></span><div class="li-body"><span class="li-name">Thailand</span></div><svg class="li-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="li"><svg class="li-ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5a6 6 0 0 1 11 0"/></svg><div class="li-body"><span class="li-name">Profile</span></div></div>
+            <div class="li"><span class="li-softic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5a6 6 0 0 1 11 0"/></svg></span><div class="li-body"><span class="li-name">Profile</span></div></div>
+            <div class="li"><div class="li-body"><span class="li-name">+63 933 4234 222</span></div></div>
+            <div class="li"><div class="li-body"><span class="li-name">Mom</span><span class="li-sub">+63 933 4234 222</span></div></div>
+            <div class="li"><span class="li-avatar" style="background:linear-gradient(135deg,#f76b8a,#c9457a)">M</span><div class="li-body"><span class="li-name">Mom</span><span class="li-sub">+63 933 4234 222</span></div><button class="li-btn">Default</button></div>
+            <div class="li"><span class="li-store" style="background:#00893d">7‑11</span><div class="li-body"><span class="li-name">7‑Eleven</span></div><span class="li-tag">Tag</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">List row — 16px gap · 1px --border/subtle divider · name PJS Medium 14 · sub Regular 12</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Dark -->
+  <div class="section">
+    <h2 class="section-title">On dark surface</h2>
+    <p class="section-desc">Text and dividers re-theme via the design-system tokens.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="canvas-dark" data-theme="dark">
+          <div class="list">
+            <div class="li"><span class="li-flag"></span><div class="li-body"><span class="li-name">Thailand</span></div><svg class="li-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div class="li"><span class="li-softic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5a6 6 0 0 1 11 0"/></svg></span><div class="li-body"><span class="li-name">Profile</span></div></div>
+            <div class="li"><span class="li-avatar" style="background:linear-gradient(135deg,#f76b8a,#c9457a)">M</span><div class="li-body"><span class="li-name">Mom</span><span class="li-sub">+63 933 4234 222</span></div><button class="li-btn">Default</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Dark surface preview</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Anatomy -->
+  <div class="section">
+    <h2 class="section-title">Anatomy</h2>
+    <p class="section-desc">Leading slot · content (name + subtitle) · trailing slot. Any slot is optional.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="list-card">
+          <div class="list">
+            <div class="li"><span class="li-avatar" style="background:linear-gradient(135deg,#6b8af7,#3a5fd9)">J</span><div class="li-body"><span class="li-name">Julio Santos</span><span class="li-sub">julio@fyscaltech.com</span></div><span class="li-tag">Owner</span></div>
+            <div class="li"><span class="li-softic"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></span><div class="li-body"><span class="li-name">Transactions</span><span class="li-sub">Last synced 2m ago</span></div><svg class="li-ic" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Anatomy — leading · content · trailing</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--border/subtle</td><td><span class="token-swatch-sm" style="background:#efefef;border:1px solid #d0d0d0"></span><span class="token-value">#efefef</span></td><td class="token-value">Row divider</td></tr>
+        <tr><td class="token-name">--main-text/default</td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">#171717</span></td><td class="token-value">Name (PJS Medium 14)</td></tr>
+        <tr><td class="token-name">--main-text/description</td><td><span class="token-swatch-sm" style="background:#7f7f7f"></span><span class="token-value">#7f7f7f</span></td><td class="token-value">Subtitle (PJS Regular 12)</td></tr>
+        <tr><td class="token-name">--System/Primary-soft</td><td><span class="token-swatch-sm" style="background:#352eff1a;border:1px solid #d0d0d0"></span><span class="token-value">#352eff1a</span></td><td class="token-value">Soft-icon chip fill</td></tr>
+        <tr><td class="token-name">Avatar · gap</td><td><span class="token-value">40px · 16px</span></td><td class="token-value">Leading media · row gap</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-264 -605)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-264 -280)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="el-salvador" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M0 11H22V16H0V11ZM0 0H22V5H0V0Z" fill="#1A47B8" style="fill:#1A47B8;fill:color(display-p3 0.1021 0.2767 0.7208);fill-opacity:1;"/>
+<path id="vector_2" d="M11.0001 9.60039C11.868 9.60039 12.5716 8.88405 12.5716 8.00039C12.5716 7.11673 11.868 6.40039 11.0001 6.40039C10.1323 6.40039 9.42871 7.11673 9.42871 8.00039C9.42871 8.88405 10.1323 9.60039 11.0001 9.60039Z" fill="#1A47B8" style="fill:#1A47B8;fill:color(display-p3 0.1021 0.2767 0.7208);fill-opacity:1;"/>
+<path id="vector_3" d="M10.9999 8.53346C11.2892 8.53346 11.5237 8.29468 11.5237 8.00013C11.5237 7.70558 11.2892 7.4668 10.9999 7.4668C10.7106 7.4668 10.4761 7.70558 10.4761 8.00013C10.4761 8.29468 10.7106 8.53346 10.9999 8.53346Z" fill="#FFDA2C" style="fill:#FFDA2C;fill:color(display-p3 1.0000 0.8568 0.1708);fill-opacity:1;"/>
+<path id="vector_4" fill-rule="evenodd" clip-rule="evenodd" d="M8.38086 7.4668L9.42848 8.53346L10.9999 9.60013L12.5713 8.53346L13.619 7.4668L12.5713 9.60013H9.42848L8.38086 7.4668Z" fill="#249F58" style="fill:#249F58;fill:color(display-p3 0.1406 0.6250 0.3444);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

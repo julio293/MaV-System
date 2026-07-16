@@ -229,9 +229,11 @@
   --mav-info:         #144cc7;
 
   /* Typography — font family tokens */
-  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
-  --font-inter:   'Inter', sans-serif;
-  --font-poppins: 'Poppins', sans-serif;
+  --font-jakarta:   'Plus Jakarta Sans', sans-serif;
+  --font-inter:     'Inter', sans-serif;
+  --font-poppins:   'Poppins', sans-serif;
+  --font-unbounded: 'Unbounded', sans-serif;
+  --font-sfpro:     'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Active font — override this token to switch the whole system */
   --font-active:  'Plus Jakarta Sans', sans-serif;
@@ -243,6 +245,26 @@
 
   /* Canonical Figma token */
   --core\/font-family: var(--font-active);
+
+  /* Figma text styles (verbatim, per-property) — PARTIAL SET
+     Extracted from styles used on Colors page (7:1040).
+     Full set pending Typography page extraction.
+     Families route through swappable role tokens (customiser architecture) —
+     override the role token to retheme; Figma's literal family is noted per style. */
+  --font-role-display: var(--font-unbounded);  /* display/expressive text */
+  --font-role-body:    var(--font-sfpro);      /* body/reading text */
+
+  --Text-md\/Regular\/font-family:    var(--font-role-display);  /* Figma: Unbounded */
+  --Text-md\/Regular\/font-weight:    300;  /* Figma style: Light */
+  --Text-md\/Regular\/font-size:      16px;
+  --Text-md\/Regular\/line-height:    1.5;
+  --Text-md\/Regular\/letter-spacing: 0;
+
+  --Body-Text-lg\/Semibold\/font-family:    var(--font-role-body);  /* Figma: SF Pro Text */
+  --Body-Text-lg\/Semibold\/font-weight:    600;
+  --Body-Text-lg\/Semibold\/font-size:      18px;
+  --Body-Text-lg\/Semibold\/line-height:    1.2;
+  --Body-Text-lg\/Semibold\/letter-spacing: -0.02em;  /* Figma: -2% */
 
   /* Extended semantic aliases */
   --mav-bg-tertiary: #e6edff;   /* tinted primary bg (swipeup, bg-tertiary) */
@@ -270,7 +292,9 @@
 
   /* Spacing */
   --space-0:   0px;
+  --space-2:   2px;
   --space-4:   4px;
+  --space-6:   6px;
   --space-8:   8px;
   --space-10:  10px;
   --space-12:  12px;
@@ -281,10 +305,36 @@
   --space-24:  24px;
   --space-28:  28px;
   --space-32:  32px;
+  --space-36:  36px;
   --space-38:  38px;
+  --space-40:  40px;
   --space-44:  44px;
   --space-48:  48px;
   --space-54:  54px;
+  --space-56:  56px;
+  --space-64:  64px;
+
+  /* Figma spacing scale (verbatim) — Spacing page (11:133).
+     Tailwind-style step names (step × 4 = px); dot in Figma name → hyphen (0.5 → 0-5). */
+  --spacing\/0:   var(--space-0);    /* 0rem */
+  --spacing\/0-5: var(--space-2);    /* 0.125rem */
+  --spacing\/1:   var(--space-4);    /* 0.25rem */
+  --spacing\/1-5: var(--space-6);    /* 0.375rem */
+  --spacing\/2:   var(--space-8);    /* 0.5rem */
+  --spacing\/2-5: var(--space-10);   /* 0.625rem */
+  --spacing\/3:   var(--space-12);   /* 0.75rem */
+  --spacing\/3-5: var(--space-14);   /* 0.875rem */
+  --spacing\/4:   var(--space-16);   /* 1rem */
+  --spacing\/5:   var(--space-20);   /* 1.25rem */
+  --spacing\/6:   var(--space-24);   /* 1.5rem */
+  --spacing\/7:   var(--space-28);   /* 1.75rem */
+  --spacing\/8:   var(--space-32);   /* 2rem */
+  --spacing\/9:   var(--space-36);   /* 2.25rem */
+  --spacing\/10:  var(--space-40);   /* 2.5rem */
+  --spacing\/11:  var(--space-44);   /* 2.75rem */
+  --spacing\/12:  var(--space-48);   /* 3rem */
+  --spacing\/14:  var(--space-56);   /* 3.5rem */
+  --spacing\/16:  var(--space-64);   /* 4rem */
 
   /* Shadows */
   --shadow-xs:    0px 2px 4px 0px rgba(16,16,19,0.16);
@@ -295,6 +345,16 @@
   --shadow-custom: 0px 0px 0px 1px rgba(16,16,19,0.08), 0px 8px 16px 0px rgba(16,16,19,0.04);
   --shadow-input:  0px 1px 0px -1px rgba(0,0,0,0.05), 0px 1px 2px -1px rgba(0,0,0,0.05), 0px 2px 4px -2px rgba(0,0,0,0.05), 0px 3px 6px -3px rgba(0,0,0,0.05);
   --shadow-focus:  0 0 0 3px rgba(53,46,255,0.4);
+  --focus\/primary: 0 0 0 3px rgba(89,156,219,0.4);  /* Figma effect style focus/primary #599CDB66 */
+
+  /* Figma effect styles (verbatim) — Shadows page (9:97).
+     Distinct from the --shadow-* scale above (that one uses rgba(16,16,19,…));
+     --shadow\/sm is the same value as --shadow-input. */
+  --shadow\/sm:  0px 1px 0px -1px rgba(0,0,0,0.05), 0px 1px 2px -1px rgba(0,0,0,0.05), 0px 2px 4px -2px rgba(0,0,0,0.05), 0px 3px 6px -3px rgba(0,0,0,0.05);
+  --shadow\/md:  0px 4px 4px -2px rgba(0,0,0,0.04), 0px 1px 3px 0px rgba(0,0,0,0.04);
+  --shadow\/lg:  0px 3px 6px -3px rgba(0,0,0,0.08), 0px 6px 12px -6px rgba(0,0,0,0.08);
+  --shadow\/xl:  0px 6px 12px -6px rgba(0,0,0,0.10), 0px 12px 24px -12px rgba(0,0,0,0.08);
+  --shadow\/2xl: 0px 12px 24px -12px rgba(0,0,0,0.12), 0px 16px 32px -16px rgba(0,0,0,0.08);
 
   /* Blur */
   --blur-xs: blur(4px);
@@ -434,6 +494,18 @@
   --Shade\/Tertiary-2\/800: #00001d;
   --Shade\/Tertiary-2\/900: #00000e;
 
+  /* Color — doc-page neutrals (Figma "Netural" typo preserved) */
+  --Color\/Netural\/White: #ffffff;
+  --Color\/Gray\/300:      #c8c8c8;
+  --Color\/Gray\/500:      #a1a1a1;
+  --Color\/Dark\/500:      #06050e;
+
+  /* Other — dimensions (Figma numbers are px) */
+  --Other\/Radius\/xs: var(--radius-xs);
+  --Other\/Radius\/md: var(--radius-md);
+  --Other\/Gap\/4:  6px;
+  --Other\/Gap\/15: 40px;
+
   /* Line chart */
   --Line-Chart\/line-loss:        #ff0000;
   --Line-Chart\/gradient-loss:    #ff00001a;
@@ -482,7 +554,7 @@
 
   /* Button — primary */
   --btn\/primary\/default:       #352eff;
-  --btn\/primary\/hover:         #7c9dff;
+  --btn\/primary\/hover:         #171717;  /* Figma 52:24315 — hover is near-black (was #7c9dff) */
   --btn\/primary\/clicked:       #030192;
   --btn\/primary\/disabled:      #e5e5e5;
   --btn\/primary\/loading:       #352eff;
@@ -549,6 +621,12 @@
   --input-field\/disabled\/outline-box-disabled: #cccccc;
   --input-field\/disabled\/text-disabled:        #b2b2b2;
 
+  /* Progress bar (Figma variable names — fill is shade/primary/900) */
+  --shade\/primary\/900: #0d00fa;
+  --brand\/primary\/200: #99c2e9;
+  --grey\/200:           #ececec;
+  --grey\/600:           #5e5e5e;
+
   /* OTP */
   --OTP\/default\/bg-box:           #ffffff;
   --OTP\/default\/outline-box:      #cccccc;
@@ -574,6 +652,10 @@
   --Checkbox\/disabled\/outline-box-disabled: #b2b2b2;
   --Checkbox\/disabled\/text-disabled:        #cccccc;
 
+  /* Radio (active dot uses --icon/active so it re-themes with the checkbox) */
+  --Account\/outline-account-primary: #efefef;
+  --Radio\/Radio-Button-Secondary:    #cccccc;
+
   /* Toggle */
   --toggle\/default\/bg-box:           #e5e5e5;
   --toggle\/default\/text-placeholder: #b2b2b2;
@@ -598,26 +680,37 @@
   --alert\/danger\/icon:         #ff0000;
 
   /* Badge & chip (note: "waring" is intentional Figma typo) */
-  --badge\ &\ chip\/primary\/bg-box:  #352eff;
-  --badge\ &\ chip\/primary\/text:    #ffffff;
-  --badge\ &\ chip\/primary\/outline: #7c9dff;
-  --badge\ &\ chip\/primary\/icon:    #ffffff;
-  --badge\ &\ chip\/white\/bg-box:    #e5e5e5;
-  --badge\ &\ chip\/white\/text:      #171717;
-  --badge\ &\ chip\/white\/outline:   #efefef;
-  --badge\ &\ chip\/white\/icon:      #171717;
-  --badge\ &\ chip\/waring\/bg-box:   #ff84001a;
-  --badge\ &\ chip\/waring\/text:     #ff8400;
-  --badge\ &\ chip\/waring\/outline:  #ff8400;
-  --badge\ &\ chip\/waring\/icon:     #ff8400;
-  --badge\ &\ chip\/success\/bg-box:  #629c281a;
-  --badge\ &\ chip\/success\/text:    #629c28;
-  --badge\ &\ chip\/success\/outline: #629c28;
-  --badge\ &\ chip\/success\/icon:    #629c28;
-  --badge\ &\ chip\/danger\/bg-box:   #ff00001a;
-  --badge\ &\ chip\/danger\/text:     #ff0000;
-  --badge\ &\ chip\/danger\/outline:  #ff0000;
-  --badge\ &\ chip\/danger\/icon:     #ff0000;
+  --badge\ \&\ chip\/primary\/bg-box:  #352eff;
+  --badge\ \&\ chip\/primary\/text:    #ffffff;
+  --badge\ \&\ chip\/primary\/outline: #7c9dff;
+  --badge\ \&\ chip\/primary\/icon:    #ffffff;
+  --badge\ \&\ chip\/white\/bg-box:    #e5e5e5;
+  --badge\ \&\ chip\/white\/text:      #171717;
+  --badge\ \&\ chip\/white\/outline:   #efefef;
+  --badge\ \&\ chip\/white\/icon:      #171717;
+  --badge\ \&\ chip\/waring\/bg-box:   #ff84001a;
+  --badge\ \&\ chip\/waring\/text:     #ff8400;
+  --badge\ \&\ chip\/waring\/outline:  #ff8400;
+  --badge\ \&\ chip\/waring\/icon:     #ff8400;
+  --badge\ \&\ chip\/success\/bg-box:  #629c281a;
+  --badge\ \&\ chip\/success\/text:    #629c28;
+  --badge\ \&\ chip\/success\/outline: #629c28;
+  --badge\ \&\ chip\/success\/icon:    #629c28;
+  --badge\ \&\ chip\/danger\/bg-box:   #ff00001a;
+  --badge\ \&\ chip\/danger\/text:     #ff0000;
+  --badge\ \&\ chip\/danger\/outline:  #ff0000;
+  --badge\ \&\ chip\/danger\/icon:     #ff0000;
+
+  /* Avatar — Figma component set 206:7252
+     bg/text alias existing tokens; status-online is the one new value (green/500). */
+  --avatar\/grey\/bg:       var(--Main\/Grey);
+  --avatar\/grey\/text:     var(--main-text\/default);
+  --avatar\/primary\/bg:    var(--background\/bg-tertiary);
+  --avatar\/primary\/text:  var(--main-text\/brand);
+  --avatar\/red\/bg:        var(--System\/Danger-soft);
+  --avatar\/red\/text:      var(--System\/Danger);
+  --avatar\/status-online:  #7cc731;
+  --avatar\/status-ring:    #ffffff;
 
   /* Toast */
   --toast\/bg-default: #ffffff;
@@ -848,6 +941,7 @@
   --OTP\/default\/outline-box:       #484848;
   --OTP\/focus\/bg-box:              #171717;
   --OTP\/focus\/outline-box:         #a1ff5b;
+  --OTP\/focus\/text-placeholder:    #e5e5e5;
   --OTP\/active\/bg-box-active:       #171717;
   --OTP\/active\/outline-box-active:  #e5e5e5;
   --OTP\/active\/text-active:         #e5e5e5;
@@ -860,9 +954,9 @@
   --alert\/primary\/bg-box:     #352eff1a;
   --alert\/primary\/text-brand: #a1ff5b;
 
-  --badge\ &\ chip\/primary\/bg-box: #a1ff5b;
-  --badge\ &\ chip\/primary\/text:   #171717;
-  --badge\ &\ chip\/primary\/icon:   #171717;
+  --badge\ \&\ chip\/primary\/bg-box: #a1ff5b;
+  --badge\ \&\ chip\/primary\/text:   #171717;
+  --badge\ \&\ chip\/primary\/icon:   #171717;
 
   --toast\/bg-default: #171717;
   --toast\/text-title: #ffffff;

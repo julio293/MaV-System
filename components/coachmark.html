@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coachmark — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Coachmark — Figma "‣ Coachmark" page (259:21967) ════════════════════════
+   Onboarding tour tip: a dashed pointer (blue line + dot) connecting to a
+   highlighted target, over a dark blanket, with white Title (PJS Medium 18) +
+   Description (PJS Bold 14) + step "( n / N )". Six pointer appearances:
+   top · top-left · top-right · bottom · bottom-left · bottom-right. */
+.coach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.blanket{background:#141414;border-radius:12px;padding:20px 16px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;min-height:180px}
+.coach{display:flex;flex-direction:column;align-items:center;width:100%;max-width:340px}
+.coach-ptr{color:var(--mav-primary,#352eff);display:flex;justify-content:center}
+[data-theme=dark] .coach-ptr{color:var(--mav-primary-dark)}
+.coach-ptr svg{overflow:visible}
+.coach-txt{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px;text-align:center}
+.coach-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:18px;color:#ffffff}
+.coach-desc{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:#ffffff;opacity:.95}
+.coach-step{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:#ffffff;opacity:.75}
+.coach-tag{font-size:11px;color:#9a9a9a;font-family:'Inter',sans-serif;margin-bottom:6px}
+
+/* Example phone */
+.phone{position:relative;width:300px;height:600px;border-radius:28px;overflow:hidden;background:#141414;
+  display:flex;flex-direction:column;box-shadow:0 20px 50px -20px rgba(0,0,0,.5)}
+.phone-target{position:absolute;top:96px;left:24px;right:24px;background:#fff;border-radius:8px;padding:12px 14px;
+  display:flex;align-items:center;gap:8px;box-shadow:0 0 0 4px rgba(53,46,255,.5)}
+.phone-target svg{width:18px;height:18px;stroke:#b2b2b2;stroke-width:1.8;fill:none;stroke-linecap:round}
+.phone-target span{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13px;color:#b2b2b2}
+.phone-coach{position:absolute;top:150px;left:0;right:0;display:flex;flex-direction:column;align-items:center}
+.phone-btn{position:absolute;left:16px;right:16px;bottom:20px;background:var(--mav-primary,#352eff);color:#fff;
+  border:0;border-radius:12px;padding:15px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;cursor:pointer}
+[data-theme=dark] .phone-btn{background:var(--mav-primary-dark);color:#171717}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar">
+  <div class="sidebar-logo"><a href="../index.html" class="sidebar-logo-mark"><div class="sidebar-logo-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1"/><rect x="8" y="1" width="5" height="5" rx="1"/><rect x="1" y="8" width="5" height="5" rx="1"/><rect x="8" y="8" width="5" height="5" rx="1" opacity=".4"/></svg></div><span class="sidebar-logo-name">MaV Design System</span></a></div>
+  <div class="sidebar-section-label">Components</div>
+  <a href="buttons.html" class="sidebar-link">Buttons</a>
+  <a href="inputs.html" class="sidebar-link">Input Fields</a>
+  <a href="otp.html" class="sidebar-link">OTP Input</a>
+  <a href="forms.html" class="sidebar-link">Forms & Controls</a>
+  <a href="feedback.html" class="sidebar-link">Alerts & Toasts</a>
+  <a href="toast.html" class="sidebar-link">Toast</a>
+  <a href="badges.html" class="sidebar-link">Badges & Chips</a>
+  <a href="avatars.html" class="sidebar-link">Avatars</a>
+  <a href="cards.html" class="sidebar-link">Payment Cards</a>
+  <a href="list.html" class="sidebar-link">List</a>
+  <a href="navigation.html" class="sidebar-link">Navigation</a>
+  <a href="chat.html" class="sidebar-link">Chat Bubbles</a>
+  <a href="message-chat.html" class="sidebar-link">Message Chat</a>
+  <a href="finance.html" class="sidebar-link">Finance Modules</a>
+  <a href="divider.html" class="sidebar-link">Divider</a>
+  <a href="progress.html" class="sidebar-link">Progress Bar</a>
+  <a href="coachmark.html" class="sidebar-link active">Coachmark</a>
+  <a href="all.html" class="sidebar-link">Kitchen Sink</a>
+</nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Coachmark</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Coachmark</h1>
+    <p class="page-desc">Onboarding tour tip — a dashed pointer links a highlighted target to a white title, description, and step counter, shown over a dark blanket. Six pointer appearances.</p>
+  </div>
+
+  <!-- Appearances -->
+  <div class="section">
+    <h2 class="section-title">Pointer appearance</h2>
+    <p class="section-desc">The pointer routes from the coachmark text to the highlighted target: top / bottom, optionally offset left or right.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="coach-grid" style="width:100%">
+          <div><div class="coach-tag">top</div><div class="blanket"><div class="coach"><div class="coach-ptr"><svg width="12" height="44" viewBox="0 0 12 44"><path d="M6 42V4" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="6" cy="42" r="5" fill="currentColor"/></svg></div><div class="coach-txt"><span class="coach-title">Coach Mark Title</span><span class="coach-desc">Coach mark description</span><span class="coach-step">( 1 / 5 )</span></div></div></div></div>
+          <div><div class="coach-tag">top-left</div><div class="blanket"><div class="coach"><div class="coach-ptr" style="width:100%"><svg width="240" height="60" viewBox="0 0 240 60"><path d="M120 56V22H8" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="120" cy="56" r="5" fill="currentColor"/></svg></div><div class="coach-txt"><span class="coach-title">Coach Mark Title</span><span class="coach-desc">Coach mark description</span><span class="coach-step">( 1 / 5 )</span></div></div></div></div>
+          <div><div class="coach-tag">top-right</div><div class="blanket"><div class="coach"><div class="coach-ptr" style="width:100%"><svg width="240" height="60" viewBox="0 0 240 60"><path d="M120 56V22H232" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="120" cy="56" r="5" fill="currentColor"/></svg></div><div class="coach-txt"><span class="coach-title">Coach Mark Title</span><span class="coach-desc">Coach mark description</span><span class="coach-step">( 1 / 5 )</span></div></div></div></div>
+          <div><div class="coach-tag">bottom</div><div class="blanket"><div class="coach"><div class="coach-txt"><span class="coach-title">Coach Mark Title</span><span class="coach-desc">Coach mark description</span><span class="coach-step">( 1 / 5 )</span></div><div class="coach-ptr"><svg width="12" height="44" viewBox="0 0 12 44"><path d="M6 2V40" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="6" cy="2" r="5" fill="currentColor"/></svg></div></div></div></div>
+          <div><div class="coach-tag">bottom-left</div><div class="blanket"><div class="coach"><div class="coach-txt"><span class="coach-title">Coach Mark Title</span><span class="coach-desc">Coach mark description</span><span class="coach-step">( 1 / 5 )</span></div><div class="coach-ptr" style="width:100%"><svg width="240" height="60" viewBox="0 0 240 60"><path d="M120 4V38H8" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="120" cy="4" r="5" fill="currentColor"/></svg></div></div></div></div>
+          <div><div class="coach-tag">bottom-right</div><div class="blanket"><div class="coach"><div class="coach-txt"><span class="coach-title">Coach Mark Title</span><span class="coach-desc">Coach mark description</span><span class="coach-step">( 1 / 5 )</span></div><div class="coach-ptr" style="width:100%"><svg width="240" height="60" viewBox="0 0 240 60"><path d="M120 4V38H232" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="120" cy="4" r="5" fill="currentColor"/></svg></div></div></div></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Coachmark — dashed pointer + dot · white text over blanket · step ( n / N )</span><span class="preview-sublabel">Title PJS Medium 18 · description/step PJS Bold 14</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Example -->
+  <div class="section">
+    <h2 class="section-title">In context</h2>
+    <p class="section-desc">Over a full-screen blanket: the target stays lit while everything else dims, the pointer connects to the coachmark, and a button advances or closes the tour.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="phone">
+          <div class="phone-target"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search transactions…</span></div>
+          <div class="phone-coach">
+            <div class="coach-ptr"><svg width="12" height="40" viewBox="0 0 12 40"><path d="M6 38V4" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="6" cy="38" r="5" fill="currentColor"/></svg></div>
+            <div class="coach-txt"><span class="coach-title">Find anything fast</span><span class="coach-desc">Search across all your transactions here.</span><span class="coach-step">( 1 / 4 )</span></div>
+          </div>
+          <button class="phone-btn">Next</button>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">In context — blanket · lit target · pointer · advance button</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">Blanket</td><td><span class="token-swatch-sm" style="background:#141414"></span><span class="token-value">#141414 (~92%)</span></td><td class="token-value">Dimming overlay</td></tr>
+        <tr><td class="token-name">--mav-primary</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Pointer line + dot (→ lime in dark)</td></tr>
+        <tr><td class="token-name">coachmark/text-title</td><td><span class="token-swatch-sm" style="background:#fff;border:1px solid #d0d0d0"></span><span class="token-value">#ffffff</span></td><td class="token-value">Title (PJS Medium 18)</td></tr>
+        <tr><td class="token-name">coachmark/text-description</td><td><span class="token-swatch-sm" style="background:#fff;border:1px solid #d0d0d0"></span><span class="token-value">#ffffff</span></td><td class="token-value">Description + step (PJS Bold 14)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>

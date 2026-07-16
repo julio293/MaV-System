@@ -1,0 +1,125 @@
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="34" height="34" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="List icons V0.1">
+<rect x="-513.689" y="-364" width="1561" height="1415" rx="16" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Bank List">
+<rect x="-465.189" y="-315.5" width="1464" height="365" rx="4.5" stroke="#9747FF" style="stroke:#9747FF;stroke:color(display-p3 0.5922 0.2784 1.0000);stroke-opacity:1;" stroke-dasharray="10 5"/>
+<g id="Property 1=Union Bank of The Phillipines">
+<mask id="mask0_51_62" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="34" height="34">
+<circle id="Ellipse 3059" cx="17" cy="17" r="17" fill="#D9D9D9" style="fill:#D9D9D9;fill:color(display-p3 0.8510 0.8510 0.8510);fill-opacity:1;"/>
+</mask>
+<g mask="url(#mask0_51_62)">
+</g>
+<g id="UnionBank_PH_logo" clip-path="url(#clip0_51_62)">
+<g id="QuickLoan">
+<g id="Quick-Loan">
+<g id="Group-3">
+<g id="Group">
+<g id="Group-15">
+<path id="Fill-1" fill-rule="evenodd" clip-rule="evenodd" d="M9.91504 17.9431V16.3682H10.6783V17.927C10.6783 18.3317 10.8769 18.5241 11.1806 18.5241C11.4882 18.5241 11.6869 18.3398 11.6869 17.9471V16.3682H12.4501V17.923C12.4501 18.8247 11.9477 19.2255 11.1728 19.2255C10.4018 19.2255 9.91504 18.8207 9.91504 17.9431Z" fill="#4B4948" style="fill:#4B4948;fill:color(display-p3 0.2941 0.2863 0.2824);fill-opacity:1;"/>
+<path id="Fill-3" fill-rule="evenodd" clip-rule="evenodd" d="M12.9131 17.0061H13.653V17.3107C13.7893 17.1303 13.984 16.958 14.2838 16.958C14.7316 16.958 15.0003 17.2626 15.0003 17.7555V19.1741H14.2644V18C14.2644 17.7594 14.1436 17.6312 13.9645 17.6312C13.7854 17.6312 13.653 17.7594 13.653 18V19.1741H12.9131V17.0061Z" fill="#4B4948" style="fill:#4B4948;fill:color(display-p3 0.2941 0.2863 0.2824);fill-opacity:1;"/>
+<g id="Mask group">
+<mask id="mask1_51_62" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="13" width="31" height="8">
+<g id="Group_2">
+<path id="Vector" d="M1.77539 20.6544H31.7372V13.333H1.77539V20.6544Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</mask>
+<g mask="url(#mask1_51_62)">
+<path id="Fill-5" fill-rule="evenodd" clip-rule="evenodd" d="M15.459 16.7806H16.195V16.248H15.459V16.7806Z" fill="#4B4948" style="fill:#4B4948;fill:color(display-p3 0.2941 0.2863 0.2824);fill-opacity:1;"/>
+</g>
+</g>
+<g id="Mask group_2">
+<mask id="mask2_51_62" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="13" width="31" height="8">
+<g id="Group_3">
+<path id="Vector_2" d="M1.77539 20.6544H31.7372V13.333H1.77539V20.6544Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</mask>
+<g mask="url(#mask2_51_62)">
+<path id="Fill-7" fill-rule="evenodd" clip-rule="evenodd" d="M15.459 19.1739H16.195V17.0059H15.459V19.1739Z" fill="#4B4948" style="fill:#4B4948;fill:color(display-p3 0.2941 0.2863 0.2824);fill-opacity:1;"/>
+</g>
+</g>
+<g id="Mask group_3">
+<mask id="mask3_51_62" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="13" width="31" height="8">
+<g id="Group_4">
+<path id="Vector_3" d="M1.77539 20.6544H31.7372V13.333H1.77539V20.6544Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</mask>
+<g mask="url(#mask3_51_62)">
+<path id="Fill-8" fill-rule="evenodd" clip-rule="evenodd" d="M18.1961 18.0991V18.0912C18.1961 17.8227 18.0053 17.5983 17.7444 17.5983C17.4757 17.5983 17.3044 17.8186 17.3044 18.0832V18.0912C17.3044 18.3556 17.4913 18.58 17.7522 18.58C18.0209 18.58 18.1961 18.3596 18.1961 18.0991ZM16.5879 18.0991V18.0912C16.5879 17.474 17.0785 16.957 17.7522 16.957C18.4259 16.957 18.9126 17.466 18.9126 18.0832V18.0912C18.9126 18.7083 18.422 19.2253 17.7444 19.2253C17.0746 19.2253 16.5879 18.7163 16.5879 18.0991Z" fill="#4B4948" style="fill:#4B4948;fill:color(display-p3 0.2941 0.2863 0.2824);fill-opacity:1;"/>
+</g>
+</g>
+<g id="Mask group_4">
+<mask id="mask4_51_62" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="13" width="31" height="8">
+<g id="Group_5">
+<path id="Vector_4" d="M1.77539 20.6544H31.7372V13.333H1.77539V20.6544Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</mask>
+<g mask="url(#mask4_51_62)">
+<path id="Fill-9" fill-rule="evenodd" clip-rule="evenodd" d="M19.2822 17.0061H20.0221V17.3107C20.1584 17.1303 20.3531 16.958 20.6529 16.958C21.1008 16.958 21.3694 17.2626 21.3694 17.7555V19.1741H20.6335V18C20.6335 17.7594 20.5128 17.6312 20.3336 17.6312C20.1545 17.6312 20.0221 17.7594 20.0221 18V19.1741H19.2822V17.0061Z" fill="#4B4948" style="fill:#4B4948;fill:color(display-p3 0.2941 0.2863 0.2824);fill-opacity:1;"/>
+</g>
+</g>
+<g id="Mask group_5">
+<mask id="mask5_51_62" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="13" width="31" height="8">
+<g id="Group_6">
+<path id="Vector_5" d="M1.77539 20.6544H31.7372V13.333H1.77539V20.6544Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</mask>
+<g mask="url(#mask5_51_62)">
+<path id="Fill-10" fill-rule="evenodd" clip-rule="evenodd" d="M23.0501 18.0312H22.5875V18.5482H23.0579C23.2915 18.5482 23.4201 18.456 23.4201 18.2917V18.2837C23.4201 18.1314 23.3032 18.0312 23.0501 18.0312ZM23.311 17.2337C23.311 17.0774 23.1903 16.9934 22.9683 16.9934H22.5875V17.4862H22.9489C23.1786 17.4862 23.311 17.4061 23.311 17.2417V17.2337ZM21.8516 16.3682H23.1491C23.4369 16.3682 23.6668 16.4586 23.8314 16.6137C24.0198 16.7911 24.1124 17.1438 24.0059 17.425C23.9542 17.5614 23.8442 17.6483 23.7141 17.7067C24.0447 17.8094 24.245 18.0112 24.245 18.3919V18.3999C24.245 18.8808 23.8634 19.1733 23.2131 19.1733H21.8516V16.3682Z" fill="#4B4948" style="fill:#4B4948;fill:color(display-p3 0.2941 0.2863 0.2824);fill-opacity:1;"/>
+</g>
+</g>
+<g id="Mask group_6">
+<mask id="mask6_51_62" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="13" width="31" height="8">
+<g id="Group_7">
+<path id="Vector_6" d="M1.77539 20.6544H31.7372V13.333H1.77539V20.6544Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</mask>
+<g mask="url(#mask6_51_62)">
+<path id="Fill-11" fill-rule="evenodd" clip-rule="evenodd" d="M25.8894 18.3882V18.2881C25.8115 18.256 25.7063 18.232 25.5973 18.232C25.3832 18.232 25.2585 18.3362 25.2585 18.5004V18.5085C25.2585 18.6568 25.3676 18.7449 25.5194 18.7449C25.7375 18.7449 25.8894 18.6046 25.8894 18.3882ZM24.5498 18.5525V18.5445C24.5498 18.0917 24.8808 17.8633 25.3754 17.8633C25.5701 17.8633 25.7609 17.8993 25.8816 17.9474V17.9114C25.8816 17.683 25.7453 17.5547 25.461 17.5547C25.239 17.5547 25.0677 17.6028 24.8769 17.6749L24.7251 17.142C24.9626 17.0417 25.2157 16.9736 25.5779 16.9736C25.9556 16.9736 26.2126 17.0658 26.38 17.2381C26.5397 17.3984 26.6058 17.6229 26.6058 17.9273V19.1737H25.8777V18.9453C25.7297 19.1096 25.5311 19.2218 25.2546 19.2218C24.8535 19.2218 24.5498 18.9813 24.5498 18.5525Z" fill="#4B4948" style="fill:#4B4948;fill:color(display-p3 0.2941 0.2863 0.2824);fill-opacity:1;"/>
+</g>
+</g>
+<g id="Mask group_7">
+<mask id="mask7_51_62" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="13" width="31" height="8">
+<g id="Group_8">
+<path id="Vector_7" d="M1.77539 20.6544H31.7372V13.333H1.77539V20.6544Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</mask>
+<g mask="url(#mask7_51_62)">
+<path id="Fill-12" fill-rule="evenodd" clip-rule="evenodd" d="M27.041 17.0061H27.781V17.3107C27.9172 17.1303 28.1119 16.958 28.4117 16.958C28.8596 16.958 29.1282 17.2626 29.1282 17.7555V19.1741H28.3923V18C28.3923 17.7594 28.2716 17.6312 28.0924 17.6312C27.9133 17.6312 27.781 17.7594 27.781 18V19.1741H27.041V17.0061Z" fill="#4B4948" style="fill:#4B4948;fill:color(display-p3 0.2941 0.2863 0.2824);fill-opacity:1;"/>
+</g>
+</g>
+<g id="Mask group_8">
+<mask id="mask8_51_62" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="13" width="31" height="8">
+<g id="Group_9">
+<path id="Vector_8" d="M1.77539 20.6544H31.7372V13.333H1.77539V20.6544Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</mask>
+<g mask="url(#mask8_51_62)">
+<path id="Fill-13" fill-rule="evenodd" clip-rule="evenodd" d="M29.5684 16.248H30.3082V17.7308L30.8807 17.0055H31.7179L30.9858 17.871L31.7374 19.1735H30.9196L30.499 18.4321L30.3082 18.6606V19.1735H29.5684V16.248Z" fill="#4B4948" style="fill:#4B4948;fill:color(display-p3 0.2941 0.2863 0.2824);fill-opacity:1;"/>
+</g>
+</g>
+<g id="Mask group_9">
+<mask id="mask9_51_62" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="13" width="31" height="8">
+<g id="Group_10">
+<path id="Vector_9" d="M1.77539 20.6544H31.7372V13.333H1.77539V20.6544Z" fill="white" style="fill:white;fill-opacity:1;"/>
+</g>
+</mask>
+<g mask="url(#mask9_51_62)">
+<path id="Fill-14" fill-rule="evenodd" clip-rule="evenodd" d="M6.422 17.1872C6.12024 17.1472 5.98875 17.1312 5.98875 17.1312V16.0351C6.06329 16.0539 6.55417 16.1757 6.55417 16.1757C6.85483 16.2363 7.00784 16.4593 7.00784 16.7266C7.00784 16.994 6.77456 17.2338 6.422 17.1872ZM7.63307 17.6403C7.63307 17.6403 7.98143 17.287 7.98143 16.6216C7.98143 16.0662 7.61447 15.4507 6.96801 15.2191L4.84283 14.45L4.83596 18.2112C4.83596 18.2112 4.83663 18.7559 4.24097 18.871C3.8422 18.9481 3.45348 18.5799 3.45348 18.1222C3.45401 18.1223 3.45568 15.1581 3.45406 13.9432L1.77539 13.333V18.2845C1.77539 20.0532 3.34851 20.8013 4.31495 20.6308C5.46849 20.4272 5.98875 19.518 5.98875 18.5341V18.1847L6.80266 18.2131C7.07185 18.2131 7.27202 18.4525 7.27202 18.7035C7.27202 18.9261 7.11964 19.1657 6.80599 19.1934L6.35876 19.2282C6.28708 19.5286 6.13169 19.9431 5.7828 20.3573L7.09326 20.121C7.621 20.0235 8.23469 19.5562 8.23469 18.7841C8.23469 18.4552 8.12571 17.9737 7.63307 17.6403Z" fill="#FEA30B" style="fill:#FEA30B;fill:color(display-p3 0.9961 0.6392 0.0431);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="30" height="7.33333" fill="white" style="fill:white;fill-opacity:1;" transform="translate(1.77539 13.333)"/>
+</clipPath>
+</defs>
+</svg>

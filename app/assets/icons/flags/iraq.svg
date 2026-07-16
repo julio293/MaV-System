@@ -1,0 +1,31 @@
+<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="22" height="16" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Country flags">
+<rect width="1024" height="1301" transform="translate(-218 -725)" fill="#F5F5F5" style="fill:#F5F5F5;fill:color(display-p3 0.9608 0.9608 0.9608);fill-opacity:1;"/>
+<g id="Container">
+<rect width="1024" height="976" transform="translate(-218 -400)" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Container_2">
+<g id="Container_3">
+<g id="iraq" clip-path="url(#clip0_51_62)">
+<g id="design">
+<g clip-path="url(#clip1_51_62)">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+<path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M0 11H22V16H0V11Z" fill="#151515" style="fill:#151515;fill:color(display-p3 0.0833 0.0833 0.0833);fill-opacity:1;"/>
+<path id="vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M10.4761 8.53372H11.5237V9.06172C11.5237 9.37106 11.7584 9.60039 12.0475 9.60039C12.3283 9.60039 12.5714 9.35932 12.5714 9.06172V6.92839C12.5714 6.63719 12.8144 6.40039 13.0952 6.40039C13.3843 6.40039 13.619 6.63079 13.619 6.92839V8.53372H15.1799C15.4754 8.53372 15.7142 8.78119 15.7142 9.06706C15.7142 9.36146 15.4816 9.60039 15.1799 9.60039H6.81993C6.5245 9.60039 6.28564 9.35292 6.28564 9.06706C6.28564 8.84092 6.42184 8.64786 6.62088 8.56999C6.64707 8.50172 6.68688 8.43666 6.74241 8.38119L8.23003 6.86652C8.43326 6.65959 8.76955 6.66706 8.9686 6.86866C9.17393 7.07666 9.18022 7.40732 8.97279 7.61852L8.07393 8.53372H9.4285V8.00572C9.4285 7.70706 9.67155 7.46706 9.95231 7.46706C10.2415 7.46706 10.4761 7.69532 10.4761 8.00572V8.53372Z" fill="#249F58" style="fill:#249F58;fill:color(display-p3 0.1406 0.6250 0.3444);fill-opacity:1;"/>
+<path id="vector_3" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H22V5H0V0Z" fill="#F93939" style="fill:#F93939;fill:color(display-p3 0.9750 0.2234 0.2234);fill-opacity:1;"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_51_62">
+<rect width="22" height="16" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+<clipPath id="clip1_51_62">
+<rect width="22" height="16" rx="2" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>
