@@ -743,11 +743,13 @@
   --coachmark\/text-description: #ffffff;
 
   /* Bubble */
-  --bubble\/bg-incoming:    #efefef;
-  --bubble\/bg-outcoming:   #352eff19;
-  --bubble\/name-incoming:  #352eff;
-  --bubble\/text-outcoming: #171717;
-  --bubble\/text-incoming:  #171717;
+  --bubble\/bg-incoming:       #efefef;
+  --bubble\/bg-outcoming:      #352eff19;
+  --bubble\/name-incoming:     #352eff;
+  --bubble\/text-outcoming:    #171717;
+  --bubble\/text-incoming:     #171717;
+  --bubble\/bg-outcoming-reply:#352eff19;
+  --bubble\/outline-incoming:  #352eff;
 
   /* Balance */
   --Balance\/Bg:           #ffffff;
