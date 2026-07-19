@@ -41,6 +41,7 @@
 
     { group: 'Organisms' },
     { href: 'components/auth.html',          label: 'Sign In / Sign Up' },
+    { href: 'components/auth-otp.html',      label: 'OTP Verification' },
 
     { group: 'iOS Screens' },
     { href: 'ios/01-onboarding.html',        label: 'Onboarding' },

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OTP Verification — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ OTP Verification — Figma "• OTP" organism (162:1133) ═════════════════════
+   Composes the OTP component into a verification screen: section header (title +
+   description with phone), 6 code slots (Box or Boxless), a resend row (reset
+   countdown + Resend Code), and a Verify button that enables once the code is
+   complete. Reuses the OTP atom's --OTP/* tokens, so it re-themes in dark. */
+.phone{width:360px;max-width:100%;border:1px solid var(--mav-border);border-radius:28px;overflow:hidden;
+  background:var(--mav-bg);box-shadow:0 20px 50px -24px rgba(0,0,0,.35)}
+.screen{padding:32px 24px;display:flex;flex-direction:column;gap:32px}
+.otp-header{display:flex;flex-direction:column;gap:4px}
+.otp-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;color:var(--main-text\/default,#171717)}
+.otp-desc{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:16px;line-height:1.4;color:var(--main-text\/description,#7f7f7f)}
+.otp-desc b{color:var(--main-text\/default,#171717);font-weight:700}
+.otp-field{display:flex;flex-direction:column;gap:16px}
+.otp-slots{display:flex;gap:8px}
+.otp-resend{display:flex;align-items:center;justify-content:space-between}
+.otp-timer{display:flex;gap:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px}
+.otp-timer .lbl{color:var(--main-text\/description,#7f7f7f)}
+.otp-timer .t{color:var(--main-text\/default,#171717)}
+.otp-resend-btn{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:12px;color:var(--btn\/textonly\/default,#352eff);background:none;border:0;cursor:pointer;padding:0}
+.otp-resend-btn:disabled{color:var(--mav-muted);cursor:default}
+.verify{width:100%;padding:12px;border:0;border-radius:var(--border\/border-radius\/sm,4px);cursor:not-allowed;
+  background:var(--btn\/primary\/disabled,#e5e5e5);color:var(--btn\/primary\/text-default,#ffffff);
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;transition:background .15s}
+.verify.on{background:var(--btn\/primary\/default,#352eff);cursor:pointer}
+[data-theme=dark] .verify.on{background:var(--mav-primary-dark);color:#171717}
+
+/* OTP slot atom (boxed) */
+.otp{width:48px;height:48px;box-sizing:border-box;text-align:center;outline:none;padding:0;
+  border:1px solid var(--OTP\/default\/outline-box,#cccccc);background:var(--OTP\/default\/bg-box,#ffffff);
+  border-radius:var(--border\/border-radius\/sm,4px);box-shadow:var(--shadow-input);
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:18px;color:var(--OTP\/default\/text-placeholder,#b2b2b2)}
+.otp.filled{border-color:var(--OTP\/active\/outline-box-active,#191919);color:var(--OTP\/active\/text-active,#191919)}
+.otp:focus{border-color:var(--OTP\/focus\/outline-box,#352eff);box-shadow:0 0 0 3px rgba(53,46,255,.4);color:var(--OTP\/focus\/text-placeholder,#191919)}
+.otp.error{background:var(--input-field\/error\/bg-box,#ff00001a);border-color:var(--input-field\/error\/outline-box,#ff0000);color:#191919}
+
+/* boxless variant */
+.otp2{display:inline-flex;flex-direction:column;align-items:center;gap:14px;width:48px}
+.otp2 .d{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:18px;line-height:20px;color:var(--OTP\/default\/text-placeholder,#b2b2b2)}
+.otp2 .u{width:100%;height:1px;background:var(--devider\/default,#efefef)}
+.otp2.filled .d{color:var(--OTP\/active\/text-active,#191919)}
+.otp2.filled .u{background:var(--OTP\/active\/outline-box-active,#191919)}
+.otp2.is-focus .d{color:var(--OTP\/focus\/text-placeholder,#191919)}
+[data-theme=dark] .otp2.is-focus .d{color:#e5e5e5}
+.otp2.is-focus .u{background:var(--OTP\/focus\/outline-box,#352eff)}
+
+.err-msg{display:flex;align-items:center;gap:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:var(--input-field\/error\/label-error,#ff0000)}
+.err-msg svg{width:18px;height:18px;stroke:var(--input-field\/error\/icon-error,#ff0000);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.phones{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}
+.state-tag{font-size:11px;color:var(--mav-muted);font-family:'Inter',sans-serif;margin-bottom:6px}
+.state-col{display:flex;flex-direction:column;gap:16px}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar"></nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">OTP Verification</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Organisms</div>
+    <h1 class="page-title">OTP Verification</h1>
+    <p class="page-desc">An organism built from the <a href="otp.html">OTP</a> component — section header, six code slots, a reset countdown with Resend, and a Verify button that enables once the code is complete.</p>
+  </div>
+
+  <!-- Interactive screen -->
+  <div class="section">
+    <h2 class="section-title">Screen (interactive)</h2>
+    <p class="section-desc">Type a 6-digit code — slots auto-advance, the timer counts down, and Verify enables when complete.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="phones">
+          <!-- Box variant -->
+          <div class="phone"><div class="screen">
+            <div class="otp-header">
+              <div class="otp-title">One time PIN</div>
+              <div class="otp-desc">Please enter the one time PIN (OTP) that was sent to <b>+1&nbsp;223&nbsp;242&nbsp;321</b></div>
+            </div>
+            <div class="otp-field">
+              <div class="otp-slots" id="otp-box"></div>
+              <div class="otp-resend">
+                <div class="otp-timer"><span class="lbl">Reset in</span><span class="t" id="timer">00:32</span></div>
+                <button class="otp-resend-btn" id="resend" disabled onclick="resetTimer()">Resend Code</button>
+              </div>
+            </div>
+            <button class="verify" id="verify">Verify</button>
+          </div></div>
+
+          <!-- Boxless variant -->
+          <div class="phone"><div class="screen">
+            <div class="otp-header">
+              <div class="otp-title">One time PIN</div>
+              <div class="otp-desc">Boxless variant — underline slots.</div>
+            </div>
+            <div class="otp-field">
+              <div class="otp-slots">
+                <div class="otp2 filled"><span class="d">1</span><span class="u"></span></div>
+                <div class="otp2 filled"><span class="d">2</span><span class="u"></span></div>
+                <div class="otp2 filled"><span class="d">3</span><span class="u"></span></div>
+                <div class="otp2 is-focus"><span class="d">4</span><span class="u"></span></div>
+                <div class="otp2"><span class="d">0</span><span class="u"></span></div>
+                <div class="otp2"><span class="d">0</span><span class="u"></span></div>
+              </div>
+              <div class="otp-resend">
+                <div class="otp-timer"><span class="lbl">Reset in</span><span class="t">00:18</span></div>
+                <button class="otp-resend-btn" style="color:var(--mav-muted)" disabled>Resend Code</button>
+              </div>
+            </div>
+            <button class="verify on">Verify</button>
+          </div></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">OTP screen — header · 6 slots · reset countdown · Verify</span><span class="preview-sublabel">Box &amp; Boxless variants, --OTP/* tokens</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- States -->
+  <div class="section">
+    <h2 class="section-title">Slot states</h2>
+    <p class="section-desc">Default, Filled, Focus, Error, Disabled — used by the screen above.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="state-col">
+          <div><div class="state-tag">Filled</div><div class="otp-slots"><input class="otp filled" value="1" readonly><input class="otp filled" value="2" readonly><input class="otp filled" value="3" readonly><input class="otp filled" value="4" readonly><input class="otp filled" value="5" readonly><input class="otp filled" value="6" readonly></div></div>
+          <div><div class="state-tag">Error</div><div class="otp-slots"><input class="otp error" value="1" readonly><input class="otp error" value="2" readonly><input class="otp error" value="3" readonly><input class="otp error" value="4" readonly><input class="otp error" value="5" readonly><input class="otp error" value="6" readonly></div>
+            <div class="err-msg" style="margin-top:8px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/></svg>Incorrect code, try again</div></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">States — Filled · Error (+ message)</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Dark -->
+  <div class="section">
+    <h2 class="section-title">Dark mode</h2>
+    <p class="section-desc">Focus ring → lime, Verify → lime, on a dark surface.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="phone" data-theme="dark"><div class="screen">
+          <div class="otp-header">
+            <div class="otp-title">One time PIN</div>
+            <div class="otp-desc">Please enter the one time PIN (OTP) that was sent to <b>+1&nbsp;223&nbsp;242&nbsp;321</b></div>
+          </div>
+          <div class="otp-field">
+            <div class="otp-slots"><input class="otp filled" value="1" readonly><input class="otp filled" value="2" readonly><input class="otp filled" value="3" readonly><input class="otp" style="border-color:var(--OTP\/focus\/outline-box);box-shadow:0 0 0 3px rgba(161,255,91,.3);color:#e5e5e5" value="4" readonly><input class="otp" readonly><input class="otp" readonly></div>
+            <div class="otp-resend"><div class="otp-timer"><span class="lbl">Reset in</span><span class="t">00:07</span></div><button class="otp-resend-btn" disabled style="color:var(--mav-muted)">Resend Code</button></div>
+          </div>
+          <button class="verify on">Verify</button>
+        </div></div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Dark — focus lime · Verify lime</span></div>
+    </div>
+  </div>
+
+</main>
+</div>
+<script>
+(function(){
+  var N=6, root=document.getElementById('otp-box'), verify=document.getElementById('verify'), inputs=[];
+  for(var i=0;i<N;i++){
+    var el=document.createElement('input');
+    el.className='otp'; el.maxLength=1; el.inputMode='numeric';
+    root.appendChild(el); inputs.push(el);
+  }
+  function sync(){
+    var v=inputs.map(function(x){return x.value}).join('');
+    inputs.forEach(function(x){x.classList.toggle('filled', x.value!=='')});
+    verify.classList.toggle('on', v.length===N);
+  }
+  inputs.forEach(function(el,i){
+    el.addEventListener('input',function(){
+      el.value=el.value.replace(/[^0-9]/g,'').slice(0,1);
+      if(el.value && i<N-1) inputs[i+1].focus();
+      sync();
+    });
+    el.addEventListener('keydown',function(e){ if(e.key==='Backspace'&&!el.value&&i>0) inputs[i-1].focus(); });
+    el.addEventListener('paste',function(e){
+      e.preventDefault();
+      var d=(e.clipboardData.getData('text')||'').replace(/[^0-9]/g,'').slice(0,N);
+      for(var k=0;k<d.length&&i+k<N;k++) inputs[i+k].value=d[k];
+      inputs[Math.min(i+d.length,N-1)].focus(); sync();
+    });
+  });
+  // countdown
+  var t=32, timerEl=document.getElementById('timer'), resend=document.getElementById('resend'), iv;
+  function tick(){
+    t--; var m=String(Math.floor(t/60)).padStart(2,'0'), s=String(t%60).padStart(2,'0');
+    timerEl.textContent=m+':'+s;
+    if(t<=0){ clearInterval(iv); resend.disabled=false; resend.style.color=''; timerEl.textContent='00:00'; }
+  }
+  iv=setInterval(tick,1000);
+  window.resetTimer=function(){ t=32; resend.disabled=true; resend.style.color='var(--mav-muted)'; clearInterval(iv); iv=setInterval(tick,1000); };
+})();
+</script>
+<script src="../js/theme.js"></script>
+</body>
+</html>
