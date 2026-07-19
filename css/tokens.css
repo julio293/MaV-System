@@ -672,6 +672,13 @@
   --Tabs\/Tab-Default: #e4ebff;
   --Tabs\/Tab-Active:  #352eff;
 
+  /* Account tile / Select-SOF + Button dock */
+  --account\/bg-account-card:           #ffffff;
+  --account\/bg-account-card-secondary: #ffffff;
+  --account\/outline-account-primary:   #efefef;
+  --account\/text-default:              #171717;
+  --button-dock\/bg-dock:               #ffffff;
+
   /* Alert (note: "waring" is intentional Figma typo) */
   --alert\/primary\/bg-box:      #352eff1a;
   --alert\/primary\/text-brand:  #352eff;
@@ -957,6 +964,11 @@
 
   --loader\/spin: #a1ff5b;
   --Tabs\/Tab-Active: #a1ff5b;
+  --account\/bg-account-card:           #242424;
+  --account\/bg-account-card-secondary: #1f1f1f;
+  --account\/outline-account-primary:   #484848;
+  --account\/text-default:              #e5e5e5;
+  --button-dock\/bg-dock:               #171717;
   --toggle\/default\/bg-box:       #242424;
   --toggle\/active\/bg-box-active: #a1ff5b;
 

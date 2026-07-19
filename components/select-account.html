@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Select Account — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Select Source of Funds — Figma "Account" organism (354:1868) ════════════
+   A mobile screen: top navigation, a Standard Account tile, a radio-selectable
+   Accounts List (with disabled / locked rows + inline message), and a bottom
+   Button Dock. Composes Radio, Section header, Account tile, and Button atoms —
+   all token-driven, so the whole screen re-themes in dark. */
+.phone{width:375px;max-width:100%;border-radius:36px;overflow:hidden;position:relative;
+  display:flex;flex-direction:column;background:var(--background\/bg-default,var(--mav-bg,#fff));
+  border:1px solid var(--mav-border);box-shadow:0 24px 60px -24px rgba(0,0,0,.4)}
+
+/* top nav */
+.statusbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 6px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;color:var(--main-text\/default,#171717)}
+.statusbar .lvl{display:flex;gap:6px;align-items:center}
+.statusbar .lvl svg{stroke:var(--main-text\/default,#171717);fill:var(--main-text\/default,#171717)}
+.topnav{display:flex;align-items:center;padding:8px 8px 12px;gap:4px}
+.nav-ic{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer}
+.nav-ic svg{width:22px;height:22px;stroke:var(--main-text\/default,#171717);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.nav-title{flex:1;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px;color:var(--main-text\/default,#171717)}
+
+.sof-body{padding:16px;display:flex;flex-direction:column;gap:32px}
+.sec-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;color:var(--main-text\/default,#171717)}
+.sec-title.sm{font-size:18px;font-weight:500}
+.sec-desc{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:15px;color:var(--main-text\/description,#7f7f7f);margin-top:4px}
+
+/* cards */
+.card{border:1px solid var(--account\/outline-account-primary,#efefef);border-radius:var(--border\/border-radius\/sm,4px);
+  padding:16px;display:flex;flex-direction:column;gap:16px;background:var(--account\/bg-account-card,#fff)}
+
+/* account tile (standard) */
+.acct-tile{display:flex;align-items:center;gap:16px}
+.avatar{width:40px;height:40px;border-radius:20px;flex-shrink:0;
+  background:linear-gradient(135deg,#f76b8a,#c9457a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-family:'Plus Jakarta Sans'}
+.acct-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.acct-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:16px;color:var(--account\/text-default,#171717)}
+.acct-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--main-text\/description,#7f7f7f)}
+.acct-bal{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:var(--account\/text-default,#171717)}
+
+/* account list rows */
+.acct-row{display:flex;align-items:center;gap:16px;padding:12px 16px;box-sizing:border-box;cursor:pointer;
+  border:1px solid var(--account\/outline-account-primary,#efefef);border-radius:var(--border\/border-radius\/sm,4px);
+  background:var(--account\/bg-account-card,#fff);transition:border-color .15s}
+.acct-row.selected{border:2px solid var(--btn\/secondary\/loading-outline,#352eff);padding:11px 15px}
+.acct-row.disabled{background:var(--background\/bg-secondary,#e5e5e5);border-color:var(--btn\/secondary\/disabled-outline,#cccccc);cursor:not-allowed}
+.acct-row.disabled .acct-name,.acct-row.disabled .acct-bal{color:var(--main-text\/description,#7f7f7f)}
+.row-ic{width:32px;height:32px;flex-shrink:0;stroke:var(--main-text\/default,#171717);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.acct-row.disabled .row-ic{stroke:var(--main-text\/description,#7f7f7f)}
+.inline-msg{display:flex;align-items:center;gap:4px;margin-top:4px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;color:var(--main-text\/default,#171717)}
+.inline-msg svg{width:12px;height:12px;stroke:currentColor;stroke-width:2;fill:none}
+
+/* radio */
+.rdo{width:16px;height:16px;border-radius:50%;box-sizing:border-box;flex-shrink:0;
+  border:2px solid var(--account\/outline-account-primary,#efefef);display:flex;align-items:center;justify-content:center}
+.rdo.active{border-color:var(--icon\/active,#352eff)}
+.rdo.active::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--icon\/active,#352eff)}
+.rdo.disabled{border-color:var(--Radio\/Radio-Button-Secondary,#cccccc);background:var(--Radio\/Radio-Button-Secondary,#cccccc)}
+.sof-list{display:flex;flex-direction:column;gap:12px}
+
+/* button dock */
+.dock{padding:16px;border-radius:32px 32px 0 0;background:var(--button-dock\/bg-dock,#fff);
+  box-shadow:0 0 12px rgba(0,0,0,.08)}
+.btn-dock{width:100%;padding:16px;border:0;border-radius:var(--border\/border-radius\/sm,4px);cursor:pointer;
+  background:var(--btn\/primary\/default,#352eff);color:var(--btn\/primary\/text-default,#fff);
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:18px}
+[data-theme=dark] .btn-dock{background:var(--mav-primary-dark);color:#171717}
+.home-ind{width:135px;height:5px;border-radius:100px;background:var(--main-text\/default,#171717);margin:12px auto 4px}
+
+.phones{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar"></nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Select Account</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Organisms</div>
+    <h1 class="page-title">Select Account</h1>
+    <p class="page-desc">A "Select source of funds" screen — top navigation, a Standard Account tile, a radio-selectable Accounts List (with disabled / locked rows), and a bottom Button Dock. Composed from Radio, Account tile, Section header, and Button atoms.</p>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Screen (interactive)</h2>
+    <p class="section-desc">Tap an available account to select it — the radio and highlight move. Locked rows are disabled with an inline message.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="phones">
+
+          <!-- LIGHT -->
+          <div class="phone">
+            <div class="statusbar"><span>9:41</span><span class="lvl">
+              <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke-width="1.6"><path d="M1 4a10 10 0 0 1 14 0M3.5 6.5a6 6 0 0 1 9 0M8 9.5h.01"/></svg>
+              <svg width="24" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke-width="1" opacity=".5"/><rect x="3" y="3" width="15" height="6" rx="1"/><rect x="22" y="4" width="1.5" height="4" rx="1"/></svg>
+            </span></div>
+            <div class="topnav"><div class="nav-ic"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></div><div class="nav-title">Money Fixed Plus</div><div style="width:32px"></div></div>
+            <div class="sof-body">
+              <div class="card">
+                <div><div class="sec-title sm">Standard Account</div><div class="sec-desc">Choose the account to transfer from.</div></div>
+                <div class="acct-tile"><span class="avatar">M</span><div class="acct-info"><span class="acct-name">Money Saving</span><span class="acct-num">***-***432-1</span><span class="acct-bal">฿ 10,000.00</span></div></div>
+              </div>
+              <div class="card">
+                <div class="sec-title">Accounts List</div>
+                <div class="sof-list" id="sof">
+                  <div class="acct-row selected" onclick="pick(this)"><svg class="row-ic" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><div class="acct-info"><span class="acct-name">Mr. K</span><span class="acct-bal">฿ 10,000.00</span></div><span class="rdo active"></span></div>
+                  <div class="acct-row" onclick="pick(this)"><svg class="row-ic" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><div class="acct-info"><span class="acct-name">Everyday Pot</span><span class="acct-bal">฿ 4,250.00</span></div><span class="rdo"></span></div>
+                  <div class="acct-row" onclick="pick(this)"><svg class="row-ic" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><div class="acct-info"><span class="acct-name">Holiday Fund</span><span class="acct-bal">฿ 82,000.00</span></div><span class="rdo"></span></div>
+                  <div class="acct-row disabled"><svg class="row-ic" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><div class="acct-info"><span class="acct-name">Locked Pot</span><span class="acct-bal">฿ 10,000.00</span><span class="inline-msg"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Locked until 12 Aug</span></div><span class="rdo disabled"></span></div>
+                  <div class="acct-row disabled"><svg class="row-ic" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><div class="acct-info"><span class="acct-name">Fixed Deposit</span><span class="acct-bal">฿ 250,000.00</span><span class="inline-msg"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Not available for transfer</span></div><span class="rdo disabled"></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="dock"><button class="btn-dock">Continue</button><div class="home-ind"></div></div>
+          </div>
+
+          <!-- DARK -->
+          <div class="phone" data-theme="dark">
+            <div class="statusbar"><span>9:41</span><span class="lvl">
+              <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+              <svg width="24" height="12" viewBox="0 0 24 12"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke-width="1" opacity=".5"/><rect x="3" y="3" width="15" height="6" rx="1"/><rect x="22" y="4" width="1.5" height="4" rx="1"/></svg>
+            </span></div>
+            <div class="topnav"><div class="nav-ic"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></div><div class="nav-title">Money Fixed Plus</div><div style="width:32px"></div></div>
+            <div class="sof-body">
+              <div class="card">
+                <div><div class="sec-title sm">Standard Account</div><div class="sec-desc">Choose the account to transfer from.</div></div>
+                <div class="acct-tile"><span class="avatar">M</span><div class="acct-info"><span class="acct-name">Money Saving</span><span class="acct-num">***-***432-1</span><span class="acct-bal">฿ 10,000.00</span></div></div>
+              </div>
+              <div class="card">
+                <div class="sec-title">Accounts List</div>
+                <div class="sof-list" id="sof2">
+                  <div class="acct-row selected" onclick="pick(this)"><svg class="row-ic" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><div class="acct-info"><span class="acct-name">Mr. K</span><span class="acct-bal">฿ 10,000.00</span></div><span class="rdo active"></span></div>
+                  <div class="acct-row" onclick="pick(this)"><svg class="row-ic" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><div class="acct-info"><span class="acct-name">Everyday Pot</span><span class="acct-bal">฿ 4,250.00</span></div><span class="rdo"></span></div>
+                  <div class="acct-row disabled"><svg class="row-ic" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><div class="acct-info"><span class="acct-name">Locked Pot</span><span class="acct-bal">฿ 10,000.00</span><span class="inline-msg"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Locked until 12 Aug</span></div><span class="rdo disabled"></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="dock"><button class="btn-dock">Continue</button><div class="home-ind"></div></div>
+          </div>
+
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Select account — top nav · account tile · radio list · button dock</span><span class="preview-sublabel">Composes Radio, Account tile, Section header, Button</span></div>
+    </div>
+  </div>
+
+</main>
+</div>
+<script>
+function pick(row){
+  if(row.classList.contains('disabled')) return;
+  var list=row.parentElement;
+  list.querySelectorAll('.acct-row').forEach(function(r){
+    if(r.classList.contains('disabled')) return;
+    r.classList.remove('selected');
+    var rd=r.querySelector('.rdo'); rd.className='rdo';
+  });
+  row.classList.add('selected');
+  row.querySelector('.rdo').className='rdo active';
+}
+</script>
+<script src="../js/theme.js"></script>
+</body>
+</html>
