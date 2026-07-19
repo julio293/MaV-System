@@ -39,6 +39,9 @@
     { href: 'components/coachmark.html',     label: 'Coachmark' },
     { href: 'components/all.html',           label: 'Kitchen Sink' },
 
+    { group: 'Organisms' },
+    { href: 'components/auth.html',          label: 'Sign In / Sign Up' },
+
     { group: 'iOS Screens' },
     { href: 'ios/01-onboarding.html',        label: 'Onboarding' },
     { href: 'ios/02-login.html',             label: 'Login' },
