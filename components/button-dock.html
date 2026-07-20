@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Button Dock — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Button Dock — Figma "Button Dock" (267:5230) ════════════════════════════
+   A sticky bottom footer: a rounded-top surface (32px) with a full-width primary
+   button, an optional checkbox row or secondary button, and an iOS home
+   indicator. bg --button-dock/bg-dock, elevation 0 0 12 shadow. Re-themes in dark. */
+.dock{width:375px;max-width:100%;box-sizing:border-box;background:var(--button-dock\/bg-dock,#ffffff);
+  border-radius:32px 32px 0 0;box-shadow:0 0 12px rgba(0,0,0,.08);overflow:hidden}
+.dock-inner{padding:16px;display:flex;flex-direction:column;gap:24px}
+.dock-btns{display:flex;flex-direction:column;gap:12px}
+
+.dock-btn{width:100%;padding:16px;border:0;border-radius:var(--border\/border-radius\/sm,4px);cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:18px;
+  background:var(--btn\/primary\/default,#352eff);color:var(--btn\/primary\/text-default,#ffffff)}
+[data-theme=dark] .dock-btn{background:var(--mav-primary-dark);color:#171717}
+.dock-btn.secondary{background:transparent;border:1px solid var(--mav-border);color:var(--main-text\/default,#171717)}
+[data-theme=dark] .dock-btn.secondary{background:transparent;color:var(--mav-fg)}
+
+/* checkbox row (additional content) */
+.dock-cbx{display:flex;align-items:center;gap:8px;cursor:pointer;
+  font-family:'Inter',sans-serif;font-weight:700;font-size:14px;color:var(--main-text\/default,#171717)}
+.dock-cbx .cbx{width:16px;height:16px;box-sizing:border-box;border-radius:4px;flex-shrink:0;box-shadow:var(--shadow-input);
+  border:1px solid var(--Checkbox\/default\/outline-box,#cccccc);background:var(--Checkbox\/default\/bg-box,#fff);
+  display:flex;align-items:center;justify-content:center}
+.dock-cbx .cbx.on{background:var(--Checkbox\/active\/bg-box-active,#352eff);border-color:var(--Checkbox\/active\/bg-box-active,#352eff)}
+.dock-cbx .cbx svg{width:12px;height:12px;stroke:#fff;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;display:none}
+.dock-cbx .cbx.on svg{display:block}
+[data-theme=dark] .dock-cbx .cbx.on svg{stroke:#171717}
+.dock-cbx a{color:var(--btn\/textonly\/default,#352eff);text-decoration:none;font-weight:700}
+
+.home-ind{width:144px;height:5px;border-radius:100px;background:var(--btn\/primary\/hover,#171717);margin:0 auto 8px}
+[data-theme=dark] .home-ind{background:var(--mav-fg,#e5e5e5)}
+
+.dock-stage{background:var(--mav-surface,#f5f5f5);border-radius:16px;padding:24px 24px 0;display:flex;justify-content:center}
+.dock-grid{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-end}
+.dock-cell{display:flex;flex-direction:column;gap:10px;align-items:center}
+.dock-tag{font-size:11px;color:var(--mav-muted);font-family:'Inter',sans-serif}
+.canvas-dark{background:var(--bc-mono900-l,#171717);border-radius:16px;padding:24px 24px 0}
+
+/* in-context phone */
+.phone{width:340px;height:420px;border-radius:32px;overflow:hidden;position:relative;
+  background:var(--mav-bg,#fff);border:1px solid var(--mav-border);display:flex;flex-direction:column}
+.phone-body{flex:1;padding:24px 20px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.phone-body .ph-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;color:var(--main-text\/default,#171717)}
+.phone-body .ph-line{height:12px;border-radius:6px;background:var(--mav-border)}
+.phone .dock{width:100%;box-shadow:0 -2px 12px rgba(0,0,0,.06)}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar"></nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Button Dock</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Button Dock</h1>
+    <p class="page-desc">A sticky bottom footer that keeps the primary action fixed above the home indicator. Rounded-top surface (32px), 16px padding, and a soft 12px elevation. Optional checkbox row, secondary button, and home indicator.</p>
+  </div>
+
+  <!-- Anatomy -->
+  <div class="section">
+    <h2 class="section-title">Anatomy</h2>
+    <p class="section-desc">Surface + full-width primary button + iOS home indicator. Rounded top corners, <code>--button-dock/bg-dock</code>.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="dock-stage">
+          <div class="dock"><div class="dock-inner"><button class="dock-btn">Continue</button></div><div class="home-ind"></div></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Button dock — 375px · radius 32px top · padding 16 · shadow 0 0 12</span><span class="preview-sublabel">Uses --button-dock/bg-dock + --btn/primary tokens</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Variations -->
+  <div class="section">
+    <h2 class="section-title">Variations</h2>
+    <p class="section-desc">With a consent checkbox, with a secondary button, and without the home indicator (Android).</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="dock-stage" style="align-items:flex-end">
+          <div class="dock-grid">
+            <div class="dock-cell"><span class="dock-tag">Checkbox + button</span>
+              <div class="dock"><div class="dock-inner">
+                <label class="dock-cbx" onclick="this.querySelector('.cbx').classList.toggle('on')"><span class="cbx on"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span>I agree to the <a href="#">Terms</a></span></label>
+                <button class="dock-btn">Continue</button>
+              </div><div class="home-ind"></div></div>
+            </div>
+            <div class="dock-cell"><span class="dock-tag">Two buttons</span>
+              <div class="dock"><div class="dock-inner"><div class="dock-btns">
+                <button class="dock-btn">Confirm</button>
+                <button class="dock-btn secondary">Cancel</button>
+              </div></div><div class="home-ind"></div></div>
+            </div>
+            <div class="dock-cell"><span class="dock-tag">No home indicator</span>
+              <div class="dock"><div class="dock-inner"><button class="dock-btn">Continue</button></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Variations — checkbox · two-button · no home indicator</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- In context + dark -->
+  <div class="section">
+    <h2 class="section-title">In context &amp; dark</h2>
+    <p class="section-desc">Pinned to the bottom of a screen; re-themes in dark (button → lime).</p>
+    <div class="preview-card">
+      <div class="preview-canvas" style="gap:32px">
+        <div class="phone">
+          <div class="phone-body"><div class="ph-title">Review &amp; confirm</div><div class="ph-line" style="width:80%"></div><div class="ph-line" style="width:60%"></div><div class="ph-line" style="width:70%"></div></div>
+          <div class="dock"><div class="dock-inner"><button class="dock-btn">Confirm payment</button></div><div class="home-ind"></div></div>
+        </div>
+        <div class="canvas-dark" data-theme="dark" style="display:flex;justify-content:center">
+          <div class="dock"><div class="dock-inner">
+            <label class="dock-cbx"><span class="cbx on"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span>Save this account</span></label>
+            <button class="dock-btn">Continue</button>
+          </div><div class="home-ind"></div></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">In context — pinned footer · dark surface</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--button-dock/bg-dock</td><td><span class="token-swatch-sm" style="background:#ffffff;border:1px solid #d0d0d0"></span><span class="token-value">#ffffff</span></td><td class="token-value">Dock surface (dark: #171717)</td></tr>
+        <tr><td class="token-name">--btn/primary/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Primary action (→ lime in dark)</td></tr>
+        <tr><td class="token-name">--btn/primary/hover</td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">#171717</span></td><td class="token-value">Home indicator</td></tr>
+        <tr><td class="token-name">Radius · Padding · Elevation</td><td><span class="token-value">32px top · 16px · 0 0 12</span></td><td class="token-value">Surface shape</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script>
+document.querySelectorAll('.dock-cbx').forEach(function(r){
+  r.addEventListener('click',function(){ var c=r.querySelector('.cbx'); if(c) c.classList.toggle('on'); });
+});
+</script>
+<script src="../js/theme.js"></script>
+</body>
+</html>
