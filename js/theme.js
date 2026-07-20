@@ -29,6 +29,7 @@
     { href: 'components/cards.html',         label: 'Payment Cards' },
     { href: 'components/list.html',          label: 'List' },
     { href: 'components/navigation.html',    label: 'Navigation' },
+    { href: 'components/app-bar.html',       label: 'Header / App Bar' },
     { href: 'components/button-dock.html',   label: 'Button Dock' },
     { href: 'components/tabs.html',          label: 'Tabs' },
     { href: 'components/chat.html',          label: 'Chat Bubbles' },

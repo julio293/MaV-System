@@ -769,6 +769,9 @@
   --Balance\/Bg:           #ffffff;
   --Balance\/Bg-secondary: #efefef;
 
+  /* Header / App Bar */
+  --Header-app\ bar\/bg-header: #ffffff;
+
   /* Gain & Loss */
   --gain\&loss\/success\/bg-box:    #629c281a;
   --gain\&loss\/success\/text-gain: #629c28;
@@ -1006,6 +1009,8 @@
 
   --Balance\/Bg:           #171717;
   --Balance\/Bg-secondary: #484848;
+
+  --Header-app\ bar\/bg-header: #171717;
 
   --System\/Primary:    #a1ff5b;
   --System\/Primary-soft: #a1ff5b1a;
