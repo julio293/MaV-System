@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Input Amount — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Input Amount — Figma "• Input Amount" organism (139:2090) ════════════════
+   An "enter amount" screen: a large amount field with round − / + steppers,
+   a grid of quick-select amount chips, and a "nominal send" slider card. Composes
+   Button, Chip-like presets, Progress/Slider and the amount display — token-driven
+   so the whole screen re-themes in dark. */
+.phone{width:375px;max-width:100%;border-radius:36px;overflow:hidden;position:relative;display:flex;flex-direction:column;
+  background:var(--mav-bg,#fff);border:1px solid var(--mav-border);box-shadow:0 24px 60px -24px rgba(0,0,0,.4)}
+.statusbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 6px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;color:var(--main-text\/default,#171717)}
+.statusbar svg{fill:var(--main-text\/default,#171717)}
+.topnav{display:flex;align-items:center;padding:8px 8px 12px;gap:4px}
+.nav-ic{width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.nav-ic svg{width:22px;height:22px;stroke:var(--main-text\/default,#171717);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.nav-title{flex:1;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px;color:var(--main-text\/default,#171717)}
+
+.body{padding:24px 20px;display:flex;flex-direction:column;gap:32px}
+
+/* Big amount input */
+.amt-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:var(--main-text\/default,#171717);text-align:center}
+.amt-row{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:16px}
+.amt-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:40px;line-height:1;color:var(--main-text\/default,#171717);min-width:110px;text-align:center}
+.amt-value.error{color:var(--input-field\/error\/text-placeholder,#ff0000)}
+.amt-btn{width:44px;height:44px;border-radius:50%;background:#030192;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.amt-btn svg{width:20px;height:20px;stroke:#fff;stroke-width:2.6;fill:none;stroke-linecap:round}
+[data-theme=dark] .amt-btn{background:var(--mav-primary-dark)}
+[data-theme=dark] .amt-btn svg{stroke:#171717}
+
+/* Quick-select chips */
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.chip{height:48px;border:1px solid var(--border\/subtle,#efefef);background:var(--mav-bg,#fff);border-radius:8px;cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:var(--main-text\/default,#171717);transition:.12s}
+.chip.on{background:var(--mav-primary,#352eff);border-color:var(--mav-primary,#352eff);color:#fff}
+[data-theme=dark] .chip.on{background:var(--mav-primary-dark);color:#171717}
+
+/* Nominal slider card */
+.slider-card{border:1px solid var(--border\/subtle,#efefef);border-radius:12px;padding:16px;background:var(--mav-bg,#fff);
+  box-shadow:0 10px 24px rgba(15,13,35,.05);display:flex;flex-direction:column;gap:16px}
+.sc-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:14px;color:var(--main-text\/default,#171717)}
+.sc-row{display:flex;align-items:center;justify-content:space-between}
+.sc-amt{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:32px;color:var(--main-text\/default,#171717)}
+.sc-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border\/subtle,#efefef);background:var(--mav-bg,#fff);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.sc-btn.solid{background:#030192;border-color:#030192}
+[data-theme=dark] .sc-btn.solid{background:var(--mav-primary-dark);border-color:var(--mav-primary-dark)}
+.sc-btn svg{width:16px;height:16px;stroke:var(--main-text\/default,#171717);stroke-width:2.4;fill:none;stroke-linecap:round}
+.sc-btn.solid svg{stroke:#fff}
+[data-theme=dark] .sc-btn.solid svg{stroke:#171717}
+
+.slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:8px;outline:none;
+  background:linear-gradient(to right,var(--mav-primary,#352eff) 50%,#e6edff 50%)}
+[data-theme=dark] .slider{background:linear-gradient(to right,var(--mav-primary-dark) 50%,#2a2740 50%)}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;
+  border:4px solid var(--mav-primary,#352eff);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+[data-theme=dark] .slider::-webkit-slider-thumb{border-color:var(--mav-primary-dark)}
+
+/* dock */
+.dock{padding:16px;border-radius:32px 32px 0 0;background:var(--button-dock\/bg-dock,#fff);box-shadow:0 0 12px rgba(0,0,0,.08)}
+.btn-dock{width:100%;padding:15px;border:0;border-radius:var(--border\/border-radius\/sm,4px);cursor:pointer;
+  background:var(--btn\/primary\/default,#352eff);color:var(--btn\/primary\/text-default,#fff);
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px}
+[data-theme=dark] .btn-dock{background:var(--mav-primary-dark);color:#171717}
+.home-ind{width:135px;height:5px;border-radius:100px;background:var(--main-text\/default,#171717);margin:12px auto 2px}
+.phones{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar"></nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Input Amount</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Organisms</div>
+    <h1 class="page-title">Input Amount</h1>
+    <p class="page-desc">An "enter amount" screen — a large amount field with round −/+ steppers, quick-select amount chips, and a "nominal send" slider card. Composes Button, preset chips, a slider, and the amount display.</p>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Screen (interactive)</h2>
+    <p class="section-desc">Tap a preset or use −/+ to set the amount; drag the slider to set a nominal. The screen re-themes in dark.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="phones" id="phones">
+          <!-- LIGHT -->
+          <div class="phone">
+            <div class="statusbar"><span>9:41</span><svg width="52" height="12" viewBox="0 0 52 12"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/><rect x="30" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/><rect x="32" y="3" width="15" height="6" rx="1"/></svg></div>
+            <div class="topnav"><div class="nav-ic"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></div><div class="nav-title">Enter amount</div><div style="width:32px"></div></div>
+            <div class="body">
+              <div>
+                <div class="amt-title">Amount of Money</div>
+                <div class="amt-row">
+                  <button class="amt-btn" onclick="step(-10)"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+                  <div class="amt-value" id="amt">$150</div>
+                  <button class="amt-btn" onclick="step(10)"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                </div>
+              </div>
+              <div class="chips" id="chips">
+                <button class="chip" onclick="pickChip(this,50)">$50</button>
+                <button class="chip" onclick="pickChip(this,100)">$100</button>
+                <button class="chip on" onclick="pickChip(this,150)">$150</button>
+                <button class="chip" onclick="pickChip(this,200)">$200</button>
+                <button class="chip" onclick="pickChip(this,250)">$250</button>
+                <button class="chip" onclick="pickChip(this,300)">$300</button>
+                <button class="chip" onclick="pickChip(this,350)">$350</button>
+                <button class="chip" onclick="pickChip(this,400)">$400</button>
+                <button class="chip" onclick="pickChip(this,450)">$450</button>
+              </div>
+              <div class="slider-card">
+                <div class="sc-title">Set the nominal send</div>
+                <div class="sc-row">
+                  <button class="sc-btn" onclick="slideStep(-10)"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+                  <div class="sc-amt" id="nom">$150</div>
+                  <button class="sc-btn solid" onclick="slideStep(10)"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                </div>
+                <input type="range" class="slider" id="slider" min="0" max="500" step="10" value="150" oninput="onSlide(this.value)">
+              </div>
+            </div>
+            <div class="dock"><button class="btn-dock">Continue</button><div class="home-ind"></div></div>
+          </div>
+
+          <!-- DARK -->
+          <div class="phone" data-theme="dark">
+            <div class="statusbar"><span>9:41</span><svg width="52" height="12" viewBox="0 0 52 12"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/><rect x="30" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/><rect x="32" y="3" width="15" height="6" rx="1"/></svg></div>
+            <div class="topnav"><div class="nav-ic"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></div><div class="nav-title">Enter amount</div><div style="width:32px"></div></div>
+            <div class="body">
+              <div>
+                <div class="amt-title">Amount of Money</div>
+                <div class="amt-row">
+                  <button class="amt-btn"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+                  <div class="amt-value">$250</div>
+                  <button class="amt-btn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                </div>
+              </div>
+              <div class="chips">
+                <button class="chip">$50</button><button class="chip">$100</button><button class="chip">$150</button>
+                <button class="chip">$200</button><button class="chip on">$250</button><button class="chip">$300</button>
+                <button class="chip">$350</button><button class="chip">$400</button><button class="chip">$450</button>
+              </div>
+              <div class="slider-card">
+                <div class="sc-title">Set the nominal send</div>
+                <div class="sc-row">
+                  <button class="sc-btn"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+                  <div class="sc-amt">$250</div>
+                  <button class="sc-btn solid"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+                </div>
+                <input type="range" class="slider" min="0" max="500" step="10" value="250" oninput="onSlideEl(this)">
+              </div>
+            </div>
+            <div class="dock"><button class="btn-dock">Continue</button><div class="home-ind"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Input amount — stepper field · preset chips · nominal slider · dock</span><span class="preview-sublabel">Round steppers → lime in dark; chips + slider re-theme</span></div>
+    </div>
+  </div>
+
+</main>
+</div>
+<script>
+var amount=150;
+function render(){ document.getElementById('amt').textContent='$'+amount; }
+function step(d){ amount=Math.max(0,amount+d); render(); syncChip(); }
+function pickChip(el,v){
+  document.querySelectorAll('#chips .chip').forEach(function(c){c.classList.remove('on')});
+  el.classList.add('on'); amount=v; render();
+}
+function syncChip(){
+  document.querySelectorAll('#chips .chip').forEach(function(c){
+    c.classList.toggle('on', c.textContent==='$'+amount);
+  });
+}
+// nominal slider
+function fill(el,v){ var p=(v/500)*100; var col=getComputedStyle(document.documentElement);
+  el.style.background='linear-gradient(to right,var(--mav-primary,#352eff) '+p+'%, #e6edff '+p+'%)'; }
+function onSlide(v){ document.getElementById('nom').textContent='$'+v; fill(document.getElementById('slider'),v); }
+function slideStep(d){ var s=document.getElementById('slider'); s.value=Math.max(0,Math.min(500,+s.value+d)); onSlide(s.value); }
+function onSlideEl(el){ el.parentElement.querySelector('.sc-amt').textContent='$'+el.value; }
+render(); onSlide(150);
+</script>
+<script src="../js/theme.js"></script>
+</body>
+</html>
