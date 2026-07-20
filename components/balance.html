@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balance &amp; Number — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Balance & Number — Figma "Balance" (236:6908) ═══════════════════════════
+   Balance display cards: an available-balance header with a big amount + eye
+   toggle and a trend badge, plus compact "Cashflow" cards (Default / Button /
+   Detail) that wrap a wallet amount over a soft surface. Amounts use the
+   Plus Jakarta Sans Bold "number" style. Re-themes in dark (primary → lime). */
+
+/* shared number + label type */
+.bal-label{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:12px;color:var(--Text\/Grey,#81878d)}
+.bal-amount{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:32px;line-height:1;color:var(--main-text\/default,#171717);letter-spacing:-.5px}
+.bal-eye{width:20px;height:20px;flex-shrink:0;stroke:var(--icon\/default,#171717);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+[data-theme=dark] .bal-eye{stroke:var(--mav-fg,#e5e5e5)}
+
+/* success trend badge */
+.bal-badge{display:inline-flex;align-items:center;padding:2px 4px;border-radius:var(--border\/border-radius\/sm,4px);
+  background:var(--badge\ \&\ chip\/success\/bg-box,#629c281a);border:1px solid var(--badge\ \&\ chip\/success\/outline,#629c28);
+  font-family:'Inter',sans-serif;font-weight:500;font-size:12px;color:var(--badge\ \&\ chip\/success\/text,#629c28)}
+
+/* ── Available-balance header card (375px) ── */
+.bal-hero{width:375px;max-width:100%;box-sizing:border-box;padding:0 20px;display:flex;flex-direction:column;gap:20px}
+.bal-hero .bal-head{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.bal-hero .amt-row{display:flex;gap:8px;align-items:center;width:100%}
+
+/* filled/outline action buttons */
+.bal-actions{display:flex;gap:15px;width:100%}
+.bal-btn{flex:1 0 0;min-width:0;display:flex;gap:8px;align-items:center;justify-content:center;
+  padding:10px 16px;border-radius:var(--border\/border-radius\/sm,4px);border:0;cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:14px}
+.bal-btn svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.bal-btn.primary{background:var(--btn\/primary\/default,#352eff);color:var(--btn\/primary\/text-default,#ffffff)}
+[data-theme=dark] .bal-btn.primary{background:var(--mav-primary-dark,#a1ff5b);color:#171717}
+.bal-btn.secondary{background:transparent;border:1px solid var(--btn\/secondary\/default-outline,#efefef);color:var(--main-text\/default,#171717)}
+[data-theme=dark] .bal-btn.secondary{border-color:var(--mav-border);color:var(--mav-fg)}
+
+/* round icon action (Top Up / Send / …) */
+.bal-quick{display:flex;gap:15px;width:100%}
+.bal-quick .q{flex:1 0 0;min-width:0;display:flex;flex-direction:column;gap:8px;align-items:center}
+.q-btn{width:40px;height:40px;box-sizing:border-box;border-radius:100px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border\/subtle,#efefef);background:transparent}
+.q-btn svg{width:20px;height:20px;stroke:var(--icon\/default,#171717);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+[data-theme=dark] .q-btn{border-color:var(--mav-border)}
+[data-theme=dark] .q-btn svg{stroke:var(--mav-fg)}
+.q-lbl{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:12px;color:var(--main-text\/default,#171717)}
+[data-theme=dark] .q-lbl{color:var(--mav-fg)}
+
+/* ── Cashflow card (Default / Button / Detail) ── */
+.cf{width:361px;max-width:100%;box-sizing:border-box;background:var(--Balance\/Bg-secondary,#efefef);
+  border-radius:12px;padding:4px;display:flex;flex-direction:column;gap:4px}
+[data-theme=dark] .cf{background:var(--Balance\/Bg-secondary,#484848)}
+.cf-head{display:flex;align-items:center;padding:8px 12px;gap:4px}
+.cf-head.between{justify-content:space-between}
+.cf-head.center{justify-content:center}
+.cf-title{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;color:var(--main-text\/default,#171717);white-space:nowrap}
+[data-theme=dark] .cf-title{color:var(--mav-fg)}
+.cf-head .bal-eye{width:20px;height:20px}
+.cf-detail{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:12px;color:var(--btn\/textonly\/default,#352eff);cursor:pointer}
+[data-theme=dark] .cf-detail{color:var(--btn\/textonly\/default,#a1ff5b)}
+
+.cf-panel{background:var(--Balance\/Bg,#ffffff);border-radius:8px;padding:12px;display:flex;gap:12px;align-items:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.04)}
+[data-theme=dark] .cf-panel{background:var(--Balance\/Bg,#171717)}
+.cf-wallet{flex:1 0 0;min-width:0;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.cf-wallet .w-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:var(--main-text\/description,#7f7f7f)}
+.cf-wallet .w-amt{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px;color:var(--main-text\/default,#171717)}
+[data-theme=dark] .cf-wallet .w-amt{color:var(--mav-fg)}
+
+.cf-change{display:inline-flex;gap:8px;align-items:center;padding:6px 12px;border-radius:var(--border\/border-radius\/sm,4px);
+  background:transparent;border:1px solid var(--btn\/secondary\/default-outline,#efefef);cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:14px;color:var(--main-text\/default,#171717);white-space:nowrap}
+.cf-change svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+[data-theme=dark] .cf-change{border-color:var(--mav-border);color:var(--mav-fg)}
+
+/* segmented control (Detail) */
+.cf-seg{display:flex;height:32px;padding:2px;gap:0;border-radius:var(--border\/border-radius\/sm,4px);background:var(--background\/bg-secondary,#e5e5e5)}
+.cf-seg .s{flex:1 0 0;min-width:0;display:flex;align-items:center;justify-content:center;border-radius:var(--border\/border-radius\/sm,4px);
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:12px;color:var(--main-text\/description,#7f7f7f)}
+.cf-seg .s.active{background:var(--background\/bg-default,#ffffff);color:var(--main-text\/default,#171717);box-shadow:0 0 .5px rgba(20,20,20,.04),0 0 4px rgba(20,20,20,.08)}
+[data-theme=dark] .cf-seg .s.active{color:var(--mav-fg)}
+
+/* income / expense split (Detail) */
+.cf-split{display:flex;gap:12px;align-items:stretch;background:var(--Balance\/Bg,#ffffff);border-radius:8px;padding:12px;box-shadow:0 4px 12px rgba(0,0,0,.04)}
+[data-theme=dark] .cf-split{background:var(--Balance\/Bg,#171717)}
+.cf-split .col{flex:1 0 0;min-width:0;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cf-split .col .k{width:100%;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;color:var(--main-text\/description,#7f7f7f)}
+.cf-split .col .v{width:100%;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px}
+.cf-split .col .v.gain{color:var(--gain\&loss\/success\/text-gain,#629c28)}
+.cf-split .col .v.loss{color:var(--gain\&loss\/danger\/text-loss,#ff0000)}
+.cf-split .vr{width:1px;background:var(--devider\/default,#efefef);align-self:stretch}
+[data-theme=dark] .cf-split .vr{background:var(--devider\/default,#484848)}
+
+/* stages */
+.bal-stage{background:var(--mav-surface,#f5f5f5);border-radius:16px;padding:32px;display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start}
+.canvas-dark{background:var(--main\/white,#171717);border-radius:16px;padding:32px;display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start}
+.bal-cell{display:flex;flex-direction:column;gap:12px;align-items:center}
+.bal-tag{font-size:11px;color:var(--mav-muted);font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar"></nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Balance &amp; Number</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Balance &amp; Number</h1>
+    <p class="page-desc">Balance display blocks that surface an account amount as the hero of a screen. A large Plus&nbsp;Jakarta&nbsp;Sans number with a privacy eye toggle and a trend badge, plus compact wallet cards (Default, Button, Detail) for dashboards. Amounts, gains, and losses all read from finance tokens.</p>
+  </div>
+
+  <!-- Anatomy -->
+  <div class="section">
+    <h2 class="section-title">Anatomy</h2>
+    <p class="section-desc">Label + big amount (<code>--heading/xl</code>, 32px) with an eye toggle, a success trend badge, then a Send / Request action pair.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="bal-stage" style="justify-content:flex-start">
+          <div class="bal-hero">
+            <div class="bal-head">
+              <div class="bal-label">Available balance</div>
+              <div class="amt-row">
+                <span class="bal-amount">$82,758.10</span>
+                <svg class="bal-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <span class="bal-badge">+24% this month</span>
+            </div>
+            <div class="bal-actions">
+              <button class="bal-btn primary"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Send</button>
+              <button class="bal-btn secondary"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Request</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Available balance — 375px · amount 32px · trend badge · action pair</span><span class="preview-sublabel">Uses --Balance/Bg · --btn/primary · --badge &amp; chip/success</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Action layouts -->
+  <div class="section">
+    <h2 class="section-title">Action layouts</h2>
+    <p class="section-desc">The header pairs with either two full-width buttons or a row of quick round actions.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="bal-stage">
+          <div class="bal-cell"><span class="bal-tag">Send / Request</span>
+            <div class="bal-hero">
+              <div class="bal-head">
+                <div class="bal-label">Available balance</div>
+                <div class="amt-row"><span class="bal-amount">$82,758.10</span><svg class="bal-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                <span class="bal-badge">+24% this month</span>
+              </div>
+              <div class="bal-actions">
+                <button class="bal-btn primary"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Send</button>
+                <button class="bal-btn secondary"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Request</button>
+              </div>
+            </div>
+          </div>
+          <div class="bal-cell"><span class="bal-tag">Quick actions</span>
+            <div class="bal-hero">
+              <div class="bal-head">
+                <div class="bal-label">Available balance</div>
+                <div class="amt-row"><span class="bal-amount">$82,758.10</span><svg class="bal-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                <span class="bal-badge">+24% this month</span>
+              </div>
+              <div class="bal-quick">
+                <div class="q"><span class="q-btn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span class="q-lbl">Top Up</span></div>
+                <div class="q"><span class="q-btn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span class="q-lbl">Send</span></div>
+                <div class="q"><span class="q-btn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span class="q-lbl">Request</span></div>
+                <div class="q"><span class="q-btn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span class="q-lbl">More</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Two-button pair vs four quick round actions</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Cashflow cards -->
+  <div class="section">
+    <h2 class="section-title">Cashflow cards</h2>
+    <p class="section-desc">Compact wallet cards on a soft <code>--Balance/Bg-secondary</code> surface: <strong>Default</strong> (top-up), <strong>Button</strong> (change wallet), and <strong>Detail</strong> (segmented + income/expense).</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="bal-stage">
+          <!-- Default -->
+          <div class="bal-cell"><span class="bal-tag">Default</span>
+            <div class="cf">
+              <div class="cf-head between">
+                <div style="display:flex;gap:4px;align-items:center"><span class="cf-title">Available Balance</span><svg class="bal-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                <span class="cf-detail">See Detail</span>
+              </div>
+              <div class="cf-panel">
+                <div class="cf-wallet"><span class="w-name">Main Wallet</span><span class="w-amt">$82,758.10</span></div>
+                <div class="q"><span class="q-btn"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span class="q-lbl">Top Up</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Button -->
+          <div class="bal-cell"><span class="bal-tag">Button</span>
+            <div class="cf">
+              <div class="cf-head center"><span class="cf-title">Available Balance</span><svg class="bal-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+              <div class="cf-panel">
+                <div class="cf-wallet"><span class="w-name">Main Wallet</span><span class="w-amt">$82,758.10</span></div>
+                <button class="cf-change"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Change</button>
+              </div>
+            </div>
+          </div>
+          <!-- Detail -->
+          <div class="bal-cell"><span class="bal-tag">Detail</span>
+            <div class="cf">
+              <div class="cf-seg"><div class="s active">Main</div><div class="s">Secondary</div></div>
+              <div class="cf-panel" style="border-radius:12px">
+                <div class="cf-wallet" style="gap:4px">
+                  <div style="display:flex;gap:4px;align-items:center"><span class="bal-label" style="color:var(--main-text\/description,#7f7f7f)">Available Balance</span><svg class="bal-eye" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                  <span class="w-amt">$82,758.10</span>
+                </div>
+                <button class="cf-change"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Top up</button>
+              </div>
+              <div class="cf-split">
+                <div class="col"><span class="k">Income</span><span class="v gain">+$20.000</span></div>
+                <div class="vr"></div>
+                <div class="col"><span class="k">Expense</span><span class="v loss">−$5.200</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Default · Button · Detail — 361px wallet cards</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Dark -->
+  <div class="section">
+    <h2 class="section-title">In dark</h2>
+    <p class="section-desc">On a dark canvas the primary action and links re-theme to lime; gains stay green, losses red.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="canvas-dark" data-theme="dark">
+          <div class="bal-hero" style="width:340px">
+            <div class="bal-head">
+              <div class="bal-label">Available balance</div>
+              <div class="amt-row"><span class="bal-amount">$82,758.10</span><svg class="bal-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+              <span class="bal-badge">+24% this month</span>
+            </div>
+            <div class="bal-actions">
+              <button class="bal-btn primary"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Send</button>
+              <button class="bal-btn secondary"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Request</button>
+            </div>
+          </div>
+          <div class="cf" style="width:340px">
+            <div class="cf-seg"><div class="s active">Main</div><div class="s">Secondary</div></div>
+            <div class="cf-panel" style="border-radius:12px">
+              <div class="cf-wallet" style="gap:4px">
+                <div style="display:flex;gap:4px;align-items:center"><span class="bal-label" style="color:var(--main-text\/description,#7f7f7f)">Available Balance</span><svg class="bal-eye" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                <span class="w-amt">$82,758.10</span>
+              </div>
+              <button class="cf-change"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Top up</button>
+            </div>
+            <div class="cf-split">
+              <div class="col"><span class="k">Income</span><span class="v gain">+$20.000</span></div>
+              <div class="vr"></div>
+              <div class="col"><span class="k">Expense</span><span class="v loss">−$5.200</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Dark — primary → lime · gain green · loss red</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--Balance/Bg</td><td><span class="token-swatch-sm" style="background:#ffffff;border:1px solid #d0d0d0"></span><span class="token-value">#ffffff</span></td><td class="token-value">Inner wallet panel (dark: #171717)</td></tr>
+        <tr><td class="token-name">--Balance/Bg-secondary</td><td><span class="token-swatch-sm" style="background:#efefef"></span><span class="token-value">#efefef</span></td><td class="token-value">Card surface (dark: #484848)</td></tr>
+        <tr><td class="token-name">--Text/Grey</td><td><span class="token-swatch-sm" style="background:#81878d"></span><span class="token-value">#81878d</span></td><td class="token-value">Balance label</td></tr>
+        <tr><td class="token-name">--main-text/default</td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">#171717</span></td><td class="token-value">Amount number</td></tr>
+        <tr><td class="token-name">--btn/primary/default</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Send action (→ lime in dark)</td></tr>
+        <tr><td class="token-name">--badge &amp; chip/success/*</td><td><span class="token-swatch-sm" style="background:#629c28"></span><span class="token-value">#629c28</span></td><td class="token-value">Trend badge</td></tr>
+        <tr><td class="token-name">--gain&amp;loss/success/text-gain</td><td><span class="token-swatch-sm" style="background:#629c28"></span><span class="token-value">#629c28</span></td><td class="token-value">Income figure</td></tr>
+        <tr><td class="token-name">--gain&amp;loss/danger/text-loss</td><td><span class="token-swatch-sm" style="background:#ff0000"></span><span class="token-value">#ff0000</span></td><td class="token-value">Expense figure</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+</body>
+</html>
