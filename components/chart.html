@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chart — MaV Design System</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+/* ══ Chart — Figma "Chart" (240:2719) ════════════════════════════════════════
+   Transaction line-chart card: a titled surface with a period dropdown and a
+   smooth spline over five days (Sun–Thu) with per-point value labels, faint
+   vertical gridlines and a soft area gradient. Four data states —
+   Earn (gain green), Loss (danger red), Flat (brand), None (empty). Line +
+   gradient read from the --Line-Chart/* tokens; brand re-themes to lime in dark. */
+
+.tx-card{width:362px;max-width:100%;box-sizing:border-box;
+  background:var(--background\/bg-default,#fff);border:1px solid var(--border\/subtle,#efefef);
+  border-radius:24px;padding-top:24px;overflow:clip;
+  display:flex;flex-direction:column;gap:22px}
+[data-theme=dark] .tx-card{background:var(--mav-surface,#1f1f1f);border-color:var(--mav-border,#484848)}
+
+/* header: title + period dropdown */
+.tx-head{display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.tx-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:18px;line-height:1;
+  color:var(--main-text\/default,#171717)}
+[data-theme=dark] .tx-title{color:var(--mav-fg,#fff)}
+.tx-btn{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;cursor:pointer;
+  background:transparent;border:1px solid var(--btn\/secondary\/default-outline,#efefef);
+  border-radius:var(--border\/border-radius\/sm,4px);
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:14px;
+  color:var(--main-text\/default,#171717);white-space:nowrap}
+.tx-btn svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+[data-theme=dark] .tx-btn{border-color:var(--mav-border,#484848);color:var(--mav-fg,#fff)}
+
+/* plot area */
+.tx-plot{display:flex;flex-direction:column}
+.tx-chart{display:block;width:100%;height:auto}
+.tx-line{fill:none;stroke:var(--line);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tx-grid line{stroke:var(--Line-Chart\/Natural,#d9d9d9);stroke-width:1;opacity:.4}
+.tx-dot-halo{fill:var(--background\/bg-default,#fff)}
+[data-theme=dark] .tx-dot-halo{fill:var(--mav-surface,#1f1f1f)}
+.tx-dot{fill:var(--line)}
+.tx-val{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:10px;fill:var(--main-text\/default,#171717)}
+[data-theme=dark] .tx-val{fill:var(--mav-fg,#fff)}
+
+/* day axis */
+.tx-days{display:flex;justify-content:space-between;padding:0 17px 18px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;font-size:12px;line-height:1;
+  color:var(--main-text\/default,#171717);opacity:.4}
+[data-theme=dark] .tx-days{color:var(--mav-fg,#fff)}
+
+/* variant palettes → local --line drives stroke, dots + gradient */
+.tx-earn{--line:var(--Line-Chart\/line-gain,#629c28)}
+.tx-loss{--line:var(--Line-Chart\/line-loss,#ff0000)}
+.tx-flat{--line:var(--Line-Chart\/line-brand,#352eff)}
+.tx-none{--line:var(--Line-Chart\/Natural,#d9d9d9)}
+
+/* stages */
+.tx-stage{background:var(--mav-surface,#f5f5f5);border-radius:16px;padding:32px;
+  display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:flex-start}
+.tx-stage.soft{background:#f5f5f5}
+[data-theme=dark] .tx-stage.soft{background:#141414}
+.canvas-dark{background:#171717;border-radius:16px;padding:32px;
+  display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:flex-start}
+.tx-cell{display:flex;flex-direction:column;gap:12px;align-items:center}
+.tx-tag{font-size:11px;color:var(--mav-muted,#7f7f7f);font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+<div class="doc-layout">
+<nav class="doc-sidebar"></nav>
+<main class="doc-main">
+  <div class="topbar">
+    <a href="../index.html" class="topbar-back">← MaV</a>
+    <span>/</span>
+    <span class="topbar-title">Chart</span>
+    <div class="topbar-spacer"></div>
+    <button class="theme-btn" data-theme-toggle><span data-theme-icon>☾</span> <span data-theme-label>Dark mode</span></button>
+  </div>
+
+  <div class="page-header">
+    <div class="page-breadcrumb"><a href="../index.html">MaV</a> / Components</div>
+    <h1 class="page-title">Chart</h1>
+    <p class="page-desc">A transaction line-chart card that plots a week of activity (Sun–Thu) as a smooth spline with per-point value labels, faint vertical gridlines and a soft area gradient. Four data states carry meaning through colour — <strong>Earn</strong> (gain green), <strong>Loss</strong> (danger red), <strong>Flat</strong> (brand), and an empty <strong>None</strong> — all sourced from the <code>--Line-Chart/*</code> tokens. Brand re-themes to lime in dark.</p>
+  </div>
+
+  <!-- Anatomy -->
+  <div class="section">
+    <h2 class="section-title">Anatomy</h2>
+    <p class="section-desc">Title + period dropdown over a 362px surface, then a five-point smooth line with value labels (<code>--medium/xs</code>, 10px), gridlines, gradient fill and the Sun–Thu axis at 40% opacity.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="tx-stage" style="justify-content:flex-start">
+          <div class="tx-card tx-earn" data-chart="20.67,37.00,45.90,26.01,57.89" data-period="Earnings"></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Transaction — 362px · smooth spline · 5 points · gradient fill</span><span class="preview-sublabel">Uses --Line-Chart/line-gain · --background/bg-default · --border/subtle</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Variations -->
+  <div class="section">
+    <h2 class="section-title">Data states</h2>
+    <p class="section-desc">The same card carries four states. Earn trends up in gain green, Loss trends down in danger red, Flat holds the brand colour, and None is the empty placeholder before data loads.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="tx-stage">
+          <div class="tx-cell"><span class="tx-tag">Earn — gain</span>
+            <div class="tx-card tx-earn" data-chart="20.67,37.00,45.90,26.01,57.89" data-period="Earnings"></div></div>
+          <div class="tx-cell"><span class="tx-tag">Loss — danger</span>
+            <div class="tx-card tx-loss" data-chart="57.99,26.01,45.90,37.00,20.67" data-period="Expenses"></div></div>
+          <div class="tx-cell"><span class="tx-tag">Flat — brand</span>
+            <div class="tx-card tx-flat" data-chart="20.67,20.67,20.67,20.67,20.67" data-period="Earnings"></div></div>
+          <div class="tx-cell"><span class="tx-tag">None — empty</span>
+            <div class="tx-card tx-none" data-chart="" data-period="Earnings"></div></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Earn · Loss · Flat · None</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Dark -->
+  <div class="section">
+    <h2 class="section-title">In dark</h2>
+    <p class="section-desc">On a dark canvas the surface and axis invert; gain stays green and loss stays red, while the brand line re-themes to lime.</p>
+    <div class="preview-card">
+      <div class="preview-canvas">
+        <div class="canvas-dark" data-theme="dark">
+          <div class="tx-card tx-earn" data-chart="20.67,37.00,45.90,26.01,57.89" data-period="Earnings"></div>
+          <div class="tx-card tx-flat" data-chart="20.67,20.67,20.67,20.67,20.67" data-period="Earnings"></div>
+        </div>
+      </div>
+      <div class="preview-meta"><span class="preview-label">Dark — gain green · loss red · brand → lime</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Token reference -->
+  <div class="section">
+    <h2 class="section-title">Token Reference</h2>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+      <tbody>
+        <tr><td class="token-name">--Line-Chart/line-gain</td><td><span class="token-swatch-sm" style="background:#629c28"></span><span class="token-value">#629c28</span></td><td class="token-value">Earn line + dots + gradient</td></tr>
+        <tr><td class="token-name">--Line-Chart/line-loss</td><td><span class="token-swatch-sm" style="background:#ff0000"></span><span class="token-value">#ff0000</span></td><td class="token-value">Loss line + dots + gradient</td></tr>
+        <tr><td class="token-name">--Line-Chart/line-brand</td><td><span class="token-swatch-sm" style="background:#352eff"></span><span class="token-value">#352eff</span></td><td class="token-value">Flat line (→ #a1ff5b in dark)</td></tr>
+        <tr><td class="token-name">--Line-Chart/Natural</td><td><span class="token-swatch-sm" style="background:#d9d9d9"></span><span class="token-value">#d9d9d9</span></td><td class="token-value">Gridlines + None empty state</td></tr>
+        <tr><td class="token-name">--background/bg-default</td><td><span class="token-swatch-sm" style="background:#ffffff;border:1px solid #d0d0d0"></span><span class="token-value">#ffffff</span></td><td class="token-value">Card surface + dot halo (dark: #1f1f1f)</td></tr>
+        <tr><td class="token-name">--border/subtle</td><td><span class="token-swatch-sm" style="background:#efefef"></span><span class="token-value">#efefef</span></td><td class="token-value">Card + dropdown outline</td></tr>
+        <tr><td class="token-name">--main-text/default</td><td><span class="token-swatch-sm" style="background:#171717"></span><span class="token-value">#171717</span></td><td class="token-value">Title, value + day labels</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+<script src="../js/theme.js"></script>
+<script>
+/* ── Transaction chart generator ─────────────────────────────────────────────
+   Builds the SVG per card from data-chart (comma values) + data-period.
+   Empty data → None state (axis only). Smooth spline via Catmull-Rom→bezier. */
+(function () {
+  var W = 362, TOP = 16, BOT = 150, PADX = 26;   /* plot geometry */
+
+  function chevron() {
+    return '<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+  }
+
+  function xAt(i, n) { return n <= 1 ? W / 2 : PADX + i * (W - 2 * PADX) / (n - 1); }
+
+  function smooth(pts) {
+    if (pts.length < 2) return '';
+    var d = 'M' + pts[0].x.toFixed(2) + ' ' + pts[0].y.toFixed(2);
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      var c1x = p1.x + (p2.x - p0.x) / 6, c1y = p1.y + (p2.y - p0.y) / 6;
+      var c2x = p2.x - (p3.x - p1.x) / 6, c2y = p2.y - (p3.y - p1.y) / 6;
+      d += ' C' + c1x.toFixed(2) + ' ' + c1y.toFixed(2) + ' ' +
+                  c2x.toFixed(2) + ' ' + c2y.toFixed(2) + ' ' +
+                  p2.x.toFixed(2) + ' ' + p2.y.toFixed(2);
+    }
+    return d;
+  }
+
+  function money(v) { return '$' + v.toFixed(2); }
+
+  var DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu'];
+
+  document.querySelectorAll('.tx-card').forEach(function (card, idx) {
+    var period = card.getAttribute('data-period') || 'Earnings';
+    var raw = (card.getAttribute('data-chart') || '').trim();
+    var vals = raw ? raw.split(',').map(function (s) { return parseFloat(s); }) : [];
+    var n = vals.length;
+
+    var head =
+      '<div class="tx-head"><span class="tx-title">Transaction</span>' +
+      '<button class="tx-btn" type="button">' + period + chevron() + '</button></div>';
+
+    var body = '';
+    if (n) {
+      var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+      var span = max - min || 1;
+      var flat = max === min;
+      var pts = vals.map(function (v, i) {
+        var y = flat ? (TOP + BOT) / 2 : BOT - (v - min) / span * (BOT - TOP);
+        return { x: xAt(i, n), y: y };
+      });
+
+      var gid = 'txg' + idx;
+      var grid = '<g class="tx-grid">' + pts.map(function (p) {
+        return '<line x1="' + p.x.toFixed(2) + '" y1="24" x2="' + p.x.toFixed(2) + '" y2="152"/>';
+      }).join('') + '</g>';
+
+      var lineD = smooth(pts);
+      var areaD = lineD + ' L' + pts[n - 1].x.toFixed(2) + ' 166 L' + pts[0].x.toFixed(2) + ' 166 Z';
+
+      var dots = pts.map(function (p) {
+        var ly = Math.max(12, p.y - 13);
+        return '<text class="tx-val" x="' + p.x.toFixed(2) + '" y="' + ly.toFixed(2) + '" text-anchor="middle">' +
+                 money(vals[pts.indexOf(p)]) + '</text>' +
+               '<circle class="tx-dot-halo" cx="' + p.x.toFixed(2) + '" cy="' + p.y.toFixed(2) + '" r="5.5"/>' +
+               '<circle class="tx-dot" cx="' + p.x.toFixed(2) + '" cy="' + p.y.toFixed(2) + '" r="3.2"/>';
+      }).join('');
+
+      body =
+        '<svg class="tx-chart" viewBox="0 0 362 178" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+          '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="var(--line)" stop-opacity="0.18"/>' +
+            '<stop offset="1" stop-color="var(--line)" stop-opacity="0"/>' +
+          '</linearGradient></defs>' +
+          grid +
+          '<path class="tx-area" d="' + areaD + '" fill="url(#' + gid + ')"/>' +
+          '<path class="tx-line" d="' + lineD + '"/>' +
+          dots +
+        '</svg>';
+    } else {
+      /* None — empty placeholder, axis only */
+      body = '<svg class="tx-chart" viewBox="0 0 362 178" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>';
+    }
+
+    var days = '<div class="tx-days">' + DAYS.map(function (d) { return '<span>' + d + '</span>'; }).join('') + '</div>';
+
+    card.innerHTML = head + '<div class="tx-plot">' + body + days + '</div>';
+  });
+})();
+</script>
+</body>
+</html>
